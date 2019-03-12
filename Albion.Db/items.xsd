@@ -1,0 +1,952 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="items">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice maxOccurs="unbounded">
+          <xs:element maxOccurs="unbounded" name="farmableitem">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:choice maxOccurs="unbounded">
+                  <xs:element name="craftingrequirements">
+                    <xs:complexType>
+                      <xs:sequence minOccurs="0">
+                        <xs:choice maxOccurs="unbounded">
+                          <xs:element name="playerfactionstanding">
+                            <xs:complexType>
+                              <xs:attribute name="faction" type="xs:string" use="required" />
+                              <xs:attribute name="minstanding" type="xs:unsignedInt" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="currency">
+                            <xs:complexType>
+                              <xs:attribute name="uniquename" type="xs:string" use="required" />
+                              <xs:attribute name="amount" type="xs:unsignedShort" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:choice>
+                      </xs:sequence>
+                      <xs:attribute name="silver" type="xs:unsignedInt" use="optional" />
+                      <xs:attribute name="time" type="xs:unsignedByte" use="required" />
+                      <xs:attribute name="swaptransaction" type="xs:boolean" use="required" />
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="AudioInfo">
+                    <xs:complexType>
+                      <xs:attribute name="name" type="xs:string" use="required" />
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="harvest">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="seed">
+                          <xs:complexType>
+                            <xs:attribute name="chance" type="xs:decimal" use="required" />
+                            <xs:attribute name="amount" type="xs:unsignedByte" use="required" />
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                      <xs:attribute name="growtime" type="xs:unsignedInt" use="required" />
+                      <xs:attribute name="lootlist" type="xs:string" use="required" />
+                      <xs:attribute name="lootchance" type="xs:unsignedByte" use="required" />
+                      <xs:attribute name="fame" type="xs:unsignedByte" use="required" />
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="grownitem">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="offspring">
+                          <xs:complexType>
+                            <xs:attribute name="chance" type="xs:decimal" use="required" />
+                            <xs:attribute name="amount" type="xs:unsignedByte" use="required" />
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                      <xs:attribute name="uniquename" type="xs:string" use="required" />
+                      <xs:attribute name="growtime" type="xs:unsignedInt" use="required" />
+                      <xs:attribute name="fame" type="xs:unsignedShort" use="required" />
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="consumption">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="food">
+                          <xs:complexType>
+                            <xs:sequence>
+                              <xs:element name="acceptedfood">
+                                <xs:complexType>
+                                  <xs:attribute name="foodcategory" type="xs:string" use="required" />
+                                </xs:complexType>
+                              </xs:element>
+                            </xs:sequence>
+                            <xs:attribute name="nutritionmax" type="xs:unsignedShort" use="required" />
+                            <xs:attribute name="secondspernutrition" type="xs:decimal" use="required" />
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="products">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="product">
+                          <xs:complexType>
+                            <xs:attribute name="productiontime" type="xs:unsignedInt" use="required" />
+                            <xs:attribute name="actionname" type="xs:string" use="required" />
+                            <xs:attribute name="lootlist" type="xs:string" use="required" />
+                            <xs:attribute name="lootchance" type="xs:unsignedByte" use="required" />
+                            <xs:attribute name="fame" type="xs:unsignedByte" use="required" />
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:choice>
+              </xs:sequence>
+              <xs:attribute name="uniquename" type="xs:string" use="required" />
+              <xs:attribute name="tier" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="craftfamegainfactor" type="xs:decimal" use="optional" />
+              <xs:attribute name="placecost" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="placefame" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="pickupable" type="xs:boolean" use="required" />
+              <xs:attribute name="destroyable" type="xs:boolean" use="required" />
+              <xs:attribute name="unlockedtoplace" type="xs:boolean" use="required" />
+              <xs:attribute name="maxstacksize" type="xs:unsignedShort" use="required" />
+              <xs:attribute name="shopcategory" type="xs:string" use="required" />
+              <xs:attribute name="shopsubcategory1" type="xs:string" use="required" />
+              <xs:attribute name="kind" type="xs:string" use="required" />
+              <xs:attribute name="weight" type="xs:decimal" use="required" />
+              <xs:attribute name="unlockedtocraft" type="xs:boolean" use="required" />
+              <xs:attribute name="animationid" type="xs:string" use="required" />
+              <xs:attribute name="activefarmfocuscost" type="xs:unsignedShort" use="optional" />
+              <xs:attribute name="activefarmmaxcycles" type="xs:unsignedByte" use="optional" />
+              <xs:attribute name="activefarmactiondurationseconds" type="xs:unsignedByte" use="optional" />
+              <xs:attribute name="activefarmcyclelengthseconds" type="xs:unsignedInt" use="optional" />
+              <xs:attribute name="activefarmbonus" type="xs:decimal" use="optional" />
+              <xs:attribute name="prefabname" type="xs:string" use="optional" />
+              <xs:attribute name="prefabscale" type="xs:decimal" use="optional" />
+              <xs:attribute name="resourcevalue" type="xs:unsignedShort" use="optional" />
+              <xs:attribute name="tile" type="xs:string" use="optional" />
+              <xs:attribute name="uisprite" type="xs:string" use="optional" />
+              <xs:attribute name="showinmarketplace" type="xs:boolean" use="optional" />
+            </xs:complexType>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" name="simpleitem">
+            <xs:complexType mixed="true">
+              <xs:sequence minOccurs="0">
+                <xs:element minOccurs="0" name="replaceondeath">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="replacementitem">
+                        <xs:complexType>
+                          <xs:attribute name="uniquename" type="xs:string" use="required" />
+                          <xs:attribute name="count" type="xs:unsignedByte" use="required" />
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" name="craftingrequirements">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element minOccurs="0" name="currency">
+                        <xs:complexType>
+                          <xs:attribute name="uniquename" type="xs:string" use="required" />
+                          <xs:attribute name="amount" type="xs:unsignedShort" use="required" />
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element minOccurs="0" name="playerfactionstanding">
+                        <xs:complexType>
+                          <xs:attribute name="faction" type="xs:string" use="required" />
+                          <xs:attribute name="minstanding" type="xs:unsignedInt" use="required" />
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element minOccurs="0" maxOccurs="unbounded" name="craftresource">
+                        <xs:complexType>
+                          <xs:attribute name="uniquename" type="xs:string" use="required" />
+                          <xs:attribute name="count" type="xs:unsignedShort" use="required" />
+                          <xs:attribute name="maxreturnamount" type="xs:unsignedByte" use="optional" />
+                          <xs:attribute name="enchantmentlevel" type="xs:unsignedByte" use="optional" />
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                    <xs:attribute name="time" type="xs:decimal" use="required" />
+                    <xs:attribute name="amountcrafted" type="xs:unsignedByte" use="optional" />
+                    <xs:attribute name="silver" type="xs:unsignedInt" use="optional" />
+                    <xs:attribute name="craftingfocus" type="xs:unsignedShort" use="optional" />
+                    <xs:attribute name="swaptransaction" type="xs:boolean" use="optional" />
+                    <xs:attribute name="buildingfilter" type="xs:string" use="optional" />
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+              <xs:attribute name="uniquename" type="xs:string" use="required" />
+              <xs:attribute name="tier" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="weight" type="xs:decimal" use="optional" />
+              <xs:attribute name="maxstacksize" type="xs:unsignedShort" use="optional" />
+              <xs:attribute name="uisprite" type="xs:string" use="optional" />
+              <xs:attribute name="shopcategory" type="xs:string" use="required" />
+              <xs:attribute name="shopsubcategory1" type="xs:string" use="required" />
+              <xs:attribute name="unlockedtocraft" type="xs:boolean" use="optional" />
+              <xs:attribute name="itemvalue" type="xs:unsignedShort" use="optional" />
+              <xs:attribute name="showinmarketplace" type="xs:boolean" use="optional" />
+              <xs:attribute name="nutrition" type="xs:unsignedByte" use="optional" />
+              <xs:attribute name="foodcategory" type="xs:string" use="optional" />
+              <xs:attribute name="resourcetype" type="xs:string" use="optional" />
+              <xs:attribute name="craftfamegainfactor" type="xs:decimal" use="optional" />
+              <xs:attribute name="enchantmentlevel" type="xs:unsignedByte" use="optional" />
+              <xs:attribute name="fishingfame" type="xs:unsignedShort" use="optional" />
+              <xs:attribute name="fishingminigamesetting" type="xs:string" use="optional" />
+              <xs:attribute name="descriptionlocatag" type="xs:string" use="optional" />
+              <xs:attribute name="fasttravelfactor" type="xs:unsignedShort" use="optional" />
+              <xs:attribute name="namelocatag" type="xs:string" use="optional" />
+              <xs:attribute name="salvageable" type="xs:boolean" use="optional" />
+              <xs:attribute name="descvariable0" type="xs:string" use="optional" />
+              <xs:attribute name="descvariable1" type="xs:string" use="optional" />
+              <xs:attribute name="uicraftsoundstart" type="xs:string" use="optional" />
+              <xs:attribute name="uicraftsoundfinish" type="xs:string" use="optional" />
+              <xs:attribute name="craftingcategory" type="xs:string" use="optional" />
+              <xs:attribute name="canbestoredinbattlevault" type="xs:boolean" use="optional" />
+            </xs:complexType>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" name="consumableitem">
+            <xs:complexType mixed="true">
+              <xs:sequence minOccurs="0">
+                <xs:element name="craftingrequirements">
+                  <xs:complexType mixed="true">
+                    <xs:sequence minOccurs="0">
+                      <xs:element maxOccurs="unbounded" name="craftresource">
+                        <xs:complexType>
+                          <xs:attribute name="uniquename" type="xs:string" use="required" />
+                          <xs:attribute name="count" type="xs:unsignedByte" use="required" />
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                    <xs:attribute name="silver" type="xs:unsignedByte" use="optional" />
+                    <xs:attribute name="time" type="xs:decimal" use="required" />
+                    <xs:attribute name="amountcrafted" type="xs:unsignedByte" use="required" />
+                    <xs:attribute name="forcesinglecraft" type="xs:boolean" use="optional" />
+                    <xs:attribute name="craftingfocus" type="xs:unsignedShort" use="optional" />
+                    <xs:attribute name="gold" type="xs:unsignedByte" use="optional" />
+                  </xs:complexType>
+                </xs:element>
+                <xs:element minOccurs="0" name="enchantments">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element maxOccurs="unbounded" name="enchantment">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="craftingrequirements">
+                              <xs:complexType>
+                                <xs:sequence>
+                                  <xs:element maxOccurs="unbounded" name="craftresource">
+                                    <xs:complexType>
+                                      <xs:attribute name="uniquename" type="xs:string" use="required" />
+                                      <xs:attribute name="count" type="xs:unsignedByte" use="required" />
+                                    </xs:complexType>
+                                  </xs:element>
+                                </xs:sequence>
+                                <xs:attribute name="amountcrafted" type="xs:unsignedByte" use="required" />
+                                <xs:attribute name="time" type="xs:decimal" use="required" />
+                                <xs:attribute name="craftingfocus" type="xs:unsignedShort" use="required" />
+                              </xs:complexType>
+                            </xs:element>
+                            <xs:element name="upgraderequirements">
+                              <xs:complexType>
+                                <xs:sequence>
+                                  <xs:element name="upgraderesource">
+                                    <xs:complexType>
+                                      <xs:attribute name="uniquename" type="xs:string" use="required" />
+                                      <xs:attribute name="count" type="xs:unsignedByte" use="required" />
+                                    </xs:complexType>
+                                  </xs:element>
+                                </xs:sequence>
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                          <xs:attribute name="enchantmentlevel" type="xs:unsignedByte" use="required" />
+                          <xs:attribute name="abilitypower" type="xs:unsignedByte" use="required" />
+                          <xs:attribute name="dummyitempower" type="xs:unsignedShort" use="required" />
+                          <xs:attribute name="consumespell" type="xs:string" use="required" />
+                          <xs:attribute name="nutrition" type="xs:unsignedShort" use="optional" />
+                          <xs:attribute name="weight" type="xs:decimal" use="optional" />
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+              <xs:attribute name="uniquename" type="xs:string" use="required" />
+              <xs:attribute name="fishingfame" type="xs:unsignedShort" use="optional" />
+              <xs:attribute name="fishingminigamesetting" type="xs:string" use="optional" />
+              <xs:attribute name="descriptionlocatag" type="xs:string" use="optional" />
+              <xs:attribute name="uisprite" type="xs:string" use="optional" />
+              <xs:attribute name="nutrition" type="xs:unsignedShort" use="optional" />
+              <xs:attribute name="abilitypower" type="xs:unsignedShort" use="required" />
+              <xs:attribute name="slottype" type="xs:string" use="required" />
+              <xs:attribute name="consumespell" type="xs:string" use="required" />
+              <xs:attribute name="shopcategory" type="xs:string" use="required" />
+              <xs:attribute name="shopsubcategory1" type="xs:string" use="required" />
+              <xs:attribute name="resourcetype" type="xs:string" use="optional" />
+              <xs:attribute name="tier" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="weight" type="xs:decimal" use="optional" />
+              <xs:attribute name="dummyitempower" type="xs:unsignedShort" use="optional" />
+              <xs:attribute name="maxstacksize" type="xs:unsignedShort" use="optional" />
+              <xs:attribute name="unlockedtocraft" type="xs:boolean" use="required" />
+              <xs:attribute name="unlockedtoequip" type="xs:boolean" use="required" />
+              <xs:attribute name="uicraftsoundstart" type="xs:string" use="optional" />
+              <xs:attribute name="uicraftsoundfinish" type="xs:string" use="optional" />
+              <xs:attribute name="uispriteoverlay" type="xs:string" use="optional" />
+              <xs:attribute name="tradable" type="xs:boolean" use="optional" />
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="consumablefrominventoryitem">
+            <xs:complexType>
+              <xs:sequence minOccurs="0">
+                <xs:element name="craftingrequirements">
+                  <xs:complexType>
+                    <xs:sequence minOccurs="0">
+                      <xs:element maxOccurs="unbounded" name="craftresource">
+                        <xs:complexType>
+                          <xs:attribute name="uniquename" type="xs:string" use="required" />
+                          <xs:attribute name="count" type="xs:unsignedShort" use="required" />
+                          <xs:attribute name="maxreturnamount" type="xs:unsignedByte" use="required" />
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                    <xs:attribute name="silver" type="xs:unsignedInt" use="required" />
+                    <xs:attribute name="time" type="xs:unsignedByte" use="required" />
+                    <xs:attribute name="craftingfocus" type="xs:unsignedByte" use="optional" />
+                  </xs:complexType>
+                </xs:element>
+                <xs:element minOccurs="0" name="AudioInfo">
+                  <xs:complexType>
+                    <xs:attribute name="name" type="xs:string" use="required" />
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+              <xs:attribute name="uniquename" type="xs:string" use="required" />
+              <xs:attribute name="tradable" type="xs:boolean" use="optional" />
+              <xs:attribute name="uisprite" type="xs:string" use="optional" />
+              <xs:attribute name="abilitypower" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="consumespell" type="xs:string" use="required" />
+              <xs:attribute name="shopcategory" type="xs:string" use="required" />
+              <xs:attribute name="shopsubcategory1" type="xs:string" use="required" />
+              <xs:attribute name="tier" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="weight" type="xs:decimal" use="required" />
+              <xs:attribute name="dummyitempower" type="xs:unsignedShort" use="optional" />
+              <xs:attribute name="maxstacksize" type="xs:unsignedShort" use="optional" />
+              <xs:attribute name="unlockedtocraft" type="xs:boolean" use="required" />
+              <xs:attribute name="uicraftsoundstart" type="xs:string" use="optional" />
+              <xs:attribute name="uicraftsoundfinish" type="xs:string" use="optional" />
+              <xs:attribute name="itemvalue" type="xs:unsignedByte" use="optional" />
+              <xs:attribute name="uispriteoverlay" type="xs:string" use="optional" />
+              <xs:attribute name="enchantmentlevel" type="xs:unsignedByte" use="optional" />
+              <xs:attribute name="descriptionlocatag" type="xs:string" use="optional" />
+              <xs:attribute name="salvageable" type="xs:boolean" use="optional" />
+              <xs:attribute name="showinmarketplace" type="xs:boolean" use="optional" />
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="equipmentitem">
+            <xs:complexType mixed="true">
+              <xs:sequence minOccurs="0">
+                <xs:choice maxOccurs="unbounded">
+                  <xs:element name="craftingrequirements">
+                    <xs:complexType mixed="true">
+                      <xs:sequence minOccurs="0">
+                        <xs:element maxOccurs="unbounded" name="craftresource">
+                          <xs:complexType>
+                            <xs:attribute name="uniquename" type="xs:string" use="required" />
+                            <xs:attribute name="count" type="xs:unsignedShort" use="required" />
+                            <xs:attribute name="maxreturnamount" type="xs:unsignedByte" use="optional" />
+                            <xs:attribute name="enchantmentlevel" type="xs:unsignedByte" use="optional" />
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                      <xs:attribute name="silver" type="xs:unsignedByte" use="optional" />
+                      <xs:attribute name="time" type="xs:decimal" use="required" />
+                      <xs:attribute name="craftingfocus" type="xs:unsignedShort" use="required" />
+                      <xs:attribute name="gold" type="xs:unsignedShort" use="optional" />
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="SocketPreset">
+                    <xs:complexType>
+                      <xs:attribute name="name" type="xs:string" use="required" />
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="AssetVfxPreset">
+                    <xs:complexType>
+                      <xs:attribute name="name" type="xs:string" use="required" />
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="enchantments">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="enchantment">
+                          <xs:complexType>
+                            <xs:sequence>
+                              <xs:element maxOccurs="unbounded" name="craftingrequirements">
+                                <xs:complexType>
+                                  <xs:sequence>
+                                    <xs:element maxOccurs="unbounded" name="craftresource">
+                                      <xs:complexType>
+                                        <xs:attribute name="uniquename" type="xs:string" use="required" />
+                                        <xs:attribute name="enchantmentlevel" type="xs:unsignedByte" use="optional" />
+                                        <xs:attribute name="count" type="xs:unsignedByte" use="required" />
+                                        <xs:attribute name="maxreturnamount" type="xs:unsignedByte" use="optional" />
+                                      </xs:complexType>
+                                    </xs:element>
+                                  </xs:sequence>
+                                  <xs:attribute name="silver" type="xs:unsignedByte" use="required" />
+                                  <xs:attribute name="time" type="xs:decimal" use="required" />
+                                  <xs:attribute name="craftingfocus" type="xs:unsignedInt" use="required" />
+                                </xs:complexType>
+                              </xs:element>
+                              <xs:element minOccurs="0" name="upgraderequirements">
+                                <xs:complexType>
+                                  <xs:sequence>
+                                    <xs:element name="upgraderesource">
+                                      <xs:complexType>
+                                        <xs:attribute name="uniquename" type="xs:string" use="required" />
+                                        <xs:attribute name="count" type="xs:unsignedByte" use="required" />
+                                      </xs:complexType>
+                                    </xs:element>
+                                  </xs:sequence>
+                                </xs:complexType>
+                              </xs:element>
+                            </xs:sequence>
+                            <xs:attribute name="enchantmentlevel" type="xs:unsignedByte" use="required" />
+                            <xs:attribute name="itempower" type="xs:unsignedShort" use="required" />
+                            <xs:attribute name="durability" type="xs:unsignedInt" use="required" />
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="craftingspelllist">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="craftspell">
+                          <xs:complexType>
+                            <xs:attribute name="uniquename" type="xs:string" use="required" />
+                            <xs:attribute name="slots" type="xs:unsignedByte" use="optional" />
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="AudioInfo">
+                    <xs:complexType>
+                      <xs:attribute name="name" type="xs:string" use="required" />
+                    </xs:complexType>
+                  </xs:element>
+                </xs:choice>
+              </xs:sequence>
+              <xs:attribute name="uniquename" type="xs:string" use="required" />
+              <xs:attribute name="uisprite" type="xs:string" use="optional" />
+              <xs:attribute name="maxqualitylevel" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="abilitypower" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="slottype" type="xs:string" use="required" />
+              <xs:attribute name="itempowerprogressiontype" type="xs:string" use="optional" />
+              <xs:attribute name="shopcategory" type="xs:string" use="required" />
+              <xs:attribute name="shopsubcategory1" type="xs:string" use="required" />
+              <xs:attribute name="uicraftsoundstart" type="xs:string" use="optional" />
+              <xs:attribute name="uicraftsoundfinish" type="xs:string" use="optional" />
+              <xs:attribute name="skincount" type="xs:unsignedByte" use="optional" />
+              <xs:attribute name="tier" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="weight" type="xs:decimal" use="required" />
+              <xs:attribute name="activespellslots" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="passivespellslots" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="physicalarmor" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="magicresistance" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="durability" type="xs:unsignedInt" use="required" />
+              <xs:attribute name="durabilityloss_attack" type="xs:decimal" use="required" />
+              <xs:attribute name="durabilityloss_spelluse" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="durabilityloss_receivedattack" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="durabilityloss_receivedspell" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="offhandanimationtype" type="xs:string" use="optional" />
+              <xs:attribute name="unlockedtocraft" type="xs:boolean" use="required" />
+              <xs:attribute name="unlockedtoequip" type="xs:boolean" use="required" />
+              <xs:attribute name="hitpointsmax" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="hitpointsregenerationbonus" type="xs:decimal" use="required" />
+              <xs:attribute name="energymax" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="energyregenerationbonus" type="xs:decimal" use="required" />
+              <xs:attribute name="crowdcontrolresistance" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="itempower" type="xs:unsignedShort" use="required" />
+              <xs:attribute name="physicalattackdamagebonus" type="xs:decimal" use="required" />
+              <xs:attribute name="magicattackdamagebonus" type="xs:decimal" use="required" />
+              <xs:attribute name="physicalspelldamagebonus" type="xs:decimal" use="required" />
+              <xs:attribute name="magicspelldamagebonus" type="xs:decimal" use="required" />
+              <xs:attribute name="healbonus" type="xs:decimal" use="required" />
+              <xs:attribute name="bonusccdurationvsplayers" type="xs:decimal" use="required" />
+              <xs:attribute name="bonusccdurationvsmobs" type="xs:decimal" use="required" />
+              <xs:attribute name="threatbonus" type="xs:decimal" use="required" />
+              <xs:attribute name="magiccooldownreduction" type="xs:decimal" use="required" />
+              <xs:attribute name="bonusdefensevsplayers" type="xs:decimal" use="optional" />
+              <xs:attribute name="bonusdefensevsmobs" type="xs:decimal" use="optional" />
+              <xs:attribute name="magiccasttimereduction" type="xs:decimal" use="optional" />
+              <xs:attribute name="attackspeedbonus" type="xs:decimal" use="optional" />
+              <xs:attribute name="movespeedbonus" type="xs:unsignedByte" use="optional" />
+              <xs:attribute name="healmodifier" type="xs:decimal" use="optional" />
+              <xs:attribute name="canbeovercharged" type="xs:boolean" use="optional" />
+              <xs:attribute name="showinmarketplace" type="xs:boolean" use="optional" />
+              <xs:attribute name="energycostreduction" type="xs:decimal" use="optional" />
+              <xs:attribute name="craftingcategory" type="xs:string" use="optional" />
+              <xs:attribute name="tradable" type="xs:boolean" use="optional" />
+              <xs:attribute name="movespeed" type="xs:unsignedByte" use="optional" />
+              <xs:attribute name="maxload" type="xs:unsignedByte" use="optional" />
+              <xs:attribute name="facestate" type="xs:string" use="optional" />
+              <xs:attribute name="requiredaccesslevel" type="xs:unsignedByte" use="optional" />
+              <xs:attribute name="uispriteoverlay" type="xs:string" use="optional" />
+              <xs:attribute name="beardstate" type="xs:string" use="optional" />
+              <xs:attribute name="mesh" type="xs:string" use="optional" />
+              <xs:attribute name="craftfamegainfactor" type="xs:unsignedByte" use="optional" />
+              <xs:attribute name="enchantmentlevel" type="xs:unsignedByte" use="optional" />
+              <xs:attribute name="mainhandanimationtype" type="xs:string" use="optional" />
+              <xs:attribute name="descriptionlocatag" type="xs:string" use="optional" />
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="weapon">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:choice maxOccurs="unbounded">
+                  <xs:element name="projectile">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="impactvfx">
+                          <xs:complexType>
+                            <xs:attribute name="prefab" type="xs:string" use="required" />
+                            <xs:attribute name="impactsocket" type="xs:string" use="required" />
+                          </xs:complexType>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="AudioInfo">
+                          <xs:complexType>
+                            <xs:attribute name="name" type="xs:string" use="required" />
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                      <xs:attribute name="prefab" type="xs:string" use="required" />
+                      <xs:attribute name="startsocket" type="xs:string" use="required" />
+                      <xs:attribute name="hitsocket" type="xs:string" use="required" />
+                      <xs:attribute name="timeoffset" type="xs:decimal" use="optional" />
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="canharvest">
+                    <xs:complexType>
+                      <xs:attribute name="resourcetype" type="xs:string" use="required" />
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="craftingrequirements">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="craftresource">
+                          <xs:complexType>
+                            <xs:attribute name="uniquename" type="xs:string" use="required" />
+                            <xs:attribute name="count" type="xs:unsignedByte" use="required" />
+                            <xs:attribute name="maxreturnamount" type="xs:unsignedByte" use="optional" />
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                      <xs:attribute name="silver" type="xs:unsignedByte" use="required" />
+                      <xs:attribute name="time" type="xs:decimal" use="required" />
+                      <xs:attribute name="craftingfocus" type="xs:unsignedInt" use="required" />
+                      <xs:attribute name="swaptransaction" type="xs:boolean" use="optional" />
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="AudioInfo">
+                    <xs:complexType>
+                      <xs:attribute name="name" type="xs:string" use="required" />
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="SocketPreset">
+                    <xs:complexType>
+                      <xs:attribute name="name" type="xs:string" use="required" />
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="craftingspelllist">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="craftspell">
+                          <xs:complexType>
+                            <xs:attribute name="uniquename" type="xs:string" use="required" />
+                            <xs:attribute name="slots" type="xs:unsignedByte" use="optional" />
+                            <xs:attribute name="tag" type="xs:string" use="optional" />
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="enchantments">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="enchantment">
+                          <xs:complexType>
+                            <xs:sequence>
+                              <xs:element name="craftingrequirements">
+                                <xs:complexType>
+                                  <xs:sequence>
+                                    <xs:element maxOccurs="unbounded" name="craftresource">
+                                      <xs:complexType>
+                                        <xs:attribute name="uniquename" type="xs:string" use="required" />
+                                        <xs:attribute name="enchantmentlevel" type="xs:unsignedByte" use="optional" />
+                                        <xs:attribute name="count" type="xs:unsignedByte" use="required" />
+                                        <xs:attribute name="maxreturnamount" type="xs:unsignedByte" use="optional" />
+                                      </xs:complexType>
+                                    </xs:element>
+                                  </xs:sequence>
+                                  <xs:attribute name="silver" type="xs:unsignedByte" use="required" />
+                                  <xs:attribute name="time" type="xs:decimal" use="required" />
+                                  <xs:attribute name="craftingfocus" type="xs:unsignedInt" use="required" />
+                                </xs:complexType>
+                              </xs:element>
+                              <xs:element name="upgraderequirements">
+                                <xs:complexType>
+                                  <xs:sequence>
+                                    <xs:element name="upgraderesource">
+                                      <xs:complexType>
+                                        <xs:attribute name="uniquename" type="xs:string" use="required" />
+                                        <xs:attribute name="count" type="xs:unsignedByte" use="required" />
+                                      </xs:complexType>
+                                    </xs:element>
+                                  </xs:sequence>
+                                </xs:complexType>
+                              </xs:element>
+                            </xs:sequence>
+                            <xs:attribute name="enchantmentlevel" type="xs:unsignedByte" use="required" />
+                            <xs:attribute name="itempower" type="xs:unsignedShort" use="required" />
+                            <xs:attribute name="durability" type="xs:unsignedInt" use="required" />
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="AssetVfxPreset">
+                    <xs:complexType>
+                      <xs:attribute name="name" type="xs:string" use="required" />
+                    </xs:complexType>
+                  </xs:element>
+                </xs:choice>
+              </xs:sequence>
+              <xs:attribute name="uniquename" type="xs:string" use="required" />
+              <xs:attribute name="mesh" type="xs:string" use="optional" />
+              <xs:attribute name="uisprite" type="xs:string" use="optional" />
+              <xs:attribute name="maxqualitylevel" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="abilitypower" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="slottype" type="xs:string" use="required" />
+              <xs:attribute name="shopcategory" type="xs:string" use="required" />
+              <xs:attribute name="shopsubcategory1" type="xs:string" use="required" />
+              <xs:attribute name="attacktype" type="xs:string" use="required" />
+              <xs:attribute name="attackdamage" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="attackspeed" type="xs:decimal" use="required" />
+              <xs:attribute name="attackrange" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="twohanded" type="xs:boolean" use="required" />
+              <xs:attribute name="tier" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="weight" type="xs:decimal" use="required" />
+              <xs:attribute name="activespellslots" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="passivespellslots" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="durability" type="xs:unsignedInt" use="required" />
+              <xs:attribute name="durabilityloss_attack" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="durabilityloss_spelluse" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="durabilityloss_receivedattack" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="durabilityloss_receivedspell" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="mainhandanimationtype" type="xs:string" use="required" />
+              <xs:attribute name="unlockedtocraft" type="xs:boolean" use="required" />
+              <xs:attribute name="unlockedtoequip" type="xs:boolean" use="required" />
+              <xs:attribute name="itempower" type="xs:unsignedShort" use="required" />
+              <xs:attribute name="unequipincombat" type="xs:boolean" use="optional" />
+              <xs:attribute name="uicraftsoundstart" type="xs:string" use="required" />
+              <xs:attribute name="uicraftsoundfinish" type="xs:string" use="required" />
+              <xs:attribute name="canbeovercharged" type="xs:boolean" use="optional" />
+              <xs:attribute name="attackbuildingdamage" type="xs:decimal" use="optional" />
+              <xs:attribute name="fishing" type="xs:boolean" use="optional" />
+              <xs:attribute name="fishingspeed" type="xs:decimal" use="optional" />
+              <xs:attribute name="physicalspelldamagebonus" type="xs:unsignedByte" use="optional" />
+              <xs:attribute name="magicspelldamagebonus" type="xs:unsignedByte" use="optional" />
+              <xs:attribute name="fxbonename" type="xs:string" use="optional" />
+              <xs:attribute name="fxboneoffset" type="xs:string" use="optional" />
+              <xs:attribute name="hitpointsmax" type="xs:unsignedByte" use="optional" />
+              <xs:attribute name="hitpointsregenerationbonus" type="xs:decimal" use="optional" />
+              <xs:attribute name="itempowerprogressiontype" type="xs:string" use="optional" />
+              <xs:attribute name="focusfireprotectionpeneration" type="xs:decimal" use="optional" />
+              <xs:attribute name="craftingcategory" type="xs:string" use="optional" />
+              <xs:attribute name="healmodifier" type="xs:unsignedByte" use="optional" />
+              <xs:attribute name="showinmarketplace" type="xs:boolean" use="optional" />
+              <xs:attribute name="attackdamagetimefactor" type="xs:decimal" use="optional" />
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="mount">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:choice maxOccurs="unbounded">
+                  <xs:element name="craftingrequirements">
+                    <xs:complexType>
+                      <xs:sequence minOccurs="0">
+                        <xs:element maxOccurs="unbounded" name="craftresource">
+                          <xs:complexType>
+                            <xs:attribute name="uniquename" type="xs:string" use="required" />
+                            <xs:attribute name="count" type="xs:unsignedShort" use="required" />
+                            <xs:attribute name="maxreturnamount" type="xs:unsignedByte" use="optional" />
+                            <xs:attribute name="enchantmentlevel" type="xs:unsignedByte" use="optional" />
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                      <xs:attribute name="silver" type="xs:unsignedShort" use="required" />
+                      <xs:attribute name="time" type="xs:decimal" use="required" />
+                      <xs:attribute name="craftingfocus" type="xs:unsignedShort" use="optional" />
+                      <xs:attribute name="gold" type="xs:unsignedByte" use="optional" />
+                      <xs:attribute name="compensategold" type="xs:unsignedByte" use="optional" />
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="SocketPreset">
+                    <xs:complexType>
+                      <xs:attribute name="name" type="xs:string" use="required" />
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="AudioInfo">
+                    <xs:complexType>
+                      <xs:attribute name="name" type="xs:string" use="required" />
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="FootStepVfxPreset">
+                    <xs:complexType>
+                      <xs:attribute name="name" type="xs:string" use="required" />
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="AssetVfxPreset">
+                    <xs:complexType>
+                      <xs:attribute name="name" type="xs:string" use="required" />
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="mountspelllist">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="mountspell">
+                          <xs:complexType>
+                            <xs:attribute name="uniquename" type="xs:string" use="required" />
+                            <xs:attribute name="spellslot" type="xs:string" use="required" />
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="craftingspelllist">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="craftspell">
+                          <xs:complexType>
+                            <xs:attribute name="uniquename" type="xs:string" use="required" />
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:choice>
+              </xs:sequence>
+              <xs:attribute name="uniquename" type="xs:string" use="required" />
+              <xs:attribute name="mountcategory" type="xs:string" use="optional" />
+              <xs:attribute name="maxqualitylevel" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="itempower" type="xs:unsignedShort" use="required" />
+              <xs:attribute name="abilitypower" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="slottype" type="xs:string" use="required" />
+              <xs:attribute name="shopcategory" type="xs:string" use="required" />
+              <xs:attribute name="shopsubcategory1" type="xs:string" use="required" />
+              <xs:attribute name="mountedbuff" type="xs:string" use="required" />
+              <xs:attribute name="halfmountedbuff" type="xs:string" use="required" />
+              <xs:attribute name="tier" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="weight" type="xs:decimal" use="required" />
+              <xs:attribute name="activespellslots" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="passivespellslots" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="durability" type="xs:decimal" use="required" />
+              <xs:attribute name="durabilityloss_attack" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="durabilityloss_spelluse" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="durabilityloss_receivedattack" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="durabilityloss_receivedspell" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="durabilityloss_receivedattack_mounted" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="durabilityloss_receivedspell_mounted" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="durabilityloss_mounting" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="unlockedtocraft" type="xs:boolean" use="required" />
+              <xs:attribute name="unlockedtoequip" type="xs:boolean" use="required" />
+              <xs:attribute name="mounttime" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="dismounttime" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="mounthitpointsmax" type="xs:unsignedShort" use="required" />
+              <xs:attribute name="mounthitpointsregeneration" type="xs:decimal" use="required" />
+              <xs:attribute name="prefabname" type="xs:string" use="required" />
+              <xs:attribute name="prefabscaling" type="xs:decimal" use="required" />
+              <xs:attribute name="despawneffect" type="xs:string" use="required" />
+              <xs:attribute name="despawneffectscaling" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="remountdistance" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="halfmountrange" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="forceddismountcooldown" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="forceddismountspellcooldown" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="fulldismountcooldown" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="remounttime" type="xs:decimal" use="required" />
+              <xs:attribute name="uicraftsoundstart" type="xs:string" use="required" />
+              <xs:attribute name="uicraftsoundfinish" type="xs:string" use="required" />
+              <xs:attribute name="dismountbuff" type="xs:string" use="required" />
+              <xs:attribute name="uisprite" type="xs:string" use="optional" />
+              <xs:attribute name="showinmarketplace" type="xs:boolean" use="optional" />
+              <xs:attribute name="enchantmentlevel" type="xs:unsignedByte" use="optional" />
+              <xs:attribute name="canuseingvg" type="xs:boolean" use="optional" />
+              <xs:attribute name="itemvalue" type="xs:unsignedShort" use="optional" />
+              <xs:attribute name="nametagoffset" type="xs:decimal" use="optional" />
+              <xs:attribute name="craftfamegainfactor" type="xs:unsignedByte" use="optional" />
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="furnitureitem">
+            <xs:complexType mixed="true">
+              <xs:sequence minOccurs="0">
+                <xs:element name="craftingrequirements">
+                  <xs:complexType mixed="true">
+                    <xs:sequence minOccurs="0">
+                      <xs:element maxOccurs="unbounded" name="craftresource">
+                        <xs:complexType>
+                          <xs:attribute name="uniquename" type="xs:string" use="required" />
+                          <xs:attribute name="count" type="xs:unsignedShort" use="required" />
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                    <xs:attribute name="time" type="xs:decimal" use="required" />
+                    <xs:attribute name="craftingfocus" type="xs:unsignedShort" use="optional" />
+                    <xs:attribute name="gold" type="xs:unsignedShort" use="optional" />
+                    <xs:attribute name="silver" type="xs:unsignedInt" use="optional" />
+                    <xs:attribute name="amountcrafted" type="xs:unsignedByte" use="optional" />
+                  </xs:complexType>
+                </xs:element>
+                <xs:element minOccurs="0" name="cheatprovider" />
+                <xs:element minOccurs="0" name="container">
+                  <xs:complexType>
+                    <xs:attribute name="capacity" type="xs:unsignedByte" use="required" />
+                    <xs:attribute name="weightlimit" type="xs:decimal" use="required" />
+                  </xs:complexType>
+                </xs:element>
+                <xs:element minOccurs="0" name="repairkit">
+                  <xs:complexType>
+                    <xs:attribute name="repaircostfactor" type="xs:unsignedByte" use="required" />
+                    <xs:attribute name="maxtier" type="xs:unsignedByte" use="required" />
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+              <xs:attribute name="uniquename" type="xs:string" use="required" />
+              <xs:attribute name="shopcategory" type="xs:string" use="required" />
+              <xs:attribute name="shopsubcategory1" type="xs:string" use="required" />
+              <xs:attribute name="tier" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="durability" type="xs:unsignedByte" use="optional" />
+              <xs:attribute name="durabilitylossperdayfactor" type="xs:decimal" use="optional" />
+              <xs:attribute name="weight" type="xs:decimal" use="required" />
+              <xs:attribute name="unlockedtocraft" type="xs:boolean" use="optional" />
+              <xs:attribute name="placeableindoors" type="xs:boolean" use="required" />
+              <xs:attribute name="placeableoutdoors" type="xs:boolean" use="required" />
+              <xs:attribute name="placeableindungeons" type="xs:boolean" use="required" />
+              <xs:attribute name="accessrightspreset" type="xs:string" use="optional" />
+              <xs:attribute name="uicraftsoundstart" type="xs:string" use="optional" />
+              <xs:attribute name="uicraftsoundfinish" type="xs:string" use="optional" />
+              <xs:attribute name="customizewithguildlogo" type="xs:boolean" use="optional" />
+              <xs:attribute name="enchantmentlevel" type="xs:unsignedByte" use="optional" />
+              <xs:attribute name="uisprite" type="xs:string" use="optional" />
+              <xs:attribute name="tile" type="xs:string" use="optional" />
+              <xs:attribute name="itemvalue" type="xs:decimal" use="optional" />
+              <xs:attribute name="showinmarketplace" type="xs:boolean" use="optional" />
+              <xs:attribute name="residencyslots" type="xs:unsignedByte" use="optional" />
+              <xs:attribute name="labourerfurnituretype" type="xs:string" use="optional" />
+              <xs:attribute name="labourersaffected" type="xs:string" use="optional" />
+              <xs:attribute name="labourerhappiness" type="xs:unsignedShort" use="optional" />
+              <xs:attribute name="labourersperfurnitureitem" type="xs:unsignedByte" use="optional" />
+              <xs:attribute name="placeableonlyonislands" type="xs:boolean" use="optional" />
+              <xs:attribute name="descriptionlocatag" type="xs:string" use="optional" />
+              <xs:attribute name="craftfamegainfactor" type="xs:unsignedByte" use="optional" />
+              <xs:attribute name="durabilitylossperusefactor" type="xs:unsignedByte" use="optional" />
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="journalitem">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="craftingrequirements">
+                  <xs:complexType>
+                    <xs:attribute name="silver" type="xs:unsignedShort" use="required" />
+                    <xs:attribute name="time" type="xs:unsignedByte" use="required" />
+                    <xs:attribute name="swaptransaction" type="xs:boolean" use="required" />
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="famefillingmissions">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element minOccurs="0" name="fishingfame">
+                        <xs:complexType>
+                          <xs:attribute name="value" type="xs:unsignedShort" use="required" />
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element minOccurs="0" name="fameearned">
+                        <xs:complexType>
+                          <xs:attribute name="value" type="xs:unsignedShort" use="required" />
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element minOccurs="0" name="killmobfame">
+                        <xs:complexType>
+                          <xs:attribute name="mintier" type="xs:unsignedByte" use="required" />
+                          <xs:attribute name="value" type="xs:unsignedShort" use="required" />
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element minOccurs="0" name="craftitemfame">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element maxOccurs="unbounded" name="validitem">
+                              <xs:complexType>
+                                <xs:attribute name="id" type="xs:string" use="required" />
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                          <xs:attribute name="mintier" type="xs:unsignedByte" use="required" />
+                          <xs:attribute name="value" type="xs:unsignedShort" use="required" />
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element minOccurs="0" name="gatherfame">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element maxOccurs="unbounded" name="validitem">
+                              <xs:complexType>
+                                <xs:attribute name="id" type="xs:string" use="required" />
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                          <xs:attribute name="mintier" type="xs:unsignedByte" use="required" />
+                          <xs:attribute name="value" type="xs:unsignedInt" use="required" />
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="lootlist">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element maxOccurs="unbounded" name="loot">
+                        <xs:complexType>
+                          <xs:attribute name="itemname" type="xs:string" use="optional" />
+                          <xs:attribute name="itemamount" type="xs:unsignedByte" use="optional" />
+                          <xs:attribute name="weight" type="xs:unsignedShort" use="required" />
+                          <xs:attribute name="labourerfame" type="xs:unsignedShort" use="required" />
+                          <xs:attribute name="itemenchantmentlevel" type="xs:unsignedByte" use="optional" />
+                          <xs:attribute name="silveramount" type="xs:unsignedShort" use="optional" />
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+              <xs:attribute name="salvageable" type="xs:boolean" use="required" />
+              <xs:attribute name="uniquename" type="xs:string" use="required" />
+              <xs:attribute name="tier" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="maxfame" type="xs:unsignedInt" use="required" />
+              <xs:attribute name="baselootamount" type="xs:decimal" use="required" />
+              <xs:attribute name="shopcategory" type="xs:string" use="required" />
+              <xs:attribute name="shopsubcategory1" type="xs:string" use="required" />
+              <xs:attribute name="weight" type="xs:decimal" use="required" />
+              <xs:attribute name="unlockedtocraft" type="xs:boolean" use="required" />
+              <xs:attribute name="craftfamegainfactor" type="xs:unsignedByte" use="required" />
+              <xs:attribute name="fasttravelfactor" type="xs:unsignedShort" use="optional" />
+              <xs:attribute name="uisprite" type="xs:string" use="optional" />
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
