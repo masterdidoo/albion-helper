@@ -23,6 +23,8 @@ namespace Albion.GUI
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = new MainViewModel();
         }
     }
 }
