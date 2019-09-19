@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29009.5
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Albion.Network.Example", "Albion.Network.Example\Albion.Network.Example.csproj", "{EE2000CC-A492-4831-A6AE-4D61C8FD78DF}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Albion.Event", "Albion.Event\Albion.Event.csproj", "{B0AF151A-78A3-4B07-975D-6C29611E3AA9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Albion.Operation", "Albion.Operation\Albion.Operation.csproj", "{FA3FC058-ECB5-4B10-B601-0F54DB23CA92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Albion.GUI", "Albion.GUI\Albion.GUI.csproj", "{80E949FA-0DBA-4CDE-B842-14200ED39946}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{FA3FC058-ECB5-4B10-B601-0F54DB23CA92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA3FC058-ECB5-4B10-B601-0F54DB23CA92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA3FC058-ECB5-4B10-B601-0F54DB23CA92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80E949FA-0DBA-4CDE-B842-14200ED39946}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80E949FA-0DBA-4CDE-B842-14200ED39946}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80E949FA-0DBA-4CDE-B842-14200ED39946}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80E949FA-0DBA-4CDE-B842-14200ED39946}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
