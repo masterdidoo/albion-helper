@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using Albion.Common;
 using Albion.Event;
 using Albion.Network;
 using Albion.Operation;
 using PcapDotNet.Core;
+using PcapDotNet.Packets;
+using PcapDotNet.Packets.IpV4;
+using PcapDotNet.Packets.Transport;
 
 namespace Albion.GUI
 {
@@ -48,6 +52,19 @@ namespace Albion.GUI
                     })
                     .Start();
             }
+        }
+
+        private void PacketHandler(Packet packet)
+        {
+            IpV4Datagram ip = packet.Ethernet.IpV4;
+            UdpDatagram udp = ip.Udp;
+
+            if (udp == null || (udp.SourcePort != 5056 && udp.DestinationPort != 5056))
+            {
+                return;
+            }
+
+            albionParser.ReceivePacket(udp.Payload.ToArray());
         }
     }
 }
