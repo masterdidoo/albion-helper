@@ -5,8 +5,41 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Albion.GUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" d:DataContext="{d:DesignInstance local:MainViewModel}">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ListView Grid.Row="1" ItemsSource="{Binding view}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding Id}" />
+                    <GridViewColumn Header="Bye" Width="50" DisplayMemberBinding="{Binding PriceHolder.Bye.Price}" />
+                    <GridViewColumn Header="bTime" Width="50" DisplayMemberBinding="{Binding PriceHolder.Bye.Time}" />
+                    <GridViewColumn Header="Sell" Width="50" DisplayMemberBinding="{Binding PriceHolder.Sell.Price}" />
+                    <GridViewColumn Header="sTime" Width="50" DisplayMemberBinding="{Binding PriceHolder.Sell.Time}" />
+                </GridView>
+            </ListView.View>
+            <!-- <ListView.ItemTemplate> -->
+            <!--     <DataTemplate> -->
+            <!--         <local:SimpleItemControl></local:SimpleItemControl> -->
+            <!--     </DataTemplate> -->
+            <!-- </ListView.ItemTemplate> -->
+        </ListView>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <TextBlock Text="Blue :" Margin="5,0"/>
+            <TextBlock Text="{Binding BluePlayers}"/>
+            <TextBlock Text="Red :" Margin="5,0"/>
+            <TextBlock Text="{Binding RedPlayers}"/>
+            <TextBlock Text="Town :" Margin="5,0" />
+            <TextBlock Text="{Binding Town}"/>
+        </StackPanel>
     </Grid>
 </Window>
+
+
+

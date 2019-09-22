@@ -10,7 +10,7 @@ namespace Albion.Network.Handlers
 
     internal class BaseHandler<T> : BaseHandler where T : BaseBase, new()
     {
-        public Action<T> Action { get; set; }
+        public event Action<T> Action;
 
         public override void Run(Dictionary<byte, object> parameters)
         {

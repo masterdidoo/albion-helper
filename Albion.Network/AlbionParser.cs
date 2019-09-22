@@ -94,20 +94,25 @@ namespace Albion.Network
         {
             var operationCode = ParseOperationCode(parameters);
 
+            if (_operationHandlers.TryGetValue(operationCode, out var handler))
+            {
+                handler.Run(parameters);
+                return;
+            }
+
             switch (operationCode)
             {
                 case OperationCodes.Move:
                     break;
-                case OperationCodes.ConsoleCommand:
-                    Console.WriteLine($"ConsoleCommand {parameters[0]}");
+                case OperationCodes.AuctionGetItemAverageValue:
+                    //Console.WriteLine($"{operationCode} {((int[])parameters[0])[1]} {((long[])parameters[1])[1]} {((long[])parameters[2])[1]}");
+                    Console.WriteLine($"{operationCode} {parameters[0]}");
                     break;
                 default:
                     Debug.WriteLine($"case OperationCodes.{operationCode.ToString()}:");
                     break;
             }
 
-            if (_operationHandlers.TryGetValue(operationCode, out var handler))
-                handler.Run(parameters);
         }
 
         protected override void OnResponse(byte code, short returnCode, string debugMessage,
@@ -133,14 +138,16 @@ namespace Albion.Network
         public void AddOperationHandler<T>(Action<T> action) where T : BaseOperation, new()
         {
             var obj = new T();
-            var handler = new BaseHandler<T> {Action = action};
+            var handler = new BaseHandler<T>();
+             handler.Action += action;
             _operationHandlers.Add(obj.Code, handler);
         }
 
         public void AddEventHandler<T>(Action<T> action) where T : BaseEvent, new()
         {
             var obj = new T();
-            var handler = new BaseHandler<T> {Action = action};
+            var handler = new BaseHandler<T>();
+            handler.Action += action;
             _eventHandlers.Add(obj.Code, handler);
         }
 
@@ -150,8 +157,6 @@ namespace Albion.Network
             foreach (var device in devices)
                 new Thread(() =>
                     {
-                        Console.WriteLine($"Open... {device.Description}");
-
                         using (var communicator = device.Open(65536, PacketDeviceOpenAttributes.Promiscuous, 1000))
                         {
                             communicator.ReceivePackets(0, PacketHandler);

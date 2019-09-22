@@ -27,30 +27,35 @@ namespace Albion.Network.Example
 
             albionParser.AddOperationHandler<ConsloeCommand>(p =>
             {
-                Console.WriteLine($"Loc: {p.Location}");
+                Console.WriteLine($"LocId: {p.LocId} {p.Town}");
+                db.Town = p.Town;
             });
 
             albionParser.AddOperationHandler<AuctionBuyOffer>(p =>
             {
                 if (p.Items.Length==0) return;
-                var items = p.Items.GroupBy(x=>x.ItemTypeId);
+                var items = p.Items.GroupBy(x=>x.ItemTypeId).ToArray();
                 foreach (var item in items)
                 {
                     var max = item.Max(x => x.UnitPriceSilver) / 10000;
-                    Console.WriteLine($"Bye: {item.Key} / {item.First().ItemGroupTypeId} {max}");
-                    db.GetItem(item.Key).PriceToBye = max;
+
+                    var ph = db.GetItem(item.Key).PriceHolder;
+
+                    ph.UpdateBye(max, items.Length == 1);
                 }
             });
 
             albionParser.AddOperationHandler<AuctionGetRequests>(p =>
             {
                 if (p.Items.Length == 0) return;
-                var items = p.Items.GroupBy(x => x.ItemTypeId);
+                var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
                 foreach (var item in items)
                 {
                     var min = item.Min(x => x.UnitPriceSilver) / 10000;
-                    Console.WriteLine($"Sell: {item.Key} / {item.First().ItemGroupTypeId} {min}");
-                    db.GetItem(item.Key).PriceToSell = min;
+
+                    var ph = db.GetItem(item.Key).PriceHolder;
+
+                    ph.UpdateSell(min, items.Length == 1);
                 }
             });
 
