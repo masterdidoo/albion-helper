@@ -49,6 +49,7 @@ namespace Albion.GUI
 
                     ph.UpdateBye(max, items.Length == 1);
                 }
+                RaisePropertyChanged(nameof(SimpleItems));
             });
 
             _albionParser.AddOperationHandler<AuctionGetRequests>(p =>
@@ -57,23 +58,21 @@ namespace Albion.GUI
                 var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
                 foreach (var item in items)
                 {
-                    var max = item.Max(x => x.UnitPriceSilver) / 10000;
+                    var min = item.Min(x => x.UnitPriceSilver) / 10000;
                     var ph = _db.GetItem(item.Key).PriceHolder;
 
-                    ph.UpdateSell(max, items.Length == 1);
+                    ph.UpdateSell(min, items.Length == 1);
                 }
+
+                RaisePropertyChanged(nameof(SimpleItems));
             });
 
             _albionParser.Start();
-
-
-            view = (CollectionView)CollectionViewSource.GetDefaultView(SimpleItems);
-            view.SortDescriptions.Add(new SortDescription("Id", ListSortDirection.Descending));
         }
 
         public CollectionView view { get; }
 
-        public IEnumerable<SimpleItem> SimpleItems => _db.ItemsDb.Values;
+        public IEnumerable<SimpleItem> SimpleItems => _db.ItemsDb.Values.OrderByDescending(x=>x.PriceHolder.Bye.Time);
 
         public Location Town
         {

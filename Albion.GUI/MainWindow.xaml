@@ -13,7 +13,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ListView Grid.Row="1" ItemsSource="{Binding view}">
+        <ListView Grid.Row="1" ItemsSource="{Binding SimpleItems}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding Id}" />
