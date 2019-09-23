@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:Albion.GUI"
              xmlns:items="clr-namespace:Albion.Db.Items;assembly=Albion.Db"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignData Source}"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DataContext="{d:DesignInstance local:TestData}"
+             d:DesignHeight="350" d:DesignWidth="800">
 
     <UserControl.Resources>
         <Style x:Key="TextBlockStyle" TargetType="{x:Type TextBlock}">
@@ -16,8 +16,43 @@
         <Style x:Key="TextBlockBoldStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
             <Setter Property="FontWeight" Value="Bold" />
         </Style>
+
+        <HierarchicalDataTemplate DataType="{x:Type items:SimpleItem}"
+                                  ItemsSource="{Binding CraftingRequirements}">
+            <DockPanel>
+                <Image Source="T5_BAG.png"></Image>
+                <TextBlock Text="{Binding Id}" Style="{StaticResource TextBlockStyle}" />
+                <TextBlock Text="1" Style="{StaticResource TextBlockStyle}" />
+                <TextBlock Text="{Binding ItemValue, StringFormat=IV: {0}}"
+                           Style="{StaticResource TextBlockStyle}" />
+            </DockPanel>
+        </HierarchicalDataTemplate>
+        <HierarchicalDataTemplate DataType="{x:Type items:CraftingRequirement}"
+                                  ItemsSource="{Binding CraftResources}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding}" Margin="2" />
+                <TextBlock Text=", Silver" Margin="0,2" />
+                <TextBlock Text="{Binding Silver}" Margin="2" />
+            </StackPanel>
+        </HierarchicalDataTemplate>
+        <HierarchicalDataTemplate DataType="{x:Type items:CraftResource}"
+                                  ItemsSource="{Binding Item.CraftingRequirements}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="Task" />
+                    <ColumnDefinition SharedSizeGroup="Toggle" />
+                    <ColumnDefinition SharedSizeGroup="Toggle" />
+                    <ColumnDefinition SharedSizeGroup="Count" />
+                    <ColumnDefinition SharedSizeGroup="Notes" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding Item.Id}" Style="{StaticResource TextBlockStyle}" />
+                <TextBlock Grid.Column="3" Text="{Binding Count}"
+                           Style="{StaticResource TextBlockStyle}" />
+                <!-- <TextBlock Grid.Column="4" Text="{Binding Notes}" Style="{StaticResource TextBlockStyle}"/> -->
+            </Grid>
+        </HierarchicalDataTemplate>
     </UserControl.Resources>
-    <Grid Grid.IsSharedSizeScope="True">
+    <Grid Grid.IsSharedSizeScope="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
@@ -43,50 +78,8 @@
                 </Grid>
             </TreeViewItem.Header>
         </TreeViewItem>
-        <TreeView Grid.Row="1" ItemsSource="{Binding}" BorderBrush="Gray" BorderThickness="0 1 0 0">
-            <TreeView.Resources>
-                <HierarchicalDataTemplate DataType="{x:Type items:SimpleItem}"
-                                          ItemsSource="{Binding CraftingRequirements}">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition SharedSizeGroup="Task" />
-                            <ColumnDefinition SharedSizeGroup="Toggle" />
-                            <ColumnDefinition SharedSizeGroup="Toggle" />
-                            <ColumnDefinition SharedSizeGroup="Count" />
-                            <ColumnDefinition SharedSizeGroup="Notes" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{Binding Id}" Style="{StaticResource TextBlockStyle}" />
-                        <TextBlock Grid.Column="3" Text="1" Style="{StaticResource TextBlockStyle}" />
-                        <TextBlock Grid.Column="4" Text="{Binding ItemValue, StringFormat=IV: {0}}"
-                                   Style="{StaticResource TextBlockStyle}" />
-                        <!-- <TextBlock Grid.Column="4" Text="{Binding Notes}" Style="{StaticResource TextBlockStyle}"/> -->
-                    </Grid>
-                </HierarchicalDataTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type items:CraftingRequirement}"
-                                          ItemsSource="{Binding CraftResources}">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding}" Margin="2" />
-                        <TextBlock Text=", Silver" Margin="0,2" />
-                        <TextBlock Text="{Binding Silver}" Margin="2" />
-                    </StackPanel>
-                </HierarchicalDataTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type items:CraftResource}"
-                                          ItemsSource="{Binding Item.CraftingRequirements}">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition SharedSizeGroup="Task" />
-                            <ColumnDefinition SharedSizeGroup="Toggle" />
-                            <ColumnDefinition SharedSizeGroup="Toggle" />
-                            <ColumnDefinition SharedSizeGroup="Count" />
-                            <ColumnDefinition SharedSizeGroup="Notes" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{Binding Item.Id}" Style="{StaticResource TextBlockStyle}" />
-                        <TextBlock Grid.Column="3" Text="{Binding Count}"
-                                   Style="{StaticResource TextBlockStyle}" />
-                        <!-- <TextBlock Grid.Column="4" Text="{Binding Notes}" Style="{StaticResource TextBlockStyle}"/> -->
-                    </Grid>
-                </HierarchicalDataTemplate>
-            </TreeView.Resources>
-        </TreeView>
+        <TreeView Grid.Row="1" ItemsSource="{Binding}" BorderBrush="Gray" BorderThickness="0 1 0 0"
+                  VirtualizingStackPanel.IsVirtualizing="True"
+                  VirtualizingStackPanel.VirtualizationMode="Recycling" />
     </Grid>
 </UserControl>
