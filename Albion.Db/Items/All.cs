@@ -19,6 +19,15 @@ namespace Albion.Db.Items
 
         public Location Town { get; set; }
 
+        public SimpleItem GetItem(string id)
+        {
+            if (id.Length > 2 && id[id.Length - 2] == '@') id = id.Substring(0, id.Length - 2);
+            if (ItemsDb.TryGetValue(id, out var item)) return item;
+            item = new SimpleItem(id, this);
+            ItemsDb.Add(id,item);
+            return item;
+        }
+
         #region JsonLoader
 
         public readonly CraftingRequirement[] Empty = new CraftingRequirement[0];
@@ -43,16 +52,13 @@ namespace Albion.Db.Items
             SimpleItems = db.Items.Simpleitem
                 .Select(x =>
                 {
-                    var art = new SimpleItem(x.Uniquename, this)
-                    {
-                        Tier = x.Tier,
-                        Weight = x.Weight,
-                        ShopCategory = x.Shopcategory,
-                        CraftingRequirements =
-                            GetCraftingRequirements(x.Craftingrequirements)
-                    };
-
-                    ItemsDb.Add(art.Id, art);
+                    var art = GetItem(x.Uniquename);
+                    art.ItemValue = x.Itemvalue ?? 0;
+                    art.Tier = x.Tier;
+                    art.Weight = x.Weight;
+                    art.ShopCategory = x.Shopcategory;
+                    art.CraftingRequirements =
+                        GetCraftingRequirements(x.Craftingrequirements);
 
                     return art;
                 })
@@ -61,50 +67,68 @@ namespace Albion.Db.Items
             Weapons = db.Items.Weapon
                 .Select(x =>
                 {
-                    var art = new SimpleItem(x.Uniquename, this)
-                    {
-                        Tier = x.Tier,
-                        Weight = x.Weight,
-                        ShopCategory = x.Shopcategory,
-                        CraftingRequirements =
-                            GetCraftingRequirements(x.Craftingrequirements)
-                    };
+                    var art = GetItem(x.Uniquename);
+                    art.ItemValue = x.Itempower;
+                    art.Tier = x.Tier;
+                    art.Weight = x.Weight;
+                    art.ShopCategory = x.Shopcategory;
+                    art.CraftingRequirements =
+                        GetCraftingRequirements(x.Craftingrequirements);
 
-                    ItemsDb.Add(art.Id, art);
+                    return art;
+                })
+                .ToArray();
+
+            Equipment = db.Items.Equipmentitem
+                .Select(x =>
+                {
+                    var art = GetItem(x.Uniquename);
+                    art.ItemValue = x.Itempower;
+                    art.Tier = x.Tier;
+                    art.Weight = x.Weight;
+                    art.ShopCategory = x.Shopcategory;
+                    art.CraftingRequirements =
+                        GetCraftingRequirements(x.Craftingrequirements);
 
                     return art;
                 })
                 .ToArray();
 
             Artefacts = SimpleItems.Where(x => x.ShopCategory == ShopCategory.Artefacts).ToArray();
-
         }
+
+        public SimpleItem[] Equipment { get; set; }
 
         private CraftingRequirement[] GetCraftingRequirements(Craftingrequirements? craftingrequirements)
         {
             if (craftingrequirements == null) return Empty;
 
-            if (craftingrequirements.Value.TentacledCraftingrequirements != null)
-                return new[]
-                {
-                    new CraftingRequirement
+            {
+                var cvt = craftingrequirements.Value.Craftingrequirement;
+                if (cvt != null)
+                    return new[]
                     {
-                        CraftResources =
-                            GetCraftResources1(craftingrequirements.Value.TentacledCraftingrequirements.Craftresource)
-                    }
-                };
-            if (craftingrequirements.Value.FluffyCraftingrequirementArray != null)
-                return
-                    craftingrequirements.Value.FluffyCraftingrequirementArray.Select(x =>
                         new CraftingRequirement
                         {
-                            CraftResources = GetCraftResources1(x.Craftresource)
+                            Silver = cvt.Silver ?? 0,
+                            CraftResources =
+                                GetCraftResources(cvt.Craftresource)
+                        }
+                    };
+            }
+            if (craftingrequirements.Value.CraftingrequirementArrayArray != null)
+                return
+                    craftingrequirements.Value.CraftingrequirementArrayArray.Select(cvt =>
+                        new CraftingRequirement
+                        {
+                            Silver = cvt.Silver ?? 0,
+                            CraftResources = GetCraftResources(cvt.Craftresource)
                         }).ToArray();
 
             return Empty;
         }
 
-        private CraftResource[] GetCraftResources1(CraftingrequirementCraftresourceUnion? craftresource)
+        private CraftResource[] GetCraftResources(CraftingrequirementCraftresourceUnion? craftresource)
         {
             if (!craftresource.HasValue) return Empty2;
 
@@ -131,13 +155,5 @@ namespace Albion.Db.Items
         }
 
         #endregion
-
-        public SimpleItem GetItem(string id)
-        {
-            if (id.Length > 2 && id[id.Length-2] == '@') id = id.Substring(0, id.Length - 2);
-            if (ItemsDb.TryGetValue(id, out var item)) return item;
-            item = new SimpleItem(id, this);
-            return item;
-        }
     }
 }

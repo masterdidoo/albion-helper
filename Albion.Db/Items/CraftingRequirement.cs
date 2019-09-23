@@ -6,6 +6,7 @@ namespace Albion.Db.Items
     public class CraftingRequirement
     {
         public CraftResource[] CraftResources { get; set; }
+        public long Silver { get; set; }
 
         public override string ToString()
         {

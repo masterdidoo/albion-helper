@@ -14,5 +14,6 @@
         public ShopCategory ShopCategory { get; set; }
 
         public PriceHolder PriceHolder { get; }
+        public long ItemValue { get; set; }
     }
 }

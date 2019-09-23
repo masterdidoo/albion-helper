@@ -14,6 +14,7 @@
         Magic,
         Melee,
         Ranged,
-        Tools
+        Tools,
+        Accessories, Armor, Gatherergear, Offhand
     }
 }

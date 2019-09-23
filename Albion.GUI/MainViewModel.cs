@@ -67,12 +67,12 @@ namespace Albion.GUI
                 RaisePropertyChanged(nameof(SimpleItems));
             });
 
-            _albionParser.Start();
+            //_albionParser.Start();
         }
 
         public CollectionView view { get; }
 
-        public IEnumerable<SimpleItem> SimpleItems => _db.ItemsDb.Values.OrderByDescending(x=>x.PriceHolder.Bye.Time);
+        public IEnumerable<SimpleItem> SimpleItems => _db.ItemsDb.Values.OrderBy(x=>x.Id);
 
         public Location Town
         {
