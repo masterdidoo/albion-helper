@@ -5,9 +5,9 @@ namespace Albion.Db.Items
 {
     public class CraftingRequirement
     {
-        public CraftResource[] CraftResources { get; set; }
+        public BaseResource[] CraftResources { get; set; }
         public long Silver { get; set; }
-        public long Cost => CraftResources.Sum(c=>c.Item.MinCost)
+        public long Cost => Silver + CraftResources.Sum(c => c.Cost);
 
         public override string ToString()
         {

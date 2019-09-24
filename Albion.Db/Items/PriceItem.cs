@@ -4,7 +4,7 @@ namespace Albion.Db.Items
 {
     public class PriceItem
     {
-        public bool IsCnown { get; set; }
+        public bool IsMin { get; set; }
 
         public DateTime Time { get; set; }
 

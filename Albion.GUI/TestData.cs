@@ -22,9 +22,9 @@ namespace Albion.GUI
                 {
                     new CraftingRequirement()
                     {
-                        CraftResources = new CraftResource[]
+                        CraftResources = new BaseResource[]
                         {
-                            new CraftResource()
+                            new BaseResource()
                             {
                                 Count = 10,
                                 Item = item1

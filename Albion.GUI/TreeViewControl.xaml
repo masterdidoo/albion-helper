@@ -38,7 +38,7 @@
                 <TextBlock Text="{Binding Silver}" Margin="2" />
             </StackPanel>
         </HierarchicalDataTemplate>
-        <HierarchicalDataTemplate DataType="{x:Type items:CraftResource}"
+        <HierarchicalDataTemplate DataType="{x:Type items:BaseResource}"
                                   ItemsSource="{Binding Item.CraftingRequirements}">
             <Grid>
                 <Grid.ColumnDefinitions>

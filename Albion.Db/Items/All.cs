@@ -31,7 +31,7 @@ namespace Albion.Db.Items
         #region JsonLoader
 
         public readonly CraftingRequirement[] Empty = new CraftingRequirement[0];
-        public readonly CraftResource[] Empty2 = new CraftResource[0];
+        public readonly BaseResource[] Empty2 = new BaseResource[0];
 
         public All(JsonDb db)
         {
@@ -128,7 +128,7 @@ namespace Albion.Db.Items
             return Empty;
         }
 
-        private CraftResource[] GetCraftResources(CraftingrequirementCraftresourceUnion? craftresource)
+        private BaseResource[] GetCraftResources(CraftingrequirementCraftresourceUnion? craftresource)
         {
             if (!craftresource.HasValue) return Empty2;
 
@@ -137,7 +137,7 @@ namespace Albion.Db.Items
                 var elem = craftresource.Value.CraftresourceElement;
                 return new[]
                 {
-                    new CraftResource
+                    new BaseResource
                     {
                         Item = GetItem(elem.Uniquename),
                         Count = elem.Count
@@ -146,7 +146,7 @@ namespace Albion.Db.Items
             }
 
             return craftresource.Value.CraftresourceElementArray.Select(elem =>
-                new CraftResource
+                new BaseResource
                 {
                     Item = GetItem(elem.Uniquename),
                     Count = elem.Count
