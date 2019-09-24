@@ -18,7 +18,10 @@ namespace Albion.Db.Items
         public ShopCategory ShopCategory { get; set; }
         public long ItemValue { get; set; }
 
+        public MarketRequirement CraftingRequirements { get; set; }
+
         public CostContainer CostContainer { get; }
+        public DateTime Time { get; set; }
     }
 
     public class CostContainer : ObservableObject
@@ -51,12 +54,12 @@ namespace Albion.Db.Items
 
         public long Cost { get; set; }
 
-        private long OrderTax(long price)
+        public static long OrderTax(long price)
         {
             return price / 1000;
         }
 
-        private long SellTax(long price)
+        public static long SellTax(long price)
         {
             return price / 500;
         }

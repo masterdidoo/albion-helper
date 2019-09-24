@@ -8,7 +8,7 @@ namespace Albion.GUI
     {
         public TestData()
         {
-            CraftingRequirement[] empty = new CraftingRequirement[0];
+            BaseRequirement[] empty = new BaseRequirement[0];
 
             SimpleItem item1 = new SimpleItem("test00", null)
             {
@@ -18,9 +18,9 @@ namespace Albion.GUI
 
             Add(new SimpleItem("test", null)
             {
-                CraftingRequirements = new CraftingRequirement[]
+                CraftingRequirements = new BaseRequirement[]
                 {
-                    new CraftingRequirement()
+                    new BaseRequirement()
                     {
                         CraftResources = new BaseResource[]
                         {
