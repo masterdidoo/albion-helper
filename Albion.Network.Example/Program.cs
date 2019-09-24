@@ -28,7 +28,6 @@ namespace Albion.Network.Example
             albionParser.AddOperationHandler<ConsloeCommand>(p =>
             {
                 Console.WriteLine($"LocId: {p.LocId} {p.Town}");
-                db.Town = p.Town;
             });
 
             albionParser.AddOperationHandler<AuctionBuyOffer>(p =>

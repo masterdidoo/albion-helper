@@ -35,7 +35,7 @@ namespace Albion.GUI
 
             _albionParser.AddOperationHandler<ConsloeCommand>(p =>
             {
-                Town = p.Town;
+                if (p.Town!=Location.None) Town = p.Town;
             });
 
             _albionParser.AddOperationHandler<AuctionBuyOffer>(p =>
@@ -44,7 +44,7 @@ namespace Albion.GUI
                 var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
                 foreach (var item in items)
                 {
-                    var max = item.Max(x => x.UnitPriceSilver) / 10000;
+                    var max = item.Max(x => x.UnitPriceSilver);
                     var ph = _db.GetItem(item.Key).PriceHolder;
 
                     ph.UpdateBye(max, items.Length == 1);
@@ -58,7 +58,7 @@ namespace Albion.GUI
                 var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
                 foreach (var item in items)
                 {
-                    var min = item.Min(x => x.UnitPriceSilver) / 10000;
+                    var min = item.Min(x => x.UnitPriceSilver);
                     var ph = _db.GetItem(item.Key).PriceHolder;
 
                     ph.UpdateSell(min, items.Length == 1);
@@ -80,7 +80,7 @@ namespace Albion.GUI
             set
             {
                 if (Set(ref _town, value))
-                    _db.Town = value;
+                    _db.Context.TownIndex = (int) value;
             }
         }
 

@@ -20,7 +20,7 @@ namespace Albion.Operation
             {"3002", Location.HighlandCross},
             {"3003", Location.BlackMarket},
             {"3005", Location.Caerleon},
-            {"3013", Location.Caerleon2},
+            {"3013", Location.Caerleon},
             {"3008", Location.Martlock},
             {"4002", Location.FortSterling},
             {"4006", Location.MountainCross}

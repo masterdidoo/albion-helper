@@ -1,23 +1,13 @@
 ﻿using System;
-using GalaSoft.MvvmLight;
 
 namespace Albion.Db.Items
 {
-    public class PriceItem : ObservableObject
+    public class PriceItem
     {
-        private long _price;
-        private DateTime _time = DateTime.MinValue;
+        public bool IsCnown { get; set; }
 
-        public DateTime Time
-        {
-            get => _time;
-            set => Set(ref _time, value);
-        }
+        public DateTime Time { get; set; }
 
-        public long Price
-        {
-            get => _price;
-            set => Set(ref _price, value);
-        }
+        public long Price { get; set; }
     }
 }

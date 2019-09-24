@@ -1,12 +1,24 @@
 ﻿using System;
+using Albion.Common;
+using GalaSoft.MvvmLight;
 
 namespace Albion.Db.Items
 {
     public class PriceHolder
     {
-        public PriceItem Sell { get; } = new PriceItem();
+        private readonly IPlayerContext _context;
 
-        public PriceItem Bye { get; } = new PriceItem();
+        public PriceHolder(IPlayerContext context)
+        {
+            this._context = context;
+        }
+
+        public PriceItem[] Sells { get; } = new PriceItem[(int) Location.None];
+        public PriceItem[] Byes { get; } = new PriceItem[(int) Location.None];
+
+        public PriceItem Sell => Sells[_context.TownIndex];
+
+        public PriceItem Bye => Byes[_context.TownIndex];
 
         public void UpdateBye(long price, bool isSngle)
         {

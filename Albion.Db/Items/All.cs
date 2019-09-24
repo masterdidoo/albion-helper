@@ -7,6 +7,8 @@ namespace Albion.Db.Items
 {
     public class All
     {
+        public IPlayerContext Context { get; } = new PlayerContext();
+
         public SimpleItem[] Weapons { get; set; }
 
         public SimpleItem[] FarmableItem { get; set; }
@@ -17,13 +19,11 @@ namespace Albion.Db.Items
 
         public SimpleItem[] Artefacts { get; }
 
-        public Location Town { get; set; }
-
         public SimpleItem GetItem(string id)
         {
             if (id.Length > 2 && id[id.Length - 2] == '@') id = id.Substring(0, id.Length - 2);
             if (ItemsDb.TryGetValue(id, out var item)) return item;
-            item = new SimpleItem(id, this);
+            item = new SimpleItem(id, Context);
             ItemsDb.Add(id,item);
             return item;
         }

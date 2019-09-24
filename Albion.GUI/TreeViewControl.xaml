@@ -6,8 +6,10 @@
              xmlns:local="clr-namespace:Albion.GUI"
              xmlns:items="clr-namespace:Albion.Db.Items;assembly=Albion.Db"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance local:TestData}"
              d:DesignHeight="350" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <local:TestData/>
+    </UserControl.DataContext>
 
     <UserControl.Resources>
         <Style x:Key="TextBlockStyle" TargetType="{x:Type TextBlock}">
@@ -20,10 +22,11 @@
         <HierarchicalDataTemplate DataType="{x:Type items:SimpleItem}"
                                   ItemsSource="{Binding CraftingRequirements}">
             <DockPanel>
-                <Image Source="T5_BAG.png"></Image>
                 <TextBlock Text="{Binding Id}" Style="{StaticResource TextBlockStyle}" />
                 <TextBlock Text="1" Style="{StaticResource TextBlockStyle}" />
                 <TextBlock Text="{Binding ItemValue, StringFormat=IV: {0}}"
+                           Style="{StaticResource TextBlockStyle}" />
+                <TextBlock Text="{Binding Price, StringFormat=IV: {0}}"
                            Style="{StaticResource TextBlockStyle}" />
             </DockPanel>
         </HierarchicalDataTemplate>
@@ -80,6 +83,8 @@
         </TreeViewItem>
         <TreeView Grid.Row="1" ItemsSource="{Binding}" BorderBrush="Gray" BorderThickness="0 1 0 0"
                   VirtualizingStackPanel.IsVirtualizing="True"
-                  VirtualizingStackPanel.VirtualizationMode="Recycling" />
+                  VirtualizingStackPanel.VirtualizationMode="Recycling">
+            
+        </TreeView>
     </Grid>
 </UserControl>
