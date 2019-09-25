@@ -1,9 +1,13 @@
 ﻿using System;
+using GalaSoft.MvvmLight;
 
 namespace Albion.Db.Items.Requirements
 {
     public abstract class BaseRequirement
     {
+        public bool IsExpanded { get; set; }
+        public bool IsSelected { get; set; }
+
         public abstract DateTime Time { get; }
         public abstract long Cost { get; }
 

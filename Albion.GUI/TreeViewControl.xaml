@@ -101,7 +101,7 @@
                   VirtualizingStackPanel.VirtualizationMode="Recycling">
             <TreeView.ItemContainerStyle>
                 <Style TargetType="{x:Type TreeViewItem}">
-                    <Setter Property="IsExpanded" Value="True" />
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
                 </Style>
             </TreeView.ItemContainerStyle>
         </TreeView>

@@ -7,6 +7,8 @@ namespace Albion.Db.Items
 {
     public class SimpleItem : BaseItem
     {
+        public bool IsExpanded => true;
+
         public SimpleItem(string id, IPlayerContext context) : base(id)
         {
             CostContainer = new CostContainer(context, this);
