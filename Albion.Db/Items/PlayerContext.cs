@@ -1,13 +1,16 @@
-﻿namespace Albion.Db.Items
+﻿using System;
+
+namespace Albion.Db.Items
 {
     public class PlayerContext : IPlayerContext
     {
-        private int _townIndex;
+        public int TownIndex { get; set; }
 
-        public int TownIndex
+        public long GetCraftTax(ShopCategory shopCategory)
         {
-            get => _townIndex;
-            set => _townIndex = value;
+            return 10;
         }
+
+        public event Action TownIndexChanged;
     }
 }

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using Albion.Db.Items;
+using Albion.Db.Items.Requirements;
+using Albion.Db.Items.Requirements.Resources;
 
 namespace Albion.GUI
 {
@@ -8,7 +10,7 @@ namespace Albion.GUI
     {
         public TestData()
         {
-            BaseRequirement[] empty = new BaseRequirement[0];
+            var empty = new CraftingRequirement[0];
 
             SimpleItem item1 = new SimpleItem("test00", null)
             {
@@ -16,23 +18,23 @@ namespace Albion.GUI
             };
             Add(item1);
 
-            Add(new SimpleItem("test", null)
+            var item2 = new SimpleItem("test", null);
+            item2.CraftingRequirements = new []
             {
-                CraftingRequirements = new BaseRequirement[]
+                new CraftingRequirement(item2)
                 {
-                    new BaseRequirement()
+                    CraftResources = new CraftResource[]
                     {
-                        CraftResources = new BaseResource[]
+                        new CraftResource()
                         {
-                            new BaseResource()
-                            {
-                                Count = 10,
-                                Item = item1
-                            }, 
-                        }
+                            Count = 10,
+                            Item = item1
+                        },
                     }
                 }
-            });
+            };
+            Add(item2);
+
             Add(new SimpleItem("test2", null)
             {
                 CraftingRequirements = empty

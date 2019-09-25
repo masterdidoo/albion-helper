@@ -30,33 +30,33 @@ namespace Albion.Network.Example
                 Console.WriteLine($"LocId: {p.LocId} {p.Town}");
             });
 
-            albionParser.AddOperationHandler<AuctionBuyOffer>(p =>
-            {
-                if (p.Items.Length==0) return;
-                var items = p.Items.GroupBy(x=>x.ItemTypeId).ToArray();
-                foreach (var item in items)
-                {
-                    var max = item.Max(x => x.UnitPriceSilver) / 10000;
-
-                    var ph = db.GetItem(item.Key).PriceHolder;
-
-                    ph.UpdateBye(max, items.Length == 1);
-                }
-            });
-
-            albionParser.AddOperationHandler<AuctionGetRequests>(p =>
-            {
-                if (p.Items.Length == 0) return;
-                var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
-                foreach (var item in items)
-                {
-                    var min = item.Min(x => x.UnitPriceSilver) / 10000;
-
-                    var ph = db.GetItem(item.Key).PriceHolder;
-
-                    ph.UpdateSell(min, items.Length == 1);
-                }
-            });
+//            albionParser.AddOperationHandler<AuctionBuyOffer>(p =>
+//            {
+//                if (p.Items.Length==0) return;
+//                var items = p.Items.GroupBy(x=>x.ItemTypeId).ToArray();
+//                foreach (var item in items)
+//                {
+//                    var max = item.Max(x => x.UnitPriceSilver) / 10000;
+//
+//                    var ph = db.GetItem(item.Key).PriceHolder;
+//
+//                    ph.UpdateBye(max, items.Length == 1);
+//                }
+//            });
+//
+//            albionParser.AddOperationHandler<AuctionGetRequests>(p =>
+//            {
+//                if (p.Items.Length == 0) return;
+//                var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
+//                foreach (var item in items)
+//                {
+//                    var min = item.Min(x => x.UnitPriceSilver) / 10000;
+//
+//                    var ph = db.GetItem(item.Key).PriceHolder;
+//
+//                    ph.UpdateSell(min, items.Length == 1);
+//                }
+//            });
 
             Console.WriteLine("Start");
 

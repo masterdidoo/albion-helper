@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Albion.GUI"
              xmlns:items="clr-namespace:Albion.Db.Items;assembly=Albion.Db"
+             xmlns:requirements="clr-namespace:Albion.Db.Items.Requirements;assembly=Albion.Db"
+             xmlns:requ="clr-namespace:Albion.Db.Items.Requirements.Resources;assembly=Albion.Db"
              mc:Ignorable="d"
              d:DesignHeight="350" d:DesignWidth="800">
     <UserControl.DataContext>
@@ -20,26 +22,39 @@
         </Style>
 
         <HierarchicalDataTemplate DataType="{x:Type items:SimpleItem}"
-                                  ItemsSource="{Binding CraftingRequirements}">
+                                  ItemsSource="{Binding Requirements}">
             <DockPanel>
                 <TextBlock Text="{Binding Id}" Style="{StaticResource TextBlockStyle}" />
                 <TextBlock Text="1" Style="{StaticResource TextBlockStyle}" />
                 <TextBlock Text="{Binding ItemValue, StringFormat=IV: {0}}"
                            Style="{StaticResource TextBlockStyle}" />
-                <TextBlock Text="{Binding Price, StringFormat=IV: {0}}"
+                <TextBlock Text="{Binding Cost, StringFormat=Cost: {0}}"
+                           Style="{StaticResource TextBlockStyle}" />
+                <TextBlock Text="{Binding CostContainer.SellPrice, StringFormat=Price: {0}}"
                            Style="{StaticResource TextBlockStyle}" />
             </DockPanel>
         </HierarchicalDataTemplate>
-        <HierarchicalDataTemplate DataType="{x:Type items:CraftingRequirement}"
-                                  ItemsSource="{Binding CraftResources}">
+        <HierarchicalDataTemplate DataType="{x:Type requirements:LongBuyRequirement}">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding}" Margin="2" />
-                <TextBlock Text=", Silver" Margin="0,2" />
-                <TextBlock Text="{Binding Silver}" Margin="2" />
             </StackPanel>
         </HierarchicalDataTemplate>
-        <HierarchicalDataTemplate DataType="{x:Type items:BaseResource}"
-                                  ItemsSource="{Binding Item.CraftingRequirements}">
+        <HierarchicalDataTemplate DataType="{x:Type requirements:FastBuyRequirement}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding}" Margin="2" />
+            </StackPanel>
+        </HierarchicalDataTemplate>
+        <HierarchicalDataTemplate DataType="{x:Type requirements:CraftingRequirement}"
+                                  ItemsSource="{Binding CraftResources}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Craft Tax:" Margin="0,2" />
+                <TextBlock Text="{Binding Tax}" Margin="2" />
+                <TextBlock Text=" Cost:" Margin="0,2" />
+                <TextBlock Text="{Binding Cost}" Margin="2" />
+            </StackPanel>
+        </HierarchicalDataTemplate>
+        <HierarchicalDataTemplate DataType="{x:Type requ:CraftResource}"
+                                  ItemsSource="{Binding Item.Requirements}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition SharedSizeGroup="Task" />
@@ -84,7 +99,11 @@
         <TreeView Grid.Row="1" ItemsSource="{Binding}" BorderBrush="Gray" BorderThickness="0 1 0 0"
                   VirtualizingStackPanel.IsVirtualizing="True"
                   VirtualizingStackPanel.VirtualizationMode="Recycling">
-            
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Setter Property="IsExpanded" Value="True" />
+                </Style>
+            </TreeView.ItemContainerStyle>
         </TreeView>
     </Grid>
 </UserControl>

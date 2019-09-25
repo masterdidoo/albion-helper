@@ -45,7 +45,7 @@ namespace Albion.GUI
                 foreach (var item in items)
                 {
                     var max = item.Max(x => x.UnitPriceSilver);
-                    var ph = _db.GetItem(item.Key).PriceHolder;
+                    var ph = _db.GetItem(item.Key).CostContainer;
 
                     ph.UpdateBye(max, items.Length == 1);
                 }
@@ -59,7 +59,7 @@ namespace Albion.GUI
                 foreach (var item in items)
                 {
                     var min = item.Min(x => x.UnitPriceSilver);
-                    var ph = _db.GetItem(item.Key).PriceHolder;
+                    var ph = _db.GetItem(item.Key).CostContainer;
 
                     ph.UpdateSell(min, items.Length == 1);
                 }
