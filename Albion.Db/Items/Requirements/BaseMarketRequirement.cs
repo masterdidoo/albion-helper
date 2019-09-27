@@ -11,6 +11,7 @@ namespace Albion.Db.Items.Requirements
 
         protected BaseMarketRequirement(CostContainer costContainer)
         {
+            Silver = MaxNullPrice;
             CostContainer = costContainer;
             costContainer.Updated += Update;
         }

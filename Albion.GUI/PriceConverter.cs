@@ -1,0 +1,29 @@
+using System;
+using System.Globalization;
+using System.Windows;
+using System.Windows.Data;
+using Albion.Db.Items.Requirements;
+
+namespace Albion.GUI
+{
+    public class PriceConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (!(value is long)) return null;
+
+            var vr = (long) value;
+            if (vr >= BaseRequirement.MaxNullPrice || vr <= -BaseRequirement.MaxNullPrice) return -1;
+
+            return vr / 10000;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (!(value is long)) return null;
+
+            var vr = (long)value;
+            return vr * 10000;
+        }
+    }
+}

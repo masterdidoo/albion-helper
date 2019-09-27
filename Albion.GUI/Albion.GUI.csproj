@@ -89,6 +89,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="PriceConverter.cs" />
     <Compile Include="SimpleItemControl.xaml.cs">
       <DependentUpon>SimpleItemControl.xaml</DependentUpon>
     </Compile>

@@ -14,8 +14,10 @@ namespace Albion.GUI
 
             SimpleItem item1 = new SimpleItem("test00", null)
             {
-                CraftingRequirements = empty
+                CraftingRequirements = empty,
             };
+
+            item1.FastBuyRequirement.Silver = 1000*10000;
             Add(item1);
 
             var item2 = new SimpleItem("test", null);

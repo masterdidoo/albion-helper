@@ -1,4 +1,6 @@
-﻿namespace Albion.Db.Items.Requirements
+﻿using System;
+
+namespace Albion.Db.Items.Requirements
 {
     public class LongBuyRequirement : BaseMarketRequirement
     {
@@ -6,7 +8,7 @@
         {
         }
 
-        public override long Cost => Silver + Tax + 10000;
+        public override long Cost => _time == DateTime.MinValue ? MaxNullPrice : (Silver + Tax + 10000);
         public override long Tax => Silver / 1000;
 
         public override string ToString()

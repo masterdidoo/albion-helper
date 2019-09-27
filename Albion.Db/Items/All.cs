@@ -9,7 +9,7 @@ namespace Albion.Db.Items
 {
     public class All
     {
-        public IPlayerContext Context { get; } = new PlayerContext();
+        public IPlayerContext Context { get; }
 
         public SimpleItem[] Weapons { get; set; }
 
@@ -37,6 +37,7 @@ namespace Albion.Db.Items
 
         public All(JsonDb db)
         {
+            Context = new PlayerContext();
             FarmableItem = db.Items.Farmableitem
                 .Select(x =>
                 {

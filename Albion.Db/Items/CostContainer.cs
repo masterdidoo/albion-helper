@@ -1,5 +1,7 @@
 ﻿using System;
 using Albion.Common;
+using Albion.Db.Items.Requirements;
+using GalaSoft.MvvmLight.Threading;
 
 namespace Albion.Db.Items
 {
@@ -15,6 +17,11 @@ namespace Albion.Db.Items
         {
             Context = context;
             Item = item;
+            for (var i = 0; i < SellPrices.Length; i++)
+            {
+                SellPrices[i] = BaseRequirement.MaxNullPrice;
+                BuyPrices[i] = -BaseRequirement.MaxNullPrice;
+            }
 //            context.TownIndexChanged += Updated;
         }
 
@@ -32,27 +39,36 @@ namespace Albion.Db.Items
 
         #region Update From Net
 
-        public void UpdateBye(long price, bool isSngle)
+        public bool UpdateBye(long price, bool isSngle)
         {
             if (!isSngle)
-                if (price < BuyPrices[Context.TownIndex] || BuyTimes[Context.TownIndex] == DateTime.MinValue)
-                    return;
+                if (price < BuyPrices[Context.TownIndex])
+                    return false;
 
             BuyPrices[Context.TownIndex] = price;
             BuyTimes[Context.TownIndex] = DateTime.Now;
 
-            Updated();
+            Update();
+
+            return true;
         }
 
-        public void UpdateSell(long price, bool isSngle)
+        public bool UpdateSell(long price, bool isSngle)
         {
             if (!isSngle)
-                if (price > SellPrices[Context.TownIndex] || SellTimes[Context.TownIndex] == DateTime.MinValue)
-                    return;
+                if (price > SellPrices[Context.TownIndex])
+                    return false;
 
             SellPrices[Context.TownIndex] = price;
             SellTimes[Context.TownIndex] = DateTime.Now;
 
+            Update();
+
+            return true;
+        }
+
+        private void Update()
+        {
             Updated();
         }
 

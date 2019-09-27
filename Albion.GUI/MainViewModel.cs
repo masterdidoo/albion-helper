@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
@@ -10,6 +11,7 @@ using Albion.Event;
 using Albion.Network;
 using Albion.Operation;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Threading;
 
 namespace Albion.GUI
 {
@@ -25,6 +27,8 @@ namespace Albion.GUI
         {
             _db = new All(JsonDb.Load());
 
+            //SimpleItems = new ObservableCollection<SimpleItem>(_db.ItemsDb.Values.OrderBy(x => x.Id));
+
             _albionParser = new AlbionParser();
 
             _albionParser.AddEventHandler<PlayerCounts>(p =>
@@ -36,6 +40,7 @@ namespace Albion.GUI
             _albionParser.AddOperationHandler<ConsloeCommand>(p =>
             {
                 if (p.Town!=Location.None) Town = p.Town;
+                RaisePropertyChanged(nameof(SimpleItems));
             });
 
             _albionParser.AddOperationHandler<AuctionBuyOffer>(p =>
@@ -63,16 +68,13 @@ namespace Albion.GUI
 
                     ph.UpdateSell(min, items.Length == 1);
                 }
-
                 RaisePropertyChanged(nameof(SimpleItems));
             });
 
-            //_albionParser.Start();
+            _albionParser.Start();
         }
 
-        public CollectionView view { get; }
-
-        public IEnumerable<SimpleItem> SimpleItems => _db.ItemsDb.Values.OrderBy(x=>x.Id);
+        public IEnumerable<SimpleItem> SimpleItems => _db.ItemsDb.Values.OrderByDescending(x => x.CostContainer.BuyTime);
 
         public Location Town
         {
