@@ -15,7 +15,7 @@ using GalaSoft.MvvmLight.Threading;
 
 namespace Albion.GUI
 {
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : ViewModelBase, IDisposable
     {
         private readonly AlbionParser _albionParser;
         private int _bluePlayers;
@@ -106,5 +106,9 @@ namespace Albion.GUI
         }
 
         public IEnumerable<Location> Towns => typeof(Location).GetEnumValues().Cast<Location>();
+        public void Dispose()
+        {
+            _albionParser.Dispose();
+        }
     }
 }

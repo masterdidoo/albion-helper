@@ -14,12 +14,14 @@ using PhotonPackageParser;
 
 namespace Albion.Network
 {
-    public sealed class AlbionParser : PhotonParser
+    public sealed class AlbionParser : PhotonParser, IDisposable
     {
         private readonly Dictionary<EventCodes, BaseHandler> _eventHandlers = new Dictionary<EventCodes, BaseHandler>();
 
         private readonly Dictionary<OperationCodes, BaseHandler> _operationHandlers =
             new Dictionary<OperationCodes, BaseHandler>();
+
+        private CancellationTokenSource[] _treads;
 
         protected override void OnEvent(byte code, Dictionary<byte, object> parameters)
         {
@@ -154,25 +156,45 @@ namespace Albion.Network
         public void Start()
         {
             var devices = LivePacketDevice.AllLocalMachine;
-            foreach (var device in devices)
-                new Thread(() =>
+            _treads = devices.Select(device =>
+            {
+
+                var cts = new CancellationTokenSource();
+                var token = cts.Token;
+                var tread = new Thread(() =>
                     {
                         using (var communicator = device.Open(65536, PacketDeviceOpenAttributes.Promiscuous, 1000))
                         {
-                            communicator.ReceivePackets(0, PacketHandler);
+                            communicator.ReceivePackets(0, packet =>
+                            {
+                                PacketHandler(packet, token);
+                            });
                         }
-                    })
-                    .Start();
+                    });
+                    tread.Start();
+                return cts;
+            }).ToArray();
         }
 
-        private void PacketHandler(Packet packet)
+        private void PacketHandler(Packet packet, CancellationToken token)
         {
+            token.ThrowIfCancellationRequested();
+
             var ip = packet.Ethernet.IpV4;
             var udp = ip.Udp;
 
             if (udp == null || udp.SourcePort != 5056 && udp.DestinationPort != 5056) return;
 
             ReceivePacket(udp.Payload.ToArray());
+        }
+
+        public void Dispose()
+        {
+            if (_treads==null) return;
+            foreach (var thread in _treads)
+            {
+                thread.Cancel();
+            }
         }
     }
 }
