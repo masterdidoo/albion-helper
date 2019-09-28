@@ -7,7 +7,7 @@ namespace Albion.Db.Items
 {
     public class SimpleItem : BaseItem
     {
-        private long _cost = BaseRequirement.MaxNullPrice;
+        private long? _cost;
         private CraftingRequirement[] _craftingRequirements;
 
         public SimpleItem(string id, IPlayerContext context) : base(id)
@@ -40,7 +40,7 @@ namespace Albion.Db.Items
         public FastBuyRequirement FastBuyRequirement { get; }
         public LongBuyRequirement LongBuyRequirement { get; }
 
-        public long Cost
+        public long? Cost
         {
             get => _cost;
             set
@@ -52,19 +52,19 @@ namespace Albion.Db.Items
             }
         }
 
-        public DateTime Time => Requirements.Min(r => r.Time); //{ get; set; }
+        public DateTime? Time => Requirements.Min(r => r.Time); //{ get; set; }
 
-        public long Profit => Cost == 0 ? -100 : CostContainer.SellPrice * 100 / Cost - 100;
+        public long? Profit => (Cost??0) == 0 ? -100 : CostContainer.SellPrice * 100 / Cost - 100;
 
         private void OnUpdated()
         {
             BaseRequirement minR = null;
-            var min = BaseRequirement.MaxNullPrice;
+            long? min = null;
             foreach (var r in Requirements)
             {
                 r.IsMin = false;
                 r.IsExpanded = false;
-                if (r.Cost < min)
+                if (min == null || r.Cost < min.Value)
                 {
                     min = r.Cost;
                     minR = r;

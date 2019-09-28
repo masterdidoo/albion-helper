@@ -10,8 +10,8 @@ namespace Albion.Db.Items.Requirements
             Update();
         }
 
-        public override long Cost => _time == DateTime.MinValue ? MaxNullPrice : (Silver + Tax + 10000);
-        public override long Tax => Silver / 1000;
+        public override long? Cost => Silver + Tax + 10000;
+        public override long Tax => Silver / 1000 ?? 0;
 
         public override string ToString()
         {

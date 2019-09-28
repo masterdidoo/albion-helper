@@ -13,7 +13,6 @@ namespace Albion.GUI
             if (!(value is long)) return null;
 
             var vr = (long) value;
-            if (vr >= BaseRequirement.MaxNullPrice || vr <= -BaseRequirement.MaxNullPrice) return -1;
 
             return vr / 10000;
         }

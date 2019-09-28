@@ -8,7 +8,7 @@
             Update();
         }
 
-        public override long Cost => Silver;
+        public override long? Cost => Silver;
         public override long Tax => 0;
 
         public override string ToString()

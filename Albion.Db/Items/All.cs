@@ -116,7 +116,7 @@ namespace Albion.Db.Items
                     {
                         new CraftingRequirement(item, GetCraftResources(cvt.Craftresource))
                         {
-                            Silver = cvt.Silver ?? 0,
+                            Silver = cvt.Silver * 10000 ?? 0,
                         }
                     };
             }
@@ -125,7 +125,7 @@ namespace Albion.Db.Items
                     craftingrequirements.Value.CraftingrequirementArrayArray.Select(cvt =>
                         new CraftingRequirement(item, GetCraftResources(cvt.Craftresource))
                         {
-                            Silver = cvt.Silver ?? 0,
+                            Silver = cvt.Silver * 10000 ?? 0,
                         }).ToArray();
 
             return Empty;

@@ -9,20 +9,20 @@ namespace Albion.Db.Items
         public PricesContainer() { }
         public PricesContainer(int size)
         {
-            BuyPrices = new long[(int)Location.None + 1];
-            BuyTimes = new DateTime[(int)Location.None + 1];
+            BuyPrices = new long?[(int)Location.None + 1];
+            BuyTimes = new DateTime?[(int)Location.None + 1];
 
-            SellPrices = new long[(int)Location.None + 1];
-            SellTimes = new DateTime[(int)Location.None + 1];
+            SellPrices = new long?[(int)Location.None + 1];
+            SellTimes = new DateTime?[(int)Location.None + 1];
         }
 
         public string Id { get; set; }
 
-        public long[] BuyPrices { get; set; }
-        public DateTime[] BuyTimes { get; set; }
+        public long?[] BuyPrices { get; set; }
+        public DateTime?[] BuyTimes { get; set; }
 
-        public long[] SellPrices { get; set; }
-        public DateTime[] SellTimes { get; set; }
+        public long?[] SellPrices { get; set; }
+        public DateTime?[] SellTimes { get; set; }
     }
 
     public class CostContainer
@@ -36,19 +36,7 @@ namespace Albion.Db.Items
 
             if (context != null) context.TownIndexChanged += ContextOnTownIndexChanged;
 
-            _pricesContainer = context?.LoadPricesContainer(item.Id);
-
-            if (_pricesContainer == null)
-            {
-                _pricesContainer = new PricesContainer(0);
-
-                for (var i = 0; i < _pricesContainer.SellPrices.Length; i++)
-                {
-                    _pricesContainer.SellPrices[i] = BaseRequirement.MaxNullPrice;
-                    _pricesContainer.BuyPrices[i] = -BaseRequirement.MaxNullPrice;
-                }
-            }
-
+            _pricesContainer = context?.LoadPricesContainer(item.Id) ?? new PricesContainer(0);
 
 //            context.TownIndexChanged += Updated;
         }
@@ -63,10 +51,10 @@ namespace Albion.Db.Items
 
         public long CraftTax => Item.ItemValue * 5 / 100 * Context.GetCraftTax(Item.ShopCategory); //10% tax
 
-        public long SellPrice => _pricesContainer.SellPrices[Context.TownIndex];
-        public DateTime SellTime => _pricesContainer.SellTimes[Context.TownIndex];
-        public long BuyPrice => _pricesContainer.BuyPrices[Context.TownIndex];
-        public DateTime BuyTime => _pricesContainer.BuyTimes[Context.TownIndex];
+        public long? SellPrice => _pricesContainer.SellPrices[Context.TownIndex];
+        public DateTime? SellTime => _pricesContainer.SellTimes[Context.TownIndex];
+        public long? BuyPrice => _pricesContainer.BuyPrices[Context.TownIndex];
+        public DateTime? BuyTime => _pricesContainer.BuyTimes[Context.TownIndex];
 
         public long CraftReturn => Context.GetReturn(Item.Craftingcategory);
 

@@ -30,7 +30,7 @@
                 <TextBlock Text="1" Style="{StaticResource TextBlockStyle}" />
                 <TextBlock Text="{Binding ItemValue, StringFormat=IV: {0}}"
                            Style="{StaticResource TextBlockStyle}" />
-                <TextBlock Text="{Binding im Cost, StringFormat=Cost: {0:#,#}, Converter={StaticResource PriceConverter}}"
+                <TextBlock Text="{Binding Cost, StringFormat=Cost: {0:#,#}, Converter={StaticResource PriceConverter}}"
                            Style="{StaticResource TextBlockStyle}" />
                 <TextBlock Text="{Binding CostContainer.SellPrice, StringFormat=Price: {0:#,#}, Converter={StaticResource PriceConverter}}"
                            Style="{StaticResource TextBlockStyle}" />
@@ -60,6 +60,8 @@
                 <CheckBox IsChecked="{Binding IsMin}" />
                 <TextBlock Text="Craft Tax:" Margin="0,2" />
                 <TextBlock Text="{Binding Tax, Converter={StaticResource PriceConverter}}" Margin="2" />
+                <TextBlock Text="Silver:" Margin="0,2" />
+                <TextBlock Text="{Binding Silver, Converter={StaticResource PriceConverter}}" Margin="2" />
                 <TextBlock Text=" Cost:" Margin="0,2" />
                 <TextBlock Text="{Binding Cost, Converter={StaticResource PriceConverter}}" Margin="2" />
             </DockPanel>

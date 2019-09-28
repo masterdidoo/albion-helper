@@ -7,7 +7,7 @@ namespace Albion.Db.Items.Requirements
     public class CraftingRequirement : BaseRequirement
     {
         private readonly SimpleItem item;
-        private long _cost = MaxNullPrice;
+        private long? _cost;
 
         public CraftingRequirement(SimpleItem item, CraftResource[] craftResources)
         {
@@ -21,9 +21,9 @@ namespace Albion.Db.Items.Requirements
 
         public CraftResource[] CraftResources { get; }
 
-        public override DateTime Time => CraftResources.Min(x => x.Time);
+        public override DateTime? Time => CraftResources.Min(x => x.Time);
 
-        public override long Cost => _cost;
+        public override long? Cost => _cost;
 
         public override long Tax => item.CostContainer.CraftTax;
 

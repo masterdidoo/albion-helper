@@ -23,10 +23,10 @@ namespace Albion.Db.Items.Requirements
 
         public bool IsSelected { get; set; }
 
-        public abstract DateTime Time { get; }
-        public abstract long Cost { get; }
+        public abstract DateTime? Time { get; }
+        public abstract long? Cost { get; }
 
-        public long Silver { get; set; }
+        public long? Silver { get; set; }
         public abstract long Tax { get; }
     }
 }
