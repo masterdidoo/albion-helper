@@ -167,7 +167,8 @@ namespace Albion.Network
                         {
                             communicator.ReceivePackets(0, packet =>
                             {
-                                PacketHandler(packet, token);
+                                token.ThrowIfCancellationRequested();
+                                PacketHandler(packet);
                             });
                         }
                     });
@@ -176,10 +177,8 @@ namespace Albion.Network
             }).ToArray();
         }
 
-        private void PacketHandler(Packet packet, CancellationToken token)
+        private void PacketHandler(Packet packet)
         {
-            token.ThrowIfCancellationRequested();
-
             var ip = packet.Ethernet.IpV4;
             var udp = ip.Udp;
 

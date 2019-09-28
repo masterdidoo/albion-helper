@@ -81,7 +81,7 @@ namespace Albion.GUI
             RaisePropertyChanged(nameof(SimpleItems));
         }
 
-        public IEnumerable<SimpleItem> SimpleItems => _db.ItemsDb.Values.OrderByDescending(x => x.CostContainer.BuyTime);
+        public IEnumerable<SimpleItem> SimpleItems => _db.ItemsDb.Values.OrderByDescending(x => x.Profit);
 
         public Location Town
         {

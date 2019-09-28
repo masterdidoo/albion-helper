@@ -43,7 +43,7 @@ namespace Albion.Db.Items
 
         public PricesContainer LoadPricesContainer(string id)
         {
-            return _rep.FindById(id) ?? new PricesContainer((int)Location.None + 1);
+            return _rep.FindById(id);
         }
 
         public long GetReturn(Craftingcategory category)

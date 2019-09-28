@@ -27,18 +27,17 @@ namespace Albion.GUI
             var item2 = new SimpleItem("test", cont);
             item2.CraftingRequirements = new []
             {
-                new CraftingRequirement(item2)
+                new CraftingRequirement(item2, new CraftResource[]
+                {
+                    new CraftResource()
+                    {
+                        Count = 10,
+                        Item = item1
+                    },
+                })
                 {
                     IsExpanded = true,
                     IsMin = true,
-                    CraftResources = new CraftResource[]
-                    {
-                        new CraftResource()
-                        {
-                            Count = 10,
-                            Item = item1
-                        },
-                    }
                 }
             };
             Add(item2);

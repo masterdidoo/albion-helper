@@ -7,9 +7,8 @@ namespace Albion.Db.Items
 {
     public class SimpleItem : BaseItem
     {
-        private CraftingRequirement[] _craftingRequirements;
         private long _cost = BaseRequirement.MaxNullPrice;
-        public bool IsExpanded => true;
+        private CraftingRequirement[] _craftingRequirements;
 
         public SimpleItem(string id, IPlayerContext context) : base(id)
         {
@@ -22,65 +21,7 @@ namespace Albion.Db.Items
             OnUpdated();
         }
 
-        private void OnUpdated()
-        {
-            BaseRequirement minR = null;
-            long min = BaseRequirement.MaxNullPrice;
-            foreach (var r in Requirements)
-            {
-                r.IsMin = false;
-                r.IsExpanded = false;
-                if (r.Cost < min)
-                {
-                    min = r.Cost;
-                    minR = r;
-                }
-            }
-
-            Cost = min;
-
-            if (minR != null)
-            {
-                minR.IsExpanded = true;
-                minR.IsMin = true;
-            }
-                RaisePropertyChanged(nameof(Profit));
-        }
-
-        #region FromConfig
-        public int Tier { get; set; }
-        public float Weight { get; set; }
-        public string Uisprite => Id.Substring(3);
-
-        public CraftingRequirement[] CraftingRequirements
-        {
-            get => _craftingRequirements;
-            set
-            {
-                if (_craftingRequirements != null)
-                {
-                    foreach (var cr in _craftingRequirements)
-                    {
-                        cr.Updated -= OnUpdated;
-                    }
-                }
-                _craftingRequirements = value;
-                if (_craftingRequirements != null)
-                {
-                    foreach (var cr in _craftingRequirements)
-                    {
-                        cr.Updated += OnUpdated;
-                    }
-
-                    OnUpdated();
-                }
-            }
-        }
-
-        public Craftingcategory Craftingcategory { get; set; }
-        public ShopCategory ShopCategory { get; set; }
-        public long ItemValue { get; set; }
-        #endregion
+        public bool IsExpanded => true;
 
         public IEnumerable<BaseRequirement> Requirements
         {
@@ -90,10 +31,7 @@ namespace Albion.Db.Items
                 yield return LongBuyRequirement;
                 if (CraftingRequirements == null) yield break;
 
-                foreach (var requirement in CraftingRequirements)
-                {
-                    yield return requirement;
-                }
+                foreach (var requirement in CraftingRequirements) yield return requirement;
             }
         }
 
@@ -114,10 +52,66 @@ namespace Albion.Db.Items
             }
         }
 
-        public DateTime Time => Requirements.Min(r=>r.Time);//{ get; set; }
+        public DateTime Time => Requirements.Min(r => r.Time); //{ get; set; }
 
-        public long Profit => Cost == 0 ? -100 : (CostContainer.SellPrice * 100 / Cost) - 100;
+        public long Profit => Cost == 0 ? -100 : CostContainer.SellPrice * 100 / Cost - 100;
+
+        private void OnUpdated()
+        {
+            BaseRequirement minR = null;
+            var min = BaseRequirement.MaxNullPrice;
+            foreach (var r in Requirements)
+            {
+                r.IsMin = false;
+                r.IsExpanded = false;
+                if (r.Cost < min)
+                {
+                    min = r.Cost;
+                    minR = r;
+                }
+            }
+
+            Cost = min;
+
+            if (minR != null)
+            {
+                minR.IsExpanded = true;
+                minR.IsMin = true;
+            }
+
+            RaisePropertyChanged(nameof(Profit));
+        }
 
         public event Action Updated;
+
+        #region FromConfig
+
+        public int Tier { get; set; }
+        public float Weight { get; set; }
+        public string Uisprite => Id.Substring(3);
+
+        public CraftingRequirement[] CraftingRequirements
+        {
+            get => _craftingRequirements;
+            set
+            {
+                if (_craftingRequirements != null)
+                    foreach (var cr in _craftingRequirements)
+                        cr.Updated -= OnUpdated;
+                _craftingRequirements = value;
+                if (_craftingRequirements != null)
+                {
+                    foreach (var cr in _craftingRequirements) cr.Updated += OnUpdated;
+
+                    OnUpdated();
+                }
+            }
+        }
+
+        public Craftingcategory Craftingcategory { get; set; }
+        public ShopCategory ShopCategory { get; set; }
+        public long ItemValue { get; set; }
+
+        #endregion
     }
 }

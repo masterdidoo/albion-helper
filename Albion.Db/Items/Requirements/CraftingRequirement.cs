@@ -7,62 +7,38 @@ namespace Albion.Db.Items.Requirements
     public class CraftingRequirement : BaseRequirement
     {
         private readonly SimpleItem item;
-        private CraftResource[] _craftResources;
         private long _cost = MaxNullPrice;
 
-        public CraftingRequirement(SimpleItem item)
+        public CraftingRequirement(SimpleItem item, CraftResource[] craftResources)
         {
             this.item = item;
+            CraftResources = craftResources;
+
+            foreach (var cr in craftResources) cr.Item.Updated += OnUpdated;
 
             OnUpdated();
         }
 
-        public CraftResource[] CraftResources
-        {
-            get => _craftResources;
-            set
-            {
-                if (_craftResources != null)
-                {
-                    foreach (var cr in _craftResources)
-                    {
-                        cr.Item.Updated -= OnUpdated;
-                    }
-                }
-                _craftResources = value;
-                if (_craftResources != null)
-                {
-                    foreach (var cr in _craftResources)
-                    {
-                        cr.Item.Updated += OnUpdated;
-                    }
+        public CraftResource[] CraftResources { get; }
 
-                    OnUpdated();
-                }
-            }
-        }
+        public override DateTime Time => CraftResources.Min(x => x.Time);
+
+        public override long Cost => _cost;
+
+        public override long Tax => item.CostContainer.CraftTax;
 
         private void OnUpdated()
         {
-            if (CraftResources == null || CraftResources.Length==0 ) return;
+            if (CraftResources == null || CraftResources.Length == 0) return;
             var craftCost = CraftResources.Sum(c => c.Cost) * 100 / item.CostContainer.CraftReturn;
             var cost = Tax + Silver + craftCost;
-            if (cost==_cost) return;
+            if (cost == _cost) return;
             _cost = cost;
 
             Updated?.Invoke();
 
             RaisePropertyChanged(nameof(Cost));
         }
-
-        public override DateTime Time => CraftResources.Min(x => x.Time);
-
-        public override long Cost
-        {
-            get => _cost;
-        }
-
-        public override long Tax => item.CostContainer.CraftTax;
 
         public override string ToString()
         {

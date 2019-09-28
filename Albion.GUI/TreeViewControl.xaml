@@ -30,7 +30,7 @@
                 <TextBlock Text="1" Style="{StaticResource TextBlockStyle}" />
                 <TextBlock Text="{Binding ItemValue, StringFormat=IV: {0}}"
                            Style="{StaticResource TextBlockStyle}" />
-                <TextBlock Text="{Binding Cost, StringFormat=Cost: {0:#,#}, Converter={StaticResource PriceConverter}}"
+                <TextBlock Text="{Binding im Cost, StringFormat=Cost: {0:#,#}, Converter={StaticResource PriceConverter}}"
                            Style="{StaticResource TextBlockStyle}" />
                 <TextBlock Text="{Binding CostContainer.SellPrice, StringFormat=Price: {0:#,#}, Converter={StaticResource PriceConverter}}"
                            Style="{StaticResource TextBlockStyle}" />
