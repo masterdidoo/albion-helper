@@ -38,7 +38,7 @@
             <TextBlock Text="Red :" Margin="5,0"/>
             <TextBlock Text="{Binding RedPlayers}"/>
             <TextBlock Text="Town :" Margin="5,0" />
-            <TextBlock Text="{Binding Town}"/>
+            <ComboBox SelectedItem="{Binding Town}" ItemsSource="{Binding Towns}"/>
         </StackPanel>
     </Grid>
 </Window>

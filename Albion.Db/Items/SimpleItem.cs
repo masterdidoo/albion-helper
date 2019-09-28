@@ -7,6 +7,8 @@ namespace Albion.Db.Items
 {
     public class SimpleItem : BaseItem
     {
+        private CraftingRequirement[] _craftingRequirements;
+        private long _cost = BaseRequirement.MaxNullPrice;
         public bool IsExpanded => true;
 
         public SimpleItem(string id, IPlayerContext context) : base(id)
@@ -15,13 +17,66 @@ namespace Albion.Db.Items
 
             FastBuyRequirement = new FastBuyRequirement(CostContainer);
             LongBuyRequirement = new LongBuyRequirement(CostContainer);
+
+            CostContainer.Updated += OnUpdated;
+            OnUpdated();
+        }
+
+        private void OnUpdated()
+        {
+            BaseRequirement minR = null;
+            long min = BaseRequirement.MaxNullPrice;
+            foreach (var r in Requirements)
+            {
+                r.IsMin = false;
+                r.IsExpanded = false;
+                if (r.Cost < min)
+                {
+                    min = r.Cost;
+                    minR = r;
+                }
+            }
+
+            Cost = min;
+
+            if (minR != null)
+            {
+                minR.IsExpanded = true;
+                minR.IsMin = true;
+            }
         }
 
         #region FromConfig
         public int Tier { get; set; }
         public float Weight { get; set; }
         public string Uisprite => Id.Substring(3);
-        public CraftingRequirement[] CraftingRequirements { get; set; }
+
+        public CraftingRequirement[] CraftingRequirements
+        {
+            get => _craftingRequirements;
+            set
+            {
+                if (_craftingRequirements != null)
+                {
+                    foreach (var cr in _craftingRequirements)
+                    {
+                        cr.Updated -= OnUpdated;
+                    }
+                }
+                _craftingRequirements = value;
+                if (_craftingRequirements != null)
+                {
+                    foreach (var cr in _craftingRequirements)
+                    {
+                        cr.Updated += OnUpdated;
+                    }
+
+                    OnUpdated();
+                }
+            }
+        }
+
+        public Craftingcategory Craftingcategory { get; set; }
         public ShopCategory ShopCategory { get; set; }
         public long ItemValue { get; set; }
         #endregion
@@ -46,7 +101,18 @@ namespace Albion.Db.Items
         public FastBuyRequirement FastBuyRequirement { get; }
         public LongBuyRequirement LongBuyRequirement { get; }
 
-        public long Cost => Requirements.Min(r => r.Cost);//{ get; set; }
+        public long Cost
+        {
+            get => _cost;
+            set
+            {
+                if (_cost == value) return;
+                _cost = value;
+                Updated?.Invoke();
+            }
+        }
+
         public DateTime Time => Requirements.Min(r=>r.Time);//{ get; set; }
+        public event Action Updated;
     }
 }

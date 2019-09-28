@@ -9,6 +9,8 @@ namespace Albion.Db.Items.Requirements.Resources
         public long Cost => Item.Cost * Count;
         public DateTime Time => Item.Time;
 
+        public bool IsExpanded => true;
+
         public override string ToString()
         {
             return $"{Item} {Count}";

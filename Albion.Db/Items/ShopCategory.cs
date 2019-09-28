@@ -1,5 +1,50 @@
 ﻿namespace Albion.Db.Items
 {
+    public enum Craftingcategory
+    {
+        None,
+        Cloth_Armor,
+        Cloth_Helmet,
+        Cloth_Shoes,
+        Leather_Armor,
+        Leather_Helmet,
+        Leather_Shoes,
+        Offhand,
+        Plate_Armor,
+        Plate_Helmet,
+        Plate_Shoes,
+        All,
+        Fiber,
+        Hide,
+        Mercenary,
+        Ore,
+        Rock,
+        Stone,
+        Wood,
+        Arcanestaff,
+        Axe,
+        Bow,
+        Crossbow,
+        Cursestaff,
+        Dagger,
+        Demolitionhammer,
+        Firestaff,
+        Fishing,
+        Froststaff,
+        Hammer,
+        Holystaff,
+        Mace,
+        Naturestaff,
+        Pickaxe,
+        Quarterstaff,
+        Sickle,
+        Skinningknife,
+        Spear,
+        Stonehammer,
+        Sword,
+        Woodaxe
+    }
+
     public enum ShopCategory
     {
         Artefacts,
@@ -15,6 +60,9 @@
         Melee,
         Ranged,
         Tools,
-        Accessories, Armor, Gatherergear, Offhand
+        Accessories,
+        Armor,
+        Gatherergear,
+        Offhand
     }
 }

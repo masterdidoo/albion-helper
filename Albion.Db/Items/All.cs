@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Albion.Common;
 using Albion.Db.Items.Requirements;
 using Albion.Db.Items.Requirements.Resources;
 using Albion.Db.JsonLoader;
@@ -60,6 +59,7 @@ namespace Albion.Db.Items
                     art.Tier = x.Tier;
                     art.Weight = x.Weight;
                     art.ShopCategory = x.Shopcategory;
+                    art.Craftingcategory = x.Craftingcategory ?? Craftingcategory.None;
                     art.CraftingRequirements =
                         GetCraftingRequirements(x.Craftingrequirements, art);
 
@@ -75,6 +75,7 @@ namespace Albion.Db.Items
                     art.Tier = x.Tier;
                     art.Weight = x.Weight;
                     art.ShopCategory = x.Shopcategory;
+                    art.Craftingcategory = x.Craftingcategory ?? Craftingcategory.None;
                     art.CraftingRequirements =
                         GetCraftingRequirements(x.Craftingrequirements, art);
 
@@ -90,6 +91,7 @@ namespace Albion.Db.Items
                     art.Tier = x.Tier;
                     art.Weight = x.Weight;
                     art.ShopCategory = x.Shopcategory;
+                    art.Craftingcategory = x.Craftingcategory ?? Craftingcategory.None;
                     art.CraftingRequirements =
                         GetCraftingRequirements(x.Craftingrequirements, art);
 

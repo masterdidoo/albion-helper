@@ -27,6 +27,8 @@ namespace Albion.GUI
         {
             _db = new All(JsonDb.Load());
 
+            _db.Context.TownIndexChanged += ContextOnTownIndexChanged;
+
             //SimpleItems = new ObservableCollection<SimpleItem>(_db.ItemsDb.Values.OrderBy(x => x.Id));
 
             _albionParser = new AlbionParser();
@@ -74,6 +76,11 @@ namespace Albion.GUI
             _albionParser.Start();
         }
 
+        private void ContextOnTownIndexChanged()
+        {
+            RaisePropertyChanged(nameof(SimpleItems));
+        }
+
         public IEnumerable<SimpleItem> SimpleItems => _db.ItemsDb.Values.OrderByDescending(x => x.CostContainer.BuyTime);
 
         public Location Town
@@ -82,7 +89,7 @@ namespace Albion.GUI
             set
             {
                 if (Set(ref _town, value))
-                    _db.Context.TownIndex = (int) value;
+                    _db.Context.Town = value;
             }
         }
 
@@ -97,5 +104,7 @@ namespace Albion.GUI
             get => _bluePlayers;
             set => Set(ref _bluePlayers, value);
         }
+
+        public IEnumerable<Location> Towns => typeof(Location).GetEnumValues().Cast<Location>();
     }
 }

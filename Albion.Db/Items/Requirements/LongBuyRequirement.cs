@@ -6,6 +6,8 @@ namespace Albion.Db.Items.Requirements
     {
         public LongBuyRequirement(CostContainer costContainer) : base(costContainer)
         {
+            costContainer.Updated += Update;
+            Update();
         }
 
         public override long Cost => _time == DateTime.MinValue ? MaxNullPrice : (Silver + Tax + 10000);
@@ -16,10 +18,11 @@ namespace Albion.Db.Items.Requirements
             return $"Long Buy {Silver}";
         }
 
-        protected override void Update()
+        protected void Update()
         {
             Silver = CostContainer.BuyPrice;
             _time = CostContainer.BuyTime;
+            RaisePropertyChanged(nameof(Cost));
         }
     }
 }

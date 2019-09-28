@@ -37,35 +37,37 @@
             </DockPanel>
         </HierarchicalDataTemplate>
         <HierarchicalDataTemplate DataType="{x:Type requirements:LongBuyRequirement}">
-            <StackPanel Orientation="Horizontal">
+            <DockPanel>
+                <CheckBox IsChecked="{Binding IsMin}" />
                 <TextBlock Text="Long Buy" Style="{StaticResource TextBlockStyle}" />
                 <TextBlock Text="{Binding Cost, StringFormat=Cost: {0:#,#}, Converter={StaticResource PriceConverter}}"
                            Style="{StaticResource TextBlockStyle}" />
-            </StackPanel>
+            </DockPanel>
         </HierarchicalDataTemplate>
         <HierarchicalDataTemplate DataType="{x:Type requirements:FastBuyRequirement}">
-            <StackPanel Orientation="Horizontal">
+            <DockPanel>
+                <CheckBox IsChecked="{Binding IsMin}" />
                 <TextBlock Text="Fast Buy" Style="{StaticResource TextBlockStyle}" />
                 <TextBlock Text="{Binding Cost, StringFormat=Cost: {0:#,#}, Converter={StaticResource PriceConverter}}"
                            Style="{StaticResource TextBlockStyle}" />
-            </StackPanel>
+            </DockPanel>
         </HierarchicalDataTemplate>
         <HierarchicalDataTemplate DataType="{x:Type requirements:CraftingRequirement}"
                                   ItemsSource="{Binding CraftResources}">
-            <StackPanel Orientation="Horizontal">
+            <DockPanel>
+                <CheckBox IsChecked="{Binding IsMin}" />
                 <TextBlock Text="Craft Tax:" Margin="0,2" />
                 <TextBlock Text="{Binding Tax, Converter={StaticResource PriceConverter}}" Margin="2" />
                 <TextBlock Text=" Cost:" Margin="0,2" />
                 <TextBlock Text="{Binding Cost, Converter={StaticResource PriceConverter}}" Margin="2" />
-            </StackPanel>
+            </DockPanel>
         </HierarchicalDataTemplate>
         <HierarchicalDataTemplate DataType="{x:Type requ:CraftResource}"
                                   ItemsSource="{Binding Item.Requirements}">
             <DockPanel>
+                <TextBlock Text="{Binding Item.Id}" Style="{StaticResource TextBlockStyle}" />
                 <TextBlock Text="{Binding Count}"
                            Style="{StaticResource TextBlockStyle}" />
-                <TextBlock Text="{Binding Item.Id}" Style="{StaticResource TextBlockStyle}" />
-                <TextBlock Text="1" Style="{StaticResource TextBlockStyle}" />
                 <TextBlock Text="{Binding Item.ItemValue, StringFormat=IV: {0}}"
                            Style="{StaticResource TextBlockStyle}" />
                 <TextBlock Text="{Binding Item.Cost, StringFormat=Cost: {0:#,#}, Converter={StaticResource PriceConverter}}"

@@ -152,7 +152,7 @@
       <Name>Albion.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Albion.Db\Albion.Db.csproj">
-      <Project>{8CC0B249-A3AD-4474-B525-9E104E3452D0}</Project>
+      <Project>{333f890a-c2de-435b-9903-2b6d12afd510}</Project>
       <Name>Albion.Db</Name>
     </ProjectReference>
     <ProjectReference Include="..\Albion.Event\Albion.Event.csproj">

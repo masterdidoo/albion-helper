@@ -1,5 +1,4 @@
 ﻿using System;
-using Albion.Common;
 
 namespace Albion.Db.Items.Requirements
 {
@@ -13,10 +12,7 @@ namespace Albion.Db.Items.Requirements
         {
             Silver = MaxNullPrice;
             CostContainer = costContainer;
-            costContainer.Updated += Update;
         }
-
-        protected abstract void Update();
 
         public CostContainer CostContainer { get; }
     }

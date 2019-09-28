@@ -1,28 +1,61 @@
 ﻿using System;
 using Albion.Common;
 using Albion.Db.Items.Requirements;
-using GalaSoft.MvvmLight.Threading;
 
 namespace Albion.Db.Items
 {
+    public class PricesContainer
+    {
+        public PricesContainer() { }
+        public PricesContainer(int size)
+        {
+            BuyPrices = new long[(int)Location.None + 1];
+            BuyTimes = new DateTime[(int)Location.None + 1];
+
+            SellPrices = new long[(int)Location.None + 1];
+            SellTimes = new DateTime[(int)Location.None + 1];
+        }
+
+        public string Id { get; set; }
+
+        public long[] BuyPrices { get; set; }
+        public DateTime[] BuyTimes { get; set; }
+
+        public long[] SellPrices { get; set; }
+        public DateTime[] SellTimes { get; set; }
+    }
+
     public class CostContainer
     {
-        public long[] BuyPrices = new long[(int) Location.None + 1];
-        public DateTime[] BuyTimes = new DateTime[(int) Location.None + 1];
-
-        public long[] SellPrices = new long[(int) Location.None + 1];
-        public DateTime[] SellTimes = new DateTime[(int) Location.None + 1];
+        private readonly PricesContainer _pricesContainer;
 
         public CostContainer(IPlayerContext context, SimpleItem item)
         {
             Context = context;
             Item = item;
-            for (var i = 0; i < SellPrices.Length; i++)
+
+            if (context != null) context.TownIndexChanged += ContextOnTownIndexChanged;
+
+            _pricesContainer = context?.LoadPricesContainer(item.Id);
+
+            if (_pricesContainer == null)
             {
-                SellPrices[i] = BaseRequirement.MaxNullPrice;
-                BuyPrices[i] = -BaseRequirement.MaxNullPrice;
+                _pricesContainer = new PricesContainer(0);
+
+                for (var i = 0; i < _pricesContainer.SellPrices.Length; i++)
+                {
+                    _pricesContainer.SellPrices[i] = BaseRequirement.MaxNullPrice;
+                    _pricesContainer.BuyPrices[i] = -BaseRequirement.MaxNullPrice;
+                }
             }
+
+
 //            context.TownIndexChanged += Updated;
+        }
+
+        private void ContextOnTownIndexChanged()
+        {
+            Updated?.Invoke();
         }
 
         private IPlayerContext Context { get; }
@@ -30,10 +63,12 @@ namespace Albion.Db.Items
 
         public long CraftTax => Item.ItemValue * 5 / 100 * Context.GetCraftTax(Item.ShopCategory); //10% tax
 
-        public long SellPrice => SellPrices[Context.TownIndex];
-        public DateTime SellTime => SellTimes[Context.TownIndex];
-        public long BuyPrice => BuyPrices[Context.TownIndex];
-        public DateTime BuyTime => BuyTimes[Context.TownIndex];
+        public long SellPrice => _pricesContainer.SellPrices[Context.TownIndex];
+        public DateTime SellTime => _pricesContainer.SellTimes[Context.TownIndex];
+        public long BuyPrice => _pricesContainer.BuyPrices[Context.TownIndex];
+        public DateTime BuyTime => _pricesContainer.BuyTimes[Context.TownIndex];
+
+        public long CraftReturn => Context.GetReturn(Item.Craftingcategory);
 
         public event Action Updated;
 
@@ -42,11 +77,11 @@ namespace Albion.Db.Items
         public bool UpdateBye(long price, bool isSngle)
         {
             if (!isSngle)
-                if (price < BuyPrices[Context.TownIndex])
+                if (price < _pricesContainer.BuyPrices[Context.TownIndex])
                     return false;
 
-            BuyPrices[Context.TownIndex] = price;
-            BuyTimes[Context.TownIndex] = DateTime.Now;
+            _pricesContainer.BuyPrices[Context.TownIndex] = price;
+            _pricesContainer.BuyTimes[Context.TownIndex] = DateTime.Now;
 
             Update();
 
@@ -56,11 +91,11 @@ namespace Albion.Db.Items
         public bool UpdateSell(long price, bool isSngle)
         {
             if (!isSngle)
-                if (price > SellPrices[Context.TownIndex])
+                if (price > _pricesContainer.SellPrices[Context.TownIndex])
                     return false;
 
-            SellPrices[Context.TownIndex] = price;
-            SellTimes[Context.TownIndex] = DateTime.Now;
+            _pricesContainer.SellPrices[Context.TownIndex] = price;
+            _pricesContainer.SellTimes[Context.TownIndex] = DateTime.Now;
 
             Update();
 
@@ -69,6 +104,7 @@ namespace Albion.Db.Items
 
         private void Update()
         {
+            Context.SavePricesContainer(Item.Id, _pricesContainer);
             Updated();
         }
 

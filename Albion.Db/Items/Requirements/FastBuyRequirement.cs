@@ -1,11 +1,11 @@
-﻿using System;
-
-namespace Albion.Db.Items.Requirements
+﻿namespace Albion.Db.Items.Requirements
 {
     public class FastBuyRequirement : BaseMarketRequirement
     {
         public FastBuyRequirement(CostContainer costContainer) : base(costContainer)
         {
+            costContainer.Updated += Update;
+            Update();
         }
 
         public override long Cost => Silver;
@@ -16,10 +16,11 @@ namespace Albion.Db.Items.Requirements
             return $"Fast Buy {Silver}";
         }
 
-        protected override void Update()
+        protected void Update()
         {
             Silver = CostContainer.SellPrice;
             _time = CostContainer.SellTime;
+            RaisePropertyChanged(nameof(Cost));
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using Albion.Common;
-using GalaSoft.MvvmLight;
 
 namespace Albion.Db.Items
 {

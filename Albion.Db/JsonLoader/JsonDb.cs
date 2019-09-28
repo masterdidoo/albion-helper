@@ -1532,7 +1532,7 @@ namespace Albion.Db.JsonLoader
             public FurnitureitemUicraftsoundfinish? Uicraftsoundfinish { get; set; }
 
             [JsonProperty("@craftingcategory", NullValueHandling = NullValueHandling.Ignore)]
-            public Labourersaffected? Craftingcategory { get; set; }
+            public Craftingcategory? Craftingcategory { get; set; }
 
             [JsonProperty("@canbestoredinbattlevault", NullValueHandling = NullValueHandling.Ignore)]
             [JsonConverter(typeof(FluffyParseStringConverter))]
@@ -1741,7 +1741,7 @@ namespace Albion.Db.JsonLoader
             public string Focusfireprotectionpeneration { get; set; }
 
             [JsonProperty("@craftingcategory", NullValueHandling = NullValueHandling.Ignore)]
-            public Shopsubcategory1Enum? Craftingcategory { get; set; }
+            public Craftingcategory? Craftingcategory { get; set; }
 
             [JsonProperty("@healmodifier", NullValueHandling = NullValueHandling.Ignore)]
             [JsonConverter(typeof(PurpleParseStringConverter))]
@@ -1898,8 +1898,6 @@ namespace Albion.Db.JsonLoader
         public enum ConsumableitemSlottype { Food, Potion };
 
         public enum Beardstate { Empty, Flat, Half };
-
-        public enum Craftingcategory { ClothArmor, ClothHelmet, ClothShoes, LeatherArmor, LeatherHelmet, LeatherShoes, Offhand, PlateArmor, PlateHelmet, PlateShoes };
 
         public enum EquipmentitemDescriptionlocatag { ItemsDecorativeEquipmentDesc, ItemsGeneralEquipmentItemDesc };
 
@@ -2120,7 +2118,6 @@ namespace Albion.Db.JsonLoader
                 PurpleCraftresourceConverter.Singleton,
                 EnchantmentUnionConverter.Singleton,
                 BeardstateConverter.Singleton,
-                CraftingcategoryConverter.Singleton,
                 EquipmentitemDescriptionlocatagConverter.Singleton,
                 FacestateConverter.Singleton,
                 IontypeConverter.Singleton,
@@ -2788,87 +2785,6 @@ namespace Albion.Db.JsonLoader
             }
 
             public static readonly BeardstateConverter Singleton = new BeardstateConverter();
-        }
-
-        internal class CraftingcategoryConverter : JsonConverter
-        {
-            public override bool CanConvert(Type t) => t == typeof(Craftingcategory) || t == typeof(Craftingcategory?);
-
-            public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
-            {
-                if (reader.TokenType == JsonToken.Null) return null;
-                var value = serializer.Deserialize<string>(reader);
-                switch (value)
-                {
-                    case "cloth_armor":
-                        return Craftingcategory.ClothArmor;
-                    case "cloth_helmet":
-                        return Craftingcategory.ClothHelmet;
-                    case "cloth_shoes":
-                        return Craftingcategory.ClothShoes;
-                    case "leather_armor":
-                        return Craftingcategory.LeatherArmor;
-                    case "leather_helmet":
-                        return Craftingcategory.LeatherHelmet;
-                    case "leather_shoes":
-                        return Craftingcategory.LeatherShoes;
-                    case "offhand":
-                        return Craftingcategory.Offhand;
-                    case "plate_armor":
-                        return Craftingcategory.PlateArmor;
-                    case "plate_helmet":
-                        return Craftingcategory.PlateHelmet;
-                    case "plate_shoes":
-                        return Craftingcategory.PlateShoes;
-                }
-                throw new Exception("Cannot unmarshal type Craftingcategory");
-            }
-
-            public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
-            {
-                if (untypedValue == null)
-                {
-                    serializer.Serialize(writer, null);
-                    return;
-                }
-                var value = (Craftingcategory)untypedValue;
-                switch (value)
-                {
-                    case Craftingcategory.ClothArmor:
-                        serializer.Serialize(writer, "cloth_armor");
-                        return;
-                    case Craftingcategory.ClothHelmet:
-                        serializer.Serialize(writer, "cloth_helmet");
-                        return;
-                    case Craftingcategory.ClothShoes:
-                        serializer.Serialize(writer, "cloth_shoes");
-                        return;
-                    case Craftingcategory.LeatherArmor:
-                        serializer.Serialize(writer, "leather_armor");
-                        return;
-                    case Craftingcategory.LeatherHelmet:
-                        serializer.Serialize(writer, "leather_helmet");
-                        return;
-                    case Craftingcategory.LeatherShoes:
-                        serializer.Serialize(writer, "leather_shoes");
-                        return;
-                    case Craftingcategory.Offhand:
-                        serializer.Serialize(writer, "offhand");
-                        return;
-                    case Craftingcategory.PlateArmor:
-                        serializer.Serialize(writer, "plate_armor");
-                        return;
-                    case Craftingcategory.PlateHelmet:
-                        serializer.Serialize(writer, "plate_helmet");
-                        return;
-                    case Craftingcategory.PlateShoes:
-                        serializer.Serialize(writer, "plate_shoes");
-                        return;
-                }
-                throw new Exception("Cannot marshal type Craftingcategory");
-            }
-
-            public static readonly CraftingcategoryConverter Singleton = new CraftingcategoryConverter();
         }
 
         internal class EquipmentitemDescriptionlocatagConverter : JsonConverter
