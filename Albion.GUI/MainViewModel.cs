@@ -109,6 +109,7 @@ namespace Albion.GUI
         public void Dispose()
         {
             _albionParser.Dispose();
+            _db.Context.Dispose();
         }
     }
 }

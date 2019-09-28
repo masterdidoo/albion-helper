@@ -51,9 +51,19 @@ namespace Albion.Db.Items
 
         public long CraftTax => Item.ItemValue * 5 / 100 * Context.GetCraftTax(Item.ShopCategory); //10% tax
 
-        public long? SellPrice => _pricesContainer.SellPrices[Context.TownIndex];
+        public long? SellPrice
+        {
+            get => _pricesContainer.SellPrices[Context.TownIndex];
+            set => _pricesContainer.SellPrices[Context.TownIndex] = value;
+        }
+
         public DateTime? SellTime => _pricesContainer.SellTimes[Context.TownIndex];
-        public long? BuyPrice => _pricesContainer.BuyPrices[Context.TownIndex];
+        public long? BuyPrice
+        {
+            get => _pricesContainer.BuyPrices[Context.TownIndex];
+            set => _pricesContainer.BuyPrices[Context.TownIndex] = value;
+        }
+
         public DateTime? BuyTime => _pricesContainer.BuyTimes[Context.TownIndex];
 
         public long CraftReturn => Context.GetReturn(Item.Craftingcategory);
@@ -92,10 +102,16 @@ namespace Albion.Db.Items
 
         private void Update()
         {
-            Context.SavePricesContainer(Item.Id, _pricesContainer);
+            //Context.SavePricesContainer(Item.Id, _pricesContainer);
             Updated();
         }
 
         #endregion
+
+        public void Save()
+        {
+            Context.SavePricesContainer(Item.Id, _pricesContainer);
+        }
+
     }
 }

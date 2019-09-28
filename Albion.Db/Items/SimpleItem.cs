@@ -17,7 +17,9 @@ namespace Albion.Db.Items
             FastBuyRequirement = new FastBuyRequirement(CostContainer);
             LongBuyRequirement = new LongBuyRequirement(CostContainer);
 
-            CostContainer.Updated += OnUpdated;
+            FastBuyRequirement.Updated += OnUpdated;
+            LongBuyRequirement.Updated += OnUpdated;
+
             OnUpdated();
         }
 
@@ -45,16 +47,17 @@ namespace Albion.Db.Items
             get => _cost;
             set
             {
-                if (_cost == value) return;
-                _cost = value;
-                Updated?.Invoke();
-                RaisePropertyChanged();
+                if (Set(ref _cost, value)) Updated?.Invoke();
             }
         }
 
         public DateTime? Time => Requirements.Min(r => r.Time); //{ get; set; }
 
-        public long? Profit => (Cost??0) == 0 ? -100 : CostContainer.SellPrice * 100 / Cost - 100;
+        public long? Profit => (Cost??0) == 0 ? -100 : LongSellPrice * 100 / Cost - 100;
+
+        public long? LongSellPrice => CostContainer.SellPrice - CostContainer.SellPrice * 3 / 100;
+
+        public long? FastSellPrice => CostContainer.BuyPrice - CostContainer.BuyPrice * 2 / 100;
 
         private void OnUpdated()
         {

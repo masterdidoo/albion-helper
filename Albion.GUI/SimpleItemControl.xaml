@@ -7,9 +7,16 @@
              xmlns:items="clr-namespace:Albion.Db.Items;assembly=Albion.Db"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance items:SimpleItem}">
-    <StackPanel>
-        <TextBlock Text="{Binding Id}"/>    
-        <TextBlock Text="{Binding PriceHolder.Bye.Price}"/>    
-        <TextBlock Text="{Binding PriceHolder.Sell.Price}"/>    
-    </StackPanel>
+    <DockPanel>
+        <TextBlock Text="{Binding Id}" Style="{StaticResource TextBlockStyle}" />
+        <TextBlock Text="1" Style="{StaticResource TextBlockStyle}" />
+        <TextBlock Text="{Binding ItemValue, StringFormat=IV: {0}}"
+                   Style="{StaticResource TextBlockStyle}" />
+        <TextBlock Text="{Binding Cost, StringFormat=Cost: {0:#,#}, Converter={StaticResource PriceConverter}}"
+                   Style="{StaticResource TextBlockStyle}" />
+        <TextBlock Text="{Binding LongSellPrice, StringFormat=Price: {0:#,#}, Converter={StaticResource PriceConverter}}"
+                   Style="{StaticResource TextBlockStyle}" />
+        <TextBlock Text="{Binding Profit, StringFormat=Profit: {0}%}"
+                   Style="{StaticResource TextBlockStyle}" />
+    </DockPanel>
 </UserControl>

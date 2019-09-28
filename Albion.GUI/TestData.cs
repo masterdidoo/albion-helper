@@ -19,6 +19,7 @@ namespace Albion.GUI
             SimpleItem item1 = new SimpleItem("test00", cont)
             {
                 CraftingRequirements = empty,
+                Cost = 20100*10000
             };
 
             item1.FastBuyRequirement.Silver = 1000*10000;
@@ -34,7 +35,7 @@ namespace Albion.GUI
                         Count = 10,
                         Item = item1
                     },
-                })
+                }, 10000)
                 {
                     IsExpanded = true,
                     IsMin = true,
@@ -76,6 +77,10 @@ namespace Albion.GUI
         public long GetReturn(Craftingcategory category)
         {
             return 100;
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

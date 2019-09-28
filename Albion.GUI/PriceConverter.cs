@@ -19,9 +19,10 @@ namespace Albion.GUI
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is long)) return null;
+            if (!(value is string)) return null;
 
-            var vr = (long)value;
+            if (!long.TryParse((string) value, out var vr)) return null;
+
             return vr * 10000;
         }
     }

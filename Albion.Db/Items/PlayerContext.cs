@@ -4,10 +4,10 @@ using LiteDB;
 
 namespace Albion.Db.Items
 {
-    public class PlayerContext : IPlayerContext
+    public class PlayerContext : IPlayerContext, IDisposable
     {
-        private LiteDatabase _ldb;
-        private LiteCollection<PricesContainer> _rep;
+        private readonly LiteDatabase _ldb;
+        private readonly LiteCollection<PricesContainer> _rep;
         private Location _town = Location.None;
 
         public PlayerContext()
@@ -75,6 +75,11 @@ namespace Albion.Db.Items
             }
 
             return 100;
+        }
+
+        public void Dispose()
+        {
+            _ldb.Dispose();
         }
     }
 }

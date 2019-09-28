@@ -14,14 +14,6 @@
     </UserControl.DataContext>
 
     <UserControl.Resources>
-        <Style x:Key="TextBlockStyle" TargetType="{x:Type TextBlock}">
-            <Setter Property="Margin" Value="3 0 3 0" />
-        </Style>
-        <Style x:Key="TextBlockBoldStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
-            <Setter Property="FontWeight" Value="Bold" />
-        </Style>
-
-        <local:PriceConverter x:Key="PriceConverter" />
 
         <HierarchicalDataTemplate DataType="{x:Type items:SimpleItem}"
                                   ItemsSource="{Binding Requirements}">
@@ -32,7 +24,7 @@
                            Style="{StaticResource TextBlockStyle}" />
                 <TextBlock Text="{Binding Cost, StringFormat=Cost: {0:#,#}, Converter={StaticResource PriceConverter}}"
                            Style="{StaticResource TextBlockStyle}" />
-                <TextBlock Text="{Binding CostContainer.SellPrice, StringFormat=Price: {0:#,#}, Converter={StaticResource PriceConverter}}"
+                <TextBlock Text="{Binding LongSellPrice, StringFormat=Price: {0:#,#}, Converter={StaticResource PriceConverter}}"
                            Style="{StaticResource TextBlockStyle}" />
                 <TextBlock Text="{Binding Profit, StringFormat=Profit: {0}%}"
                            Style="{StaticResource TextBlockStyle}" />
@@ -44,6 +36,7 @@
                 <TextBlock Text="Long Buy" Style="{StaticResource TextBlockStyle}" />
                 <TextBlock Text="{Binding Cost, StringFormat=Cost: {0:#,#}, Converter={StaticResource PriceConverter}}"
                            Style="{StaticResource TextBlockStyle}" />
+                <TextBox Text="{Binding Silver, Converter={StaticResource PriceConverter}}"/>
             </DockPanel>
         </HierarchicalDataTemplate>
         <HierarchicalDataTemplate DataType="{x:Type requirements:FastBuyRequirement}">
@@ -52,6 +45,7 @@
                 <TextBlock Text="Fast Buy" Style="{StaticResource TextBlockStyle}" />
                 <TextBlock Text="{Binding Cost, StringFormat=Cost: {0:#,#}, Converter={StaticResource PriceConverter}}"
                            Style="{StaticResource TextBlockStyle}" />
+                <TextBox Text="{Binding Silver, Converter={StaticResource PriceConverter}}"/>
             </DockPanel>
         </HierarchicalDataTemplate>
         <HierarchicalDataTemplate DataType="{x:Type requirements:CraftingRequirement}"
@@ -76,7 +70,7 @@
                            Style="{StaticResource TextBlockStyle}" />
                 <TextBlock Text="{Binding Item.Cost, StringFormat=Cost: {0:#,#}, Converter={StaticResource PriceConverter}}"
                            Style="{StaticResource TextBlockStyle}" />
-                <TextBlock Text="{Binding Item.CostContainer.SellPrice, StringFormat=Price: {0:#,#}, Converter={StaticResource PriceConverter}}"
+                <TextBlock Text="{Binding Item.LongSellPrice, StringFormat=Price: {0:#,#}, Converter={StaticResource PriceConverter}}"
                            Style="{StaticResource TextBlockStyle}" />
                 <TextBlock Text="{Binding Item.Profit, StringFormat=Profit: {0}%}"
                            Style="{StaticResource TextBlockStyle}" />

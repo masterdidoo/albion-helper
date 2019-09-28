@@ -6,23 +6,15 @@ namespace Albion.Db.Items.Requirements
     {
         public LongBuyRequirement(CostContainer costContainer) : base(costContainer)
         {
-            costContainer.Updated += Update;
-            Update();
         }
 
-        public override long? Cost => Silver + Tax + 10000;
-        public override long Tax => Silver / 1000 ?? 0;
-
-        public override string ToString()
+        protected override DateTime? InitTime => CostContainer.BuyTime;
+        protected override long? InitSilver
         {
-            return $"Long Buy {Silver}";
+            get => CostContainer.BuyPrice;
+            set => CostContainer.BuyPrice = value;
         }
 
-        protected void Update()
-        {
-            Silver = CostContainer.BuyPrice;
-            _time = CostContainer.BuyTime;
-            RaisePropertyChanged(nameof(Cost));
-        }
+        protected override long? InitCost => Silver + Silver / 100 + 10000;
     }
 }

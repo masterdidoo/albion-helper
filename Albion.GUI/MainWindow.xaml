@@ -15,23 +15,6 @@
         </Grid.RowDefinitions>
 
         <local:TreeViewControl Grid.Row="1" DataContext="{Binding SimpleItems}"/>
-        <ListView Grid.Row="1" ItemsSource="{Binding SimpleItems}" Visibility="Collapsed">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding Id}" />
-                    <GridViewColumn Header="Bye" Width="50" DisplayMemberBinding="{Binding PriceHolder.Bye.Price}" />
-                    <GridViewColumn Header="bTime" Width="50" DisplayMemberBinding="{Binding PriceHolder.Bye.Time}" />
-                    <GridViewColumn Header="Sell" Width="50" DisplayMemberBinding="{Binding PriceHolder.Sell.Price}" />
-                    <GridViewColumn Header="sTime" Width="50" DisplayMemberBinding="{Binding PriceHolder.Sell.Time}" />
-                </GridView>
-            </ListView.View>
-            <!-- <ListView.ItemTemplate> -->
-            <!--     <DataTemplate> -->
-            <!--         <local:SimpleItemControl></local:SimpleItemControl> -->
-            <!--     </DataTemplate> -->
-            <!-- </ListView.ItemTemplate> -->
-        </ListView>
-
         <StackPanel Grid.Row="2" Orientation="Horizontal">
             <TextBlock Text="Blue :" Margin="5,0"/>
             <TextBlock Text="{Binding BluePlayers}"/>

@@ -5,6 +5,14 @@
              Startup="App_OnStartup"
              Exit="App_OnExit">
     <Application.Resources>
-         
+        <Style x:Key="TextBlockStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="Margin" Value="3 0 3 0" />
+        </Style>
+        <Style x:Key="TextBlockBoldStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+
+        <local:PriceConverter x:Key="PriceConverter" />
+
     </Application.Resources>
 </Application>

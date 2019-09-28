@@ -114,19 +114,13 @@ namespace Albion.Db.Items
                 if (cvt != null)
                     return new []
                     {
-                        new CraftingRequirement(item, GetCraftResources(cvt.Craftresource))
-                        {
-                            Silver = cvt.Silver * 10000 ?? 0,
-                        }
+                        new CraftingRequirement(item, GetCraftResources(cvt.Craftresource), cvt.Silver * 10000 ?? 0)
                     };
             }
             if (craftingrequirements.Value.CraftingrequirementArrayArray != null)
                 return
                     craftingrequirements.Value.CraftingrequirementArrayArray.Select(cvt =>
-                        new CraftingRequirement(item, GetCraftResources(cvt.Craftresource))
-                        {
-                            Silver = cvt.Silver * 10000 ?? 0,
-                        }).ToArray();
+                        new CraftingRequirement(item, GetCraftResources(cvt.Craftresource), cvt.Silver * 10000 ?? 0)).ToArray();
 
             return Empty;
         }

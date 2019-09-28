@@ -3,7 +3,7 @@ using Albion.Common;
 
 namespace Albion.Db.Items
 {
-    public interface IPlayerContext
+    public interface IPlayerContext : IDisposable
     {
         int TownIndex { get; }
         Location Town { get; set; }
