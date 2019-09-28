@@ -44,6 +44,7 @@ namespace Albion.Db.Items
                 minR.IsExpanded = true;
                 minR.IsMin = true;
             }
+                RaisePropertyChanged(nameof(Profit));
         }
 
         #region FromConfig
@@ -109,10 +110,14 @@ namespace Albion.Db.Items
                 if (_cost == value) return;
                 _cost = value;
                 Updated?.Invoke();
+                RaisePropertyChanged();
             }
         }
 
         public DateTime Time => Requirements.Min(r=>r.Time);//{ get; set; }
+
+        public long Profit => Cost == 0 ? -100 : (CostContainer.SellPrice * 100 / Cost) - 100;
+
         public event Action Updated;
     }
 }

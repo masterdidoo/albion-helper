@@ -34,6 +34,8 @@
                            Style="{StaticResource TextBlockStyle}" />
                 <TextBlock Text="{Binding CostContainer.SellPrice, StringFormat=Price: {0:#,#}, Converter={StaticResource PriceConverter}}"
                            Style="{StaticResource TextBlockStyle}" />
+                <TextBlock Text="{Binding Profit, StringFormat=Profit: {0}%}"
+                           Style="{StaticResource TextBlockStyle}" />
             </DockPanel>
         </HierarchicalDataTemplate>
         <HierarchicalDataTemplate DataType="{x:Type requirements:LongBuyRequirement}">
@@ -73,6 +75,8 @@
                 <TextBlock Text="{Binding Item.Cost, StringFormat=Cost: {0:#,#}, Converter={StaticResource PriceConverter}}"
                            Style="{StaticResource TextBlockStyle}" />
                 <TextBlock Text="{Binding Item.CostContainer.SellPrice, StringFormat=Price: {0:#,#}, Converter={StaticResource PriceConverter}}"
+                           Style="{StaticResource TextBlockStyle}" />
+                <TextBlock Text="{Binding Item.Profit, StringFormat=Profit: {0}%}"
                            Style="{StaticResource TextBlockStyle}" />
             </DockPanel>
         </HierarchicalDataTemplate>

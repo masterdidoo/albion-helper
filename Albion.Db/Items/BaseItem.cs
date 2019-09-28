@@ -1,6 +1,8 @@
-﻿namespace Albion.Db.Items
+﻿using GalaSoft.MvvmLight;
+
+namespace Albion.Db.Items
 {
-    public class BaseItem
+    public class BaseItem : ObservableObject
     {
         public BaseItem(string id)
         {
