@@ -1,4 +1,4 @@
-﻿namespace Albion.Db.Items
+﻿namespace Albion.Db.JsonLoader
 {
     public enum Craftingcategory
     {

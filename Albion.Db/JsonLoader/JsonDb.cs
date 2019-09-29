@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
-using Albion.Db.Items;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 namespace Albion.Db.JsonLoader
 {
-    public partial class JsonDb
+    public class JsonDb
     {
         public static JsonDb Load()
         {
@@ -33,12 +32,6 @@ namespace Albion.Db.JsonLoader
 
         public class Items
         {
-            [JsonProperty("@xmlns:xsi")]
-            public Uri XmlnsXsi { get; set; }
-
-            [JsonProperty("@xsi:noNamespaceSchemaLocation")]
-            public string XsiNoNamespaceSchemaLocation { get; set; }
-
             [JsonProperty("farmableitem")]
             public Farmableitem[] Farmableitem { get; set; }
 
@@ -97,7 +90,7 @@ namespace Albion.Db.JsonLoader
             public long Tier { get; set; }
 
             [JsonProperty("@weight")]
-            public string Weight { get; set; }
+            public float Weight { get; set; }
 
             [JsonProperty("@dummyitempower", NullValueHandling = NullValueHandling.Ignore)]
             [JsonConverter(typeof(PurpleParseStringConverter))]
@@ -275,7 +268,7 @@ namespace Albion.Db.JsonLoader
             public long? Craftingfocus { get; set; }
 
             [JsonProperty("craftresource", NullValueHandling = NullValueHandling.Ignore)]
-            public PurpleCraftresource? Craftresource { get; set; }
+            public CraftingrequirementCraftresourceUnion? Craftresource { get; set; }
 
             [JsonProperty("@gold", NullValueHandling = NullValueHandling.Ignore)]
             [JsonConverter(typeof(PurpleParseStringConverter))]
@@ -1787,7 +1780,7 @@ namespace Albion.Db.JsonLoader
             public long Craftingfocus { get; set; }
 
             [JsonProperty("craftresource")]
-            public FluffyCraftresource Craftresource { get; set; }
+            public CraftingrequirementCraftresourceUnion Craftresource { get; set; }
 
             [JsonProperty("@swaptransaction", NullValueHandling = NullValueHandling.Ignore)]
             [JsonConverter(typeof(FluffyParseStringConverter))]
@@ -2087,11 +2080,6 @@ namespace Albion.Db.JsonLoader
             public static implicit operator ProjectileUnion(ProjectileElement[] ProjectileElementArray) => new ProjectileUnion { ProjectileElementArray = ProjectileElementArray };
         }
 
-        public partial class JsonDb
-        {
-            public static JsonDb FromJson(string json) => JsonConvert.DeserializeObject<JsonDb>(json, Converter.Settings);
-        }
-
         public static class Serialize
         {
             public static string ToJson(this JsonDb self) => JsonConvert.SerializeObject(self, Converter.Settings);
@@ -2115,7 +2103,6 @@ namespace Albion.Db.JsonLoader
                 ConsumableitemResourcetypeConverter.Singleton,
                 ConsumableitemShopsubcategory1Converter.Singleton,
                 ConsumableitemSlottypeConverter.Singleton,
-                PurpleCraftresourceConverter.Singleton,
                 EnchantmentUnionConverter.Singleton,
                 BeardstateConverter.Singleton,
                 EquipmentitemDescriptionlocatagConverter.Singleton,
@@ -2667,44 +2654,7 @@ namespace Albion.Db.JsonLoader
             public static readonly ConsumableitemSlottypeConverter Singleton = new ConsumableitemSlottypeConverter();
         }
 
-        internal class PurpleCraftresourceConverter : JsonConverter
-        {
-            public override bool CanConvert(Type t) => t == typeof(PurpleCraftresource) || t == typeof(PurpleCraftresource?);
-
-            public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
-            {
-                switch (reader.TokenType)
-                {
-                    case JsonToken.StartObject:
-                        var objectValue = serializer.Deserialize<Replacementitem>(reader);
-                        return new PurpleCraftresource { Replacementitem = objectValue };
-                    case JsonToken.StartArray:
-                        var arrayValue = serializer.Deserialize<Replacementitem[]>(reader);
-                        return new PurpleCraftresource { ReplacementitemArray = arrayValue };
-                }
-                throw new Exception("Cannot unmarshal type PurpleCraftresource");
-            }
-
-            public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
-            {
-                var value = (PurpleCraftresource)untypedValue;
-                if (value.ReplacementitemArray != null)
-                {
-                    serializer.Serialize(writer, value.ReplacementitemArray);
-                    return;
-                }
-                if (value.Replacementitem != null)
-                {
-                    serializer.Serialize(writer, value.Replacementitem);
-                    return;
-                }
-                throw new Exception("Cannot marshal type PurpleCraftresource");
-            }
-
-            public static readonly PurpleCraftresourceConverter Singleton = new PurpleCraftresourceConverter();
-        }
-
-        internal class EnchantmentUnionConverter : JsonConverter
+    internal class EnchantmentUnionConverter : JsonConverter
         {
             public override bool CanConvert(Type t) => t == typeof(EnchantmentUnion) || t == typeof(EnchantmentUnion?);
 

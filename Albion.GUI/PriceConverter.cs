@@ -2,7 +2,6 @@ using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
-using Albion.Db.Items.Requirements;
 
 namespace Albion.GUI
 {

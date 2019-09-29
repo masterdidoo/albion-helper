@@ -5,8 +5,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
 using Albion.Common;
-using Albion.Db.Items;
-using Albion.Db.Items.ViewModels;
 using Albion.Db.JsonLoader;
 using Albion.Event;
 using Albion.Network;
@@ -22,17 +20,10 @@ namespace Albion.GUI
         private int _bluePlayers;
         private int _redPlayers;
         private Location _town = Location.None;
-        private readonly All _db;
         private Location _townSell = Location.None;
 
         public MainViewModel()
         {
-            _db = new All(JsonDb.Load(), JsonNames.LoadNames());
-
-            _db.Context.TownIndexChanged += ContextOnTownIndexChanged;
-
-            //SimpleItems = new ObservableCollection<SimpleItem>(_db.ItemsDb.Values.OrderBy(x => x.Id));
-
             _albionParser = new AlbionParser();
 
             _albionParser.AddEventHandler<PlayerCounts>(p =>
@@ -48,51 +39,39 @@ namespace Albion.GUI
                     Town = p.Town;
                     TownSell = p.Town;
                 }
-                RaisePropertyChanged(nameof(SimpleItems));
             });
 
             _albionParser.AddOperationHandler<AuctionBuyOffer>(p =>
             {
-                if (p.Items.Length == 0) return;
-                var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
-                foreach (var item in items)
-                {
-                    var ph = _db.GetItem(item.Key).CostContainer;
-                    ph.UpdateBye(item, items.Length == 1);
-                }
-                RaisePropertyChanged(nameof(SimpleItems));
+//                if (p.Items.Length == 0) return;
+//                var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
+//                foreach (var item in items)
+//                {
+//                    var ph = _db.GetItem(item.Key).CostContainer;
+//                    ph.UpdateBye(item, items.Length == 1);
+//                }
+//                RaisePropertyChanged(nameof(SimpleItems));
             });
 
             _albionParser.AddOperationHandler<AuctionGetRequests>(p =>
             {
-                if (p.Items.Length == 0) return;
-                var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
-                foreach (var item in items)
-                {
-                    var ph = _db.GetItem(item.Key).CostContainer;
-                    ph.UpdateSell(item, items.Length == 1);
-                }
-                RaisePropertyChanged(nameof(SimpleItems));
+//                if (p.Items.Length == 0) return;
+//                var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
+//                foreach (var item in items)
+//                {
+//                    var ph = _db.GetItem(item.Key).CostContainer;
+//                    ph.UpdateSell(item, items.Length == 1);
+//                }
+//                RaisePropertyChanged(nameof(SimpleItems));
             });
 
             _albionParser.Start();
         }
 
-        private void ContextOnTownIndexChanged()
-        {
-            RaisePropertyChanged(nameof(SimpleItems));
-        }
-
-        public IEnumerable<SimpleItem> SimpleItems => _db.ItemsDb.Values.OrderByDescending(x => x.Time).ThenByDescending(x=>x.Profit);
-
         public Location Town
         {
             get => _town;
-            set
-            {
-                if (Set(ref _town, value))
-                    _db.Context.Town = value;
-            }
+            set { Set(ref _town, value); }
         }
 
         public Location TownSell
@@ -100,8 +79,7 @@ namespace Albion.GUI
             get => _townSell;
             set
             {
-                if (Set(ref _townSell, value))
-                    _db.Context.TownSell = value;
+                Set(ref _townSell, value);
             }
         }
 
@@ -119,12 +97,9 @@ namespace Albion.GUI
 
         public IEnumerable<Location> Towns => typeof(Location).GetEnumValues().Cast<Location>();
 
-        public IEnumerable<ArtefactVm> Artefacts => _db.Artefacts;
-
         public void Dispose()
         {
             _albionParser.Dispose();
-            _db.Context.Dispose();
         }
     }
 }

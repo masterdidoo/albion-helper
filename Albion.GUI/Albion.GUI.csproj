@@ -93,7 +93,6 @@
       <DependentUpon>ArtefactsViewControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="PriceConverter.cs" />
-    <Compile Include="TestData.cs" />
     <Compile Include="TreeViewControl.xaml.cs">
       <DependentUpon>TreeViewControl.xaml</DependentUpon>
     </Compile>
@@ -167,9 +166,6 @@
       <Project>{FA3FC058-ECB5-4B10-B601-0F54DB23CA92}</Project>
       <Name>Albion.Operation</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="T5_BAG.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
