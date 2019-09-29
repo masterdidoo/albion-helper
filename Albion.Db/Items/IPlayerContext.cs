@@ -5,6 +5,8 @@ namespace Albion.Db.Items
 {
     public interface IPlayerContext : IDisposable
     {
+        int TownIndexSell { get; }
+        Location TownSell { get; set; }
         int TownIndex { get; }
         Location Town { get; set; }
         long GetCraftTax(ShopCategory shopCategory);

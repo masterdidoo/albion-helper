@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Data;
 using Albion.Common;
 using Albion.Db.Items;
+using Albion.Db.Items.ViewModels;
 using Albion.Db.JsonLoader;
 using Albion.Event;
 using Albion.Network;
@@ -22,10 +23,11 @@ namespace Albion.GUI
         private int _redPlayers;
         private Location _town = Location.None;
         private readonly All _db;
+        private Location _townSell = Location.None;
 
         public MainViewModel()
         {
-            _db = new All(JsonDb.Load());
+            _db = new All(JsonDb.Load(), JsonNames.LoadNames());
 
             _db.Context.TownIndexChanged += ContextOnTownIndexChanged;
 
@@ -41,7 +43,11 @@ namespace Albion.GUI
 
             _albionParser.AddOperationHandler<ConsloeCommand>(p =>
             {
-                if (p.Town!=Location.None) Town = p.Town;
+                if (p.Town != Location.None)
+                {
+                    Town = p.Town;
+                    TownSell = p.Town;
+                }
                 RaisePropertyChanged(nameof(SimpleItems));
             });
 
@@ -51,10 +57,8 @@ namespace Albion.GUI
                 var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
                 foreach (var item in items)
                 {
-                    var max = item.Max(x => x.UnitPriceSilver);
                     var ph = _db.GetItem(item.Key).CostContainer;
-
-                    ph.UpdateBye(max, items.Length == 1);
+                    ph.UpdateBye(item, items.Length == 1);
                 }
                 RaisePropertyChanged(nameof(SimpleItems));
             });
@@ -65,10 +69,8 @@ namespace Albion.GUI
                 var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
                 foreach (var item in items)
                 {
-                    var min = item.Min(x => x.UnitPriceSilver);
                     var ph = _db.GetItem(item.Key).CostContainer;
-
-                    ph.UpdateSell(min, items.Length == 1);
+                    ph.UpdateSell(item, items.Length == 1);
                 }
                 RaisePropertyChanged(nameof(SimpleItems));
             });
@@ -81,7 +83,7 @@ namespace Albion.GUI
             RaisePropertyChanged(nameof(SimpleItems));
         }
 
-        public IEnumerable<SimpleItem> SimpleItems => _db.ItemsDb.Values.OrderByDescending(x => x.Profit);
+        public IEnumerable<SimpleItem> SimpleItems => _db.ItemsDb.Values.OrderByDescending(x => x.Time).ThenByDescending(x=>x.Profit);
 
         public Location Town
         {
@@ -90,6 +92,16 @@ namespace Albion.GUI
             {
                 if (Set(ref _town, value))
                     _db.Context.Town = value;
+            }
+        }
+
+        public Location TownSell
+        {
+            get => _townSell;
+            set
+            {
+                if (Set(ref _townSell, value))
+                    _db.Context.TownSell = value;
             }
         }
 
@@ -106,6 +118,9 @@ namespace Albion.GUI
         }
 
         public IEnumerable<Location> Towns => typeof(Location).GetEnumValues().Cast<Location>();
+
+        public IEnumerable<ArtefactVm> Artefacts => _db.Artefacts;
+
         public void Dispose()
         {
             _albionParser.Dispose();

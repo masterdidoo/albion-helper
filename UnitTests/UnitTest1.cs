@@ -13,6 +13,7 @@ namespace UnitTests
         public void TestMethod1()
         {
             var db = JsonDb.Load();
+            var dbnames = JsonNames.LoadNames();
 
             Assert.IsNotNull(db);
 
@@ -20,7 +21,7 @@ namespace UnitTests
 
             Assert.AreEqual(405, artefacts.Count());
 
-            var all = new All(db);
+            var all = new All(db, dbnames);
 
             Assert.AreEqual(79, all.FarmableItem.Length);
             Assert.AreEqual(405, all.Artefacts.Length);

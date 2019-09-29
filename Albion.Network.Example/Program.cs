@@ -16,7 +16,7 @@ namespace Albion.Network.Example
 
         private static void Main(string[] args)
         {
-            var db = new All(JsonDb.Load());
+            var db = new All(JsonDb.Load(), JsonNames.LoadNames());
 
             albionParser = new AlbionParser();
 

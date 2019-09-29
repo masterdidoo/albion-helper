@@ -9,10 +9,23 @@ namespace Albion.Db.Items
     {
         private long? _cost;
         private CraftingRequirement[] _craftingRequirements;
+        private DateTime? _time;
+
+        public override string ToString()
+        {
+            return $"{Id} ({Name})";
+        }
 
         public SimpleItem(string id, IPlayerContext context) : base(id)
         {
             CostContainer = new CostContainer(context, this);
+
+            CostContainer.SellUpdated += ()=>
+            {
+                RaisePropertyChanged(nameof(LongSellPrice));
+                RaisePropertyChanged(nameof(FastSellPrice));
+                RaisePropertyChanged(nameof(Profit));
+            };
 
             FastBuyRequirement = new FastBuyRequirement(CostContainer);
             LongBuyRequirement = new LongBuyRequirement(CostContainer);
@@ -51,13 +64,17 @@ namespace Albion.Db.Items
             }
         }
 
-        public DateTime? Time => Requirements.Min(r => r.Time); //{ get; set; }
+        public DateTime? Time
+        {
+            get => _time;
+            set => Set(ref _time , value);
+        }
 
         public long? Profit => (Cost??0) == 0 ? -100 : LongSellPrice * 100 / Cost - 100;
 
-        public long? LongSellPrice => CostContainer.SellPrice - CostContainer.SellPrice * 3 / 100;
+        public long? LongSellPrice => CostContainer.SellPrice2 - CostContainer.SellPrice2 * 3 / 100;
 
-        public long? FastSellPrice => CostContainer.BuyPrice - CostContainer.BuyPrice * 2 / 100;
+        public long? FastSellPrice => CostContainer.BuyPrice2 - CostContainer.BuyPrice2 * 2 / 100;
 
         private void OnUpdated()
         {
@@ -81,6 +98,8 @@ namespace Albion.Db.Items
                 minR.IsExpanded = true;
                 minR.IsMin = true;
             }
+
+            Time = CostContainer.BuyTime2; //Requirements.Max(r => r.Time);
 
             RaisePropertyChanged(nameof(Profit));
         }
@@ -114,6 +133,7 @@ namespace Albion.Db.Items
         public Craftingcategory Craftingcategory { get; set; }
         public ShopCategory ShopCategory { get; set; }
         public long ItemValue { get; set; }
+        public string Name { get; set; }
 
         #endregion
     }

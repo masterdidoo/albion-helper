@@ -18,7 +18,7 @@
         <HierarchicalDataTemplate DataType="{x:Type items:SimpleItem}"
                                   ItemsSource="{Binding Requirements}">
             <DockPanel>
-                <TextBlock Text="{Binding Id}" Style="{StaticResource TextBlockStyle}" />
+                <TextBlock Text="{Binding}" Style="{StaticResource TextBlockStyle}" />
                 <TextBlock Text="1" Style="{StaticResource TextBlockStyle}" />
                 <TextBlock Text="{Binding ItemValue, StringFormat=IV: {0}}"
                            Style="{StaticResource TextBlockStyle}" />
@@ -63,7 +63,7 @@
         <HierarchicalDataTemplate DataType="{x:Type requ:CraftResource}"
                                   ItemsSource="{Binding Item.Requirements}">
             <DockPanel>
-                <TextBlock Text="{Binding Item.Id}" Style="{StaticResource TextBlockStyle}" />
+                <TextBlock Text="{Binding Item}" Style="{StaticResource TextBlockStyle}" />
                 <TextBlock Text="{Binding Count}"
                            Style="{StaticResource TextBlockStyle}" />
                 <TextBlock Text="{Binding Item.ItemValue, StringFormat=IV: {0}}"

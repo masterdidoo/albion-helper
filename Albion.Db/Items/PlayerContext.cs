@@ -9,6 +9,7 @@ namespace Albion.Db.Items
         private readonly LiteDatabase _ldb;
         private readonly LiteCollection<PricesContainer> _rep;
         private Location _town = Location.None;
+        private Location _townSell = Location.None;
 
         public PlayerContext()
         {
@@ -25,6 +26,19 @@ namespace Albion.Db.Items
             {
                 if (_town == value) return;
                 _town = value;
+                TownIndexChanged?.Invoke();
+            }
+        }
+
+        public int TownIndexSell => (int) TownSell;
+
+        public Location TownSell
+        {
+            get => _townSell;
+            set
+            {
+                if (_townSell == value) return;
+                _townSell = value;
                 TownIndexChanged?.Invoke();
             }
         }

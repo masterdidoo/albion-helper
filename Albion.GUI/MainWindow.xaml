@@ -14,7 +14,14 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <local:TreeViewControl Grid.Row="1" DataContext="{Binding SimpleItems}"/>
+        <TabControl Grid.Row="1">
+            <TabItem Header="All">
+                <local:TreeViewControl Grid.Row="1" DataContext="{Binding SimpleItems}"/>
+            </TabItem>
+            <TabItem Header="Artefacts">
+                <local:ArtefactsViewControl Grid.Row="1" DataContext="{Binding Artefacts}"/>
+            </TabItem>
+        </TabControl>
         <StackPanel Grid.Row="2" Orientation="Horizontal">
             <TextBlock Text="Blue :" Margin="5,0"/>
             <TextBlock Text="{Binding BluePlayers}"/>
@@ -22,6 +29,8 @@
             <TextBlock Text="{Binding RedPlayers}"/>
             <TextBlock Text="Town :" Margin="5,0" />
             <ComboBox SelectedItem="{Binding Town}" ItemsSource="{Binding Towns}"/>
+            <TextBlock Text="TownSell :" Margin="5,0" />
+            <ComboBox SelectedItem="{Binding TownSell}" ItemsSource="{Binding Towns}"/>
         </StackPanel>
     </Grid>
 </Window>

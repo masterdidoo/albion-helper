@@ -2,6 +2,7 @@
 using System.Linq;
 using Albion.Db.Items.Requirements;
 using Albion.Db.Items.Requirements.Resources;
+using Albion.Db.Items.ViewModels;
 using Albion.Db.JsonLoader;
 
 namespace Albion.Db.Items
@@ -18,7 +19,7 @@ namespace Albion.Db.Items
 
         public IDictionary<string, SimpleItem> ItemsDb { get; } = new Dictionary<string, SimpleItem>();
 
-        public SimpleItem[] Artefacts { get; }
+        public ArtefactVm[] Artefacts { get; }
 
         public SimpleItem GetItem(string id)
         {
@@ -34,13 +35,16 @@ namespace Albion.Db.Items
         public readonly CraftingRequirement[] Empty = new CraftingRequirement[0];
         public readonly CraftResource[] Empty2 = new CraftResource[0];
 
-        public All(JsonDb db)
+        public All(JsonDb db, JsonNames[] jnames)
         {
+            var names = jnames.Where(x=>x.LocalizedNames!=null).ToDictionary(k => k.UniqueName, v => v.LocalizedNames.RU);
+
             Context = new PlayerContext();
             FarmableItem = db.Items.Farmableitem
                 .Select(x =>
                 {
                     var art = GetItem(x.Uniquename);
+                    art.Name = names[x.Uniquename];
                     art.Tier = x.Tier;
                     art.Weight = x.Weight;
                     art.ShopCategory = x.Shopcategory;
@@ -55,6 +59,7 @@ namespace Albion.Db.Items
                 .Select(x =>
                 {
                     var art = GetItem(x.Uniquename);
+                    art.Name = names.TryGetValue(x.Uniquename, out var name) ? name : x.Uniquename;
                     art.ItemValue = x.Itemvalue ?? 0;
                     art.Tier = x.Tier;
                     art.Weight = x.Weight;
@@ -71,6 +76,7 @@ namespace Albion.Db.Items
                 .Select(x =>
                 {
                     var art = GetItem(x.Uniquename);
+                    art.Name = names.TryGetValue(x.Uniquename, out var name) ? name : x.Uniquename;
                     art.ItemValue = x.Itempower;
                     art.Tier = x.Tier;
                     art.Weight = x.Weight;
@@ -87,6 +93,7 @@ namespace Albion.Db.Items
                 .Select(x =>
                 {
                     var art = GetItem(x.Uniquename);
+                    art.Name = names.TryGetValue(x.Uniquename, out var name) ? name : x.Uniquename;
                     art.ItemValue = x.Itempower;
                     art.Tier = x.Tier;
                     art.Weight = x.Weight;
@@ -99,7 +106,7 @@ namespace Albion.Db.Items
                 })
                 .ToArray();
 
-            Artefacts = SimpleItems.Where(x => x.ShopCategory == ShopCategory.Artefacts).ToArray();
+            Artefacts = SimpleItems.Where(x => x.ShopCategory == ShopCategory.Artefacts).Select(s=>new ArtefactVm(s)).ToArray();
         }
 
         public SimpleItem[] Equipment { get; set; }

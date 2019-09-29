@@ -59,6 +59,10 @@ namespace Albion.GUI
         public int TownIndex { get; }
         public Location Town { get; set; }
 
+        public int TownIndexSell { get; }
+
+        public Location TownSell { get ; set ; }
+
         public long GetCraftTax(ShopCategory shopCategory)
         {
             return 10000;
