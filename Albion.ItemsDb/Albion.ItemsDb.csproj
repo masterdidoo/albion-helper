@@ -41,7 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IItem.cs" />
     <Compile Include="items.cs" />
+    <Compile Include="itemsEquipmentitem.cs" />
+    <Compile Include="itemsMount.cs" />
+    <Compile Include="itemsSimpleitem.cs" />
+    <Compile Include="itemsWeapon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XmlLoader.cs" />
   </ItemGroup>

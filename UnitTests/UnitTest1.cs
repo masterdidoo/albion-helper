@@ -14,6 +14,11 @@ namespace UnitTests
             var db = XmlLoader.Load();
             Assert.IsNotNull(db);
             Assert.AreEqual(405, db.Items.OfType<itemsSimpleitem>().Count(x => x.shopcategory== "artefacts"));
+
+            var items = db.Items.OfType<IItem>().ToArray();
+            //var items = db.Items.OfType<IItem>().Select(x=>x.craftingcategory).Distinct().ToList();
+
+            Assert.IsNotNull(items);
         }
 
 
