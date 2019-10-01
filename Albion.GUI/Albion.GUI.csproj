@@ -150,10 +150,6 @@
       <Project>{BAD21844-F93F-4F46-B540-28631D7B0255}</Project>
       <Name>Albion.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Albion.Db\Albion.Db.csproj">
-      <Project>{333f890a-c2de-435b-9903-2b6d12afd510}</Project>
-      <Name>Albion.Db</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Albion.Event\Albion.Event.csproj">
       <Project>{B0AF151A-78A3-4B07-975D-6C29611E3AA9}</Project>
       <Name>Albion.Event</Name>

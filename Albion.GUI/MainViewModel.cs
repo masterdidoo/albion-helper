@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
 using Albion.Common;
-using Albion.Db.JsonLoader;
 using Albion.Event;
 using Albion.Network;
 using Albion.Operation;
