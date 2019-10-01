@@ -11,6 +11,9 @@
 public interface IItem
 {
     string uniquename { get; }
-    string craftingcategory { get; }
+    string shopcategory { get; }
     craftingrequirements[] craftingrequirements { get; }
+
+
+    string craftingcategory { get; }
 }

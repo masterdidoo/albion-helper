@@ -9,6 +9,8 @@
 //------------------------------------------------------------------------------
 
 using System.Xml.Serialization;
+using Albion.ItemsDb;
+using Albion.ItemsDb.Entity;
 
 // 
 // Этот исходный код был создан с помощью xsd, версия=4.6.1055.0.
@@ -696,11 +698,11 @@ public partial class items {
     [System.Xml.Serialization.XmlElementAttribute("equipmentitem", typeof(itemsEquipmentitem), Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
     [System.Xml.Serialization.XmlElementAttribute("farmableitem", typeof(itemsFarmableitem), Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
     [System.Xml.Serialization.XmlElementAttribute("furnitureitem", typeof(itemsFurnitureitem), Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-    [System.Xml.Serialization.XmlElementAttribute("journalitem", typeof(itemsJournalitem), Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+    [System.Xml.Serialization.XmlElementAttribute("journalitem", typeof(ItemsJournalitem), Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
     [System.Xml.Serialization.XmlElementAttribute("mount", typeof(itemsMount), Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-    [System.Xml.Serialization.XmlElementAttribute("simpleitem", typeof(itemsSimpleitem), Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+    [System.Xml.Serialization.XmlElementAttribute("simpleitem", typeof(ItemsSimpleitem), Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
     [System.Xml.Serialization.XmlElementAttribute("validitem", typeof(validitem))]
-    [System.Xml.Serialization.XmlElementAttribute("weapon", typeof(itemsWeapon), Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+    [System.Xml.Serialization.XmlElementAttribute("weapon", typeof(ItemsWeapon), Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
     public object[] Items {
         get {
             return this.itemsField;

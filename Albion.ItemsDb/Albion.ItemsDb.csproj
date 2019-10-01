@@ -43,15 +43,15 @@
   <ItemGroup>
     <Compile Include="IItem.cs" />
     <Compile Include="items.cs" />
-    <Compile Include="itemsConsumablefrominventoryitem.cs" />
-    <Compile Include="itemsConsumableitem.cs" />
-    <Compile Include="itemsEquipmentitem.cs" />
-    <Compile Include="itemsFarmableitem.cs" />
-    <Compile Include="itemsFurnitureitem.cs" />
-    <Compile Include="itemsJournalitem.cs" />
-    <Compile Include="itemsMount.cs" />
-    <Compile Include="itemsSimpleitem.cs" />
-    <Compile Include="itemsWeapon.cs" />
+    <Compile Include="Entity\itemsConsumablefrominventoryitem.cs" />
+    <Compile Include="Entity\itemsConsumableitem.cs" />
+    <Compile Include="Entity\itemsEquipmentitem.cs" />
+    <Compile Include="Entity\itemsFarmableitem.cs" />
+    <Compile Include="Entity\itemsFurnitureitem.cs" />
+    <Compile Include="Entity\itemsJournalitem.cs" />
+    <Compile Include="Entity\itemsMount.cs" />
+    <Compile Include="Entity\itemsSimpleitem.cs" />
+    <Compile Include="Entity\itemsWeapon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XmlLoader.cs" />
   </ItemGroup>
