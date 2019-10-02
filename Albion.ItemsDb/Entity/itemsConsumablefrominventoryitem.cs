@@ -4,234 +4,237 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Xml.Serialization;
 
-/// <remarks />
-[GeneratedCode("xsd", "4.6.1055.0")]
-[Serializable]
-[DebuggerStepThrough]
-[DesignerCategory("code")]
-[XmlType(AnonymousType = true)]
-public class itemsConsumablefrominventoryitem : IItem
+namespace Albion.ItemsDb.Entity
 {
-    private string abilitypowerField;
-
-    private AudioInfo[] audioInfoField;
-
-    private string consumespellField;
-
-    private craftingrequirements[] craftingrequirementsField;
-
-    private string descriptionlocatagField;
-
-    private string dummyitempowerField;
-
-    private string enchantmentlevelField;
-
-    private string itemvalueField;
-
-    private string maxstacksizeField;
-
-    private string salvageableField;
-
-    private string shopcategoryField;
-
-    private string shopsubcategory1Field;
-
-    private string showinmarketplaceField;
-
-    private string tierField;
-
-    private string tradableField;
-
-    private string uicraftsoundfinishField;
-
-    private string uicraftsoundstartField;
-
-    private string uispriteField;
-
-    private string uispriteoverlayField;
-
-    private string uniquenameField;
-
-    private string unlockedtocraftField;
-
-    private string weightField;
-
     /// <remarks />
-    [XmlElement("craftingrequirements")]
-    public craftingrequirements[] craftingrequirements
+    [GeneratedCode("xsd", "4.6.1055.0")]
+    [Serializable]
+    [DebuggerStepThrough]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    public class itemsConsumablefrominventoryitem : IItem
     {
-        get => craftingrequirementsField;
-        set => craftingrequirementsField = value;
-    }
+        private string abilitypowerField;
 
-    /// <remarks />
-    [XmlElement("AudioInfo")]
-    public AudioInfo[] AudioInfo
-    {
-        get => audioInfoField;
-        set => audioInfoField = value;
-    }
+        private AudioInfo[] audioInfoField;
 
-    /// <remarks />
-    [XmlAttribute]
-    public string tradable
-    {
-        get => tradableField;
-        set => tradableField = value;
-    }
+        private string consumespellField;
 
-    /// <remarks />
-    [XmlAttribute]
-    public string uisprite
-    {
-        get => uispriteField;
-        set => uispriteField = value;
-    }
+        private craftingrequirements[] craftingrequirementsField;
 
-    /// <remarks />
-    [XmlAttribute]
-    public string abilitypower
-    {
-        get => abilitypowerField;
-        set => abilitypowerField = value;
-    }
+        private string descriptionlocatagField;
 
-    /// <remarks />
-    [XmlAttribute]
-    public string consumespell
-    {
-        get => consumespellField;
-        set => consumespellField = value;
-    }
+        private string dummyitempowerField;
 
-    /// <remarks />
-    [XmlAttribute]
-    public string shopsubcategory1
-    {
-        get => shopsubcategory1Field;
-        set => shopsubcategory1Field = value;
-    }
+        private string enchantmentlevelField;
 
-    /// <remarks />
-    [XmlAttribute]
-    public string tier
-    {
-        get => tierField;
-        set => tierField = value;
-    }
+        private string itemvalueField;
 
-    /// <remarks />
-    [XmlAttribute]
-    public string weight
-    {
-        get => weightField;
-        set => weightField = value;
-    }
+        private string maxstacksizeField;
 
-    /// <remarks />
-    [XmlAttribute]
-    public string dummyitempower
-    {
-        get => dummyitempowerField;
-        set => dummyitempowerField = value;
-    }
+        private string salvageableField;
 
-    /// <remarks />
-    [XmlAttribute]
-    public string maxstacksize
-    {
-        get => maxstacksizeField;
-        set => maxstacksizeField = value;
-    }
+        private string shopcategoryField;
 
-    /// <remarks />
-    [XmlAttribute]
-    public string unlockedtocraft
-    {
-        get => unlockedtocraftField;
-        set => unlockedtocraftField = value;
-    }
+        private string shopsubcategory1Field;
 
-    /// <remarks />
-    [XmlAttribute]
-    public string uicraftsoundstart
-    {
-        get => uicraftsoundstartField;
-        set => uicraftsoundstartField = value;
-    }
+        private string showinmarketplaceField;
 
-    /// <remarks />
-    [XmlAttribute]
-    public string uicraftsoundfinish
-    {
-        get => uicraftsoundfinishField;
-        set => uicraftsoundfinishField = value;
-    }
+        private string tierField;
 
-    /// <remarks />
-    [XmlAttribute]
-    public string itemvalue
-    {
-        get => itemvalueField;
-        set => itemvalueField = value;
-    }
+        private string tradableField;
 
-    /// <remarks />
-    [XmlAttribute]
-    public string uispriteoverlay
-    {
-        get => uispriteoverlayField;
-        set => uispriteoverlayField = value;
-    }
+        private string uicraftsoundfinishField;
 
-    /// <remarks />
-    [XmlAttribute]
-    public string enchantmentlevel
-    {
-        get => enchantmentlevelField;
-        set => enchantmentlevelField = value;
-    }
+        private string uicraftsoundstartField;
 
-    /// <remarks />
-    [XmlAttribute]
-    public string descriptionlocatag
-    {
-        get => descriptionlocatagField;
-        set => descriptionlocatagField = value;
-    }
+        private string uispriteField;
 
-    /// <remarks />
-    [XmlAttribute]
-    public string salvageable
-    {
-        get => salvageableField;
-        set => salvageableField = value;
-    }
+        private string uispriteoverlayField;
 
-    /// <remarks />
-    [XmlAttribute]
-    public string showinmarketplace
-    {
-        get => showinmarketplaceField;
-        set => showinmarketplaceField = value;
-    }
+        private string uniquenameField;
 
-    public string craftingcategory => "itemsConsumablefrominventoryitem???";
+        private string unlockedtocraftField;
+
+        private string weightField;
+
+        /// <remarks />
+        [XmlElement("craftingrequirements")]
+        public craftingrequirements[] craftingrequirements
+        {
+            get => craftingrequirementsField;
+            set => craftingrequirementsField = value;
+        }
+
+        /// <remarks />
+        [XmlElement("AudioInfo")]
+        public AudioInfo[] AudioInfo
+        {
+            get => audioInfoField;
+            set => audioInfoField = value;
+        }
+
+        /// <remarks />
+        [XmlAttribute]
+        public string tradable
+        {
+            get => tradableField;
+            set => tradableField = value;
+        }
+
+        /// <remarks />
+        [XmlAttribute]
+        public string uisprite
+        {
+            get => uispriteField;
+            set => uispriteField = value;
+        }
+
+        /// <remarks />
+        [XmlAttribute]
+        public string abilitypower
+        {
+            get => abilitypowerField;
+            set => abilitypowerField = value;
+        }
+
+        /// <remarks />
+        [XmlAttribute]
+        public string consumespell
+        {
+            get => consumespellField;
+            set => consumespellField = value;
+        }
+
+        /// <remarks />
+        [XmlAttribute]
+        public string shopsubcategory1
+        {
+            get => shopsubcategory1Field;
+            set => shopsubcategory1Field = value;
+        }
+
+        /// <remarks />
+        [XmlAttribute]
+        public string tier
+        {
+            get => tierField;
+            set => tierField = value;
+        }
+
+        /// <remarks />
+        [XmlAttribute]
+        public string weight
+        {
+            get => weightField;
+            set => weightField = value;
+        }
+
+        /// <remarks />
+        [XmlAttribute]
+        public string dummyitempower
+        {
+            get => dummyitempowerField;
+            set => dummyitempowerField = value;
+        }
+
+        /// <remarks />
+        [XmlAttribute]
+        public string maxstacksize
+        {
+            get => maxstacksizeField;
+            set => maxstacksizeField = value;
+        }
+
+        /// <remarks />
+        [XmlAttribute]
+        public string unlockedtocraft
+        {
+            get => unlockedtocraftField;
+            set => unlockedtocraftField = value;
+        }
+
+        /// <remarks />
+        [XmlAttribute]
+        public string uicraftsoundstart
+        {
+            get => uicraftsoundstartField;
+            set => uicraftsoundstartField = value;
+        }
+
+        /// <remarks />
+        [XmlAttribute]
+        public string uicraftsoundfinish
+        {
+            get => uicraftsoundfinishField;
+            set => uicraftsoundfinishField = value;
+        }
+
+        /// <remarks />
+        [XmlAttribute]
+        public string itemvalue
+        {
+            get => itemvalueField;
+            set => itemvalueField = value;
+        }
+
+        /// <remarks />
+        [XmlAttribute]
+        public string uispriteoverlay
+        {
+            get => uispriteoverlayField;
+            set => uispriteoverlayField = value;
+        }
+
+        /// <remarks />
+        [XmlAttribute]
+        public string enchantmentlevel
+        {
+            get => enchantmentlevelField;
+            set => enchantmentlevelField = value;
+        }
+
+        /// <remarks />
+        [XmlAttribute]
+        public string descriptionlocatag
+        {
+            get => descriptionlocatagField;
+            set => descriptionlocatagField = value;
+        }
+
+        /// <remarks />
+        [XmlAttribute]
+        public string salvageable
+        {
+            get => salvageableField;
+            set => salvageableField = value;
+        }
+
+        /// <remarks />
+        [XmlAttribute]
+        public string showinmarketplace
+        {
+            get => showinmarketplaceField;
+            set => showinmarketplaceField = value;
+        }
+
+        public string craftingcategory => "itemsConsumablefrominventoryitem???";
 
 
-    /// <remarks />
-    [XmlAttribute]
-    public string uniquename
-    {
-        get => uniquenameField;
-        set => uniquenameField = value;
-    }
+        /// <remarks />
+        [XmlAttribute]
+        public string uniquename
+        {
+            get => uniquenameField;
+            set => uniquenameField = value;
+        }
 
-    /// <remarks />
-    [XmlAttribute]
-    public string shopcategory
-    {
-        get => shopcategoryField;
-        set => shopcategoryField = value;
+        /// <remarks />
+        [XmlAttribute]
+        public string shopcategory
+        {
+            get => shopcategoryField;
+            set => shopcategoryField = value;
+        }
     }
 }

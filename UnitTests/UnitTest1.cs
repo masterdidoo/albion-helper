@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using Albion.ItemsDb;
 using Albion.ItemsDb.Entity;
@@ -18,10 +19,16 @@ namespace UnitTests
             Assert.AreEqual(72, db.Items.Cast<IItem>().Count(x => x.shopcategory== "offhand"));
 
             var items = db.Items.Where(x=>!(x is IItem)).ToArray();
-            //var items = db.Items.OfType<IItem>().Select(x=>x.craftingcategory).Distinct().ToList();
 
             Assert.IsNotNull(items);
             Assert.AreEqual(0, items.Length);
+
+            var shopcategories = db.Items.OfType<IItem>().Select(x => x.shopcategory).Distinct();
+
+            foreach (var shopcategory in shopcategories)
+            {
+                Debug.WriteLine(shopcategory);
+            }
         }
 
 
