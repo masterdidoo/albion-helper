@@ -12,12 +12,17 @@ namespace Albion.ItemsDb
 
         Craftingrequirements[] craftingrequirements { get; }
 
-        int tier { get; set; }
+        int tier { get; }
     }
 
     public interface IItemPowered : IItem
     {
         int itempower { get; }
+    }
+
+    public interface IItemPowered2 : IItem
+    {
+        int dummyitempower { get; }
     }
 
     public interface IItemValued : IItem

@@ -5,16 +5,18 @@ using System.Reflection;
 using System.Xml.Serialization;
 using Albion.ItemsDb.Entity;
 using Albion.ItemsDb.Requirements;
-using Albion.Model;
 using Albion.Model.Items;
 using Albion.Model.Items.Categories;
 using Albion.Model.Requirements;
+using Albion.Model.Requirements.Resources;
 
 namespace Albion.ItemsDb
 {
     public class XmlLoader
     {
         private const string LevelNameConst = "_LEVEL";
+
+        private int _memCounter;
 
         public Dictionary<string, IItem> XmlItems { get; private set; }
 
@@ -57,19 +59,22 @@ namespace Albion.ItemsDb
                 var item = CreateBaseItem(iItem, iItem.uniquename + LevelNameConst + enchantment.enchantmentlevel,
                     craftingRequirements);
 
+                item.ItemPower = enchantment.itempower > 0 ? enchantment.itempower : enchantment.dummyitempower;
+
                 yield return item;
             }
         }
 
         private CommonItem CreateBaseItem(IItem iItem, string itemId,
-            IEnumerable<CraftingRequirement> craftingRequirements)
+            IEnumerable<BaseResorcedRequirement> craftingRequirements)
         {
             var item = new CommonItem(craftingRequirements.ToArray())
             {
+                MemId = _memCounter++,
                 Id = itemId,
                 ShopCategory = (ShopCategory) iItem.shopcategory,
                 ShopSubCategory = (ShopSubCategory) iItem.shopsubcategory1,
-                ItemPower = (iItem as IItemPowered)?.itempower ?? (iItem as IItemValued)?.itemvalue ?? 0,
+                ItemPower = (iItem as IItemPowered)?.itempower ?? (iItem as IItemPowered2)?.dummyitempower ?? (iItem as IItemValued)?.itemvalue ?? 0
             };
 
             Items.Add(item.Id, item);
@@ -83,12 +88,11 @@ namespace Albion.ItemsDb
         /// <param name="itemId"></param>
         /// <param name="enchantment"></param>
         /// <returns></returns>
-        private IEnumerable<CraftingRequirement> EnCreateCraftingRequirements(string itemId,
+        private IEnumerable<BaseResorcedRequirement> EnCreateCraftingRequirements(string itemId,
             EnchantmentsEnchantment enchantment)
         {
-            if (enchantment.craftingrequirements != null)
-                foreach (var c in CreateCraftingRequirements(enchantment.craftingrequirements))
-                    yield return c;
+            foreach (var c in CreateCraftingRequirements(enchantment.craftingrequirements))
+                yield return c;
             if (enchantment.upgraderequirements != null)
                 yield return CreateUpgradeRequirements(itemId, enchantment);
         }
@@ -99,7 +103,7 @@ namespace Albion.ItemsDb
         /// <param name="itemId"></param>
         /// <param name="enchantment"></param>
         /// <returns></returns>
-        private CraftingRequirement CreateUpgradeRequirements(string itemId,
+        private BaseResorcedRequirement CreateUpgradeRequirements(string itemId,
             EnchantmentsEnchantment enchantment)
         {
             var id = enchantment.enchantmentlevel > 1
@@ -112,12 +116,7 @@ namespace Albion.ItemsDb
                 Count = 1
             });
 
-            return
-                new CraftingRequirement(res.ToArray())
-                {
-                    Silver = 0,
-                    AmountCrafted = 1,
-                };
+            return new UpgradeRequirement(res.ToArray());
         }
 
         private CommonItem CreateOrGetItem(IItem arg)
@@ -145,11 +144,14 @@ namespace Albion.ItemsDb
         {
             if (arg == null) yield break;
             foreach (var cr in arg)
-                yield return new CraftingRequirement(CreateResources(cr.craftresource, cr.currency, cr.playerfactionstanding).ToArray())
+            {
+                var res = CreateResources(cr.craftresource, cr.currency, cr.playerfactionstanding);
+                yield return new CraftingRequirement(res.ToArray())
                 {
                     Silver = cr.silver * 10000,
-                    AmountCrafted = cr.amountcrafted,
+                    AmountCrafted = cr.amountcrafted
                 };
+            }
         }
 
         private IEnumerable<CraftingResource> CreateResources(rementsResource[] craftresource,

@@ -14,7 +14,7 @@ namespace Albion.ItemsDb.Entity
     [DebuggerStepThrough]
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
-    public class ItemsConsumableitem : IItemEnchantments, IItem
+    public class ItemsConsumableitem : IItem, IItemEnchantments, IItemPowered2
     {
         [XmlAttribute] public string fishingfame { get; set; }
 
@@ -46,7 +46,7 @@ namespace Albion.ItemsDb.Entity
         [XmlAttribute] public string weight { get; set; }
 
 
-        [XmlAttribute] public string dummyitempower { get; set; }
+        [XmlAttribute] public int dummyitempower { get; set; }
 
 
         [XmlAttribute] public string maxstacksize { get; set; }

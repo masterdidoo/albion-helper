@@ -29,7 +29,7 @@ namespace Albion.ItemsDb.Requirements
         [XmlAttribute] public string abilitypower { get; set; }
 
 
-        [XmlAttribute] public string dummyitempower { get; set; }
+        [XmlAttribute] public int dummyitempower { get; set; }
 
 
         [XmlAttribute] public string consumespell { get; set; }
@@ -41,7 +41,7 @@ namespace Albion.ItemsDb.Requirements
         [XmlAttribute] public string weight { get; set; }
 
 
-        [XmlAttribute] public string itempower { get; set; }
+        [XmlAttribute] public int itempower { get; set; }
 
 
         [XmlAttribute] public string durability { get; set; }

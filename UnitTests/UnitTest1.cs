@@ -13,18 +13,25 @@ namespace UnitTests
     public class UnitTest1
     {
         [TestMethod]
-        public void TestUpdateModel()
+        public void TestUpdatePrice()
         {
             var loader = new XmlLoader();
             var model = loader.LoadModel();
 
             var all = model.ToDictionary(k=>k.Id);
 
+            bool fired = false;
+            all["T4_OFF_SHIELD"].UpdateCost += () =>
+            {
+                Assert.AreEqual(40000, all["T4_OFF_SHIELD"].Cost);
+                fired = true;
+            };
+
             Assert.AreEqual(0, all["T4_OFF_SHIELD"].Cost);
 
-            all["T4_PLANKS"].CraftingRequirements Cost = 10;
-
-            Assert.AreEqual(40, all["T4_OFF_SHIELD"].Cost);
+            all["T4_PLANKS"].MarketData.SellPrice = 10000;
+            Assert.IsTrue(fired);
+            Assert.AreEqual(40000, all["T4_OFF_SHIELD"].Cost);
         }
 
         [TestMethod]

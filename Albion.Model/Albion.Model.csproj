@@ -41,16 +41,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\BuildingData.cs" />
     <Compile Include="Data\PriceData.cs" />
     <Compile Include="Items\CommonItem.cs" />
     <Compile Include="BaseCostableEntity.cs" />
+    <Compile Include="Requirements\BaseResorcedRequirement.cs" />
+    <Compile Include="Requirements\FastBuyRequirement.cs" />
+    <Compile Include="Requirements\LongBuyRequirement.cs" />
     <Compile Include="Requirements\BaseRequirement.cs" />
     <Compile Include="Requirements\CraftingRequirement.cs" />
-    <Compile Include="Requirements\CraftingResource.cs" />
+    <Compile Include="Requirements\Resources\CraftingResource.cs" />
     <Compile Include="Items\Categories\ShopCategory.cs" />
     <Compile Include="Items\Categories\ShopSubCategory.cs" />
     <Compile Include="Data\MarketData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requirements\UpgradeRequirement.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Albion.Common\Albion.Common.csproj">

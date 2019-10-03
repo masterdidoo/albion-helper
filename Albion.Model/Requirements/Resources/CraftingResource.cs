@@ -1,6 +1,6 @@
 ﻿using Albion.Model.Items;
 
-namespace Albion.Model.Requirements
+namespace Albion.Model.Requirements.Resources
 {
     public class CraftingResource
     {

@@ -8,11 +8,17 @@ namespace Albion.Model.Items
 {
     public class CommonItem : BaseCostableEntity
     {
-        public CommonItem(CraftingRequirement[] craftingRequirements)
+        private readonly FastBuyRequirement _fastBuyRequirement;
+        private readonly LongBuyRequirement _longBuyRequirement;
+
+        public CommonItem(BaseResorcedRequirement[] craftingRequirements)
         {
-            CraftingRequirements = craftingRequirements;
-            LongBuyRequirement = new LongBuyRequirement();
-            FastBuyRequirement = new FastBuyRequirement();
+            _craftingRequirements = craftingRequirements;
+            _longBuyRequirement = new LongBuyRequirement();
+            _fastBuyRequirement = new FastBuyRequirement();
+
+            MarketData = new MarketData();
+            BuildingData = new BuildingData();
 
             foreach (var cr in Requirements)
             {
@@ -21,69 +27,39 @@ namespace Albion.Model.Items
             }
         }
 
-        #region From Config
-
-        public string Id { get; set; }
-        public ShopCategory ShopCategory { get; set; }
-        public ShopSubCategory ShopSubCategory { get; set; }
-        public CraftingRequirement[] CraftingRequirements { get; }
-        public int ItemPower { get; set; }
-
-        #endregion
-
         public IEnumerable<BaseRequirement> Requirements
         {
             get
             {
-                yield return FastBuyRequirement;
-                yield return LongBuyRequirement;
-                foreach (var cr in CraftingRequirements)
-                {
-                    yield return cr;
-                }
+                yield return _fastBuyRequirement;
+                yield return _longBuyRequirement;
+                foreach (var cr in _craftingRequirements) yield return cr;
             }
         }
 
-        public LongBuyRequirement LongBuyRequirement { get; }
-        public FastBuyRequirement FastBuyRequirement { get; }
+        public int MemId { get; set; }
 
-        public MarketData MarketData { get; set; }
-        public Building Building { get; set; }
+        public MarketData MarketData { get; }
+        public BuildingData BuildingData { get; }
 
         private void CrOnUpdateCost()
         {
-            Cost = CraftingRequirements.Min(x => x.Cost);
+            Cost = Requirements.Select(x => x.Cost).Where(x => x > 0).DefaultIfEmpty(0).Min();
         }
 
         public override string ToString()
         {
             return Id;
         }
-    }
 
-    public class FastBuyRequirement : BaseRequirement
-    {
-        protected override void OnSetParent(CommonItem item)
-        {
-            item.MarketData.UpdateSellPrice += OnUpdateSellPrice;
-        }
+        #region From Config
 
-        private void OnUpdateSellPrice()
-        {
-            throw new System.NotImplementedException();
-        }
-    }
+        public string Id { get; set; }
+        public ShopCategory ShopCategory { get; set; }
+        public ShopSubCategory ShopSubCategory { get; set; }
+        private readonly BaseResorcedRequirement[] _craftingRequirements;
+        public int ItemPower { get; set; }
 
-    public class LongBuyRequirement : BaseRequirement
-    {
-        protected override void OnSetParent(CommonItem item)
-        {
-            item.MarketData.UpdateBuyPrice += OnUpdateBuyPrice;
-        }
-
-        private void OnUpdateBuyPrice()
-        {
-            throw new System.NotImplementedException();
-        }
+        #endregion
     }
 }

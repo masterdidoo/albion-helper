@@ -1,33 +1,46 @@
 ﻿using System.Linq;
 using Albion.Model.Items;
+using Albion.Model.Requirements.Resources;
 
 namespace Albion.Model.Requirements
 {
-    public class CraftingRequirement : BaseRequirement
+    public class CraftingRequirement : BaseResorcedRequirement
     {
-        public CraftingRequirement(CraftingResource[] resources)
+        private long _tax;
+
+        public CraftingRequirement(CraftingResource[] resources) : base(resources)
         {
-            Resources = resources;
-            foreach (var cr in Resources) cr.Item.UpdateCost += CrOnUpdateCost;
         }
 
         public long Silver { get; set; }
 
         public int AmountCrafted { get; set; }
 
-        public CraftingResource[] Resources { get; }
-
-        private void CrOnUpdateCost()
+        public long Tax
         {
-            Tax = Item.ItemPower * 5 * Item.Building.Tax / 100;
+            get => _tax;
+            private set
+            {
+                if (_tax == value) return;
+                _tax = value;
+                OnPropertyChanged();
+                ResourcesOnUpdateCost();
+            }
+        }
+
+        protected override void ResourcesOnUpdateCost()
+        {
             Cost = (Resources.Sum(x => x.Count * x.Item.Cost) + Silver + Tax) / AmountCrafted;
         }
 
         protected override void OnSetParent(CommonItem item)
         {
-            item.Building.UpdateTax += CrOnUpdateCost;
+            item.BuildingData.UpdateTax += BuildingDataOnUpdateTax;
         }
 
-        public long Tax { get; private set; }
+        private void BuildingDataOnUpdateTax()
+        {
+            Tax = Item.ItemPower * 5 * Item.BuildingData.Tax / 100;
+        }
     }
 }
