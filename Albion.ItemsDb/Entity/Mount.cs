@@ -49,7 +49,7 @@ namespace Albion.ItemsDb.Entity
         [XmlAttribute] public string maxqualitylevel { get; set; }
 
 
-        [XmlAttribute] public string itempower { get; set; }
+        [XmlAttribute] public int itempower { get; set; }
 
 
         [XmlAttribute] public string abilitypower { get; set; }

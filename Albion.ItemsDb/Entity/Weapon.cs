@@ -103,7 +103,7 @@ namespace Albion.ItemsDb.Entity
         [XmlAttribute] public string unlockedtoequip { get; set; }
 
 
-        [XmlAttribute] public string itempower { get; set; }
+        [XmlAttribute] public int itempower { get; set; }
 
 
         [XmlAttribute] public string unequipincombat { get; set; }

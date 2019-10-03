@@ -69,6 +69,7 @@ namespace Albion.ItemsDb
                 Id = itemId,
                 ShopCategory = (ShopCategory) iItem.shopcategory,
                 ShopSubCategory = (ShopSubCategory) iItem.shopsubcategory1,
+                ItemPower = (iItem as IItemPowered)?.itempower ?? (iItem as IItemValued)?.itemvalue ?? 0,
             };
 
             Items.Add(item.Id, item);

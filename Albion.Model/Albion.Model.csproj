@@ -44,6 +44,7 @@
     <Compile Include="Data\PriceData.cs" />
     <Compile Include="Items\CommonItem.cs" />
     <Compile Include="BaseCostableEntity.cs" />
+    <Compile Include="Requirements\BaseRequirement.cs" />
     <Compile Include="Requirements\CraftingRequirement.cs" />
     <Compile Include="Requirements\CraftingResource.cs" />
     <Compile Include="Items\Categories\ShopCategory.cs" />

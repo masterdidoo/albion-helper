@@ -1,4 +1,6 @@
 ﻿using System;
+using Albion.Model.Items;
+using Albion.Model.Requirements;
 
 namespace Albion.Model
 {
@@ -10,7 +12,7 @@ namespace Albion.Model
         public long Cost
         {
             get => _cost;
-            set
+            protected set
             {
                 if (_cost == value) return;
                 _cost = value;

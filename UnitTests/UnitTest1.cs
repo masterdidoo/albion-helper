@@ -13,6 +13,21 @@ namespace UnitTests
     public class UnitTest1
     {
         [TestMethod]
+        public void TestUpdateModel()
+        {
+            var loader = new XmlLoader();
+            var model = loader.LoadModel();
+
+            var all = model.ToDictionary(k=>k.Id);
+
+            Assert.AreEqual(0, all["T4_OFF_SHIELD"].Cost);
+
+            all["T4_PLANKS"].CraftingRequirements Cost = 10;
+
+            Assert.AreEqual(40, all["T4_OFF_SHIELD"].Cost);
+        }
+
+        [TestMethod]
         public void TestMethodModel()
         {
             var loader = new XmlLoader();

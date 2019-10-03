@@ -122,7 +122,7 @@ namespace Albion.ItemsDb.Entity
         [XmlAttribute] public string crowdcontrolresistance { get; set; }
 
 
-        [XmlAttribute] public string itempower { get; set; }
+        [XmlAttribute] public int itempower { get; set; }
 
 
         [XmlAttribute] public string physicalattackdamagebonus { get; set; }

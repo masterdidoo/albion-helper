@@ -17,13 +17,12 @@ namespace Albion.ItemsDb
 
     public interface IItemPowered : IItem
     {
-        string itempower { get; }
-
+        int itempower { get; }
     }
 
     public interface IItemValued : IItem
     {
-        string itemvalue { get; }
+        int itemvalue { get; }
     }
 
     public interface IItemCraftingcategory : IItem
