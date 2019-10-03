@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 [DebuggerStepThrough]
 [DesignerCategory("code")]
 [XmlType(AnonymousType = true)]
-public class craftingrequirementsCraftresource
+public class rementsResource
 {
     /// <remarks />
     [XmlAttribute]

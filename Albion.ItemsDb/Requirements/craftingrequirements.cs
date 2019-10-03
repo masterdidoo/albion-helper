@@ -24,7 +24,7 @@ namespace Albion.ItemsDb.Requirements
 
 
         [XmlElement("craftresource", Form = XmlSchemaForm.Unqualified)]
-        public craftingrequirementsCraftresource[] craftresource { get; set; }
+        public rementsResource[] craftresource { get; set; }
 
 
         [XmlAttribute] public long silver { get; set; }
@@ -36,7 +36,7 @@ namespace Albion.ItemsDb.Requirements
         [XmlAttribute] public string swaptransaction { get; set; }
 
 
-        [XmlAttribute] public int amountcrafted { get; set; }
+        [XmlAttribute] public int amountcrafted { get; set; } = 1;
 
 
         [XmlAttribute] public string craftingfocus { get; set; }

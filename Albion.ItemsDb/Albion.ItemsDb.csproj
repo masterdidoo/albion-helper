@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Requirements\craftingrequirementsCraftresource.cs" />
+    <Compile Include="Requirements\rementsResource.cs" />
     <Compile Include="Entity\items.cs" />
     <Compile Include="Requirements\enchantmentsEnchantment.cs" />
     <Compile Include="Requirements\craftingrequirements.cs" />

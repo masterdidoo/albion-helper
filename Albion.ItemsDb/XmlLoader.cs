@@ -11,6 +11,8 @@ namespace Albion.ItemsDb
 {
     public class XmlLoader
     {
+        private const string LevelNameConst = "_LEVEL";
+
         public Dictionary<string, IItem> XmlItems { get; private set; }
 
         public Dictionary<string, BaseItem> Items { get; } = new Dictionary<string, BaseItem>();
@@ -41,29 +43,30 @@ namespace Albion.ItemsDb
             return items;
         }
 
-        private IEnumerable<BaseItem> CreateEnItems(IItemEnchantments arg)
+        private IEnumerable<BaseItem> CreateEnItems(IItemEnchantments iItem)
         {
-            if (arg.enchantments == null) yield break;
+            if (iItem.enchantments == null) yield break;
 
-            foreach (var enchantments in arg.enchantments)
+            foreach (var enchantment in iItem.enchantments)
             {
-                var craftingRequirements = EnCreateCraftingRequirements(enchantments);
+                var craftingRequirements = EnCreateCraftingRequirements(iItem.uniquename, enchantment);
                 if (craftingRequirements == null) continue;
 
-                var item = CreateBaseItem(arg, arg.uniquename + "_LEVEL" + enchantments.enchantmentlevel,
+                var item = CreateBaseItem(iItem, iItem.uniquename + LevelNameConst + enchantment.enchantmentlevel,
                     craftingRequirements);
 
                 yield return item;
             }
         }
 
-        private BaseItem CreateBaseItem(IItem arg, string id, IEnumerable<CraftingRequirement> craftingRequirements)
+        private BaseItem CreateBaseItem(IItem iItem, string itemId,
+            IEnumerable<CraftingRequirement> craftingRequirements)
         {
             var item = new BaseItem
             {
-                Id = id,
-                ShopCategory = (ShopCategory) arg.shopcategory,
-                ShopSubCategory = (ShopSubCategory) arg.shopsubcategory1,
+                Id = itemId,
+                ShopCategory = (ShopCategory) iItem.shopcategory,
+                ShopSubCategory = (ShopSubCategory) iItem.shopsubcategory1,
                 CraftingRequirements = craftingRequirements.ToArray()
             };
 
@@ -72,11 +75,48 @@ namespace Albion.ItemsDb
             return item;
         }
 
-        private IEnumerable<CraftingRequirement> EnCreateCraftingRequirements(EnchantmentsEnchantment arg)
+        /// <summary>
+        ///     enchanted versions
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <param name="enchantment"></param>
+        /// <returns></returns>
+        private IEnumerable<CraftingRequirement> EnCreateCraftingRequirements(string itemId,
+            EnchantmentsEnchantment enchantment)
         {
-            if (arg.craftingrequirements != null)
-                return CreateCraftingRequirements(arg.craftingrequirements);
-            return null;
+            if (enchantment.craftingrequirements != null)
+                foreach (var c in CreateCraftingRequirements(enchantment.craftingrequirements))
+                    yield return c;
+            if (enchantment.upgraderequirements != null)
+                yield return CreateUpgradeRequirements(itemId, enchantment);
+        }
+
+        /// <summary>
+        ///     upgrade existed
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <param name="enchantment"></param>
+        /// <returns></returns>
+        private CraftingRequirement CreateUpgradeRequirements(string itemId,
+            EnchantmentsEnchantment enchantment)
+        {
+            var id = enchantment.enchantmentlevel > 1
+                ? itemId + LevelNameConst + (enchantment.enchantmentlevel - 1)
+                : itemId;
+            var res = CreateResources(enchantment.upgraderequirements).ToList();
+            res.Add(new CraftingResource
+            {
+                Item = Items[id],
+                Count = 1
+            });
+
+            return
+                new CraftingRequirement
+                {
+                    Silver = 0,
+                    AmountCrafted = 1,
+                    Resources = res.ToArray()
+                };
         }
 
         private BaseItem CreateOrGetItem(IItem arg)
@@ -112,8 +152,9 @@ namespace Albion.ItemsDb
                 };
         }
 
-        private IEnumerable<CraftingResource> CreateResources(craftingrequirementsCraftresource[] craftresource,
-            craftingrequirementsCurrency[] currency, craftingrequirementsPlayerfactionstanding[] playerfactionstanding)
+        private IEnumerable<CraftingResource> CreateResources(rementsResource[] craftresource,
+            craftingrequirementsCurrency[] currency = null,
+            craftingrequirementsPlayerfactionstanding[] playerfactionstanding = null)
         {
             if (playerfactionstanding != null)
             {

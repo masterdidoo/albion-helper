@@ -18,12 +18,12 @@ namespace Albion.ItemsDb.Requirements
 
 
         [XmlArray(Form = XmlSchemaForm.Unqualified)]
-        [XmlArrayItem("upgraderesource", typeof(enchantmentsEnchantmentUpgraderequirementsUpgraderesource),
+        [XmlArrayItem("upgraderesource", typeof(rementsResource),
             Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-        public enchantmentsEnchantmentUpgraderequirementsUpgraderesource[] upgraderequirements { get; set; }
+        public rementsResource[] upgraderequirements { get; set; }
 
 
-        [XmlAttribute] public string enchantmentlevel { get; set; }
+        [XmlAttribute] public int enchantmentlevel { get; set; }
 
 
         [XmlAttribute] public string abilitypower { get; set; }
