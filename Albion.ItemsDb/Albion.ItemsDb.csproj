@@ -41,22 +41,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Requirements\craftingrequirementsCraftresource.cs" />
+    <Compile Include="Entity\items.cs" />
+    <Compile Include="Requirements\enchantmentsEnchantment.cs" />
+    <Compile Include="Requirements\craftingrequirements.cs" />
     <Compile Include="IItem.cs" />
-    <Compile Include="items.cs" />
+    <Compile Include="Entity\itemsAll.cs" />
     <Compile Include="Entity\itemsConsumablefrominventoryitem.cs" />
     <Compile Include="Entity\itemsConsumableitem.cs" />
-    <Compile Include="Entity\itemsEquipmentitem.cs" />
+    <Compile Include="Entity\Equipmentitem.cs" />
     <Compile Include="Entity\itemsFarmableitem.cs" />
     <Compile Include="Entity\itemsFurnitureitem.cs" />
     <Compile Include="Entity\itemsJournalitem.cs" />
-    <Compile Include="Entity\itemsMount.cs" />
-    <Compile Include="Entity\itemsSimpleitem.cs" />
-    <Compile Include="Entity\itemsWeapon.cs" />
+    <Compile Include="Entity\Mount.cs" />
+    <Compile Include="Entity\SimpleItem.cs" />
+    <Compile Include="Entity\Weapon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Enums\shopCategory.cs" />
+    <Compile Include="Enums\shopSubCategory.cs" />
     <Compile Include="XmlLoader.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="items.xml" />
+    <EmbeddedResource Include="Xmls\items.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Albion.Model\Albion.Model.csproj">
+      <Project>{47BD76E1-B185-4E58-8347-ACDD1BFA9EDD}</Project>
+      <Name>Albion.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Xmls\localization.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Xmls\buildings.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -2,5 +2,7 @@
 {
     public enum CraftingType
     {
+        Mage,
+        Hunter,
     }
 }
