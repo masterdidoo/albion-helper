@@ -1,4 +1,4 @@
-﻿namespace Albion.Model.Items
+﻿namespace Albion.Model.Items.Categories
 {
     public enum ShopCategory
     {

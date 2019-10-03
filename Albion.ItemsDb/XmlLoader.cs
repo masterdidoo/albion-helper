@@ -5,7 +5,10 @@ using System.Reflection;
 using System.Xml.Serialization;
 using Albion.ItemsDb.Entity;
 using Albion.ItemsDb.Requirements;
+using Albion.Model;
 using Albion.Model.Items;
+using Albion.Model.Items.Categories;
+using Albion.Model.Requirements;
 
 namespace Albion.ItemsDb
 {
@@ -15,7 +18,7 @@ namespace Albion.ItemsDb
 
         public Dictionary<string, IItem> XmlItems { get; private set; }
 
-        public Dictionary<string, BaseItem> Items { get; } = new Dictionary<string, BaseItem>();
+        public Dictionary<string, CommonItem> Items { get; } = new Dictionary<string, CommonItem>();
 
         public static items Load()
         {
@@ -30,7 +33,7 @@ namespace Albion.ItemsDb
             }
         }
 
-        public IEnumerable<BaseItem> LoadModel()
+        public IEnumerable<CommonItem> LoadModel()
         {
             var itemsDb = Load();
 
@@ -43,14 +46,13 @@ namespace Albion.ItemsDb
             return items;
         }
 
-        private IEnumerable<BaseItem> CreateEnItems(IItemEnchantments iItem)
+        private IEnumerable<CommonItem> CreateEnItems(IItemEnchantments iItem)
         {
             if (iItem.enchantments == null) yield break;
 
             foreach (var enchantment in iItem.enchantments)
             {
                 var craftingRequirements = EnCreateCraftingRequirements(iItem.uniquename, enchantment);
-                if (craftingRequirements == null) continue;
 
                 var item = CreateBaseItem(iItem, iItem.uniquename + LevelNameConst + enchantment.enchantmentlevel,
                     craftingRequirements);
@@ -59,15 +61,14 @@ namespace Albion.ItemsDb
             }
         }
 
-        private BaseItem CreateBaseItem(IItem iItem, string itemId,
+        private CommonItem CreateBaseItem(IItem iItem, string itemId,
             IEnumerable<CraftingRequirement> craftingRequirements)
         {
-            var item = new BaseItem
+            var item = new CommonItem(craftingRequirements.ToArray())
             {
                 Id = itemId,
                 ShopCategory = (ShopCategory) iItem.shopcategory,
                 ShopSubCategory = (ShopSubCategory) iItem.shopsubcategory1,
-                CraftingRequirements = craftingRequirements.ToArray()
             };
 
             Items.Add(item.Id, item);
@@ -111,29 +112,28 @@ namespace Albion.ItemsDb
             });
 
             return
-                new CraftingRequirement
+                new CraftingRequirement(res.ToArray())
                 {
                     Silver = 0,
                     AmountCrafted = 1,
-                    Resources = res.ToArray()
                 };
         }
 
-        private BaseItem CreateOrGetItem(IItem arg)
+        private CommonItem CreateOrGetItem(IItem arg)
         {
             if (Items.TryGetValue(arg.uniquename, out var item)) return item;
 
             return CreateItem(arg);
         }
 
-        private BaseItem CreateOrGetItem(string id)
+        private CommonItem CreateOrGetItem(string id)
         {
             if (Items.TryGetValue(id, out var item)) return item;
 
             return CreateItem(XmlItems[id]);
         }
 
-        private BaseItem CreateItem(IItem arg)
+        private CommonItem CreateItem(IItem arg)
         {
             var item = CreateBaseItem(arg, arg.uniquename, CreateCraftingRequirements(arg.craftingrequirements));
 
@@ -144,11 +144,10 @@ namespace Albion.ItemsDb
         {
             if (arg == null) yield break;
             foreach (var cr in arg)
-                yield return new CraftingRequirement
+                yield return new CraftingRequirement(CreateResources(cr.craftresource, cr.currency, cr.playerfactionstanding).ToArray())
                 {
-                    Silver = cr.silver,
+                    Silver = cr.silver * 10000,
                     AmountCrafted = cr.amountcrafted,
-                    Resources = CreateResources(cr.craftresource, cr.currency, cr.playerfactionstanding).ToArray()
                 };
         }
 

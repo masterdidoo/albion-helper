@@ -4,6 +4,7 @@ using System.Linq;
 using Albion.ItemsDb;
 using Albion.ItemsDb.Enums;
 using Albion.Model.Items;
+using Albion.Model.Items.Categories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests

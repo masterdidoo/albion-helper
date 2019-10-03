@@ -41,11 +41,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Items\BaseItem.cs" />
-    <Compile Include="Items\CraftingType.cs" />
-    <Compile Include="Items\ShopCategory.cs" />
-    <Compile Include="Items\ShopSubCategory.cs" />
+    <Compile Include="Data\PriceData.cs" />
+    <Compile Include="Items\CommonItem.cs" />
+    <Compile Include="BaseCostableEntity.cs" />
+    <Compile Include="Requirements\CraftingRequirement.cs" />
+    <Compile Include="Requirements\CraftingResource.cs" />
+    <Compile Include="Items\Categories\ShopCategory.cs" />
+    <Compile Include="Items\Categories\ShopSubCategory.cs" />
+    <Compile Include="Data\MarketData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Albion.Common\Albion.Common.csproj">
+      <Project>{BAD21844-F93F-4F46-B540-28631D7B0255}</Project>
+      <Name>Albion.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
