@@ -44,7 +44,7 @@ namespace Albion.Db.Xml
         private CommonItem CreateCommonItem(IItem iItem, string itemId,
             IEnumerable<BaseResorcedRequirement> craftingRequirements)
         {
-            var item = new CommonItem(craftingRequirements.ToArray(), _marketDataManager.GetData(itemId), _buildingDataManager.GetData(itemId))
+            var item = new CommonItem(craftingRequirements.ToArray(), _marketDataManager.GetData(itemId), _buildingDataManager.GetData(BuildingByItem(itemId)))
             {
                 MemId = _memCounter++,
                 Id = itemId,
@@ -57,6 +57,11 @@ namespace Albion.Db.Xml
             Items.Add(item.Id, item);
 
             return item;
+        }
+
+        private string BuildingByItem(string itemId)
+        {
+            return itemId;
         }
 
         /// <summary>

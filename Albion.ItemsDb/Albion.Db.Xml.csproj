@@ -41,26 +41,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity\Building\buildings.cs" />
+    <Compile Include="Entity\Building\CraftBuilding.cs" />
+    <Compile Include="Entity\Building\CraftingItemList.cs" />
+    <Compile Include="Entity\Building\CraftItem.cs" />
+    <Compile Include="Entity\Common\AudioInfo.cs" />
     <Compile Include="Requirements\rementsResource.cs" />
-    <Compile Include="Entity\items.cs" />
+    <Compile Include="Entity\Item\items.cs" />
     <Compile Include="Requirements\enchantmentsEnchantment.cs" />
     <Compile Include="Requirements\craftingrequirements.cs" />
     <Compile Include="IItem.cs" />
-    <Compile Include="Entity\itemsAll.cs" />
-    <Compile Include="Entity\itemsConsumablefrominventoryitem.cs" />
-    <Compile Include="Entity\itemsConsumableitem.cs" />
-    <Compile Include="Entity\Equipmentitem.cs" />
-    <Compile Include="Entity\itemsFarmableitem.cs" />
-    <Compile Include="Entity\itemsFurnitureitem.cs" />
-    <Compile Include="Entity\itemsJournalitem.cs" />
-    <Compile Include="Entity\Mount.cs" />
-    <Compile Include="Entity\SimpleItem.cs" />
-    <Compile Include="Entity\Weapon.cs" />
+    <Compile Include="Entity\Item\itemsAll.cs" />
+    <Compile Include="Entity\Item\itemsConsumablefrominventoryitem.cs" />
+    <Compile Include="Entity\Item\itemsConsumableitem.cs" />
+    <Compile Include="Entity\Item\Equipmentitem.cs" />
+    <Compile Include="Entity\Item\itemsFarmableitem.cs" />
+    <Compile Include="Entity\Item\itemsFurnitureitem.cs" />
+    <Compile Include="Entity\Item\itemsJournalitem.cs" />
+    <Compile Include="Entity\Item\Mount.cs" />
+    <Compile Include="Entity\Item\SimpleItem.cs" />
+    <Compile Include="Entity\Item\Weapon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Enums\shopCategory.cs" />
     <Compile Include="Enums\shopSubCategory.cs" />
     <Compile Include="XmlLoaderPrivate.cs" />
     <Compile Include="XmlLoader.cs" />
+    <Compile Include="Entity\Building\buildingsAll.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Xmls\items.xml" />

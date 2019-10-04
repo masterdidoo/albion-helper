@@ -13,7 +13,7 @@ using Moq;
 namespace UnitTests
 {
     [TestClass]
-    public class ModelTests
+    public class ItemsModelTests
     {
         [TestMethod]
         public void TestUpdatePrice()
@@ -67,7 +67,7 @@ namespace UnitTests
         [TestMethod]
         public void TestMethodXml()
         {
-            var db = XmlLoader.LoadXml();
+            var db = XmlLoader.LoadItemsXml();
             Assert.IsNotNull(db);
             Assert.AreEqual(405, db.Items.Cast<IItem>().Count(x => x.shopcategory == shopCategory.artefacts));
             Assert.AreEqual(72, db.Items.Cast<IItem>().Count(x => x.shopcategory == shopCategory.offhand));

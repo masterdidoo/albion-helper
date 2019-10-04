@@ -10,6 +10,7 @@
 
 using System.Xml.Serialization;
 using Albion.Db.Xml;
+using Albion.Db.Xml.Entity.Common;
 using Albion.Db.Xml.Requirements;
 
 // 
@@ -83,29 +84,6 @@ public partial class craftingrequirementsCurrency {
         }
         set {
             this.amountField = value;
-        }
-    }
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
-[System.SerializableAttribute()]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true)]
-[System.Xml.Serialization.XmlRootAttribute(Namespace="", IsNullable=false)]
-public partial class AudioInfo {
-    
-    private string nameField;
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string name {
-        get {
-            return this.nameField;
-        }
-        set {
-            this.nameField = value;
         }
     }
 }

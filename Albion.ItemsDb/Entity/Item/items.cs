@@ -4,9 +4,10 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using Albion.Db.Xml.Entity.Common;
 using Albion.Db.Xml.Requirements;
 
-namespace Albion.Db.Xml.Entity
+namespace Albion.Db.Xml.Entity.Item
 {
     [GeneratedCode("xsd", "4.6.1055.0")]
     [Serializable]
@@ -41,10 +42,6 @@ namespace Albion.Db.Xml.Entity
         [XmlElement("validitem", typeof(validitem))]
         [XmlElement("weapon", typeof(Weapon), Form =
             XmlSchemaForm.Unqualified)]
-        public object[] Items
-        {
-            get;
-            set;
-        }
+        public object[] Items { get; set; }
     }
 }
