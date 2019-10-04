@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Albion.Model.Buildings;
 using Albion.Model.Data;
 using Albion.Model.Items.Categories;
 using Albion.Model.Requirements;
@@ -11,14 +12,14 @@ namespace Albion.Model.Items
         private readonly FastBuyRequirement _fastBuyRequirement;
         private readonly LongBuyRequirement _longBuyRequirement;
 
-        public CommonItem(BaseResorcedRequirement[] craftingRequirements, ItemMarket itemMarket, ItemBuilding itemBuilding)
+        public CommonItem(BaseResorcedRequirement[] craftingRequirements, ItemMarket itemMarket, CraftBuilding craftingBuilding)
         {
             _craftingRequirements = craftingRequirements;
+            _craftingBuilding = craftingBuilding;
             _longBuyRequirement = new LongBuyRequirement();
             _fastBuyRequirement = new FastBuyRequirement();
 
             ItemMarket = itemMarket;
-            ItemBuilding = itemBuilding;
 
             foreach (var cr in Requirements)
             {
@@ -42,7 +43,7 @@ namespace Albion.Model.Items
         public int MemId { get; set; }
 
         public ItemMarket ItemMarket { get; }
-        public ItemBuilding ItemBuilding { get; }
+        internal ItemBuilding ItemBuilding => _craftingBuilding.ItemBuilding;
 
         private void CrOnUpdateCost()
         {
@@ -60,6 +61,7 @@ namespace Albion.Model.Items
         public ShopCategory ShopCategory { get; set; }
         public ShopSubCategory ShopSubCategory { get; set; }
         private readonly BaseResorcedRequirement[] _craftingRequirements;
+        private readonly CraftBuilding _craftingBuilding;
         public int ItemPower { get; set; }
 
         #endregion

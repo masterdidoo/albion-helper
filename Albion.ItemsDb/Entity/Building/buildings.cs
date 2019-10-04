@@ -23,7 +23,7 @@ namespace Albion.Db.Xml.Entity.Building
         [XmlElement("blackmarketbuilding", typeof(buildingsBlackmarketbuilding), Form = XmlSchemaForm.Unqualified)]
         [XmlElement("buildingreference", typeof(buildingsBuildingreference), Form = XmlSchemaForm.Unqualified)]
         [XmlElement("castlegate", typeof(buildingsCastlegate), Form = XmlSchemaForm.Unqualified)]
-        [XmlElement("craftbuilding", typeof(CraftBuilding), Form = XmlSchemaForm.Unqualified)]
+        [XmlElement("craftbuilding", typeof(craftBuilding), Form = XmlSchemaForm.Unqualified)]
         [XmlElement("craftingitemlist", typeof(CraftingItemList))]
         [XmlElement("craftingrequirements", typeof(craftingrequirements))]
         [XmlElement("factionbuilding", typeof(buildingsFactionbuilding), Form = XmlSchemaForm.Unqualified)]

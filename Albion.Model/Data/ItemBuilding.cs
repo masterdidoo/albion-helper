@@ -5,10 +5,9 @@ namespace Albion.Model.Data
     public class ItemBuilding
     {
         private int _tax;
-        public event Action UpdateTax;
 
         /// <summary>
-        /// tax %
+        ///     tax %
         /// </summary>
         public int Tax
         {
@@ -20,5 +19,7 @@ namespace Albion.Model.Data
                 UpdateTax?.Invoke();
             }
         }
+
+        public event Action UpdateTax;
     }
 }

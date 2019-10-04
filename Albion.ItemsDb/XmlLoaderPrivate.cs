@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Albion.Db.Xml.Entity.Building;
 using Albion.Db.Xml.Requirements;
-using Albion.Model.Data;
+using Albion.Model.Buildings;
 using Albion.Model.Items;
 using Albion.Model.Items.Categories;
 using Albion.Model.Managers;
@@ -44,7 +45,7 @@ namespace Albion.Db.Xml
         private CommonItem CreateCommonItem(IItem iItem, string itemId,
             IEnumerable<BaseResorcedRequirement> craftingRequirements)
         {
-            var item = new CommonItem(craftingRequirements.ToArray(), _marketDataManager.GetData(itemId), _buildingDataManager.GetData(BuildingByItem(itemId)))
+            var item = new CommonItem(craftingRequirements.ToArray(), _marketDataManager.GetData(itemId), BuildingByItem(itemId))
             {
                 MemId = _memCounter++,
                 Id = itemId,
@@ -59,9 +60,13 @@ namespace Albion.Db.Xml
             return item;
         }
 
-        private string BuildingByItem(string itemId)
+        private CraftBuilding BuildingByItem(string itemId)
         {
-            return itemId;
+            if (ItemIdToCraftBuildingId.TryGetValue(itemId, out var buildingId))
+            {
+                return CraftBuildings[buildingId];
+            }
+            return NoneBuilding;
         }
 
         /// <summary>
@@ -156,6 +161,16 @@ namespace Albion.Db.Xml
                     Item = CreateOrGetItem(crr.uniquename),
                     Count = crr.count
                 };
+        }
+
+        private CraftBuilding CreateCraftBuilding(craftBuilding craftBuilding)
+        {
+            var id = craftBuilding.uniquename;
+            var itemBuilding = _buildingDataManager.GetData(id);
+            return new CraftBuilding(itemBuilding)
+            {
+                Id = id
+            };
         }
     }
 }

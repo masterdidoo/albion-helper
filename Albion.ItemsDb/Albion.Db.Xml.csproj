@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entity\Building\buildings.cs" />
-    <Compile Include="Entity\Building\CraftBuilding.cs" />
+    <Compile Include="Entity\Building\craftBuilding.cs" />
     <Compile Include="Entity\Building\CraftingItemList.cs" />
     <Compile Include="Entity\Building\CraftItem.cs" />
     <Compile Include="Entity\Common\AudioInfo.cs" />

@@ -5,6 +5,8 @@ using System.Reflection;
 using System.Xml.Serialization;
 using Albion.Db.Xml.Entity.Building;
 using Albion.Db.Xml.Entity.Item;
+using Albion.Model.Buildings;
+using Albion.Model.Data;
 using Albion.Model.Items;
 
 namespace Albion.Db.Xml
@@ -43,10 +45,26 @@ namespace Albion.Db.Xml
 
         public IEnumerable<CommonItem> LoadModel()
         {
-            //var buildingsDb = LoadBuildingsXml();
+            NoneBuilding = new CraftBuilding(new ItemBuilding());
+            var buildingsDb = LoadBuildingsXml();
             var itemsDb = LoadItemsXml();
 
-//            buildingsDb.Items.OfType<CraftBuilding>()
+            var xmlCraftBuildings = buildingsDb.Items.OfType<craftBuilding>().Where(x =>
+                x.tier == 8 && x.favoritedish != null && x.craftingitemlist != null &&
+                x.craftingitemlist[0].craftitem != null);
+
+            ItemIdToCraftBuildingId = xmlCraftBuildings
+                .SelectMany(x=>
+                    x.craftingitemlist[0].craftitem
+                        .Select(ci=>new {
+                            itemId = ci.uniquename,
+                            buildingId = x.uniquename
+                        }))
+                .ToDictionary(k=>k.itemId, v=>v.buildingId);
+
+            CraftBuildings = xmlCraftBuildings.Select(CreateCraftBuilding).ToDictionary(k=>k.Id);
+
+            //            buildingsDb.Items.OfType<CraftBuilding>()
 
             XmlItems = itemsDb.Items.Cast<IItem>().ToDictionary(k => k.uniquename, v => v);
 
@@ -58,5 +76,10 @@ namespace Albion.Db.Xml
 
             return items;
         }
+
+        public Dictionary<string, CraftBuilding> CraftBuildings { get; set; }
+
+        public Dictionary<string, string> ItemIdToCraftBuildingId { get; private set; }
+        public CraftBuilding NoneBuilding { get; private set; }
     }
 }

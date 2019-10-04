@@ -14,7 +14,7 @@ namespace Albion.Db.Xml.Entity.Building
     [DebuggerStepThrough]
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
-    public class CraftBuilding
+    public class craftBuilding
     {
         [XmlArrayItem("dish", typeof(favoritedishDish), Form = XmlSchemaForm.Unqualified, IsNullable = false)]
         public favoritedishDish[] favoritedish { get; set; }
@@ -32,7 +32,7 @@ namespace Albion.Db.Xml.Entity.Building
         [XmlAttribute] public string uniquename { get; set; }
 
 
-        [XmlAttribute] public string tier { get; set; }
+        [XmlAttribute] public int tier { get; set; }
 
 
         [XmlAttribute] public string placecost { get; set; }

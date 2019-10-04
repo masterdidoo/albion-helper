@@ -23,6 +23,8 @@ namespace UnitTests
                 var loader = new XmlLoader(mdm, bdm);
                 var model = loader.LoadModel();
 
+                var buildings = loader.CraftBuildings;
+
                 var all = model.ToDictionary(k => k.Id);
 
                 _exp = 40000;
@@ -41,7 +43,9 @@ namespace UnitTests
 
                 _exp = 3540000;
 
-                all["T4_OFF_SHIELD"].ItemBuilding.Tax= 10;
+                buildings["T8_FORGE"].ItemBuilding.Tax = 10;
+
+//                all["T4_OFF_SHIELD"].Building.Tax= 10;
                 Assert.AreEqual(2, fired);
                 Assert.AreEqual(3540000, all["T4_OFF_SHIELD"].Cost);
             }
