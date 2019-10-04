@@ -12,7 +12,7 @@ namespace Albion.DataStore.DataModel
         {
             Id = id;
 
-            const int n = (int) Location.None;
+            const int n = (int) Location.None + 1;
 
             SellPriceDatas = new PriceData[n];
             BuyPriceDatas = new PriceData[n];
