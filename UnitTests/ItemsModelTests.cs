@@ -30,15 +30,16 @@ namespace UnitTests
             int fired = 0;
             all["T4_OFF_SHIELD"].UpdateCost += () =>
             {
-                Assert.AreEqual(40000, all["T4_OFF_SHIELD"].Cost);
+                Assert.AreEqual(80000, all["T4_OFF_SHIELD"].Cost);
                 fired++;
             };
 
             Assert.AreEqual(0, all["T4_OFF_SHIELD"].Cost);
 
             all["T4_PLANKS"].ItemMarket.SellPrice = 10000;
+            all["T4_METALBAR"].ItemMarket.SellPrice = 10000;
             Assert.AreEqual(1, fired);
-            Assert.AreEqual(40000, all["T4_OFF_SHIELD"].Cost);
+            Assert.AreEqual(80000, all["T4_OFF_SHIELD"].Cost);
         }
 
         [TestMethod]

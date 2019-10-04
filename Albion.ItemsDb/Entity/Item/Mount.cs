@@ -15,7 +15,7 @@ namespace Albion.Db.Xml.Entity.Item
     [DebuggerStepThrough]
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
-    public class Mount : IItem, IItemPowered
+    public class Mount : IItem, IItemPowered, IItemEnchantmentLevel
     {
         [XmlElement("craftingrequirements")] public Craftingrequirements[] craftingrequirements { get; set; }
 
@@ -167,7 +167,7 @@ namespace Albion.Db.Xml.Entity.Item
         [XmlAttribute] public string showinmarketplace { get; set; }
 
 
-        [XmlAttribute] public string enchantmentlevel { get; set; }
+        [XmlAttribute] public int enchantmentlevel { get; set; }
 
 
         [XmlAttribute] public string canuseingvg { get; set; }

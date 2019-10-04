@@ -13,7 +13,7 @@ namespace Albion.Db.Xml
 {
     public partial class XmlLoader
     {
-        private const string LevelNameConst = "_LEVEL";
+        private const string LevelNameConst = "@";
 
         private int _memCounter;
         private readonly IMarketDataManager _marketDataManager;

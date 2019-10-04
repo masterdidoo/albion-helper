@@ -14,7 +14,7 @@ namespace Albion.Db.Xml.Entity.Item
     [DebuggerStepThrough]
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
-    public class ItemsFurnitureitem : IItem
+    public class ItemsFurnitureitem : IItem, IItemEnchantmentLevel
     {
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string cheatprovider { get; set; }
@@ -70,7 +70,7 @@ namespace Albion.Db.Xml.Entity.Item
         [XmlAttribute] public string customizewithguildlogo { get; set; }
 
 
-        [XmlAttribute] public string enchantmentlevel { get; set; }
+        [XmlAttribute] public int enchantmentlevel { get; set; }
 
 
         [XmlAttribute] public string uisprite { get; set; }

@@ -65,6 +65,14 @@
                 <TextBlock Text="{Binding Cost, Converter={StaticResource PriceConverter}}" Margin="2" />
             </DockPanel>
         </HierarchicalDataTemplate>
+        <HierarchicalDataTemplate DataType="{x:Type requirements:UpgradeRequirement}"
+                                  ItemsSource="{Binding Resources}">
+            <DockPanel>
+                <CheckBox IsChecked="{Binding IsMin}" Margin="2" />
+                <TextBlock Text="Craft Tax:" Margin="0,2" />
+                <TextBlock Text="{Binding Cost, Converter={StaticResource PriceConverter}}" Margin="2" />
+            </DockPanel>
+        </HierarchicalDataTemplate>
         <HierarchicalDataTemplate DataType="{x:Type requ:CraftingResource}"
                                   ItemsSource="{Binding Item.Requirements}">
             <DockPanel>

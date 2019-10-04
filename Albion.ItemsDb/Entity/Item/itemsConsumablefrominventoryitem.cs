@@ -14,7 +14,7 @@ namespace Albion.Db.Xml.Entity.Item
     [DebuggerStepThrough]
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
-    public class ItemsConsumablefrominventoryitem : IItem, IItemPowered2
+    public class ItemsConsumablefrominventoryitem : IItem, IItemPowered2, IItemEnchantmentLevel
     {
         [XmlElement("craftingrequirements")] public Craftingrequirements[] craftingrequirements { get; set; }
 
@@ -57,7 +57,7 @@ namespace Albion.Db.Xml.Entity.Item
         [XmlAttribute] public string uispriteoverlay { get; set; }
 
 
-        [XmlAttribute] public string enchantmentlevel { get; set; }
+        [XmlAttribute] public int enchantmentlevel { get; set; }
 
 
         [XmlAttribute] public string descriptionlocatag { get; set; }

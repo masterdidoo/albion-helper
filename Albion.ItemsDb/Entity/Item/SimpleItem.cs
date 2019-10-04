@@ -14,7 +14,7 @@ namespace Albion.Db.Xml.Entity.Item
     [DebuggerStepThrough]
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
-    public class SimpleItem : IItem, IItemCraftingcategory
+    public class SimpleItem : IItem, IItemCraftingcategory, IItemEnchantmentLevel
     {
         [XmlArray(Form = XmlSchemaForm.Unqualified)]
         [XmlArrayItem("replacementitem", typeof(itemsSimpleitemReplaceondeathReplacementitem),
@@ -52,7 +52,7 @@ namespace Albion.Db.Xml.Entity.Item
         [XmlAttribute] public string craftfamegainfactor { get; set; }
 
 
-        [XmlAttribute] public string enchantmentlevel { get; set; }
+        [XmlAttribute] public int enchantmentlevel { get; set; }
 
 
         [XmlAttribute] public string fishingfame { get; set; }

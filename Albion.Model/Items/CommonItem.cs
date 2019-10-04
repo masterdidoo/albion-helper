@@ -48,7 +48,7 @@ namespace Albion.Model.Items
 
         #region For UI
 
-        public bool IsExpanded { get; set; }
+        public bool IsExpanded { get; set; } = true;
 
         #endregion
 
@@ -68,6 +68,7 @@ namespace Albion.Model.Items
             {
                 minItem.IsMin = true;
                 minItem.IsExpanded = true;
+                Cost = minItem.Cost;
             }
 
             //Cost = Requirements.Select(x => x.Cost).Where(x => x > 0).DefaultIfEmpty(0).Min();

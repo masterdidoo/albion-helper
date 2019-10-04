@@ -21,6 +21,7 @@ namespace Albion.Model.Requirements
             }
 
             Cost = (price + 10000) + (price + 10000) / 100;
+            OnPropertyChanged(nameof(Silver));
         }
 
         public long Silver

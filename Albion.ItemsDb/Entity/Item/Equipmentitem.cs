@@ -15,7 +15,7 @@ namespace Albion.Db.Xml.Entity.Item
     [DebuggerStepThrough]
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
-    public class Equipmentitem : IItem, IItemCraftingcategory, IItemEnchantments, IItemPowered
+    public class Equipmentitem : IItem, IItemCraftingcategory, IItemEnchantments, IItemPowered, IItemEnchantmentLevel
     {
         [XmlElement("craftingrequirements")] public Craftingrequirements[] craftingrequirements { get; set; }
 
@@ -207,7 +207,7 @@ namespace Albion.Db.Xml.Entity.Item
         [XmlAttribute] public string craftfamegainfactor { get; set; }
 
 
-        [XmlAttribute] public string enchantmentlevel { get; set; }
+        [XmlAttribute] public int enchantmentlevel { get; set; }
 
 
         [XmlAttribute] public string mainhandanimationtype { get; set; }

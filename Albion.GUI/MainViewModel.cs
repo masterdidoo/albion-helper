@@ -18,17 +18,17 @@ namespace Albion.GUI
     public class MainViewModel : ViewModelBase, IDisposable
     {
         private readonly AlbionParser _albionParser;
-        private int _bluePlayers;
-        private string _filterTest;
-        private int _redPlayers;
-        private Location _town = Location.None;
-        private Location _townSell = Location.None;
         private readonly BuildingDataManager bdm;
         private readonly MarketDataManager mdm;
-        private int? _tir;
+        private int _bluePlayers;
         private int? _enchant;
+        private string _filterTest;
+        private int _redPlayers;
         private ShopCategory? _shopCategory;
         private ShopSubCategory? _shopSubCategory;
+        private int? _tir;
+        private Location _town = Location.None;
+        private Location _townSell = Location.None;
 
         public MainViewModel()
         {
@@ -68,6 +68,13 @@ namespace Albion.GUI
                 var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
                 foreach (var item in items)
                     if (items.Length > 1)
+                    {
+                        var bdprice = mdm.GetData(item.Key);
+                            var max = item.Max(x => x.UnitPriceSilver);
+                        if (bdprice.BuyPrice < max)
+                            bdprice.BuyPrice = max;
+                    }
+                    else
                         mdm.GetData(item.Key).BuyPrice = item.Max(x => x.UnitPriceSilver);
             });
 
@@ -77,10 +84,17 @@ namespace Albion.GUI
                 var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
                 foreach (var item in items)
                     if (items.Length > 1)
+                    {
+                        var bdprice = mdm.GetData(item.Key);
+                        var min = item.Min(x => x.UnitPriceSilver);
+                        if (bdprice.SellPrice > min || bdprice.SellPrice == 0 && min > 0)
+                            bdprice.SellPrice = min;
+                    }
+                    else
                         mdm.GetData(item.Key).SellPrice = item.Min(x => x.UnitPriceSilver);
             });
 
-            //_albionParser.Start();
+            _albionParser.Start();
         }
 
         public Dictionary<string, CraftBuilding> CraftBuildings { get; }
@@ -92,7 +106,7 @@ namespace Albion.GUI
             get => _town;
             set
             {
-                if(!Set(ref _town, value))return;
+                if (!Set(ref _town, value)) return;
                 mdm.SelectTown((int) _town);
                 bdm.SelectTown((int) _town);
             }
@@ -101,7 +115,7 @@ namespace Albion.GUI
         public Location TownSell
         {
             get => _townSell;
-            set 
+            set
             {
                 if (!Set(ref _townSell, value)) return;
 //                mdm.SelectTown((int)_townSell);
@@ -127,22 +141,10 @@ namespace Albion.GUI
             get
             {
                 IEnumerable<CommonItem> items = Items.Values;
-                if (Tir>=0)
-                {
-                    items = items.Where(x => x.Tir == Tir);
-                }
-                if (Enchant>=0)
-                {
-                    items = items.Where(x => x.Enchant == Enchant);
-                }
-                if (ShopCategory != null)
-                {
-                    items = items.Where(x => x.ShopCategory == ShopCategory);
-                }
-                if (ShopSubCategory != null)
-                {
-                    items = items.Where(x => x.ShopSubCategory == ShopSubCategory);
-                }
+                if (Tir >= 0) items = items.Where(x => x.Tir == Tir);
+                if (Enchant >= 0) items = items.Where(x => x.Enchant == Enchant);
+                if (ShopCategory != null) items = items.Where(x => x.ShopCategory == ShopCategory);
+                if (ShopSubCategory != null) items = items.Where(x => x.ShopSubCategory == ShopSubCategory);
                 if (!_filterTest.IsNullOrEmpty())
                 {
                     var filterTest = _filterTest.ToUpper();
@@ -197,7 +199,7 @@ namespace Albion.GUI
             }
         }
 
-        public int?[] Tirs { get; } = {-1,1,2,3,4,5,6,7,8};
+        public int?[] Tirs { get; } = {-1, 1, 2, 3, 4, 5, 6, 7, 8};
 
         public int? Enchant
         {
@@ -209,7 +211,7 @@ namespace Albion.GUI
             }
         }
 
-        public int?[] Enchants { get; } = { -1, 0, 1, 2, 3 };
+        public int?[] Enchants { get; } = {-1, 0, 1, 2, 3};
 
         public void Dispose()
         {

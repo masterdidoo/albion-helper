@@ -14,6 +14,7 @@ namespace Albion.Model.Requirements
         private void OnUpdateSellPrice()
         {
             Cost = Item.ItemMarket.SellPrice;
+            OnPropertyChanged(nameof(Silver));
         }
 
         public long Silver

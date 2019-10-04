@@ -6,6 +6,7 @@ namespace Albion.Model.Requirements.Resources
     {
         public CommonItem Item { get; set; }
         public int Count { get; set; }
+        public long Cost => Item.Cost * Count;
 
         public override string ToString() => $"{Item}[{Count}]";
     }

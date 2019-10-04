@@ -26,7 +26,7 @@ namespace UnitTests
                 var buildings = loader.CraftBuildings;
                 var all = loader.Items;
 
-                _exp = 40000;
+                _exp = 80000;
                 var fired = 0;
                 all["T4_OFF_SHIELD"].UpdateCost += () =>
                 {
@@ -37,16 +37,17 @@ namespace UnitTests
                 Assert.AreEqual(0, all["T4_OFF_SHIELD"].Cost);
 
                 all["T4_PLANKS"].ItemMarket.SellPrice = 10000;
+                all["T4_METALBAR"].ItemMarket.SellPrice = 10000;
                 Assert.AreEqual(1, fired);
-                Assert.AreEqual(40000, all["T4_OFF_SHIELD"].Cost);
+                Assert.AreEqual(80000, all["T4_OFF_SHIELD"].Cost);
 
-                _exp = 3540000;
+                _exp = 3580000;
 
                 buildings["T8_FORGE"].ItemBuilding.Tax = 10;
 
 //                all["T4_OFF_SHIELD"].Building.Tax= 10;
                 Assert.AreEqual(2, fired);
-                Assert.AreEqual(3540000, all["T4_OFF_SHIELD"].Cost);
+                Assert.AreEqual(3580000, all["T4_OFF_SHIELD"].Cost);
             }
             {
                 var mdm = new MarketDataManager();
@@ -57,7 +58,7 @@ namespace UnitTests
 
                 var all = loader.Items;
 
-                Assert.AreEqual(40000, all["T4_OFF_SHIELD"].Cost);
+                Assert.AreEqual(80000, all["T4_OFF_SHIELD"].Cost);
             }
         }
     }

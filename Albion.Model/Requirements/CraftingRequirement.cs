@@ -42,7 +42,7 @@ namespace Albion.Model.Requirements
                 return;
             }
 
-            var summ = Resources.Sum(x => x.Count * x.Item.Cost);
+            var summ = Resources.Sum(x => x.Cost);
 
             Cost = (summ + Silver + Tax) / AmountCrafted;
         }

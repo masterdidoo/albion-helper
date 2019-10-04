@@ -30,11 +30,15 @@ namespace Albion.DataStore.Managers
 
         public TItem GetData(string id)
         {
+            if (id[id.Length - 2] == '@' && id.Substring(id.Length - Level.Length - 2).Contains(Level))
+                id = id.Substring(0, id.Length - 2);
             if (_data.TryGetValue(id, out var data)) return data;
             data = CreateData(id);
             _data.Add(id, data);
             return data;
         }
+
+        static string Level = "_LEVEL";
 
 
         public event Action TownChanged;
