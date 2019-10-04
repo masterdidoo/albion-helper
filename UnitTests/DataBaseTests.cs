@@ -21,11 +21,10 @@ namespace UnitTests
                 var bdm = new BuildingDataManager();
 
                 var loader = new XmlLoader(mdm, bdm);
-                var model = loader.LoadModel();
+                loader.LoadModel();
 
                 var buildings = loader.CraftBuildings;
-
-                var all = model.ToDictionary(k => k.Id);
+                var all = loader.Items;
 
                 _exp = 40000;
                 var fired = 0;
@@ -56,7 +55,7 @@ namespace UnitTests
                 var loader = new XmlLoader(mdm, bdm);
                 var model = loader.LoadModel();
 
-                var all = model.ToDictionary(k => k.Id);
+                var all = loader.Items;
 
                 Assert.AreEqual(40000, all["T4_OFF_SHIELD"].Cost);
             }

@@ -8,6 +8,7 @@ using Albion.Db.Xml.Entity.Item;
 using Albion.Model.Buildings;
 using Albion.Model.Data;
 using Albion.Model.Items;
+using Albion.Model.Managers;
 
 namespace Albion.Db.Xml
 {
@@ -16,6 +17,12 @@ namespace Albion.Db.Xml
         public Dictionary<string, IItem> XmlItems { get; private set; }
 
         public Dictionary<string, CommonItem> Items { get; private set; }
+
+        public XmlLoader(IMarketDataManager marketDataManager, IBuildingDataManager buildingDataManager)
+        {
+            _marketDataManager = marketDataManager;
+            _buildingDataManager = buildingDataManager;
+        }
 
         public static items LoadItemsXml()
         {
@@ -43,7 +50,7 @@ namespace Albion.Db.Xml
             }
         }
 
-        public IEnumerable<CommonItem> LoadModel()
+        public int LoadModel()
         {
             NoneBuilding = new CraftBuilding(new ItemBuilding());
             var buildingsDb = LoadBuildingsXml();
@@ -74,7 +81,7 @@ namespace Albion.Db.Xml
 
             var items = XmlItems.Values.Select(CreateOrGetItem).Concat(enItems);
 
-            return items;
+            return items.Count();
         }
 
         public Dictionary<string, CraftBuilding> CraftBuildings { get; set; }

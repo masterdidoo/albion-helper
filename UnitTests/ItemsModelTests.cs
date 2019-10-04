@@ -25,7 +25,7 @@ namespace UnitTests
             var loader = new XmlLoader(mmdm.Object, bdm);
             var model = loader.LoadModel();
 
-            var all = model.ToDictionary(k=>k.Id);
+            var all = loader.Items;
 
             int fired = 0;
             all["T4_OFF_SHIELD"].UpdateCost += () =>
@@ -52,7 +52,8 @@ namespace UnitTests
 
             Assert.IsNotNull(model);
 
-            var list = model.ToList();
+            
+            var list = loader.Items.Values;
 
             Assert.AreEqual(6282, list.Count);
 

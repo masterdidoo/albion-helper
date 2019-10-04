@@ -19,12 +19,6 @@ namespace Albion.Db.Xml
         private readonly IMarketDataManager _marketDataManager;
         private readonly IBuildingDataManager _buildingDataManager;
 
-        public XmlLoader(IMarketDataManager marketDataManager, IBuildingDataManager buildingDataManager)
-        {
-            _marketDataManager = marketDataManager;
-            _buildingDataManager = buildingDataManager;
-        }
-
         private IEnumerable<CommonItem> CreateEnchantedItems(IItemEnchantments iItem)
         {
             if (iItem.enchantments == null) yield break;
