@@ -12,10 +12,16 @@ namespace Albion.Model.Requirements
         {
         }
 
+        /// <summary>
+        /// silver * 10000
+        /// </summary>
         public long Silver { get; set; }
 
         public int AmountCrafted { get; set; }
 
+        /// <summary>
+        /// tax * 10000
+        /// </summary>
         public long Tax
         {
             get => _tax;
@@ -50,7 +56,7 @@ namespace Albion.Model.Requirements
 
         private void BuildingDataOnUpdateTax()
         {
-            Tax = Item.ItemPower * 5 * Item.ItemBuilding.Tax / 100;
+            Tax = 10000 / 100 * Item.ItemBuilding.Tax * Item.ItemPower * 5;
         }
     }
 }

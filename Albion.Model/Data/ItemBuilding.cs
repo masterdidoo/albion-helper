@@ -7,6 +7,9 @@ namespace Albion.Model.Data
         private int _tax;
         public event Action UpdateTax;
 
+        /// <summary>
+        /// tax %
+        /// </summary>
         public int Tax
         {
             get => _tax;

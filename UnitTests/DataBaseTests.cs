@@ -2,6 +2,7 @@
 using Albion.DataStore.Db;
 using Albion.DataStore.Managers;
 using Albion.Db.Xml;
+using Castle.DynamicProxy.Generators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests
@@ -9,6 +10,8 @@ namespace UnitTests
     [TestClass]
     public class DataBaseTests
     {
+        private long _exp;
+
         [TestMethod]
         public void TestUpdatePrice()
         {
@@ -22,10 +25,11 @@ namespace UnitTests
 
                 var all = model.ToDictionary(k => k.Id);
 
+                _exp = 40000;
                 var fired = 0;
                 all["T4_OFF_SHIELD"].UpdateCost += () =>
                 {
-                    Assert.AreEqual(40000, all["T4_OFF_SHIELD"].Cost);
+                    Assert.AreEqual(_exp, all["T4_OFF_SHIELD"].Cost);
                     fired++;
                 };
 
@@ -34,6 +38,12 @@ namespace UnitTests
                 all["T4_PLANKS"].ItemMarket.SellPrice = 10000;
                 Assert.AreEqual(1, fired);
                 Assert.AreEqual(40000, all["T4_OFF_SHIELD"].Cost);
+
+                _exp = 3540000;
+
+                all["T4_OFF_SHIELD"].ItemBuilding.Tax= 10;
+                Assert.AreEqual(2, fired);
+                Assert.AreEqual(3540000, all["T4_OFF_SHIELD"].Cost);
             }
             {
                 var mdm = new MarketDataManager();
