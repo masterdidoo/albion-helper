@@ -18,6 +18,7 @@ namespace UnitTests
 
             var craft = db.Items.OfType<CraftBuilding>();
             Assert.AreEqual(135, craft.Count());
+            Assert.AreEqual(135, craft.Select(x=>x.uniquename).Distinct().Count());
         }
     }
 }
