@@ -11,20 +11,22 @@ namespace Albion.Model.Items
         private readonly FastBuyRequirement _fastBuyRequirement;
         private readonly LongBuyRequirement _longBuyRequirement;
 
-        public CommonItem(BaseResorcedRequirement[] craftingRequirements)
+        public CommonItem(BaseResorcedRequirement[] craftingRequirements, ItemMarket itemMarket, ItemBuilding itemBuilding)
         {
             _craftingRequirements = craftingRequirements;
             _longBuyRequirement = new LongBuyRequirement();
             _fastBuyRequirement = new FastBuyRequirement();
 
-            MarketData = new MarketData();
-            BuildingData = new BuildingData();
+            ItemMarket = itemMarket;
+            ItemBuilding = itemBuilding;
 
             foreach (var cr in Requirements)
             {
-                cr.SetParent(this);
+                cr.SetItem(this);
                 cr.UpdateCost += CrOnUpdateCost;
             }
+
+            CrOnUpdateCost();
         }
 
         public IEnumerable<BaseRequirement> Requirements
@@ -39,8 +41,8 @@ namespace Albion.Model.Items
 
         public int MemId { get; set; }
 
-        public MarketData MarketData { get; }
-        public BuildingData BuildingData { get; }
+        public ItemMarket ItemMarket { get; }
+        public ItemBuilding ItemBuilding { get; }
 
         private void CrOnUpdateCost()
         {

@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
-using Albion.ItemsDb.Enums;
-using Albion.ItemsDb.Requirements;
+using Albion.Db.Xml.Enums;
+using Albion.Db.Xml.Requirements;
 
-namespace Albion.ItemsDb
+namespace Albion.Db.Xml
 {
     public interface IItem
     {

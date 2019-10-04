@@ -9,8 +9,8 @@
 //------------------------------------------------------------------------------
 
 using System.Xml.Serialization;
-using Albion.ItemsDb;
-using Albion.ItemsDb.Requirements;
+using Albion.Db.Xml;
+using Albion.Db.Xml.Requirements;
 
 // 
 // Этот исходный код был создан с помощью xsd, версия=4.6.1055.0.

@@ -5,13 +5,21 @@ namespace Albion.Model.Requirements
 {
     public class LongBuyRequirement : BaseRequirement
     {
-        protected override void OnSetParent(CommonItem item)
+        protected override void OnSetItem()
         {
-            item.MarketData.UpdateBuyPrice += OnUpdateBuyPrice;
+            Item.ItemMarket.UpdateBuyPrice += OnUpdateBuyPrice;
+            OnUpdateBuyPrice();
         }
 
-        private void OnUpdateBuyPrice(long price)
+        private void OnUpdateBuyPrice()
         {
+            var price = Item.ItemMarket.BuyPrice;
+            if (price == 0)
+            {
+                Cost = 0;
+                return;
+            }
+
             Cost = (price + 10000) + (price + 10000) / 100;
         }
     }

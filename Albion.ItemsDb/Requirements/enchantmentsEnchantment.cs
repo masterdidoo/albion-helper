@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace Albion.ItemsDb.Requirements
+namespace Albion.Db.Xml.Requirements
 {
     [GeneratedCode("xsd", "4.6.1055.0")]
     [Serializable]

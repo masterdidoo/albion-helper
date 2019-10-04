@@ -30,17 +30,27 @@ namespace Albion.Model.Requirements
 
         protected override void ResourcesOnUpdateCost()
         {
-            Cost = (Resources.Sum(x => x.Count * x.Item.Cost) + Silver + Tax) / AmountCrafted;
+            var summ = Resources.Sum(x => x.Count * x.Item.Cost);
+
+            if (summ == 0)
+            {
+                Cost = 0;
+                return;
+            }
+
+            Cost = (summ + Silver + Tax) / AmountCrafted;
         }
 
-        protected override void OnSetParent(CommonItem item)
+        protected override void OnSetItem()
         {
-            item.BuildingData.UpdateTax += BuildingDataOnUpdateTax;
+            base.OnSetItem();
+            Item.ItemBuilding.UpdateTax += BuildingDataOnUpdateTax;
+            BuildingDataOnUpdateTax();
         }
 
         private void BuildingDataOnUpdateTax()
         {
-            Tax = Item.ItemPower * 5 * Item.BuildingData.Tax / 100;
+            Tax = Item.ItemPower * 5 * Item.ItemBuilding.Tax / 100;
         }
     }
 }

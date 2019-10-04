@@ -1,14 +1,11 @@
 ﻿using System;
-using Albion.Common;
 
 namespace Albion.Model.Data
 {
-    public class MarketData
+    public class ItemMarket
     {
         private long _buyPrice;
         private long _sellPrice;
-        public PriceData[] SellPriceDatas { get; set; } = new PriceData[(int) (Location.None + 1)];
-        public PriceData[] BuyPriceDatas { get; set; } = new PriceData[(int) (Location.None + 1)];
 
         public long SellPrice
         {
@@ -17,7 +14,7 @@ namespace Albion.Model.Data
             {
                 if (_sellPrice == value) return;
                 _sellPrice = value;
-                UpdateSellPrice?.Invoke(value);
+                UpdateSellPrice?.Invoke();
             }
         }
 
@@ -28,11 +25,11 @@ namespace Albion.Model.Data
             {
                 if (_buyPrice == value) return;
                 _buyPrice = value;
-                UpdateBuyPrice?.Invoke(value);
+                UpdateBuyPrice?.Invoke();
             }
         }
 
-        public event Action<long> UpdateSellPrice;
-        public event Action<long> UpdateBuyPrice;
+        public event Action UpdateSellPrice;
+        public event Action UpdateBuyPrice;
     }
 }

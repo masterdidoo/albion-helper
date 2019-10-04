@@ -1,4 +1,4 @@
-﻿namespace Albion.ItemsDb.Enums
+﻿namespace Albion.Db.Xml.Enums
 {
     //@MARKETPLACEGUI_ROLLOUT_SHOPCATEGORY_
     public enum shopCategory

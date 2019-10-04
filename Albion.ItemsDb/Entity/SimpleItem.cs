@@ -4,10 +4,10 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Xml.Schema;
 using System.Xml.Serialization;
-using Albion.ItemsDb.Enums;
-using Albion.ItemsDb.Requirements;
+using Albion.Db.Xml.Enums;
+using Albion.Db.Xml.Requirements;
 
-namespace Albion.ItemsDb.Entity
+namespace Albion.Db.Xml.Entity
 {
     [GeneratedCode("xsd", "4.6.1055.0")]
     [Serializable]

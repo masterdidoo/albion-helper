@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Albion.Model.Data
+namespace Albion.DataStore.DataModel
 {
     public class PriceData
     {

@@ -1,4 +1,5 @@
-﻿using Albion.Model.Requirements.Resources;
+﻿using Albion.Model.Items;
+using Albion.Model.Requirements.Resources;
 
 namespace Albion.Model.Requirements
 {
@@ -12,5 +13,10 @@ namespace Albion.Model.Requirements
 
         public CraftingResource[] Resources { get; }
         protected abstract void ResourcesOnUpdateCost();
+
+        protected override void OnSetItem()
+        {
+            ResourcesOnUpdateCost();
+        }
     }
 }

@@ -6,12 +6,12 @@ namespace Albion.Model.Requirements
     {
         public CommonItem Item { get; private set; }
 
-        public void SetParent(CommonItem item)
+        internal void SetItem(CommonItem item)
         {
             Item = item;
-            OnSetParent(item);
+            OnSetItem();
         }
 
-        protected abstract void OnSetParent(CommonItem item);
+        protected abstract void OnSetItem();
     }
 }

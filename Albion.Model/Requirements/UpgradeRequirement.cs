@@ -15,8 +15,5 @@ namespace Albion.Model.Requirements
             Cost = Resources.Sum(x => x.Count * x.Item.Cost);
         }
 
-        protected override void OnSetParent(CommonItem item)
-        {
-        }
     }
 }
