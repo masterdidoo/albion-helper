@@ -5,7 +5,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
 using Albion.Common;
+using Albion.DataStore.Managers;
+using Albion.Db.Xml;
 using Albion.Event;
+using Albion.Model.Buildings;
+using Albion.Model.Items;
 using Albion.Network;
 using Albion.Operation;
 using GalaSoft.MvvmLight;
@@ -20,9 +24,21 @@ namespace Albion.GUI
         private int _redPlayers;
         private Location _town = Location.None;
         private Location _townSell = Location.None;
+        private MarketDataManager mdm;
+        private BuildingDataManager bdm;
 
         public MainViewModel()
         {
+            mdm = new MarketDataManager();
+            bdm = new BuildingDataManager();
+
+            var loader = new XmlLoader(mdm, bdm);
+            loader.LoadModel();
+
+            Items = loader.Items;
+
+            CraftBuildings = loader.CraftBuildings;
+
             _albionParser = new AlbionParser();
 
             _albionParser.AddEventHandler<PlayerCounts>(p =>
@@ -64,8 +80,12 @@ namespace Albion.GUI
 //                RaisePropertyChanged(nameof(SimpleItems));
             });
 
-            _albionParser.Start();
+            //_albionParser.Start();
         }
+
+        public Dictionary<string, CraftBuilding> CraftBuildings { get; }
+
+        public Dictionary<string, CommonItem> Items { get; }
 
         public Location Town
         {
@@ -95,6 +115,8 @@ namespace Albion.GUI
         }
 
         public IEnumerable<Location> Towns => typeof(Location).GetEnumValues().Cast<Location>();
+
+        public IEnumerable<CommonItem> CommonItems => Items.Values;
 
         public void Dispose()
         {

@@ -150,9 +150,21 @@
       <Project>{BAD21844-F93F-4F46-B540-28631D7B0255}</Project>
       <Name>Albion.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Albion.DataStore\Albion.DataStore.csproj">
+      <Project>{1C5990CC-588F-4CA1-8708-1F4B4E0F523E}</Project>
+      <Name>Albion.DataStore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Albion.Event\Albion.Event.csproj">
       <Project>{B0AF151A-78A3-4B07-975D-6C29611E3AA9}</Project>
       <Name>Albion.Event</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Albion.ItemsDb\Albion.Db.Xml.csproj">
+      <Project>{CC5764FF-3A22-46D5-BD5F-EF3D5FC159B6}</Project>
+      <Name>Albion.Db.Xml</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Albion.Model\Albion.Model.csproj">
+      <Project>{47BD76E1-B185-4E58-8347-ACDD1BFA9EDD}</Project>
+      <Name>Albion.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\Albion.Network\Albion.Network.csproj">
       <Project>{4d1a1f8d-46e1-456d-83cf-78e4d7dd6fa7}</Project>
