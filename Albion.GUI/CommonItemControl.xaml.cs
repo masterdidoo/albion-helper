@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Albion.GUI
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for CommonItemControl.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class CommonItemControl : UserControl
     {
-        public MainWindow()
+        public CommonItemControl()
         {
             InitializeComponent();
         }

@@ -15,5 +15,11 @@ namespace Albion.Model.Requirements
         {
             Cost = Item.ItemMarket.SellPrice;
         }
+
+        public long Silver
+        {
+            get => Item.ItemMarket.SellPrice;
+            set => Item.ItemMarket.SellPrice = value;
+        }
     }
 }

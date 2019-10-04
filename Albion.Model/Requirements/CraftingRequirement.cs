@@ -36,13 +36,13 @@ namespace Albion.Model.Requirements
 
         protected override void ResourcesOnUpdateCost()
         {
-            var summ = Resources.Sum(x => x.Count * x.Item.Cost);
-
-            if (summ == 0)
+            if (Resources.Any(x => x.Item.Cost == 0))
             {
                 Cost = 0;
                 return;
             }
+
+            var summ = Resources.Sum(x => x.Count * x.Item.Cost);
 
             Cost = (summ + Silver + Tax) / AmountCrafted;
         }

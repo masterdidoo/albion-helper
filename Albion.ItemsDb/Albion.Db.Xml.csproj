@@ -46,6 +46,7 @@
     <Compile Include="Entity\Building\CraftingItemList.cs" />
     <Compile Include="Entity\Building\CraftItem.cs" />
     <Compile Include="Entity\Common\AudioInfo.cs" />
+    <Compile Include="Entity\Localization\localization.cs" />
     <Compile Include="Requirements\rementsResource.cs" />
     <Compile Include="Entity\Item\items.cs" />
     <Compile Include="Requirements\enchantmentsEnchantment.cs" />

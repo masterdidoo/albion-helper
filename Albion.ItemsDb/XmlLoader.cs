@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -50,6 +51,24 @@ namespace Albion.Db.Xml
             }
         }
 
+        public static Dictionary<string, string> LoadLocalizationXml()
+        {
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Albion.Db.Xml.Xmls.localization.xml");
+            if (stream == null) return null;
+            using (TextReader tr = new StreamReader(stream))
+            {
+                var xml = new XmlSerializer(typeof(tmx));
+                var items = (tmx) xml.Deserialize(tr);
+
+                return items.body.Where(s => s.tuid.StartsWith("@ITEMS_")).SelectMany(x => x.tuv
+                    .Where(lr => lr.lang == "RU-RU").Select(lr => new
+                    {
+                        tuid = x.tuid.Substring(7),
+                        lr.seg
+                    })).ToDictionary(k => k.tuid, v => v.seg);
+            }
+        }
+
         public int LoadModel()
         {
             NoneBuilding = new CraftBuilding(new ItemBuilding());
@@ -77,12 +96,16 @@ namespace Albion.Db.Xml
 
             Items = new Dictionary<string, CommonItem>();
 
+            Localization = XmlLoader.LoadLocalizationXml();
+
             var enItems = XmlItems.Values.OfType<IItemEnchantments>().SelectMany(CreateEnchantedItems);
 
             var items = XmlItems.Values.Select(CreateOrGetItem).Concat(enItems);
 
             return items.Count();
         }
+
+        public Dictionary<string, string> Localization { get; set; }
 
         public Dictionary<string, CraftBuilding> CraftBuildings { get; set; }
 

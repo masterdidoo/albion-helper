@@ -22,5 +22,11 @@ namespace Albion.Model.Requirements
 
             Cost = (price + 10000) + (price + 10000) / 100;
         }
+
+        public long Silver
+        {
+            get => Item.ItemMarket.BuyPrice;
+            set => Item.ItemMarket.BuyPrice = value;
+        }
     }
 }

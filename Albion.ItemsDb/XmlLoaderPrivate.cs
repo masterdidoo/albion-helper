@@ -28,7 +28,7 @@ namespace Albion.Db.Xml
                 var craftingRequirements = EnCreateCraftingRequirements(iItem.uniquename, enchantment);
 
                 var item = CreateCommonItem(iItem, iItem.uniquename + LevelNameConst + enchantment.enchantmentlevel,
-                    craftingRequirements);
+                    craftingRequirements, enchantment.enchantmentlevel);
 
                 item.ItemPower = enchantment.itempower > 0 ? enchantment.itempower : enchantment.dummyitempower;
 
@@ -37,12 +37,15 @@ namespace Albion.Db.Xml
         }
 
         private CommonItem CreateCommonItem(IItem iItem, string itemId,
-            IEnumerable<BaseResorcedRequirement> craftingRequirements)
+            IEnumerable<BaseResorcedRequirement> craftingRequirements, int enchant=0)
         {
             var item = new CommonItem(craftingRequirements.ToArray(), _marketDataManager.GetData(itemId), BuildingByItem(itemId))
             {
                 MemId = _memCounter++,
                 Id = itemId,
+                Name = Localization.TryGetValue(iItem.uniquename, out var name) ? name : itemId,
+                Tir = iItem.tier,
+                Enchant = enchant,
                 ShopCategory = (ShopCategory) iItem.shopcategory,
                 ShopSubCategory = (ShopSubCategory) iItem.shopsubcategory1,
                 ItemPower = (iItem as IItemPowered)?.itempower ?? (iItem as IItemPowered2)?.dummyitempower ??

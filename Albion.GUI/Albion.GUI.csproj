@@ -92,11 +92,18 @@
     <Compile Include="ArtefactsViewControl.xaml.cs">
       <DependentUpon>ArtefactsViewControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CommonItemControl.xaml.cs">
+      <DependentUpon>CommonItemControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PriceConverter.cs" />
     <Compile Include="TreeViewControl.xaml.cs">
       <DependentUpon>TreeViewControl.xaml</DependentUpon>
     </Compile>
     <Page Include="ArtefactsViewControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CommonItemControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

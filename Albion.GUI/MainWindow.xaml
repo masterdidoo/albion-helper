@@ -13,12 +13,21 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
+        <DockPanel>
+            <ComboBox SelectedItem="{Binding Tir}" ItemsSource="{Binding Tirs}"></ComboBox>
+            <ComboBox SelectedItem="{Binding Enchant}" ItemsSource="{Binding Enchants}"></ComboBox>
+            <ComboBox SelectedItem="{Binding ShopCategory}" ></ComboBox>
+            <ComboBox SelectedItem="{Binding ShopSubCategory}" ></ComboBox>
+            <TextBlock>Filter:</TextBlock>
+            <TextBox Text="{Binding FilterTest, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        </DockPanel>
+
         <TabControl Grid.Row="1">
             <TabItem Header="All">
-                <local:TreeViewControl Grid.Row="1" DataContext="{Binding CommonItems}"/>
+                <local:TreeViewControl DataContext="{Binding CommonItems}"/>
             </TabItem>
             <TabItem Header="Artefacts">
-                <!-- <local:ArtefactsViewControl Grid.Row="1" DataContext="{Binding Artefacts}"/> -->
+                <!-- <local:ArtefactsViewControl DataContext="{Binding Artefacts}"/> -->
             </TabItem>
         </TabControl>
         <StackPanel Grid.Row="2" Orientation="Horizontal">
