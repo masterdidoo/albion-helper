@@ -30,7 +30,7 @@ namespace Albion.DataStore.Managers
 
         public TItem GetData(string id)
         {
-            if (id[id.Length - 2] == '@' && id.Substring(id.Length - Level.Length - 2).Contains(Level))
+            if (id[id.Length - 2] == '@' && id.Length - Level.Length - 3 > 0 && id.Substring(id.Length - Level.Length - 3, Level.Length)==(Level))
                 id = id.Substring(0, id.Length - 2);
             if (_data.TryGetValue(id, out var data)) return data;
             data = CreateData(id);
