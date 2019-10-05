@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using Albion.DataStore.Db;
-using Albion.Model.Data;
 using LiteDB;
 
 namespace Albion.DataStore.Managers
 {
     public abstract class BaseDataManager<TData, TItem>
     {
-        public int Town { get; private set; }
+
+        protected readonly Dictionary<string, TItem> _data;
 
         protected BaseDataManager()
         {
@@ -16,6 +16,8 @@ namespace Albion.DataStore.Managers
             var db = DataBase.Instance;
             Rep = db.GetCollection<TData>();
         }
+
+        public int Town { get; private set; }
 
         internal LiteCollection<TData> Rep { get; }
 
@@ -26,20 +28,13 @@ namespace Albion.DataStore.Managers
             TownChanged?.Invoke();
         }
 
-        protected readonly Dictionary<string, TItem> _data;
-
         public TItem GetData(string id)
         {
-            if (id[id.Length - 2] == '@' && id.Length - Level.Length - 3 > 0 && id.Substring(id.Length - Level.Length - 3, Level.Length)==(Level))
-                id = id.Substring(0, id.Length - 2);
             if (_data.TryGetValue(id, out var data)) return data;
             data = CreateData(id);
             _data.Add(id, data);
             return data;
         }
-
-        static string Level = "_LEVEL";
-
 
         public event Action TownChanged;
 

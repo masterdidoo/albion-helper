@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Albion.Model.Buildings;
 using Albion.Model.Data;
 using Albion.Model.Items.Categories;
@@ -24,10 +25,10 @@ namespace Albion.Model.Items
             foreach (var cr in Requirements)
             {
                 cr.SetItem(this);
-                cr.UpdateCost += CrOnUpdateCost;
+                cr.UpdateCost += RequirementOnUpdateCost;
             }
 
-            CrOnUpdateCost();
+            RequirementOnUpdateCost();
         }
 
         public IEnumerable<BaseRequirement> Requirements
@@ -52,7 +53,7 @@ namespace Albion.Model.Items
 
         #endregion
 
-        private void CrOnUpdateCost()
+        private void RequirementOnUpdateCost()
         {
             var min = long.MaxValue;
             BaseRequirement minItem = null;
@@ -69,6 +70,11 @@ namespace Albion.Model.Items
                 minItem.IsMin = true;
                 minItem.IsExpanded = true;
                 Cost = minItem.Cost;
+            }
+            else
+            {
+                Pos = DateTime.MinValue;
+                Cost = 0;
             }
 
             //Cost = Requirements.Select(x => x.Cost).Where(x => x > 0).DefaultIfEmpty(0).Min();

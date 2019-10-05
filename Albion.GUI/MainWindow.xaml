@@ -4,44 +4,42 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Albion.GUI"
+        xmlns:viewModels="clr-namespace:Albion.GUI.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" d:DataContext="{d:DesignInstance local:MainViewModel}">
+        Title="MainWindow" Height="450" Width="800" d:DataContext="{d:DesignInstance viewModels:MainViewModel}">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <DockPanel>
-            <ComboBox SelectedItem="{Binding Tir}" ItemsSource="{Binding Tirs}"></ComboBox>
-            <ComboBox SelectedItem="{Binding Enchant}" ItemsSource="{Binding Enchants}"></ComboBox>
-            <ComboBox SelectedItem="{Binding ShopCategory}" ></ComboBox>
-            <ComboBox SelectedItem="{Binding ShopSubCategory}" ></ComboBox>
+            <ComboBox SelectedValue="{Binding Tir}" DisplayMemberPath="Item1" ItemsSource="{Binding Tirs}" SelectedValuePath="Item2"/>
+            <ComboBox SelectedValue="{Binding Enchant}" DisplayMemberPath="Item1" ItemsSource="{Binding Enchants}" SelectedValuePath="Item2"/>
+            <ComboBox SelectedValue="{Binding ShopCategory}" DisplayMemberPath="Item1" ItemsSource="{Binding ShopCategories}" SelectedValuePath="Item2"/>
+            <ComboBox SelectedValue="{Binding ShopSubCategory}" DisplayMemberPath="Item1" ItemsSource="{Binding ShopSubCategories}" SelectedValuePath="Item2"/>
             <TextBlock>Filter:</TextBlock>
-            <TextBox Text="{Binding FilterTest, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Text="{Binding FilterTest, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
 
         <TabControl Grid.Row="1">
             <TabItem Header="All">
-                <local:TreeViewControl DataContext="{Binding CommonItems}"/>
+                <local:TreeViewControl DataContext="{Binding CommonItems}" />
             </TabItem>
             <TabItem Header="Artefacts">
                 <!-- <local:ArtefactsViewControl DataContext="{Binding Artefacts}"/> -->
             </TabItem>
         </TabControl>
         <StackPanel Grid.Row="2" Orientation="Horizontal">
-            <TextBlock Text="Blue :" Margin="5,0"/>
-            <TextBlock Text="{Binding BluePlayers}"/>
-            <TextBlock Text="Red :" Margin="5,0"/>
-            <TextBlock Text="{Binding RedPlayers}"/>
+            <TextBlock Text="Blue :" Margin="5,0" />
+            <TextBlock Text="{Binding BluePlayers}" />
+            <TextBlock Text="Red :" Margin="5,0" />
+            <TextBlock Text="{Binding RedPlayers}" />
             <TextBlock Text="Town :" Margin="5,0" />
-            <ComboBox SelectedItem="{Binding Town}" ItemsSource="{Binding Towns}"/>
-            <TextBlock Text="TownSell :" Margin="5,0" />
-            <ComboBox SelectedItem="{Binding TownSell}" ItemsSource="{Binding Towns}"/>
+            <ComboBox SelectedItem="{Binding Town}" ItemsSource="{Binding Towns}" />
+            <TextBlock Text="SellTown :" Margin="5,0" />
+            <ComboBox SelectedItem="{Binding SellTown}" ItemsSource="{Binding Towns}" />
         </StackPanel>
     </Grid>
 </Window>
-
-
-

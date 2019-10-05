@@ -52,7 +52,6 @@
     <Compile Include="DataModel\MarketData.cs" />
     <Compile Include="Managers\MarketDataManager.cs" />
     <Compile Include="Model\ProxyBuildingData.cs" />
-    <Compile Include="DataModel\TaxData.cs" />
     <Compile Include="Model\ProxyMarketData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

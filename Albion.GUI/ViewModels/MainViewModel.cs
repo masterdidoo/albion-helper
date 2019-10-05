@@ -13,9 +13,9 @@ using Albion.Operation;
 using GalaSoft.MvvmLight;
 using PcapDotNet.Base;
 
-namespace Albion.GUI
+namespace Albion.GUI.ViewModels
 {
-    public class MainViewModel : ViewModelBase, IDisposable
+    public partial class MainViewModel : ViewModelBase, IDisposable
     {
         private readonly AlbionParser _albionParser;
         private readonly BuildingDataManager bdm;
@@ -27,13 +27,16 @@ namespace Albion.GUI
         private ShopCategory? _shopCategory;
         private ShopSubCategory? _shopSubCategory;
         private int? _tir;
-        private Location _town = Location.None;
-        private Location _townSell = Location.None;
+        private Location _town;
+        private Location _sellTown;
 
         public MainViewModel()
         {
-            ShopCategories = Enum.GetValues(typeof(ShopCategory)).Cast<ShopCategory?>();
-            ShopSubCategories = Enum.GetValues(typeof(ShopSubCategory)).Cast<ShopSubCategory?>();
+            Tirs = Enumerable.Repeat(new Tuple<string,int?>("-",null),1).Concat(Enumerable.Range(1,8).Select(x=>Tuple.Create(x.ToString(),(int?) x)));
+            Enchants = Enumerable.Repeat(new Tuple<string,int?>("-",null),1).Concat(Enumerable.Range(0,4).Select(x=>Tuple.Create(x.ToString(),(int?) x)));
+
+            ShopCategories = Enumerable.Repeat(new Tuple<string, ShopCategory?>("-", null), 1).Concat(Enum.GetValues(typeof(ShopCategory)).Cast<ShopCategory?>().Select(x=> Tuple.Create(x.Value.ToString(), x)));
+            ShopSubCategories = Enumerable.Repeat(new Tuple<string, ShopSubCategory?>("-", null), 1).Concat(Enum.GetValues(typeof(ShopSubCategory)).Cast<ShopSubCategory?>().Select(x => Tuple.Create(x.Value.ToString(), x)));
 
             mdm = new MarketDataManager();
             bdm = new BuildingDataManager();
@@ -47,54 +50,10 @@ namespace Albion.GUI
 
             _albionParser = new AlbionParser();
 
-            _albionParser.AddEventHandler<PlayerCounts>(p =>
-            {
-                BluePlayers = p.Blue > 0 ? p.Blue : 0;
-                RedPlayers = p.Red > 0 ? p.Red : 0;
-            });
+            Town = Location.None;
+            SellTown = Location.None;
 
-            _albionParser.AddOperationHandler<ConsloeCommand>(p =>
-            {
-                if (p.Town != Location.None)
-                {
-                    Town = p.Town;
-                    TownSell = p.Town;
-                }
-            });
-
-            _albionParser.AddOperationHandler<AuctionBuyOffer>(p =>
-            {
-                if (p.Items.Length == 0) return;
-                var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
-                foreach (var item in items)
-                    if (items.Length > 1)
-                    {
-                        var bdprice = mdm.GetData(item.Key);
-                            var max = item.Max(x => x.UnitPriceSilver);
-                        if (bdprice.BuyPrice < max)
-                            bdprice.BuyPrice = max;
-                    }
-                    else
-                        mdm.GetData(item.Key).BuyPrice = item.Max(x => x.UnitPriceSilver);
-            });
-
-            _albionParser.AddOperationHandler<AuctionGetRequests>(p =>
-            {
-                if (p.Items.Length == 0) return;
-                var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
-                foreach (var item in items)
-                    if (items.Length > 1)
-                    {
-                        var bdprice = mdm.GetData(item.Key);
-                        var min = item.Min(x => x.UnitPriceSilver);
-                        if (bdprice.SellPrice > min || bdprice.SellPrice == 0 && min > 0)
-                            bdprice.SellPrice = min;
-                    }
-                    else
-                        mdm.GetData(item.Key).SellPrice = item.Min(x => x.UnitPriceSilver);
-            });
-
-            _albionParser.Start();
+            InitAlbionParser();
         }
 
         public Dictionary<string, CraftBuilding> CraftBuildings { get; }
@@ -112,13 +71,13 @@ namespace Albion.GUI
             }
         }
 
-        public Location TownSell
+        public Location SellTown
         {
-            get => _townSell;
+            get => _sellTown;
             set
             {
-                if (!Set(ref _townSell, value)) return;
-//                mdm.SelectTown((int)_townSell);
+                if (!Set(ref _sellTown, value)) return;
+                mdm.SelectSellTown((int)_sellTown);
             }
         }
 
@@ -150,12 +109,13 @@ namespace Albion.GUI
                     var filterTest = _filterTest.ToUpper();
                     items = items.Where(x => x.Name.ToUpper().Contains(filterTest));
                 }
+                items = items.OrderByDescending(x=>x.Pos).ThenBy(x=>x.FullName);
 
                 return items;
             }
         }
 
-        public IEnumerable<ShopCategory?> ShopCategories { get; }
+        public IEnumerable<Tuple<string, ShopCategory?>> ShopCategories { get; }
 
         public ShopCategory? ShopCategory
         {
@@ -167,7 +127,7 @@ namespace Albion.GUI
             }
         }
 
-        public IEnumerable<ShopSubCategory?> ShopSubCategories { get; }
+        public IEnumerable<Tuple<string, ShopSubCategory?>> ShopSubCategories { get; }
 
         public ShopSubCategory? ShopSubCategory
         {
@@ -199,7 +159,7 @@ namespace Albion.GUI
             }
         }
 
-        public int?[] Tirs { get; } = {-1, 1, 2, 3, 4, 5, 6, 7, 8};
+        public IEnumerable<Tuple<string, int?>> Tirs { get; }
 
         public int? Enchant
         {
@@ -211,11 +171,13 @@ namespace Albion.GUI
             }
         }
 
-        public int?[] Enchants { get; } = {-1, 0, 1, 2, 3};
+        public IEnumerable<Tuple<string, int?>> Enchants { get; }
 
         public void Dispose()
         {
             _albionParser.Dispose();
         }
     }
+
+
 }

@@ -17,6 +17,7 @@ namespace Albion.Model.Requirements
             if (price == 0)
             {
                 Cost = 0;
+                OnPropertyChanged(nameof(Silver));
                 return;
             }
 

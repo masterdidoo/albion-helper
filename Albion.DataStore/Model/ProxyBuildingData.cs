@@ -21,13 +21,13 @@ namespace Albion.DataStore.Model
         private void ManagerOnTownChanged()
         {
             UpdateTax -= OnUpdateTax;
-            Tax = _buildingData.TaxDatas[_manager.Town].Tax;
+            Tax = _buildingData.TaxDatas[_manager.Town];
             UpdateTax += OnUpdateTax;
         }
 
         private void OnUpdateTax()
         {
-            _buildingData.TaxDatas[_manager.Town].Tax = Tax;
+            _buildingData.TaxDatas[_manager.Town] = Tax;
 
             _manager.Rep.Upsert(_buildingData);
         }
