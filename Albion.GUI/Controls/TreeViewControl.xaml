@@ -24,7 +24,8 @@
                 </DockPanel.Resources>
                 <TextBlock Text="{Binding FullName}" />
                 <TextBlock Text="1" />
-                <TextBlock Text="{Binding Cost, StringFormat=Cost: {0}, Converter={StaticResource PriceConverter}}" />
+                <TextBlock Text="{Binding Profit, StringFormat=Profit: {0}, Converter={StaticResource PriceConverter}}" Width="100"/>
+                <TextBlock Text="{Binding Cost, StringFormat=Cost: {0}, Converter={StaticResource PriceConverter}}" Width="100"/>
             </DockPanel>
         </HierarchicalDataTemplate>
         <HierarchicalDataTemplate DataType="{x:Type requirements:LongBuyRequirement}">

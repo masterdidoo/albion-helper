@@ -89,25 +89,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ArtefactsViewControl.xaml.cs">
+    <Compile Include="Controls\ArtefactsViewControl.xaml.cs">
       <DependentUpon>ArtefactsViewControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CommonItemControl.xaml.cs">
+    <Compile Include="Controls\CommonItemControl.xaml.cs">
       <DependentUpon>CommonItemControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="PriceConverter.cs" />
-    <Compile Include="TreeViewControl.xaml.cs">
+    <Compile Include="Controls\TreeViewControl.xaml.cs">
       <DependentUpon>TreeViewControl.xaml</DependentUpon>
     </Compile>
-    <Page Include="ArtefactsViewControl.xaml">
+    <Page Include="Controls\ArtefactsViewControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CommonItemControl.xaml">
+    <Page Include="Controls\CommonItemControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -117,11 +117,11 @@
     </Compile>
     <Compile Include="ViewModels\MainViewModelParser.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="TreeViewControl.xaml">
+    <Page Include="Controls\TreeViewControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

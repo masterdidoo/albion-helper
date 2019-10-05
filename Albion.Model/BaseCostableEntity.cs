@@ -1,12 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Albion.Model.Items;
 using Albion.Model.Requirements;
 
 namespace Albion.Model
 {
-    public class BaseCostableEntity : INotifyPropertyChanged
+    public class BaseCostableEntity : NotifyEntity
     {
         private long _cost;
         private DateTime _pos;
@@ -37,11 +36,6 @@ namespace Albion.Model
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        public override event PropertyChangedEventHandler PropertyChanged;
     }
 }

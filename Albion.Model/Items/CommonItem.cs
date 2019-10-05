@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Albion.Model.Buildings;
 using Albion.Model.Data;
 using Albion.Model.Items.Categories;
+using Albion.Model.Items.Profits;
 using Albion.Model.Requirements;
 
 namespace Albion.Model.Items
@@ -10,17 +12,26 @@ namespace Albion.Model.Items
     public class CommonItem : BaseCostableEntity
     {
         private readonly FastBuyRequirement _fastBuyRequirement;
+        private readonly FastSellProfit _fastSellProfit;
         private readonly LongBuyRequirement _longBuyRequirement;
+        private readonly LongSellProfit _longSellProfit;
+        private long _profit;
 
         public CommonItem(BaseResorcedRequirement[] craftingRequirements, ItemMarket itemMarket,
             CraftBuilding craftingBuilding)
         {
             _craftingRequirements = craftingRequirements;
             _craftingBuilding = craftingBuilding;
+            ItemMarket = itemMarket;
+
             _longBuyRequirement = new LongBuyRequirement();
             _fastBuyRequirement = new FastBuyRequirement();
 
-            ItemMarket = itemMarket;
+            _longSellProfit = new LongSellProfit(this);
+            _fastSellProfit = new FastSellProfit(this);
+
+
+            foreach (var profit in Profits) profit.UpdateProfit += OnUpdateProfit;
 
             foreach (var cr in Requirements)
             {
@@ -31,6 +42,17 @@ namespace Albion.Model.Items
             RequirementOnUpdateCost();
         }
 
+        public long Profit
+        {
+            get => _profit;
+            protected set
+            {
+                if (_profit == value) return;
+                _profit = value;
+                OnPropertyChanged();
+            }
+        }
+
         public IEnumerable<BaseRequirement> Requirements
         {
             get
@@ -38,6 +60,15 @@ namespace Albion.Model.Items
                 yield return _fastBuyRequirement;
                 yield return _longBuyRequirement;
                 foreach (var cr in _craftingRequirements) yield return cr;
+            }
+        }
+
+        public IEnumerable<BaseProfit> Profits
+        {
+            get
+            {
+                yield return _fastSellProfit;
+                yield return _longSellProfit;
             }
         }
 
@@ -52,6 +83,11 @@ namespace Albion.Model.Items
         public bool IsExpanded { get; set; } = true;
 
         #endregion
+
+        private void OnUpdateProfit()
+        {
+            Profit = Profits.Max(p => p.Profit);
+        }
 
         private void RequirementOnUpdateCost()
         {

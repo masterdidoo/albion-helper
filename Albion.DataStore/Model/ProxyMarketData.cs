@@ -46,6 +46,13 @@ namespace Albion.DataStore.Model
 
         private void UpdatePrice()
         {
+            if (_manager.SellTown == _manager.Town)
+            {
+                SellFastPrice = BuyPrice;
+                SellLongPrice = SellPrice;
+                return;
+            }
+
             _marketData.BuyPriceDatas[_manager.Town].Price = BuyPrice;
             _marketData.BuyPriceDatas[_manager.Town].Pos = DateTime.Now;
             _marketData.SellPriceDatas[_manager.Town].Price = SellPrice;
@@ -56,6 +63,13 @@ namespace Albion.DataStore.Model
 
         private void SellUpdatePrice()
         {
+            if (_manager.SellTown == _manager.Town)
+            {
+                BuyPrice = SellFastPrice;
+                SellPrice = SellLongPrice;
+                return;
+            }
+
             _marketData.BuyPriceDatas[_manager.SellTown].Price = SellFastPrice;
             _marketData.BuyPriceDatas[_manager.SellTown].Pos = DateTime.Now;
             _marketData.SellPriceDatas[_manager.SellTown].Price = SellLongPrice;
