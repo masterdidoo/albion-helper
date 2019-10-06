@@ -103,7 +103,7 @@ namespace Albion.Model.Items
 
             if (minItem != null)
             {
-                minItem.IsMin = true;
+                minItem.IsSelected = true;
                 minItem.IsExpanded = true;
                 Cost = minItem.Cost;
             }
@@ -125,7 +125,7 @@ namespace Albion.Model.Items
         {
             foreach (var item in Requirements)
                 if (item != requirement)
-                    item.IsMin = false;
+                    item.IsSelected = false;
             Cost = requirement.Cost;
         }
 

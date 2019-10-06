@@ -1,6 +1,6 @@
 ﻿namespace Albion.Model.Items.Requirements
 {
-    public class LongBuyRequirement : BaseRequirement
+    public class LongBuyRequirement : BaseMarketRequirement
     {
         protected override void OnSetItem()
         {
@@ -10,22 +10,12 @@
 
         private void OnUpdateBuyPrice()
         {
-            var price = Item.ItemMarket.BuyPrice;
-            if (price == 0)
-            {
-                Cost = 0;
-                OnPropertyChanged(nameof(Silver));
-                return;
-            }
-
-            Cost = (price + 10000) + (price + 10000) / 100;
-            OnPropertyChanged(nameof(Silver));
+            Silver = Item.ItemMarket.BuyPrice;
         }
 
-        public long Silver
+        protected override void OnUpdateSilver()
         {
-            get => Item.ItemMarket.BuyPrice;
-            set => Item.ItemMarket.BuyPrice = value;
+            Cost = Silver == 0 ? 0 : (Silver + 10000) + (Silver + 10000) / 100;
         }
     }
 }

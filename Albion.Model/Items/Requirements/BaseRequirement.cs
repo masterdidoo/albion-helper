@@ -4,7 +4,7 @@
     {
         private bool _isExpanded;
 
-        private bool _isMin;
+        private bool _isSelected;
 
         public bool IsExpanded
         {
@@ -17,13 +17,13 @@
             }
         }
 
-        public bool IsMin
+        public bool IsSelected
         {
-            get => _isMin;
+            get => _isSelected;
             set
             {
-                if (_isMin == value) return;
-                _isMin = value;
+                if (_isSelected == value) return;
+                _isSelected = value;
                 OnPropertyChanged();
                 if (value) Item.UpdateMinCost(this);
             }
