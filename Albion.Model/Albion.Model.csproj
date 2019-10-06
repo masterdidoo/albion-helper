@@ -48,6 +48,7 @@
     <Compile Include="Items\CommonItem.cs" />
     <Compile Include="BaseCostableEntity.cs" />
     <Compile Include="Items\Profits\LongSellProfit.cs" />
+    <Compile Include="Items\Requirements\BaseMarketRequirement.cs" />
     <Compile Include="Managers\IBuildingDataManager.cs" />
     <Compile Include="Managers\IMarketDataManager.cs" />
     <Compile Include="NotifyEntity.cs" />

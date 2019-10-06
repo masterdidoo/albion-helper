@@ -1,6 +1,6 @@
 ﻿namespace Albion.Model.Items.Requirements
 {
-    public class FastBuyRequirement : BaseRequirement
+    public class FastBuyRequirement : BaseMarketRequirement
     {
         protected override void OnSetItem()
         {
@@ -10,14 +10,12 @@
 
         private void OnUpdateSellPrice()
         {
-            Cost = Item.ItemMarket.SellPrice;
-            OnPropertyChanged(nameof(Silver));
+            Silver = Item.ItemMarket.SellPrice;
         }
 
-        public long Silver
+        protected override void OnUpdateSilver()
         {
-            get => Item.ItemMarket.SellPrice;
-            set => Item.ItemMarket.SellPrice = value;
+            Cost = Silver;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Albion.Model.Items
             CraftBuilding craftingBuilding)
         {
             _craftingRequirements = craftingRequirements;
-            _craftingBuilding = craftingBuilding;
+            CraftingBuilding = craftingBuilding;
             ItemMarket = itemMarket;
 
             _longBuyRequirement = new LongBuyRequirement();
@@ -76,7 +76,7 @@ namespace Albion.Model.Items
         public int MemId { get; set; }
 
         public ItemMarket ItemMarket { get; }
-        internal ItemBuilding ItemBuilding => _craftingBuilding.ItemBuilding;
+        internal ItemBuilding ItemBuilding => CraftingBuilding.ItemBuilding;
 
         #region For UI
 
@@ -135,7 +135,7 @@ namespace Albion.Model.Items
         public ShopCategory ShopCategory { get; set; }
         public ShopSubCategory ShopSubCategory { get; set; }
         private readonly BaseResorcedRequirement[] _craftingRequirements;
-        private readonly CraftBuilding _craftingBuilding;
+        public CraftBuilding CraftingBuilding { get; }
         public int ItemPower { get; set; }
 
         public int Tir { get; set; }

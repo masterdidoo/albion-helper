@@ -35,7 +35,7 @@
                         <Setter Property="Margin" Value="2"/>
                     </Style>
                 </DockPanel.Resources>
-                <CheckBox IsChecked="{Binding IsMin}" Margin="2"/>
+                <CheckBox IsChecked="{Binding IsMin, Mode=TwoWay}" Margin="2"/>
                 <TextBlock Text="Long Buy" />
                 <TextBlock Text="{Binding Cost, StringFormat=Cost: {0}, Converter={StaticResource PriceConverter}}" />
                 <TextBox Text="{Binding Silver, Mode=TwoWay, Converter={StaticResource PriceConverter}}" />
@@ -48,7 +48,7 @@
                         <Setter Property="Margin" Value="2"/>
                     </Style>
                 </DockPanel.Resources>
-                <CheckBox IsChecked="{Binding IsMin}" Margin="2"/>
+                <CheckBox IsChecked="{Binding IsMin, Mode=TwoWay}" Margin="2"/>
                 <TextBlock Text="Fast Buy" />
                 <TextBlock Text="{Binding Cost, StringFormat=Cost: {0}, Converter={StaticResource PriceConverter}}" />
                 <TextBox Text="{Binding Silver, Mode=TwoWay, Converter={StaticResource PriceConverter}}" />
@@ -57,7 +57,7 @@
         <HierarchicalDataTemplate DataType="{x:Type requirements:CraftingRequirement}"
                                   ItemsSource="{Binding Resources}">
             <DockPanel>
-                <CheckBox IsChecked="{Binding IsMin}" Margin="2" />
+                <CheckBox IsChecked="{Binding IsMin, Mode=TwoWay}" Margin="2" />
                 <TextBlock Text="Craft Tax:" Margin="0,2" />
                 <TextBlock Text="{Binding Tax, Converter={StaticResource PriceConverter}}" Margin="2" />
                 <TextBlock Text="Silver:" Margin="0,2" />
@@ -69,7 +69,7 @@
         <HierarchicalDataTemplate DataType="{x:Type requirements:UpgradeRequirement}"
                                   ItemsSource="{Binding Resources}">
             <DockPanel>
-                <CheckBox IsChecked="{Binding IsMin}" Margin="2" />
+                <CheckBox IsChecked="{Binding IsMin, Mode=TwoWay}" Margin="2" />
                 <TextBlock Text="Craft Tax:" Margin="0,2" />
                 <TextBlock Text="{Binding Cost, Converter={StaticResource PriceConverter}}" Margin="2" />
             </DockPanel>
