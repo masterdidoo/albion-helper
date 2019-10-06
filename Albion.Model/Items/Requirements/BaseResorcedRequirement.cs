@@ -1,7 +1,6 @@
-﻿using Albion.Model.Items;
-using Albion.Model.Requirements.Resources;
+﻿using Albion.Model.Items.Requirements.Resources;
 
-namespace Albion.Model.Requirements
+namespace Albion.Model.Items.Requirements
 {
     public abstract class BaseResorcedRequirement : BaseRequirement
     {

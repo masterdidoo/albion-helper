@@ -1,8 +1,7 @@
 ﻿using System.Linq;
-using Albion.Model.Items;
-using Albion.Model.Requirements.Resources;
+using Albion.Model.Items.Requirements.Resources;
 
-namespace Albion.Model.Requirements
+namespace Albion.Model.Items.Requirements
 {
     public class UpgradeRequirement : BaseResorcedRequirement
     {
@@ -12,7 +11,7 @@ namespace Albion.Model.Requirements
 
         protected override void ResourcesOnUpdateCost()
         {
-            Cost = Resources.Sum(x => x.Count * x.Item.Cost);
+            Cost = Resources.Any(x => x.Cost == 0) ? 0 : Resources.Sum(x => x.Count * x.Item.Cost);
         }
 
     }

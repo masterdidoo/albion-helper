@@ -1,7 +1,4 @@
-﻿using System;
-using Albion.Model.Items;
-
-namespace Albion.Model.Requirements
+﻿namespace Albion.Model.Items.Requirements
 {
     public class FastBuyRequirement : BaseRequirement
     {

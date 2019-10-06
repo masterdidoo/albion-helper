@@ -5,7 +5,7 @@ using Albion.Model.Buildings;
 using Albion.Model.Data;
 using Albion.Model.Items.Categories;
 using Albion.Model.Items.Profits;
-using Albion.Model.Requirements;
+using Albion.Model.Items.Requirements;
 
 namespace Albion.Model.Items
 {

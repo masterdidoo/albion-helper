@@ -1,6 +1,4 @@
-﻿using Albion.Model.Items;
-
-namespace Albion.Model.Requirements
+﻿namespace Albion.Model.Items.Requirements
 {
     public abstract class BaseRequirement : BaseCostableEntity
     {

@@ -5,9 +5,9 @@ using Albion.Db.Xml.Requirements;
 using Albion.Model.Buildings;
 using Albion.Model.Items;
 using Albion.Model.Items.Categories;
+using Albion.Model.Items.Requirements;
+using Albion.Model.Items.Requirements.Resources;
 using Albion.Model.Managers;
-using Albion.Model.Requirements;
-using Albion.Model.Requirements.Resources;
 
 namespace Albion.Db.Xml
 {

@@ -1,8 +1,7 @@
 ﻿using System.Linq;
-using Albion.Model.Items;
-using Albion.Model.Requirements.Resources;
+using Albion.Model.Items.Requirements.Resources;
 
-namespace Albion.Model.Requirements
+namespace Albion.Model.Items.Requirements
 {
     public class CraftingRequirement : BaseResorcedRequirement
     {

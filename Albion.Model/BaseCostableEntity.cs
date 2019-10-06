@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using Albion.Model.Items;
-using Albion.Model.Requirements;
 
 namespace Albion.Model
 {

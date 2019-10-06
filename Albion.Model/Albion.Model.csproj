@@ -51,17 +51,17 @@
     <Compile Include="Managers\IBuildingDataManager.cs" />
     <Compile Include="Managers\IMarketDataManager.cs" />
     <Compile Include="NotifyEntity.cs" />
-    <Compile Include="Requirements\BaseResorcedRequirement.cs" />
-    <Compile Include="Requirements\FastBuyRequirement.cs" />
-    <Compile Include="Requirements\LongBuyRequirement.cs" />
-    <Compile Include="Requirements\BaseRequirement.cs" />
-    <Compile Include="Requirements\CraftingRequirement.cs" />
-    <Compile Include="Requirements\Resources\CraftingResource.cs" />
+    <Compile Include="Items\Requirements\BaseResorcedRequirement.cs" />
+    <Compile Include="Items\Requirements\FastBuyRequirement.cs" />
+    <Compile Include="Items\Requirements\LongBuyRequirement.cs" />
+    <Compile Include="Items\Requirements\BaseRequirement.cs" />
+    <Compile Include="Items\Requirements\CraftingRequirement.cs" />
+    <Compile Include="Items\Requirements\Resources\CraftingResource.cs" />
     <Compile Include="Items\Categories\ShopCategory.cs" />
     <Compile Include="Items\Categories\ShopSubCategory.cs" />
     <Compile Include="Data\ItemMarket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Requirements\UpgradeRequirement.cs" />
+    <Compile Include="Items\Requirements\UpgradeRequirement.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
