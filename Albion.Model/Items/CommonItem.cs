@@ -27,11 +27,16 @@ namespace Albion.Model.Items
             _longBuyRequirement = new LongBuyRequirement();
             _fastBuyRequirement = new FastBuyRequirement();
 
-            _longSellProfit = new LongSellProfit(this);
-            _fastSellProfit = new FastSellProfit(this);
+            _longSellProfit = new LongSellProfit();
+            _fastSellProfit = new FastSellProfit();
 
+            UpdateCost += OnUpdateProfitOrCost;
 
-            foreach (var profit in Profits) profit.UpdateProfit += OnUpdateProfit;
+            foreach (var profit in Profits)
+            {
+                profit.SetItem(this);
+                profit.UpdateCost += OnUpdateProfitOrCost;
+            }
 
             foreach (var cr in Requirements)
             {
@@ -63,7 +68,7 @@ namespace Albion.Model.Items
             }
         }
 
-        public IEnumerable<BaseProfit> Profits
+        public IEnumerable<BaseRequirement> Profits
         {
             get
             {
@@ -84,9 +89,10 @@ namespace Albion.Model.Items
 
         #endregion
 
-        private void OnUpdateProfit()
+        private void OnUpdateProfitOrCost()
         {
-            Profit = Profits.Max(p => p.Profit);
+            var sell = Profits.Max(p => p.Cost);
+            Profit = (sell - Cost) * 100 / Cost;
         }
 
         private void RequirementOnUpdateCost()
@@ -109,10 +115,10 @@ namespace Albion.Model.Items
             }
             else
             {
-                Pos = DateTime.MinValue;
                 Cost = 0;
             }
 
+            Pos = Requirements.Max(x=>x.Pos);
             //Cost = Requirements.Select(x => x.Cost).Where(x => x > 0).DefaultIfEmpty(0).Min();
         }
 

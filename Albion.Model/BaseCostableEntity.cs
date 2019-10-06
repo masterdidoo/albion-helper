@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using Albion.Model.Items;
 
 namespace Albion.Model
 {
