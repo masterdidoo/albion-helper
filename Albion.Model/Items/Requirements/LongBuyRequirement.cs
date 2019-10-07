@@ -11,6 +11,7 @@
         private void OnUpdateBuyPrice()
         {
             Silver = Item.ItemMarket.BuyPrice;
+            Pos = Item.ItemMarket.BuyPos;
         }
 
         protected override void OnUpdateSilver()

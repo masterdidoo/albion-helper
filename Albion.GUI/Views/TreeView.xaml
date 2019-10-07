@@ -29,10 +29,13 @@
                     <TextBlock Grid.Column="1" Text="Task" Style="{StaticResource TextBlockBoldStyle}" />
                     <GridSplitter Grid.Column="1" Width="3" Background="Black" Margin="1,0" />
                     <Border Grid.Column="2" BorderThickness="0,0,1,0" BorderBrush="Black">
-                        <TextBlock Text="Profit" Style="{StaticResource TextBlockBoldStyle}" Margin="0 0 3 0"
-                                   Background="Aqua" 
-                                   Width="57"
-                                   TextAlignment="Right" />
+                        <ToggleButton IsChecked="{Binding IsProfitOrder}"
+                            Width="60"
+                            >Profit</ToggleButton>
+                        <!-- <TextBlock Text="Profit" Style="{StaticResource TextBlockBoldStyle}" Margin="0 0 3 0" -->
+                        <!--            Background="Aqua"  -->
+                        <!--            Width="57" -->
+                        <!--            TextAlignment="Right" /> -->
                     </Border>
                     <TextBlock Grid.Column="3" Text="Cost" Style="{StaticResource TextBlockBoldStyle}" />
                 </Grid>

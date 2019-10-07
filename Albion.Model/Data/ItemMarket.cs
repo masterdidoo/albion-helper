@@ -53,6 +53,11 @@ namespace Albion.Model.Data
             }
         }
 
+        public DateTime SellFastPos { get; set; }
+        public DateTime SellLongPos { get; set; }
+        public DateTime BuyPos { get; set; }
+        public DateTime SellPos { get; set; }
+
 
         public event Action UpdateSellFastPrice;
         public event Action UpdateSellLongPrice;

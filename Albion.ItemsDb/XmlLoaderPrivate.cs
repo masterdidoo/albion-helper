@@ -52,6 +52,8 @@ namespace Albion.Db.Xml
                             (iItem as IItemValued)?.itemvalue ?? 0
             };
 
+            item.Init();
+
             Items.Add(item.Id, item);
 
             return item;

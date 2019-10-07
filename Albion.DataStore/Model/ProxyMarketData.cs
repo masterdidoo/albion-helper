@@ -25,6 +25,8 @@ namespace Albion.DataStore.Model
             UpdateSellFastPrice -= OnUpdateSellFastPrice;
             UpdateSellLongPrice -= OnUpdateSellLongPrice;
 
+            SellLongPos = _marketData.SellPriceDatas[_manager.SellTown].Pos;
+            SellFastPos = _marketData.BuyPriceDatas[_manager.SellTown].Pos;
             SellLongPrice = _marketData.SellPriceDatas[_manager.SellTown].Price;
             SellFastPrice = _marketData.BuyPriceDatas[_manager.SellTown].Price;
 
@@ -37,6 +39,8 @@ namespace Albion.DataStore.Model
             UpdateBuyPrice -= OnUpdateBuyPrice;
             UpdateSellPrice -= OnUpdateSellPrice;
 
+            SellPos = _marketData.SellPriceDatas[_manager.Town].Pos;
+            BuyPos = _marketData.BuyPriceDatas[_manager.Town].Pos;
             SellPrice = _marketData.SellPriceDatas[_manager.Town].Price;
             BuyPrice = _marketData.BuyPriceDatas[_manager.Town].Price;
 

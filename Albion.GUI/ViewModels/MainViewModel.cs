@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Input;
 using Albion.Common;
 using Albion.DataStore.Managers;
 using Albion.Db.Xml;
@@ -11,6 +12,7 @@ using Albion.Model.Items.Categories;
 using Albion.Network;
 using Albion.Operation;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
 using PcapDotNet.Base;
 
 namespace Albion.GUI.ViewModels
@@ -32,6 +34,8 @@ namespace Albion.GUI.ViewModels
 
         public MainViewModel()
         {
+            RefreshCommand = new RelayCommand(() => RaisePropertyChanged(nameof(CommonItems)));
+
             Tirs = Enumerable.Repeat(new Tuple<string,int?>("-",null),1).Concat(Enumerable.Range(1,8).Select(x=>Tuple.Create(x.ToString(),(int?) x)));
             Enchants = Enumerable.Repeat(new Tuple<string,int?>("-",null),1).Concat(Enumerable.Range(0,4).Select(x=>Tuple.Create(x.ToString(),(int?) x)));
 
@@ -46,14 +50,14 @@ namespace Albion.GUI.ViewModels
 
             Items = loader.Items;
 
-            foreach (var item in Items.Values)
-            {
-                item.PropertyChanged += (sender, args) =>
-                {
-                    if (args.PropertyName=="Pos")
-                        RaisePropertyChanged(nameof(CommonItems));
-                };
-            }
+//            foreach (var item in Items.Values)
+//            {
+//                item.PropertyChanged += (sender, args) =>
+//                {
+//                    if (args.PropertyName=="Pos")
+//                        RaisePropertyChanged(nameof(CommonItems));
+//                };
+//            }
 
             CraftBuildings = loader.CraftBuildings;
 
@@ -118,11 +122,15 @@ namespace Albion.GUI.ViewModels
                     var filterTest = _filterTest.ToUpper();
                     items = items.Where(x => x.Name.ToUpper().Contains(filterTest));
                 }
-                items = items.OrderByDescending(x=>x.Pos).ThenBy(x=>x.FullName);
+                items = IsProfitOrder 
+                    ? items.OrderByDescending(x=>x.Profit).ThenBy(x => x.Pos).ThenBy(x=>x.FullName) 
+                    : items.OrderByDescending(x=>x.Pos).ThenBy(x=>x.FullName);
 
                 return items;
             }
         }
+
+        public bool IsProfitOrder { get; set; }
 
         public IEnumerable<Tuple<string, ShopCategory?>> ShopCategories { get; }
 
@@ -181,6 +189,8 @@ namespace Albion.GUI.ViewModels
         }
 
         public IEnumerable<Tuple<string, int?>> Enchants { get; }
+
+        public ICommand RefreshCommand { get; }
 
         public void Dispose()
         {

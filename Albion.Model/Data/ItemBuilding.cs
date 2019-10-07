@@ -4,14 +4,14 @@ namespace Albion.Model.Data
 {
     public class ItemBuilding
     {
-        private int _tax;
+        private int _tax = 10;
 
         /// <summary>
         ///     tax %
         /// </summary>
         public int Tax
         {
-            get => _tax;
+            get => 10;//_tax;
             set
             {
                 if (_tax == value) return;

@@ -19,6 +19,7 @@
             <ComboBox SelectedValue="{Binding Enchant}" DisplayMemberPath="Item1" ItemsSource="{Binding Enchants}" SelectedValuePath="Item2"/>
             <ComboBox SelectedValue="{Binding ShopCategory}" DisplayMemberPath="Item1" ItemsSource="{Binding ShopCategories}" SelectedValuePath="Item2"/>
             <ComboBox SelectedValue="{Binding ShopSubCategory}" DisplayMemberPath="Item1" ItemsSource="{Binding ShopSubCategories}" SelectedValuePath="Item2"/>
+            <Button Command="{Binding RefreshCommand}">REFRESH</Button>
             <TextBlock>Filter:</TextBlock>
             <TextBox Text="{Binding FilterTest, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>

@@ -28,7 +28,7 @@ namespace Albion.Model
             {
                 if (_cost == value) return;
                 _cost = value;
-                Pos = _cost == 0 ? DateTime.MinValue : DateTime.Now;
+                //Pos = _cost == 0 ? DateTime.MinValue : DateTime.Now;
                 UpdateCost?.Invoke();
                 OnPropertyChanged();
             }

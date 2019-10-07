@@ -30,7 +30,10 @@ namespace Albion.Model.Items
             _fastSellProfit = new FastSellProfit();
 
             UpdateCost += OnUpdateProfitOrCost;
+        }
 
+        public void Init()
+        {
             foreach (var profit in Profits)
             {
                 profit.SetItem(this);
@@ -201,5 +204,6 @@ namespace Albion.Model.Items
             return Id;
         }
         #endregion
+
     }
 }
