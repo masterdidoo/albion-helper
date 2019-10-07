@@ -22,58 +22,80 @@ namespace Albion.DataStore.Model
 
         private void ManagerOnSellTownChanged()
         {
-            UpdateSellFastPrice -= SellUpdatePrice;
-            UpdateSellLongPrice -= SellUpdatePrice;
+            UpdateSellFastPrice -= OnUpdateSellFastPrice;
+            UpdateSellLongPrice -= OnUpdateSellLongPrice;
 
             SellLongPrice = _marketData.SellPriceDatas[_manager.SellTown].Price;
             SellFastPrice = _marketData.BuyPriceDatas[_manager.SellTown].Price;
 
-            UpdateSellFastPrice += SellUpdatePrice;
-            UpdateSellLongPrice += SellUpdatePrice;
+            UpdateSellFastPrice += OnUpdateSellFastPrice;
+            UpdateSellLongPrice += OnUpdateSellLongPrice;
         }
 
         private void ManagerOnTownChanged()
         {
-            UpdateBuyPrice -= UpdatePrice;
-            UpdateSellPrice -= UpdatePrice;
+            UpdateBuyPrice -= OnUpdateBuyPrice;
+            UpdateSellPrice -= OnUpdateSellPrice;
 
             SellPrice = _marketData.SellPriceDatas[_manager.Town].Price;
             BuyPrice = _marketData.BuyPriceDatas[_manager.Town].Price;
 
-            UpdateBuyPrice += UpdatePrice;
-            UpdateSellPrice += UpdatePrice;
+            UpdateBuyPrice += OnUpdateBuyPrice;
+            UpdateSellPrice += OnUpdateSellPrice;
         }
 
-        private void UpdatePrice()
+        private void OnUpdateBuyPrice()
         {
             if (_manager.SellTown == _manager.Town)
             {
                 SellFastPrice = BuyPrice;
-                SellLongPrice = SellPrice;
                 return;
             }
 
-            _marketData.BuyPriceDatas[_manager.Town].Price = BuyPrice;
-            _marketData.BuyPriceDatas[_manager.Town].Pos = DateTime.Now;
             _marketData.SellPriceDatas[_manager.Town].Price = SellPrice;
             _marketData.SellPriceDatas[_manager.Town].Pos = DateTime.Now;
 
             _manager.Rep.Upsert(_marketData);
         }
 
-        private void SellUpdatePrice()
+        private void OnUpdateSellPrice()
         {
             if (_manager.SellTown == _manager.Town)
             {
-                BuyPrice = SellFastPrice;
+                SellLongPrice = SellPrice;
+                return;
+            }
+
+            _marketData.SellPriceDatas[_manager.Town].Price = SellPrice;
+            _marketData.SellPriceDatas[_manager.Town].Pos = DateTime.Now;
+
+            _manager.Rep.Upsert(_marketData);
+        }
+
+        private void OnUpdateSellLongPrice()
+        {
+            if (_manager.SellTown == _manager.Town)
+            {
+                SellPrice = SellLongPrice;
+                return;
+            }
+
+            _marketData.SellPriceDatas[_manager.SellTown].Price = SellLongPrice;
+            _marketData.SellPriceDatas[_manager.SellTown].Pos = DateTime.Now;
+
+            _manager.Rep.Upsert(_marketData);
+        }
+
+        private void OnUpdateSellFastPrice()
+        {
+            if (_manager.SellTown == _manager.Town)
+            {
                 SellPrice = SellLongPrice;
                 return;
             }
 
             _marketData.BuyPriceDatas[_manager.SellTown].Price = SellFastPrice;
             _marketData.BuyPriceDatas[_manager.SellTown].Pos = DateTime.Now;
-            _marketData.SellPriceDatas[_manager.SellTown].Price = SellLongPrice;
-            _marketData.SellPriceDatas[_manager.SellTown].Pos = DateTime.Now;
 
             _manager.Rep.Upsert(_marketData);
         }
