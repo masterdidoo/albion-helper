@@ -33,7 +33,5 @@ namespace Albion.Model
                 OnPropertyChanged();
             }
         }
-
-        public override event PropertyChangedEventHandler PropertyChanged;
     }
 }
