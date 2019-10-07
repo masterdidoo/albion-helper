@@ -33,6 +33,7 @@ namespace Albion.Model.Items.Profits
 
         protected override void OnUpdateSilver()
         {
+            Item.ItemMarket.SellLongPrice = Silver;
             Cost = Silver - Silver * 3 / 100;
         }
     }

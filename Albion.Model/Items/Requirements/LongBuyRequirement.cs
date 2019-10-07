@@ -15,6 +15,7 @@
 
         protected override void OnUpdateSilver()
         {
+            Item.ItemMarket.BuyPrice = Silver;
             Cost = Silver == 0 ? 0 : (Silver + 10000) + (Silver + 10000) / 100;
         }
     }
