@@ -122,7 +122,7 @@ namespace Albion.Model.Items
                 Cost = 0;
             }
 
-            Pos = Requirements.Max(x=>x.Pos);
+            Pos = Requirements.Max(x=>x.Pos).AddTicks(1);
             //Cost = Requirements.Select(x => x.Cost).Where(x => x > 0).DefaultIfEmpty(0).Min();
         }
 

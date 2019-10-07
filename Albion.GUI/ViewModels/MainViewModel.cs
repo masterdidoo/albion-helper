@@ -46,6 +46,15 @@ namespace Albion.GUI.ViewModels
 
             Items = loader.Items;
 
+            foreach (var item in Items.Values)
+            {
+                item.PropertyChanged += (sender, args) =>
+                {
+                    if (args.PropertyName=="Pos")
+                        RaisePropertyChanged(nameof(CommonItems));
+                };
+            }
+
             CraftBuildings = loader.CraftBuildings;
 
             _albionParser = new AlbionParser();
