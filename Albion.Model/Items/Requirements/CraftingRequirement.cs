@@ -55,8 +55,6 @@ namespace Albion.Model.Items.Requirements
 
         private void BuildingDataOnUpdateTax()
         {
-            if (Item.ItemPower > 0)
-                Tax = 0;
             Tax = 10000 / 100 * Item.ItemBuilding.Tax * Item.ItemPower * 5;
         }
     }
