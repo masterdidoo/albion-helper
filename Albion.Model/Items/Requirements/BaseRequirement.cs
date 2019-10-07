@@ -1,4 +1,6 @@
-﻿namespace Albion.Model.Items.Requirements
+﻿using System;
+
+namespace Albion.Model.Items.Requirements
 {
     public abstract class BaseRequirement : BaseCostableEntity
     {
@@ -25,11 +27,13 @@
                 if (_isSelected == value) return;
                 _isSelected = value;
                 OnPropertyChanged();
-                if (value) Item.UpdateMinCost(this);
+                if (value) Selected?.Invoke(this);
             }
         }
 
         public CommonItem Item { get; private set; }
+
+        public event Action<BaseRequirement> Selected;
 
         internal void SetItem(CommonItem item)
         {

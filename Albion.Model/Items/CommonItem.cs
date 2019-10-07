@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Albion.Model.Buildings;
 using Albion.Model.Data;
@@ -36,12 +35,14 @@ namespace Albion.Model.Items
             {
                 profit.SetItem(this);
                 profit.UpdateCost += OnUpdateProfitOrCost;
+                profit.Selected += UpdateMaxSale;
             }
 
             foreach (var cr in Requirements)
             {
                 cr.SetItem(this);
                 cr.UpdateCost += RequirementOnUpdateCost;
+                cr.Selected += UpdateMinCost;
             }
 
             RequirementOnUpdateCost();
@@ -102,11 +103,43 @@ namespace Albion.Model.Items
 
         #endregion
 
+        private void UpdateMaxSale(BaseRequirement requirement)
+        {
+            foreach (var item in Profits)
+                if (item != requirement)
+                    item.IsSelected = false;
+
+            Profit = Cost > 0 ? (requirement.Cost - Cost) * 100 / Cost : -100;
+        }
+
         private void OnUpdateProfitOrCost()
         {
-            var sell = Profits.Max(p => p.Cost);
+            var max = 0L;
+            BaseRequirement maxItem = null;
 
-            Profit = Cost > 0 ? (sell - Cost) * 100 / Cost : -100;
+            foreach (var item in Profits)
+            {
+                item.IsSelected = false;
+                if (max < item.Cost && item.Cost > 0)
+                {
+                    max = item.Cost;
+                    maxItem = item;
+                }
+            }
+
+            if (maxItem != null)
+            {
+                maxItem.IsSelected = true;
+                maxItem.IsExpanded = true;
+                //Cost = minItem.Cost; set from UpdateMaxProfit
+                Profit = Cost > 0 ? (max - Cost) * 100 / Cost : -100;
+            }
+            else
+            {
+                Profit = -100;
+            }
+
+            Pos = Components.Max(x => x.Pos).AddTicks(1);
         }
 
         private void RequirementOnUpdateCost()
@@ -135,13 +168,8 @@ namespace Albion.Model.Items
                 Cost = 0;
             }
 
-            Pos = Requirements.Max(x=>x.Pos).AddTicks(1);
+            Pos = Components.Max(x => x.Pos).AddTicks(1);
             //Cost = Requirements.Select(x => x.Cost).Where(x => x > 0).DefaultIfEmpty(0).Min();
-        }
-
-        public override string ToString()
-        {
-            return Id;
         }
 
         public void UpdateMinCost(BaseRequirement requirement)
@@ -168,6 +196,10 @@ namespace Albion.Model.Items
 
         public string FullName => $"{Tir}.{Enchant} {Name}";
 
+        public override string ToString()
+        {
+            return Id;
+        }
         #endregion
     }
 }
