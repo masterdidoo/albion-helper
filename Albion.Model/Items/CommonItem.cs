@@ -92,7 +92,8 @@ namespace Albion.Model.Items
         private void OnUpdateProfitOrCost()
         {
             var sell = Profits.Max(p => p.Cost);
-            Profit = (sell - Cost) * 100 / Cost;
+
+            Profit = Cost > 0 ? (sell - Cost) * 100 / Cost : -100;
         }
 
         private void RequirementOnUpdateCost()
@@ -101,17 +102,20 @@ namespace Albion.Model.Items
             BaseRequirement minItem = null;
 
             foreach (var item in Requirements)
+            {
+                item.IsSelected = false;
                 if (min > item.Cost && item.Cost > 0)
                 {
                     min = item.Cost;
                     minItem = item;
                 }
+            }
 
             if (minItem != null)
             {
                 minItem.IsSelected = true;
                 minItem.IsExpanded = true;
-                Cost = minItem.Cost;
+                //Cost = minItem.Cost; set from UpdateMinCost
             }
             else
             {
