@@ -46,7 +46,7 @@ namespace Albion.DataStore.Model
 
         private void OnUpdateBuyPrice()
         {
-            if (_manager.SellTown == _manager.Town)
+            if (_manager.SellTown == _manager.Town && SellFastPrice != BuyPrice)
             {
                 SellFastPrice = BuyPrice;
                 return;
@@ -60,7 +60,7 @@ namespace Albion.DataStore.Model
 
         private void OnUpdateSellPrice()
         {
-            if (_manager.SellTown == _manager.Town)
+            if (_manager.SellTown == _manager.Town && SellLongPrice != SellPrice)
             {
                 SellLongPrice = SellPrice;
                 return;
@@ -74,7 +74,7 @@ namespace Albion.DataStore.Model
 
         private void OnUpdateSellLongPrice()
         {
-            if (_manager.SellTown == _manager.Town)
+            if (_manager.SellTown == _manager.Town && SellPrice != SellLongPrice)
             {
                 SellPrice = SellLongPrice;
                 return;
@@ -88,9 +88,9 @@ namespace Albion.DataStore.Model
 
         private void OnUpdateSellFastPrice()
         {
-            if (_manager.SellTown == _manager.Town)
+            if (_manager.SellTown == _manager.Town && BuyPrice != SellFastPrice)
             {
-                SellPrice = SellLongPrice;
+                BuyPrice = SellFastPrice;
                 return;
             }
 
