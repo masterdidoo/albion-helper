@@ -52,8 +52,8 @@ namespace Albion.DataStore.Model
                 return;
             }
 
-            _marketData.SellPriceDatas[_manager.Town].Price = SellPrice;
-            _marketData.SellPriceDatas[_manager.Town].Pos = DateTime.Now;
+            _marketData.BuyPriceDatas[_manager.Town].Price = BuyPrice;
+            _marketData.BuyPriceDatas[_manager.Town].Pos = DateTime.Now;
 
             _manager.Rep.Upsert(_marketData);
         }
