@@ -89,8 +89,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Controls\ArtefactsViewControl.xaml.cs">
-      <DependentUpon>ArtefactsViewControl.xaml</DependentUpon>
+    <Compile Include="Controls\RequirementControl.xaml.cs">
+      <DependentUpon>RequirementControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\CommonItemControl.xaml.cs">
       <DependentUpon>CommonItemControl.xaml</DependentUpon>
@@ -99,7 +99,7 @@
     <Compile Include="Views\TreeView.xaml.cs">
       <DependentUpon>TreeView.xaml</DependentUpon>
     </Compile>
-    <Page Include="Controls\ArtefactsViewControl.xaml">
+    <Page Include="Controls\RequirementControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

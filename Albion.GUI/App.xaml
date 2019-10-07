@@ -11,6 +11,10 @@
         <Style x:Key="TextBlockBoldStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
             <Setter Property="FontWeight" Value="Bold" />
         </Style>
+        <Style x:Key="IntBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
+            <Setter Property="TextAlignment" Value="Right" />
+            <Setter Property="MinWidth" Value="60" />
+        </Style>
 
         <local:PriceConverter x:Key="PriceConverter" />
 

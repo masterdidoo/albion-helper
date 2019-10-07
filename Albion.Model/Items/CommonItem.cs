@@ -58,6 +58,19 @@ namespace Albion.Model.Items
             }
         }
 
+        public IEnumerable<BaseRequirement> Components
+        {
+            get
+            {
+                yield return _longSellProfit;
+                yield return _fastSellProfit;
+
+                yield return _fastBuyRequirement;
+                yield return _longBuyRequirement;
+                foreach (var cr in _craftingRequirements) yield return cr;
+            }
+        }
+
         public IEnumerable<BaseRequirement> Requirements
         {
             get

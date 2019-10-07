@@ -6,94 +6,11 @@
              xmlns:items="clr-namespace:Albion.Model.Items;assembly=Albion.Model"
              xmlns:requirements="clr-namespace:Albion.Model.Items.Requirements;assembly=Albion.Model"
              xmlns:requ="clr-namespace:Albion.Model.Items.Requirements.Resources;assembly=Albion.Model"
+             xmlns:controls="clr-namespace:Albion.GUI.Controls"
+             xmlns:profits="clr-namespace:Albion.Model.Items.Profits;assembly=Albion.Model"
              mc:Ignorable="d"
              d:DesignHeight="350" d:DesignWidth="800">
-    <UserControl.Resources>
-        <Style x:Key="Style">
-            <Setter Property="TextBlock.Margin" Value="2"/>
-        </Style>
-
-        <HierarchicalDataTemplate DataType="{x:Type items:CommonItem}"
-                                  ItemsSource="{Binding Requirements}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition SharedSizeGroup="Item" MinWidth="300"/>
-                    <ColumnDefinition SharedSizeGroup="Profit" MinWidth="60"/>
-                    <ColumnDefinition SharedSizeGroup="Cost" />
-                </Grid.ColumnDefinitions>
-                <Grid.Resources>
-                    <Style TargetType="TextBlock">
-                        <Setter Property="Padding" Value="2,0"/>
-                    </Style>
-                </Grid.Resources>
-                <TextBlock Text="{Binding FullName, Mode=OneTime}"/>
-                <TextBlock Grid.Column="1" Text="{Binding Profit, Mode=OneWay, Converter={StaticResource PriceConverter}}"  Background="Beige"/>
-                <TextBlock Grid.Column="2" Text="{Binding Cost, Mode=OneWay, StringFormat={}{0:#,#}, Converter={StaticResource PriceConverter}}" />
-            </Grid>
-        </HierarchicalDataTemplate>
-        <HierarchicalDataTemplate DataType="{x:Type requirements:LongBuyRequirement}">
-            <DockPanel>
-                <DockPanel.Resources>
-                    <Style TargetType="TextBlock">
-                        <Setter Property="Margin" Value="2"/>
-                    </Style>
-                </DockPanel.Resources>
-                <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" Margin="2"/>
-                <TextBlock Text="Long Buy" />
-                <TextBlock Text="{Binding Cost, StringFormat=Cost: {0}, Converter={StaticResource PriceConverter}}" />
-                <TextBox Text="{Binding Silver, Mode=TwoWay, Converter={StaticResource PriceConverter}}" />
-            </DockPanel>
-        </HierarchicalDataTemplate>
-        <HierarchicalDataTemplate DataType="{x:Type requirements:FastBuyRequirement}">
-            <DockPanel>
-                <DockPanel.Resources>
-                    <Style TargetType="TextBlock">
-                        <Setter Property="Margin" Value="2"/>
-                    </Style>
-                </DockPanel.Resources>
-                <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" Margin="2"/>
-                <TextBlock Text="Fast Buy" />
-                <TextBlock Text="{Binding Cost, StringFormat=Cost: {0}, Converter={StaticResource PriceConverter}}" />
-                <TextBox Text="{Binding Silver, Mode=TwoWay, Converter={StaticResource PriceConverter}}" />
-            </DockPanel>
-        </HierarchicalDataTemplate>
-        <HierarchicalDataTemplate DataType="{x:Type requirements:CraftingRequirement}"
-                                  ItemsSource="{Binding Resources}">
-            <DockPanel>
-                <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" Margin="2" />
-                <TextBlock Text="Craft Tax:" Margin="0,2" />
-                <TextBlock Text="{Binding Tax, Converter={StaticResource PriceConverter}}" Margin="2" />
-                <TextBlock Text="Silver:" Margin="0,2" />
-                <TextBlock Text="{Binding Silver, Converter={StaticResource PriceConverter}}" Margin="2" />
-                <TextBlock Text=" Cost:" Margin="0,2" />
-                <TextBlock Text="{Binding Cost, Converter={StaticResource PriceConverter}}" Margin="2" />
-            </DockPanel>
-        </HierarchicalDataTemplate>
-        <HierarchicalDataTemplate DataType="{x:Type requirements:UpgradeRequirement}"
-                                  ItemsSource="{Binding Resources}">
-            <DockPanel>
-                <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" Margin="2" />
-                <TextBlock Text="Craft Tax:" Margin="0,2" />
-                <TextBlock Text="{Binding Cost, Converter={StaticResource PriceConverter}}" Margin="2" />
-            </DockPanel>
-        </HierarchicalDataTemplate>
-        <HierarchicalDataTemplate DataType="{x:Type requ:CraftingResource}"
-                                  ItemsSource="{Binding Item.Requirements}">
-            <DockPanel>
-                <DockPanel.Resources>
-                    <Style TargetType="TextBlock">
-                        <Setter Property="Margin" Value="2"/>
-                    </Style>
-                </DockPanel.Resources>
-                <TextBlock Text="{Binding Item.FullName}" />
-                <TextBlock Text="{Binding Count}" />
-                <TextBlock Text="{Binding Item.ItemPower, StringFormat=IP: {0}}" />
-                <TextBlock
-                    Text="{Binding Item.Cost, StringFormat=Cost: {0}, Converter={StaticResource PriceConverter}}" />
-            </DockPanel>
-        </HierarchicalDataTemplate>
-    </UserControl.Resources>
-    <Grid Grid.IsSharedSizeScope="False">
+    <Grid Grid.IsSharedSizeScope="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
@@ -102,23 +19,102 @@
         <!-- Column headers -->
         <TreeViewItem Grid.Row="0" BorderThickness="1">
             <TreeViewItem.Header>
-                <Grid>
+                <Grid x:Name="TitleGrid">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition SharedSizeGroup="Item" Width="300"/>
-                        <ColumnDefinition SharedSizeGroup="Profit" Width="60" />
-                        <ColumnDefinition SharedSizeGroup="Cost" />
+                        <ColumnDefinition Width="3" />
+                        <ColumnDefinition SharedSizeGroup="Item" Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Task" Style="{StaticResource TextBlockBoldStyle}" />
-                    <!-- Empty TreeViewItem to measure the size of its ToggleButton into the "Toggle" group-->
-                    <TreeViewItem Grid.Column="1" Padding="0" />
-                    <TextBlock Grid.Column="1" Text="Profit" Style="{StaticResource TextBlockBoldStyle}" />
-                    <TextBlock Grid.Column="2" Text="Cost" Style="{StaticResource TextBlockBoldStyle}" />
+                    <TextBlock Grid.Column="1" Text="Task" Style="{StaticResource TextBlockBoldStyle}" />
+                    <GridSplitter Grid.Column="1" Width="3" Background="Black" Margin="1,0" />
+                    <Border Grid.Column="2" BorderThickness="0,0,1,0" BorderBrush="Black">
+                        <TextBlock Text="Profit" Style="{StaticResource TextBlockBoldStyle}" Margin="0 0 3 0"
+                                   Background="Aqua" 
+                                   Width="57"
+                                   TextAlignment="Right" />
+                    </Border>
+                    <TextBlock Grid.Column="3" Text="Cost" Style="{StaticResource TextBlockBoldStyle}" />
                 </Grid>
             </TreeViewItem.Header>
         </TreeViewItem>
         <TreeView Grid.Row="1" ItemsSource="{Binding CommonItems}" BorderBrush="Gray" BorderThickness="0 1 0 0"
                   VirtualizingStackPanel.IsVirtualizing="True"
                   VirtualizingStackPanel.VirtualizationMode="Recycling">
+
+            <TreeView.Resources>
+                <HierarchicalDataTemplate DataType="{x:Type items:CommonItem}"
+                                          ItemsSource="{Binding Components}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition SharedSizeGroup="Item" />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding FullName, Mode=OneTime}" />
+                        <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,1,0">
+                            <TextBlock Text="{Binding Profit, Mode=OneWay}"
+                                       Style="{StaticResource IntBlockStyle}" />
+                        </Border>
+                        <TextBlock Grid.Column="2"
+                                   Text="{Binding Cost, Mode=OneWay, StringFormat={}{0:#,#}, Converter={StaticResource PriceConverter}}"
+                                   Style="{StaticResource IntBlockStyle}" />
+                    </Grid>
+                </HierarchicalDataTemplate>
+
+                <!--Profits-->
+                <HierarchicalDataTemplate DataType="{x:Type profits:LongSellProfit}">
+                    <controls:RequirementControl Title="Long Sell" />
+                </HierarchicalDataTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type profits:FastSellProfit}">
+                    <controls:RequirementControl Title="Fast Sell" />
+                </HierarchicalDataTemplate>
+
+                <!--Requirements-->
+                <HierarchicalDataTemplate DataType="{x:Type requirements:LongBuyRequirement}">
+                    <controls:RequirementControl Title="Long Buy" />
+                </HierarchicalDataTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type requirements:FastBuyRequirement}">
+                    <controls:RequirementControl Title="Fast Buy" />
+                </HierarchicalDataTemplate>
+
+                <HierarchicalDataTemplate DataType="{x:Type requirements:CraftingRequirement}"
+                                          ItemsSource="{Binding Resources}">
+                    <DockPanel>
+                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" Margin="2" />
+                        <TextBlock Text="Craft Tax:" Margin="0,2" />
+                        <TextBlock Text="{Binding Tax, Converter={StaticResource PriceConverter}}" Margin="2" />
+                        <TextBlock Text="Silver:" Margin="0,2" />
+                        <TextBlock Text="{Binding Silver, Converter={StaticResource PriceConverter}}" Margin="2" />
+                        <TextBlock Text=" Cost:" Margin="0,2" />
+                        <TextBlock Text="{Binding Cost, Converter={StaticResource PriceConverter}}" Margin="2" />
+                    </DockPanel>
+                </HierarchicalDataTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type requirements:UpgradeRequirement}"
+                                          ItemsSource="{Binding Resources}">
+                    <DockPanel>
+                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" Margin="2" />
+                        <TextBlock Text="Craft Tax:" Margin="0,2" />
+                        <TextBlock Text="{Binding Cost, Converter={StaticResource PriceConverter}}" Margin="2" />
+                    </DockPanel>
+                </HierarchicalDataTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type requ:CraftingResource}"
+                                          ItemsSource="{Binding Item.Requirements}">
+                    <DockPanel>
+                        <DockPanel.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Margin" Value="2" />
+                            </Style>
+                        </DockPanel.Resources>
+                        <TextBlock Text="{Binding Item.FullName}" />
+                        <TextBlock Text="{Binding Count}" />
+                        <TextBlock Text="{Binding Item.ItemPower, StringFormat=IP: {0}}" />
+                        <TextBlock
+                            Text="{Binding Item.Cost, StringFormat=Cost: {0}, Converter={StaticResource PriceConverter}}" />
+                    </DockPanel>
+                </HierarchicalDataTemplate>
+            </TreeView.Resources>
+
             <TreeView.ItemContainerStyle>
                 <Style TargetType="{x:Type TreeViewItem}">
                     <Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
