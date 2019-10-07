@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Windows;
 using Albion.Common;
 using Albion.Event;
 using Albion.Model.Data;
@@ -31,7 +33,14 @@ namespace Albion.GUI.ViewModels
 
             _albionParser.AddOperationHandler<AuctionGetRequests>(AuctionGetRequestsHandler);
 
-            _albionParser.Start();
+            try
+            {
+                _albionParser.Start();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Error Net Init", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void AuctionGetRequestsHandler(AuctionGetRequests p)
