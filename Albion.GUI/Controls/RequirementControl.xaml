@@ -5,18 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Albion.GUI"
              mc:Ignorable="d" 
-             Name="Root"
-             d:DesignHeight="450" d:DesignWidth="800">
+             Name="Root">
     <DockPanel>
-        <DockPanel.Resources>
-            <Style TargetType="TextBlock">
-                <Setter Property="Margin" Value="2"/>
-            </Style>
-        </DockPanel.Resources>
-        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" Margin="2"/>
+        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" Margin="2" VerticalAlignment="Center"/>
         <!-- <TextBlock Name="TitleBox" Text="{Binding Title, ElementName=Root}" /> -->
-        <TextBlock Name="TitleBox" Text="{Binding Title, ElementName=Root}" />
-        <TextBlock Text="{Binding Cost, StringFormat=Cost: {0}, Converter={StaticResource PriceConverter}}" />
-        <TextBox Text="{Binding Silver, Mode=TwoWay, Converter={StaticResource PriceConverter}}" />
+        <TextBlock Name="TitleBox" Text="{Binding Title, ElementName=Root}" 
+                   Style="{StaticResource TextBlockStyle}"
+                   MinWidth="150" />
+        <TextBox Text="{Binding Silver, Mode=TwoWay, Converter={StaticResource PriceConverter}, UpdateSourceTrigger=PropertyChanged, Delay=500}" 
+                 MinWidth="60" TextAlignment="Right" />
+        <TextBlock Text="{Binding Cost, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,#}}" 
+                   Style="{StaticResource IntBlockStyle}"/>
     </DockPanel>
 </UserControl>

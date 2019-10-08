@@ -20,15 +20,16 @@
             <ComboBox SelectedValue="{Binding ShopCategory}" DisplayMemberPath="Item1" ItemsSource="{Binding ShopCategories}" SelectedValuePath="Item2"/>
             <ComboBox SelectedValue="{Binding ShopSubCategory}" DisplayMemberPath="Item1" ItemsSource="{Binding ShopSubCategories}" SelectedValuePath="Item2"/>
             <Button Command="{Binding RefreshCommand}">REFRESH</Button>
-            <TextBlock>Filter:</TextBlock>
-            <TextBox Text="{Binding FilterTest, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock VerticalAlignment="Center">Filter:</TextBlock>
+            <TextBox Text="{Binding FilterTest, UpdateSourceTrigger=PropertyChanged, Delay=100}" />
         </DockPanel>
 
         <TabControl Grid.Row="1">
             <TabItem Header="All">
                 <views:TreeView />
             </TabItem>
-            <TabItem Header="Artefacts">
+            <TabItem Header="Options">
+                <views:OptionsView />
                 <!-- <local:ArtefactsViewControl DataContext="{Binding Artefacts}"/> -->
             </TabItem>
         </TabControl>

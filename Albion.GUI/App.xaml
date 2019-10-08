@@ -7,6 +7,7 @@
     <Application.Resources>
         <Style x:Key="TextBlockStyle" TargetType="{x:Type TextBlock}">
             <Setter Property="Margin" Value="3 0 3 0" />
+            <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
         <Style x:Key="TextBlockBoldStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
             <Setter Property="FontWeight" Value="Bold" />

@@ -21,23 +21,22 @@
             <TreeViewItem.Header>
                 <Grid x:Name="TitleGrid">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3" />
+                        <ColumnDefinition Width="2" />
                         <ColumnDefinition SharedSizeGroup="Item" Width="Auto" />
                         <ColumnDefinition />
-                        <ColumnDefinition />
+                        <ColumnDefinition SharedSizeGroup="Cost"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="1" Text="Task" Style="{StaticResource TextBlockBoldStyle}" />
-                    <GridSplitter Grid.Column="1" Width="3" Background="Black" Margin="1,0" />
-                    <Border Grid.Column="2" BorderThickness="0,0,1,0" BorderBrush="Black">
+                    <ToggleButton Grid.Column="1" Content="Task" Margin="2,0,5,0"/>
+                    <GridSplitter Grid.Column="1" Width="3" Background="Black"/>
+                    <Border Grid.Column="2" BorderThickness="0,0,3,0" BorderBrush="Black">
                         <ToggleButton IsChecked="{Binding IsProfitOrder}"
-                            Width="60"
-                            >Profit</ToggleButton>
+                            Width="60" Margin="2,0,2,0">Profit</ToggleButton>
                         <!-- <TextBlock Text="Profit" Style="{StaticResource TextBlockBoldStyle}" Margin="0 0 3 0" -->
                         <!--            Background="Aqua"  -->
                         <!--            Width="57" -->
                         <!--            TextAlignment="Right" /> -->
                     </Border>
-                    <TextBlock Grid.Column="3" Text="Cost" Style="{StaticResource TextBlockBoldStyle}" />
+                    <ToggleButton Grid.Column="3" Content="Cost" Margin="2,0,2,0"/>
                 </Grid>
             </TreeViewItem.Header>
         </TreeViewItem>
@@ -52,7 +51,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition SharedSizeGroup="Item" />
                             <ColumnDefinition />
-                            <ColumnDefinition />
+                            <ColumnDefinition SharedSizeGroup="Cost" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="{Binding FullName, Mode=OneTime}" />
                         <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,1,0">
