@@ -1,4 +1,6 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Input;
 
 namespace Albion.GUI.Controls
 {
@@ -15,7 +17,15 @@ namespace Albion.GUI.Controls
         public string Title
         {
             get => TitleBox.Text;
-            set { TitleBox.Text = value; }
+            set => TitleBox.Text = value;
+        }
+
+        private void UIElement_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key != Key.Enter) return;
+
+            BindingExpression be = ((TextBox) sender).GetBindingExpression(TextBox.TextProperty);
+            be?.UpdateSource();
         }
     }
 }

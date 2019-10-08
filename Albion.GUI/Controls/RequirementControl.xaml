@@ -12,7 +12,7 @@
         <TextBlock Name="TitleBox" Text="{Binding Title, ElementName=Root}" 
                    Style="{StaticResource TextBlockStyle}"
                    MinWidth="150" />
-        <TextBox Text="{Binding Silver, Mode=TwoWay, Converter={StaticResource PriceConverter}, UpdateSourceTrigger=PropertyChanged, Delay=500}" 
+        <TextBox KeyDown="UIElement_OnKeyDown" Text="{Binding Silver, Mode=TwoWay, Converter={StaticResource PriceConverter}}" 
                  MinWidth="60" TextAlignment="Right" />
         <TextBlock Text="{Binding Cost, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,#}}" 
                    Style="{StaticResource IntBlockStyle}"/>
