@@ -14,10 +14,10 @@ namespace Albion.Db.Xml
     public partial class XmlLoader
     {
         private const string LevelNameConst = "@";
+        private readonly IBuildingDataManager _buildingDataManager;
+        private readonly IMarketDataManager _marketDataManager;
 
         private int _memCounter;
-        private readonly IMarketDataManager _marketDataManager;
-        private readonly IBuildingDataManager _buildingDataManager;
 
         private IEnumerable<CommonItem> CreateEnchantedItems(IItemEnchantments iItem)
         {
@@ -28,18 +28,18 @@ namespace Albion.Db.Xml
                 var craftingRequirements = EnCreateCraftingRequirements(iItem.uniquename, enchantment);
 
                 var item = CreateCommonItem(iItem, iItem.uniquename + LevelNameConst + enchantment.enchantmentlevel,
-                    craftingRequirements, enchantment.enchantmentlevel);
-
-                item.ItemPower = enchantment.itempower > 0 ? enchantment.itempower : enchantment.dummyitempower;
+                    craftingRequirements, enchantment.enchantmentlevel,
+                    enchantment.itempower > 0 ? enchantment.itempower : enchantment.dummyitempower);
 
                 yield return item;
             }
         }
 
         private CommonItem CreateCommonItem(IItem iItem, string itemId,
-            IEnumerable<BaseResorcedRequirement> craftingRequirements, int enchant=0)
+            IEnumerable<BaseResorcedRequirement> craftingRequirements, int enchant = 0, int enchantIp = 0)
         {
-            var item = new CommonItem(craftingRequirements.ToArray(), _marketDataManager.GetData(itemId), BuildingByItem(itemId))
+            var item = new CommonItem(craftingRequirements.ToArray(), _marketDataManager.GetData(itemId),
+                BuildingByItem(itemId))
             {
                 MemId = _memCounter++,
                 Id = itemId,
@@ -48,8 +48,10 @@ namespace Albion.Db.Xml
                 Enchant = enchant,
                 ShopCategory = (ShopCategory) iItem.shopcategory,
                 ShopSubCategory = (ShopSubCategory) iItem.shopsubcategory1,
-                ItemPower = (iItem as IItemPowered)?.itempower ?? (iItem as IItemPowered2)?.dummyitempower ??
-                            (iItem as IItemValued)?.itemvalue ?? 0
+                ItemPower = enchantIp > 0
+                    ? enchantIp
+                    : (iItem as IItemPowered)?.itempower ?? (iItem as IItemPowered2)?.dummyitempower ??
+                      (iItem as IItemValued)?.itemvalue ?? 0
             };
 
             item.Init();
@@ -61,10 +63,7 @@ namespace Albion.Db.Xml
 
         private CraftBuilding BuildingByItem(string itemId)
         {
-            if (ItemIdToCraftBuildingId.TryGetValue(itemId, out var buildingId))
-            {
-                return CraftBuildings[buildingId];
-            }
+            if (ItemIdToCraftBuildingId.TryGetValue(itemId, out var buildingId)) return CraftBuildings[buildingId];
             return NoneBuilding;
         }
 

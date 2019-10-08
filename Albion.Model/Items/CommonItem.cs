@@ -28,8 +28,6 @@ namespace Albion.Model.Items
 
             _longSellProfit = new LongSellProfit();
             _fastSellProfit = new FastSellProfit();
-
-            UpdateCost += OnUpdateProfitOrCost;
         }
 
         public void Init()
@@ -47,6 +45,8 @@ namespace Albion.Model.Items
                 cr.UpdateCost += RequirementOnUpdateCost;
                 cr.Selected += UpdateMinCost;
             }
+
+            UpdateCost += OnUpdateProfitOrCost;
 
             RequirementOnUpdateCost();
         }

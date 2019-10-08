@@ -15,6 +15,12 @@ namespace Albion.DataStore.DataModel
             const int n = (int) Location.None + 1;
 
             TaxDatas = new int[n];
+
+            //default
+            for (int i = 0; i < n; i++)
+            {
+                TaxDatas[i] = 10;
+            }
         }
 
         public string Id { get; set; }

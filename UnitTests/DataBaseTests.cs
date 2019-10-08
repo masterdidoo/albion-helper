@@ -26,6 +26,9 @@ namespace UnitTests
                 var buildings = loader.CraftBuildings;
                 var all = loader.Items;
 
+                Assert.AreEqual(10, buildings["T8_FORGE"].ItemBuilding.Tax);
+                buildings["T8_FORGE"].ItemBuilding.Tax = 0;
+
                 _exp = 80000;
                 var fired = 0;
                 all["T4_OFF_SHIELD"].UpdateCost += () =>
@@ -58,7 +61,7 @@ namespace UnitTests
 
                 var all = loader.Items;
 
-                Assert.AreEqual(80000, all["T4_OFF_SHIELD"].Cost);
+                Assert.AreEqual(3580000, all["T4_OFF_SHIELD"].Cost);
             }
         }
     }
