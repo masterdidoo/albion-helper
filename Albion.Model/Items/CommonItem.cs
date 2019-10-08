@@ -14,7 +14,7 @@ namespace Albion.Model.Items
         private readonly FastSellProfit _fastSellProfit;
         private readonly LongBuyRequirement _longBuyRequirement;
         private readonly LongSellProfit _longSellProfit;
-        private long _profit;
+        private long _profit = -100;
 
         public CommonItem(BaseResorcedRequirement[] craftingRequirements, ItemMarket itemMarket,
             CraftBuilding craftingBuilding)

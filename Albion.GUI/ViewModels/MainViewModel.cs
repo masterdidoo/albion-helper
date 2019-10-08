@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using Albion.Common;
+using Albion.DataStore.Db;
 using Albion.DataStore.Managers;
 using Albion.Db.Xml;
 using Albion.Event;
-using Albion.Model.Buildings;
+using Albion.GUI.Libs;
 using Albion.Model.Items;
 using Albion.Model.Items.Categories;
 using Albion.Network;
@@ -31,6 +32,8 @@ namespace Albion.GUI.ViewModels
         private int? _tir;
         private Location _town;
         private Location _sellTown;
+        private DebounceDispatcher _debounceDispatcher;
+        private bool _isProfitOrder;
 
         public MainViewModel()
         {
@@ -50,16 +53,18 @@ namespace Albion.GUI.ViewModels
 
             Items = loader.Items;
 
-//            foreach (var item in Items.Values)
-//            {
-//                item.PropertyChanged += (sender, args) =>
-//                {
-//                    if (args.PropertyName=="Pos")
-//                        RaisePropertyChanged(nameof(CommonItems));
-//                };
-//            }
 
-            CraftBuildings = loader.CraftBuildings;
+            _debounceDispatcher = new DebounceDispatcher();
+            foreach (var item in Items.Values)
+            {
+                item.PropertyChanged += (sender, args) =>
+                {
+                     //if (args.PropertyName == "Pos")
+                     RefreshTree();
+                };
+            }
+
+            BuildingsViewModel = new BuildingsViewModel(this, loader.CraftBuildings, bdm);
 
             _albionParser = new AlbionParser();
 
@@ -69,9 +74,18 @@ namespace Albion.GUI.ViewModels
             InitAlbionParser();
         }
 
-        public Dictionary<string, CraftBuilding> CraftBuildings { get; }
+        private void RefreshTree()
+        {
+            _debounceDispatcher.Debounce(200, RaiseRefreshTree);
+        }
+
+        private void RaiseRefreshTree(object obj)
+        {
+            RaisePropertyChanged(nameof(CommonItems));
+        }
 
         public Dictionary<string, CommonItem> Items { get; }
+        public BuildingsViewModel BuildingsViewModel { get; }
 
         public Location Town
         {
@@ -130,7 +144,15 @@ namespace Albion.GUI.ViewModels
             }
         }
 
-        public bool IsProfitOrder { get; set; }
+        public bool IsProfitOrder
+        {
+            get => _isProfitOrder;
+            set
+            {
+                if (!Set(ref _isProfitOrder, value)) return;
+                RefreshTree();
+            }
+        }
 
         public IEnumerable<Tuple<string, ShopCategory?>> ShopCategories { get; }
 
@@ -195,6 +217,7 @@ namespace Albion.GUI.ViewModels
         public void Dispose()
         {
             _albionParser.Dispose();
+            DataBase.Close();
         }
     }
 

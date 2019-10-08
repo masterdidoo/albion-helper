@@ -89,13 +89,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BuildingsViewModel.cs" />
     <Compile Include="Controls\RequirementControl.xaml.cs">
       <DependentUpon>RequirementControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\CommonItemControl.xaml.cs">
       <DependentUpon>CommonItemControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Libs\DebounceDispatcher.cs" />
     <Compile Include="PriceConverter.cs" />
+    <Compile Include="Views\BuildingsView.xaml.cs">
+      <DependentUpon>BuildingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\OptionsView.xaml.cs">
       <DependentUpon>OptionsView.xaml</DependentUpon>
     </Compile>
@@ -109,6 +114,10 @@
     <Page Include="Controls\CommonItemControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BuildingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

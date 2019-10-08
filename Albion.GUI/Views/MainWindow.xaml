@@ -28,6 +28,10 @@
             <TabItem Header="All">
                 <views:TreeView />
             </TabItem>
+            <TabItem Header="Buildings">
+                <views:BuildingsView DataContext="{Binding BuildingsViewModel}" />
+                <!-- <local:ArtefactsViewControl DataContext="{Binding Artefacts}"/> -->
+            </TabItem>
             <TabItem Header="Options">
                 <views:OptionsView />
                 <!-- <local:ArtefactsViewControl DataContext="{Binding Artefacts}"/> -->

@@ -18,6 +18,12 @@ namespace Albion.DataStore.Db
             return LiteDatabase.GetCollection<T>();
         }
 
+        public static void Close()
+        {
+            Instance.LiteDatabase.Shrink();
+            Instance.LiteDatabase.Dispose();
+        }
+
         public static void Drop()
         {
             File.Delete("main.db");
