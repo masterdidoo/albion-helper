@@ -83,37 +83,40 @@
                 <HierarchicalDataTemplate DataType="{x:Type requirements:CraftingRequirement}"
                                           ItemsSource="{Binding Resources}">
                     <DockPanel>
-                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" Margin="2" />
-                        <TextBlock Text="Craft Tax:" Margin="0,2" />
-                        <TextBlock Text="{Binding Tax, Converter={StaticResource PriceConverter}}" Margin="2" />
-                        <TextBlock Text="Silver:" Margin="0,2" />
-                        <TextBlock Text="{Binding Silver, Converter={StaticResource PriceConverter}}" Margin="2" />
-                        <TextBlock Text=" Cost:" Margin="0,2" />
-                        <TextBlock Text="{Binding Cost, Converter={StaticResource PriceConverter}}" Margin="2" />
+                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"  Margin="2" VerticalAlignment="Center"/>
+                        <TextBlock Text="Craft " 
+                                   Style="{StaticResource TextBlockStyle}" />
+                        <TextBlock Text="{Binding Tax, Converter={StaticResource PriceConverter}, StringFormat=Tax {0:#,#}}" 
+                                   Style="{StaticResource TextBlockStyle}"/>
+                        <TextBlock Text="{Binding Silver, Converter={StaticResource PriceConverter}, StringFormat=Silver {0:#,#}}" 
+                                   Style="{StaticResource TextBlockStyle}"/>
+                        <TextBlock Text="{Binding Cost, Converter={StaticResource PriceConverter}, StringFormat=Cost {0:#,#}}" 
+                                   Style="{StaticResource TextBlockStyle}" />
                     </DockPanel>
                 </HierarchicalDataTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type requirements:UpgradeRequirement}"
                                           ItemsSource="{Binding Resources}">
                     <DockPanel>
-                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" Margin="2" />
-                        <TextBlock Text="Craft Tax:" Margin="0,2" />
-                        <TextBlock Text="{Binding Cost, Converter={StaticResource PriceConverter}}" Margin="2" />
+                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"  Margin="2" VerticalAlignment="Center"/>
+                        <TextBlock Text="Upgrade " 
+                                   Style="{StaticResource TextBlockStyle}" />
+                        <TextBlock Text="{Binding Cost, Converter={StaticResource PriceConverter}, StringFormat=Cost {0:#,#}}" 
+                                   Style="{StaticResource TextBlockStyle}" />
                     </DockPanel>
                 </HierarchicalDataTemplate>
+
                 <HierarchicalDataTemplate DataType="{x:Type requ:CraftingResource}"
-                                          ItemsSource="{Binding Item.Requirements}">
+                                          ItemsSource="{Binding Item.Components}">
                     <DockPanel>
-                        <DockPanel.Resources>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="Margin" Value="2" />
-                            </Style>
-                        </DockPanel.Resources>
-                        <TextBlock Text="{Binding Item.FullName}" />
-                        <TextBlock Text="{Binding Count}" />
-                        <TextBlock Text="{Binding Item.ItemPower, StringFormat=IP: {0}}" />
-                        <TextBlock
-                            Text="{Binding Item.Cost, StringFormat=Cost: {0}, Converter={StaticResource PriceConverter}}" />
-                    </DockPanel>
+                        <TextBlock Text="{Binding Item.FullName, Mode=OneTime}" 
+                                   Style="{StaticResource TextBlockStyle}"/>
+                        <Border BorderBrush="Black" BorderThickness="1,0,1,0">
+                            <TextBlock Text="{Binding Item.Profit, Mode=OneWay}"
+                                       Style="{StaticResource IntBlockStyle}" />
+                        </Border>
+                        <TextBlock Text="{Binding Item.Cost, Mode=OneWay, StringFormat={}{0:#,#}, Converter={StaticResource PriceConverter}}"
+                                   Style="{StaticResource IntBlockStyle}" />
+                    </DockPanel>                
                 </HierarchicalDataTemplate>
             </TreeView.Resources>
 
