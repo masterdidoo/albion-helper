@@ -33,7 +33,7 @@
                 <!-- <local:ArtefactsViewControl DataContext="{Binding Artefacts}"/> -->
             </TabItem>
             <TabItem Header="Options">
-                <views:OptionsView />
+                <views:OptionsView DataContext="{Binding CostCalcOptions}"/>
                 <!-- <local:ArtefactsViewControl DataContext="{Binding Artefacts}"/> -->
             </TabItem>
         </TabControl>

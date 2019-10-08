@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using Albion.Db.Xml;
+using Albion.Db.Xml.Entity.Item;
 using Albion.Db.Xml.Enums;
 using Albion.Model.Data;
 using Albion.Model.Items;
@@ -90,14 +91,15 @@ namespace UnitTests
 
             var enums = db.Items.OfType<IItemCraftingcategory>()
                 //.Where(x => x.shopcategory==ShopCategory.melee)
-                .Where(x => x.tier.ToString()!=x.uniquename.Substring(1,1))
-                .Select(x => Tuple.Create(x.shopcategory, x.shopsubcategory1, x.craftingcategory, x.uniquename, x.craftingrequirements?.Length))
-                .Distinct()
-                .OrderBy(x => x.Item1)
-                .ThenBy(x=>x.Item2)
-                .ThenBy(x=>x.Item3);
-
-            foreach (var value in enums) Debug.WriteLine($"{value},");
+                .Where(x => x.shopcategory == shopCategory.resources)
+                .OfType<SimpleItem>();
+//                .Select(x => Tuple.Create(x.shopcategory, x.shopsubcategory1, x.craftingcategory, x.uniquename))
+//                .Distinct()
+//                .OrderBy(x => x.Item1)
+//                .ThenBy(x=>x.Item2)
+//                .ThenBy(x=>x.Item3);
+//
+//            foreach (var value in enums) Debug.WriteLine($"{value},");
         }
 
 

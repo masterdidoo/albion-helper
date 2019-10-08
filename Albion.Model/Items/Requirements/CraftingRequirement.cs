@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Albion.Model.Items.Categories;
 using Albion.Model.Items.Requirements.Resources;
 
 namespace Albion.Model.Items.Requirements
@@ -43,7 +44,10 @@ namespace Albion.Model.Items.Requirements
 
             var summ = Resources.Sum(x => x.Cost);
 
-            Cost = (summ + Silver + Tax) / AmountCrafted;
+            //TODO сделать красиво
+            var artefacts = Item.ShopCategory == ShopCategory.Artefacts ? 8 : 1;
+
+            Cost = (summ + Silver + Tax) / AmountCrafted * artefacts;
         }
 
         protected override void OnSetItem()

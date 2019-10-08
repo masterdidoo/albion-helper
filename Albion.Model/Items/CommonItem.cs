@@ -28,27 +28,9 @@ namespace Albion.Model.Items
 
             _longSellProfit = new LongSellProfit();
             _fastSellProfit = new FastSellProfit();
-        }
 
-        public void Init()
-        {
-            foreach (var profit in Profits)
-            {
-                profit.SetItem(this);
-                profit.UpdateCost += OnUpdateProfitOrCost;
-                profit.Selected += UpdateMaxSale;
-            }
-
-            foreach (var cr in Requirements)
-            {
-                cr.SetItem(this);
-                cr.UpdateCost += RequirementOnUpdateCost;
-                cr.Selected += UpdateMinCost;
-            }
-
-            UpdateCost += OnUpdateProfitOrCost;
-
-            RequirementOnUpdateCost();
+            CostCalcOptions.Instance.Changed += RequirementOnUpdateCost;
+            CostCalcOptions.Instance.Changed += OnUpdateProfitOrCost;
         }
 
         public long Profit
@@ -62,20 +44,9 @@ namespace Albion.Model.Items
             }
         }
 
-        public IEnumerable<BaseRequirement> Components
-        {
-            get
-            {
-                yield return _longSellProfit;
-                yield return _fastSellProfit;
+        public IEnumerable<BaseRequirement> Components => ProfitsAll.Concat(RequirementsAll);
 
-                yield return _fastBuyRequirement;
-                yield return _longBuyRequirement;
-                foreach (var cr in _craftingRequirements) yield return cr;
-            }
-        }
-
-        public IEnumerable<BaseRequirement> Requirements
+        private IEnumerable<BaseRequirement> RequirementsAll
         {
             get
             {
@@ -85,12 +56,34 @@ namespace Albion.Model.Items
             }
         }
 
-        public IEnumerable<BaseRequirement> Profits
+        private IEnumerable<BaseRequirement> ProfitsAll
         {
             get
             {
                 yield return _fastSellProfit;
                 yield return _longSellProfit;
+            }
+        }
+
+        private IEnumerable<BaseRequirement> RequirementsAutoMin
+        {
+            get
+            {
+                yield return _fastBuyRequirement;
+                if (!CostCalcOptions.Instance.IsLongBuyDisabled || CostCalcOptions.Instance.IsArtefactsLongBuyEnabled &&
+                    ShopCategory == ShopCategory.Artefacts)
+                    yield return _longBuyRequirement;
+                foreach (var cr in _craftingRequirements) yield return cr;
+            }
+        }
+
+        private IEnumerable<BaseRequirement> ProfitsAutoMax
+        {
+            get
+            {
+                yield return _fastSellProfit;
+                if (!CostCalcOptions.Instance.IsLongSellDisabled)
+                    yield return _longSellProfit;
             }
         }
 
@@ -106,9 +99,30 @@ namespace Albion.Model.Items
 
         #endregion
 
+        public void Init()
+        {
+            foreach (var profit in ProfitsAll)
+            {
+                profit.SetItem(this);
+                profit.UpdateCost += OnUpdateProfitOrCost;
+                profit.Selected += UpdateMaxSale;
+            }
+
+            foreach (var cr in RequirementsAll)
+            {
+                cr.SetItem(this);
+                cr.UpdateCost += RequirementOnUpdateCost;
+                cr.Selected += UpdateMinCost;
+            }
+
+            UpdateCost += OnUpdateProfitOrCost;
+
+            RequirementOnUpdateCost();
+        }
+
         private void UpdateMaxSale(BaseRequirement requirement)
         {
-            foreach (var item in Profits)
+            foreach (var item in ProfitsAll)
                 if (item != requirement)
                     item.IsSelected = false;
 
@@ -120,7 +134,7 @@ namespace Albion.Model.Items
             var max = 0L;
             BaseRequirement maxItem = null;
 
-            foreach (var item in Profits)
+            foreach (var item in ProfitsAutoMax)
             {
                 item.IsSelected = false;
                 if (max < item.Cost && item.Cost > 0)
@@ -145,12 +159,20 @@ namespace Albion.Model.Items
             Pos = Components.Max(x => x.Pos).AddTicks(1);
         }
 
+        public void UpdateMinCost(BaseRequirement requirement)
+        {
+            foreach (var item in RequirementsAll)
+                if (item != requirement)
+                    item.IsSelected = false;
+            Cost = requirement.Cost;
+        }
+
         private void RequirementOnUpdateCost()
         {
             var min = long.MaxValue;
             BaseRequirement minItem = null;
 
-            foreach (var item in Requirements)
+            foreach (var item in RequirementsAutoMin)
             {
                 item.IsSelected = false;
                 if (min > item.Cost && item.Cost > 0)
@@ -175,14 +197,6 @@ namespace Albion.Model.Items
             //Cost = Requirements.Select(x => x.Cost).Where(x => x > 0).DefaultIfEmpty(0).Min();
         }
 
-        public void UpdateMinCost(BaseRequirement requirement)
-        {
-            foreach (var item in Requirements)
-                if (item != requirement)
-                    item.IsSelected = false;
-            Cost = requirement.Cost;
-        }
-
         #region From Config
 
         public string Id { get; set; }
@@ -203,7 +217,7 @@ namespace Albion.Model.Items
         {
             return Id;
         }
-        #endregion
 
+        #endregion
     }
 }

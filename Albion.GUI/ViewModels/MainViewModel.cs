@@ -8,6 +8,7 @@ using Albion.DataStore.Managers;
 using Albion.Db.Xml;
 using Albion.Event;
 using Albion.GUI.Libs;
+using Albion.Model.Data;
 using Albion.Model.Items;
 using Albion.Model.Items.Categories;
 using Albion.Network;
@@ -32,7 +33,7 @@ namespace Albion.GUI.ViewModels
         private int? _tir;
         private Location _town;
         private Location _sellTown;
-        private DebounceDispatcher _debounceDispatcher;
+        private readonly DebounceDispatcher _debounceDispatcher;
         private bool _isProfitOrder;
 
         public MainViewModel()
@@ -213,6 +214,8 @@ namespace Albion.GUI.ViewModels
         public IEnumerable<Tuple<string, int?>> Enchants { get; }
 
         public ICommand RefreshCommand { get; }
+
+        public CostCalcOptions CostCalcOptions => CostCalcOptions.Instance;
 
         public void Dispose()
         {

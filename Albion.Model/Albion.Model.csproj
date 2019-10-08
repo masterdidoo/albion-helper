@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Buildings\CraftBuilding.cs" />
     <Compile Include="Data\ItemBuilding.cs" />
+    <Compile Include="Data\CostCalcOptions.cs" />
     <Compile Include="Items\Profits\FastSellProfit.cs" />
     <Compile Include="Items\CommonItem.cs" />
     <Compile Include="BaseCostableEntity.cs" />

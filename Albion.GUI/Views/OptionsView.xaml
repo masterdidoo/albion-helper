@@ -1,13 +1,19 @@
 <UserControl x:Class="Albion.GUI.Views.OptionsView"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:data="clr-namespace:Albion.Model.Data;assembly=Albion.Model"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance data:CostCalcOptions}">
     <StackPanel>
-        <CheckBox>Disable long buy</CheckBox>
-        <CheckBox Margin="16,0,0,0">Enable for Artefacts</CheckBox>
-        <DockPanel>
-        </DockPanel>
-        <!-- <DockPanel> -->
-        <!--     <CheckBox></CheckBox> -->
-        <!-- </DockPanel> -->
+        <CheckBox Name="LongBuy"
+                  IsChecked="{Binding IsLongBuyDisabled}"
+                  Content="Disable long buy"/>
+        <CheckBox 
+            Content="Enable for Artefacts"
+            IsChecked="{Binding IsArtefactsLongBuyEnabled}"
+            IsEnabled="{Binding IsChecked, ElementName=LongBuy}"
+            Margin="16,0,0,0"/>
+        <CheckBox Content="Disable long sell" IsChecked="{Binding IsLongSellDisabled}"/>
     </StackPanel>
 </UserControl>
