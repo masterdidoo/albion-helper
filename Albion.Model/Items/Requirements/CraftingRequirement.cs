@@ -52,7 +52,7 @@ namespace Albion.Model.Items.Requirements
             //TODO сделать красиво
             var artefacts = Item.ShopCategory == ShopCategory.Artefacts ? 9 : 1;
 
-            Cost = (summ + Silver + Tax) / AmountCrafted * artefacts;
+            Cost = (summ + Tax) / AmountCrafted * artefacts;
         }
 
         private long GetReturnCoeff()
@@ -85,6 +85,11 @@ namespace Albion.Model.Items.Requirements
         protected override void OnSetItem()
         {
             base.OnSetItem();
+            if (Silver > 0)
+            {
+                Tax = Silver;
+                return;
+            }
             Item.ItemBuilding.UpdateTax += BuildingDataOnUpdateTax;
             BuildingDataOnUpdateTax();
         }

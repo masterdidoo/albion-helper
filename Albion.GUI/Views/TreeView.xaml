@@ -97,9 +97,8 @@
                         <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"  Margin="2" VerticalAlignment="Center"/>
                         <TextBlock Style="{StaticResource TextBlockStyle}">
                             <TextBlock.Text>
-                                <MultiBinding StringFormat="CRAFT  tax: {0:#,##0}; silver: {1:#,##0}; cost: {2:#,##0}">
+                                <MultiBinding StringFormat="CRAFT  tax: {0:#,##0} cost: {1:#,##0}">
                                     <Binding Path="Tax" Converter="{StaticResource PriceConverter}"/>
-                                    <Binding Path="Silver" Converter="{StaticResource PriceConverter}"/>
                                     <Binding Path="Cost" Converter="{StaticResource PriceConverter}"/>
                                 </MultiBinding>
                             </TextBlock.Text>
