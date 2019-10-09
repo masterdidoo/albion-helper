@@ -19,7 +19,7 @@ namespace Albion.Model.Items
         public CommonItem(BaseResorcedRequirement[] craftingRequirements, ItemMarket itemMarket,
             CraftBuilding craftingBuilding)
         {
-            _craftingRequirements = craftingRequirements;
+            CraftingRequirements = craftingRequirements;
             CraftingBuilding = craftingBuilding;
             ItemMarket = itemMarket;
 
@@ -52,7 +52,7 @@ namespace Albion.Model.Items
             {
                 yield return _fastBuyRequirement;
                 yield return _longBuyRequirement;
-                foreach (var cr in _craftingRequirements) yield return cr;
+                foreach (var cr in CraftingRequirements) yield return cr;
             }
         }
 
@@ -73,7 +73,7 @@ namespace Albion.Model.Items
                 if (!CostCalcOptions.Instance.IsLongBuyDisabled || CostCalcOptions.Instance.IsArtefactsLongBuyEnabled &&
                     ShopCategory == ShopCategory.Artefacts)
                     yield return _longBuyRequirement;
-                foreach (var cr in _craftingRequirements) yield return cr;
+                foreach (var cr in CraftingRequirements) yield return cr;
             }
         }
 
@@ -175,6 +175,7 @@ namespace Albion.Model.Items
             foreach (var item in RequirementsAutoMin)
             {
                 item.IsSelected = false;
+                item.IsExpanded = false;
                 if (min > item.Cost && item.Cost > 0)
                 {
                     min = item.Cost;
@@ -202,7 +203,6 @@ namespace Albion.Model.Items
         public string Id { get; set; }
         public ShopCategory ShopCategory { get; set; }
         public ShopSubCategory ShopSubCategory { get; set; }
-        private readonly BaseResorcedRequirement[] _craftingRequirements;
         public CraftBuilding CraftingBuilding { get; }
         public int ItemPower { get; set; }
 
@@ -212,6 +212,8 @@ namespace Albion.Model.Items
         public string Name { get; set; }
 
         public string FullName => $"{Tir}.{Enchant} {Name}";
+
+        public BaseResorcedRequirement[] CraftingRequirements { get; }
 
         public override string ToString()
         {

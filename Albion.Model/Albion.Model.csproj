@@ -64,6 +64,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Items\Requirements\UpgradeRequirement.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Albion.Common\Albion.Common.csproj">
+      <Project>{BAD21844-F93F-4F46-B540-28631D7B0255}</Project>
+      <Name>Albion.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

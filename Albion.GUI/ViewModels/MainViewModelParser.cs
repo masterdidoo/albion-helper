@@ -10,7 +10,7 @@ namespace Albion.GUI.ViewModels
 {
     public partial class MainViewModel
     {
-        private static readonly string Level = "_LEVEL";
+//        private static readonly string Level = "_LEVEL";
 
         private void InitAlbionParser()
         {
@@ -59,12 +59,25 @@ namespace Albion.GUI.ViewModels
                 {
                     MdmGetData(item.Key).SellLongPrice = item.Min(x => x.UnitPriceSilver);
                 }
+            RefreshTree();
         }
 
         private void AuctionBuyOfferHandler(AuctionBuyOffer p)
         {
             if (p.Items.Length == 0) return;
             var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
+
+            if (items.Length == 1)
+                MdmGetData(items[0].Key).SetBuyOffers(SellTown, items[0]);
+            else
+            {
+                foreach (var item in items)
+                {
+                    MdmGetData(item.Key).SetBuyOffer(SellTown, item);
+                }
+                //if(SellTown == )
+            }
+
             foreach (var item in items)
                 if (items.Length > 1)
                 {
@@ -77,13 +90,14 @@ namespace Albion.GUI.ViewModels
                 {
                     MdmGetData(item.Key).SellFastPrice = item.Max(x => x.UnitPriceSilver);
                 }
+            RefreshTree();
         }
 
         private ItemMarket MdmGetData(string id)
         {
-            if (id[id.Length - 2] == '@' && id.Length - Level.Length - 3 > 0 &&
-                id.Substring(id.Length - Level.Length - 3, Level.Length) == Level)
-                id = id.Substring(0, id.Length - 2);
+//            if (id[id.Length - 2] == '@' && id.Length - Level.Length - 3 > 0 &&
+//                id.Substring(id.Length - Level.Length - 3, Level.Length) == Level)
+//                id = id.Substring(0, id.Length - 2);
             return mdm.GetData(id);
         }
     }

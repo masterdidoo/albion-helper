@@ -7,6 +7,7 @@ using Albion.Db.Xml.Enums;
 using Albion.Model.Data;
 using Albion.Model.Items;
 using Albion.Model.Items.Categories;
+using Albion.Model.Items.Requirements;
 using Albion.Model.Managers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -44,7 +45,7 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void TestMethodModel()
+        public void TestModel()
         {
             var mdm = Mock.Of<IMarketDataManager>(x => x.GetData(It.IsAny<string>()) == new ItemMarket());
             var bdm = Mock.Of<IBuildingDataManager>(x => x.GetData(It.IsAny<string>()) == new ItemBuilding());
@@ -64,11 +65,41 @@ namespace UnitTests
             Assert.AreEqual(15, list.Count(x => x.ShopSubCategory == ShopSubCategory.Seed));
             Assert.AreEqual(72, list.Count(x => x.ShopSubCategory == ShopSubCategory.Animals));
             Assert.AreEqual(6, list.Count(x => x.ShopSubCategory == ShopSubCategory.Event));
+
+            Assert.IsTrue(list.All(x=>x.Enchant > 0 && x.Id.EndsWith($"@{x.Enchant}") || x.Enchant==0));
+
+            foreach (var item in list
+                .Where(x=>
+                    x.ShopCategory==ShopCategory.Armor
+                    || x.ShopCategory == ShopCategory.Magic
+                    || x.ShopCategory == ShopCategory.Melee
+                    || x.ShopCategory == ShopCategory.Ranged
+                )
+            )
+            {
+                foreach (var requirement in item.Components.OfType<CraftingRequirement>())
+                {
+                    foreach (var cr in requirement.Resources)
+                    {
+                        if(cr.Item.Enchant == item.Enchant || cr.Item.ShopCategory == ShopCategory.Artefacts || cr.Item.ShopSubCategory == ShopSubCategory.Royalsigils || cr.Item.Id == "QUESTITEM_TOKEN_EVENT_EASTER_2018") continue;
+                        //Debug.WriteLine($"{item} {item.FullName} <- {cr.Item} {cr.Item.ShopCategory} {cr.Item.ShopSubCategory}");
+                        Assert.Fail($"{item} {item.FullName} <- {cr.Item} {cr.Item.ShopCategory} {cr.Item.ShopSubCategory}");
+                    }
+                }
+            }
+//            Assert.IsTrue(list
+//                .Where(x=>
+//                    x.ShopCategory==ShopCategory.Armor
+//                          || x.ShopCategory == ShopCategory.Magic
+//                          || x.ShopCategory == ShopCategory.Melee
+//                          || x.ShopCategory == ShopCategory.Ranged
+//                    )
+//                .All(x=>x.Enchant > 0 && x.CraftingRequirements.All(c=>c.Resources.All(cr=>cr.Item.Enchant==x.Enchant))));
         }
 
 
         [TestMethod]
-        public void TestMethodXml()
+        public void TestReadXml()
         {
             var db = XmlLoader.LoadItemsXml();
             Assert.IsNotNull(db);
@@ -85,9 +116,7 @@ namespace UnitTests
 
             Assert.AreEqual(3097, db.Items.Length);
 
-
-
-//            Assert.IsTrue(db.Items.Cast<IItem>().Where(x=>x.craftingcategory!= "farmabal??").All(x=>x.craftingrequirements.Length > 0));
+            //            Assert.IsTrue(db.Items.Cast<IItem>().Where(x=>x.craftingcategory!= "farmabal??").All(x=>x.craftingrequirements.Length > 0));
 
             var enums = db.Items.OfType<IItemCraftingcategory>()
                 //.Where(x => x.shopcategory==ShopCategory.melee)
@@ -101,24 +130,5 @@ namespace UnitTests
 //
 //            foreach (var value in enums) Debug.WriteLine($"{value},");
         }
-
-
-//        [TestMethod]
-//        public void TestMethod1()
-//        {
-//            var db = JsonDb.Load();
-//            var dbnames = JsonNames.LoadNames();
-//
-//            Assert.IsNotNull(db);
-//
-//            var artefacts =  db.Items.Simpleitem.Where(x => x.Shopcategory == ShopCategory.Artefacts);
-//
-//            Assert.AreEqual(405, artefacts.Count());
-//
-////            var all = new All(db, dbnames);
-////
-////            Assert.AreEqual(79, all.FarmableItem.Length);
-////            Assert.AreEqual(405, all.Artefacts.Length);
-//        }
     }
 }

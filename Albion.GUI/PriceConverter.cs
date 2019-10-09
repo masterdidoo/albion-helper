@@ -11,9 +11,10 @@ namespace Albion.GUI
         {
             if (!(value is long)) return null;
 
-            var vr = (long) value;
+            var vr = (long) value / 10000;
 
-            return vr / 10000;
+            return vr;
+//            return vr.ToString("#,##0", CultureInfo.InvariantCulture);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

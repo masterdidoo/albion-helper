@@ -56,14 +56,14 @@ namespace Albion.GUI.ViewModels
 
 
             _debounceDispatcher = new DebounceDispatcher();
-            foreach (var item in Items.Values)
-            {
-                item.PropertyChanged += (sender, args) =>
-                {
-                     //if (args.PropertyName == "Pos")
-                     RefreshTree();
-                };
-            }
+//            foreach (var item in Items.Values)
+//            {
+//                item.PropertyChanged += (sender, args) =>
+//                {
+//                     //if (args.PropertyName == "Pos")
+//                     RefreshTree();
+//                };
+//            }
 
             BuildingsViewModel = new BuildingsViewModel(this, loader.CraftBuildings, bdm);
 

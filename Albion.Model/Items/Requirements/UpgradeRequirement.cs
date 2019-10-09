@@ -13,6 +13,5 @@ namespace Albion.Model.Items.Requirements
         {
             Cost = Resources.Any(x => x.Cost == 0) ? 0 : Resources.Sum(x => x.Count * x.Item.Cost);
         }
-
     }
 }

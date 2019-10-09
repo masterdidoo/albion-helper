@@ -19,6 +19,28 @@ namespace Albion.Db.Xml
 
         private int _memCounter;
 
+
+        private CommonItem CreateOrGetItem(IItem arg)
+        {
+            if (Items.TryGetValue(GetId(arg), out var item)) return item;
+
+            return CreateItem(arg);
+        }
+
+        private CommonItem CreateOrGetItem(string id)
+        {
+            if (Items.TryGetValue(id, out var item)) return item;
+
+            return CreateItem(XmlItems[id]);
+        }
+
+        private CommonItem CreateItem(IItem arg)
+        {
+            var item = CreateCommonItem(arg, GetId(arg), CreateCraftingRequirements(arg.craftingrequirements), (arg as IItemEnchantmentLevel)?.enchantmentlevel ?? 0);
+
+            return item;
+        }
+
         private IEnumerable<CommonItem> CreateEnchantedItems(IItemEnchantments iItem)
         {
             if (iItem.enchantments == null) yield break;
@@ -27,7 +49,7 @@ namespace Albion.Db.Xml
             {
                 var craftingRequirements = EnCreateCraftingRequirements(iItem.uniquename, enchantment);
 
-                var item = CreateCommonItem(iItem, iItem.uniquename + LevelNameConst + enchantment.enchantmentlevel,
+                var item = CreateCommonItem(iItem, GetId(iItem.uniquename, enchantment.enchantmentlevel),
                     craftingRequirements, enchantment.enchantmentlevel,
                     enchantment.itempower > 0 ? enchantment.itempower : enchantment.dummyitempower);
 
@@ -36,10 +58,10 @@ namespace Albion.Db.Xml
         }
 
         private CommonItem CreateCommonItem(IItem iItem, string itemId,
-            IEnumerable<BaseResorcedRequirement> craftingRequirements, int enchant = 0, int enchantIp = 0)
+            IEnumerable<BaseResorcedRequirement> craftingRequirements, int enchant, int enchantIp = 0)
         {
             var item = new CommonItem(craftingRequirements.ToArray(), _marketDataManager.GetData(itemId),
-                BuildingByItem(itemId))
+                BuildingByItem(iItem.uniquename))
             {
                 MemId = _memCounter++,
                 Id = itemId,
@@ -91,9 +113,7 @@ namespace Albion.Db.Xml
         private BaseResorcedRequirement CreateUpgradeRequirements(string itemId,
             EnchantmentsEnchantment enchantment)
         {
-            var id = enchantment.enchantmentlevel > 1
-                ? itemId + LevelNameConst + (enchantment.enchantmentlevel - 1)
-                : itemId;
+            var id = GetId(itemId, enchantment.enchantmentlevel - 1);
             var res = CreateResources(enchantment.upgraderequirements).ToList();
             res.Add(new CraftingResource
             {
@@ -104,26 +124,6 @@ namespace Albion.Db.Xml
             return new UpgradeRequirement(res.ToArray());
         }
 
-        private CommonItem CreateOrGetItem(IItem arg)
-        {
-            if (Items.TryGetValue(arg.uniquename, out var item)) return item;
-
-            return CreateItem(arg);
-        }
-
-        private CommonItem CreateOrGetItem(string id)
-        {
-            if (Items.TryGetValue(id, out var item)) return item;
-
-            return CreateItem(XmlItems[id]);
-        }
-
-        private CommonItem CreateItem(IItem arg)
-        {
-            var item = CreateCommonItem(arg, arg.uniquename, CreateCraftingRequirements(arg.craftingrequirements));
-
-            return item;
-        }
 
         private IEnumerable<CraftingRequirement> CreateCraftingRequirements(Craftingrequirements[] arg)
         {
@@ -153,12 +153,27 @@ namespace Albion.Db.Xml
 
             if (craftresource == null) yield break;
 
+
             foreach (var crr in craftresource)
                 yield return new CraftingResource
                 {
-                    Item = CreateOrGetItem(crr.uniquename),
+                    Item = CreateOrGetItem(GetId(crr.uniquename, crr.enchantmentlevel)),
                     Count = crr.count
                 };
+        }
+
+        private string GetId(string uniquename, int enchantmentlevel)
+        {
+            return enchantmentlevel > 0
+                ? uniquename + LevelNameConst + enchantmentlevel
+                : uniquename;
+        }
+
+        private string GetId(IItem iItem)
+        {
+            return iItem is IItemEnchantmentLevel ie
+                ? GetId(iItem.uniquename, ie.enchantmentlevel)
+                : iItem.uniquename;
         }
 
         private CraftBuilding CreateCraftBuilding(craftBuilding craftBuilding)

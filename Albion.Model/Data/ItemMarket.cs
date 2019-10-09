@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Albion.Common;
 
 namespace Albion.Model.Data
 {
@@ -64,5 +67,16 @@ namespace Albion.Model.Data
 
         public event Action UpdateSellPrice;
         public event Action UpdateBuyPrice;
+
+        public void SetBuyOffers(Location sellTown, IEnumerable<AuctionItem> auctionItems)
+        {
+            AuctionBuyOffers = auctionItems.ToList();
+        }
+
+        public List<AuctionItem> AuctionBuyOffers { get; set; }
+
+        public void SetBuyOffer(Location sellTown, IEnumerable<AuctionItem> item)
+        {
+        }
     }
 }
