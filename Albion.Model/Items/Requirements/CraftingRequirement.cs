@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using Albion.Common;
+using Albion.Model.Data;
 using Albion.Model.Items.Categories;
 using Albion.Model.Items.Requirements.Resources;
 
@@ -43,13 +46,41 @@ namespace Albion.Model.Items.Requirements
                 return;
             }
 
-            var summ = Resources.Sum(x => x.Cost);
+            var resourceCost = Resources.Where(r=>r.Item.IsResource).Sum(x => x.Cost) * 1000 / GetReturnCoeff();
+            var summ = Resources.Where(r => !r.Item.IsResource).Sum(x => x.Cost) + resourceCost;
 
             //TODO сделать красиво
             var artefacts = Item.ShopCategory == ShopCategory.Artefacts ? 9 : 1;
 
             Cost = (summ + Silver + Tax) / AmountCrafted * artefacts;
         }
+
+        private long GetReturnCoeff()
+        {
+            switch (Item.ShopSubCategory)
+            {
+                case ShopSubCategory.Planks:
+                    if (CostCalcOptions.Instance.CraftTown == Location.FortSterling) return Return35;
+                    break;
+                case ShopSubCategory.Stoneblock:
+                    if (CostCalcOptions.Instance.CraftTown == Location.Bridgewatch) return Return35;
+                    break;
+                case ShopSubCategory.Metalbar:
+                    if (CostCalcOptions.Instance.CraftTown == Location.Thetford) return Return35;
+                    break;
+                case ShopSubCategory.Leather:
+                    if (CostCalcOptions.Instance.CraftTown == Location.Martlock) return Return35;
+                    break;
+                case ShopSubCategory.Cloth:
+                    if (CostCalcOptions.Instance.CraftTown == Location.Lymhurst) return Return35;
+                    break;
+            }
+            return Return15;
+        }
+
+        private const long Return35 = 1533;
+        private const long Return25 = 1330;
+        private const long Return15 = 1175;
 
         protected override void OnSetItem()
         {

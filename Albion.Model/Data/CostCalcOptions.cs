@@ -1,4 +1,5 @@
 ﻿using System;
+using Albion.Common;
 
 namespace Albion.Model.Data
 {
@@ -42,6 +43,8 @@ namespace Albion.Model.Data
                 Changed?.Invoke();
             }
         }
+
+        public Location CraftTown { get; set; }
 
         public event Action Changed;
     }

@@ -94,6 +94,7 @@ namespace Albion.GUI.ViewModels
             set
             {
                 if (!Set(ref _town, value)) return;
+                CostCalcOptions.Instance.CraftTown = _town;
                 mdm.SelectTown((int) _town);
                 bdm.SelectTown((int) _town);
             }

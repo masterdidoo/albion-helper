@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Albion.Common;
 using Albion.Model.Data;
 
 namespace Albion.Model.Buildings
@@ -25,6 +26,8 @@ namespace Albion.Model.Buildings
         #endregion
 
         public ItemBuilding ItemBuilding { get; }
+
+        public Location Town { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
