@@ -75,8 +75,11 @@ namespace Albion.Model.Data
 
         public List<AuctionItem> AuctionBuyOffers { get; set; }
 
-        public void SetBuyOffer(Location sellTown, IEnumerable<AuctionItem> item)
+        public void AppendBuyOffers(Location sellTown, IEnumerable<AuctionItem> auctionItems)
         {
+            var items = auctionItems.ToDictionary(k => k.Id);
+            AuctionBuyOffers.RemoveAll(x=>items.ContainsKey(x.Id));
+            AuctionBuyOffers.AddRange(items.Values);
         }
     }
 }

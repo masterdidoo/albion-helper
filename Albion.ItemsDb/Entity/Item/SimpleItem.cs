@@ -14,7 +14,7 @@ namespace Albion.Db.Xml.Entity.Item
     [DebuggerStepThrough]
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
-    public class SimpleItem : IItem, IItemCraftingcategory, IItemEnchantmentLevel
+    public class SimpleItem : IItem, IItemCraftingcategory, IItemEnchantmentLevel, IItemValued
     {
         [XmlArray(Form = XmlSchemaForm.Unqualified)]
         [XmlArrayItem("replacementitem", typeof(itemsSimpleitemReplaceondeathReplacementitem),
@@ -34,7 +34,7 @@ namespace Albion.Db.Xml.Entity.Item
         [XmlAttribute] public string unlockedtocraft { get; set; }
 
 
-        [XmlAttribute] public string itemvalue { get; set; }
+        [XmlAttribute] public float itemvalue { get; set; }
 
 
         [XmlAttribute] public string showinmarketplace { get; set; }

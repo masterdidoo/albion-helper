@@ -10,6 +10,7 @@ namespace Albion.Model.Items.Requirements
 
         public CraftingRequirement(CraftingResource[] resources) : base(resources)
         {
+            //ItemValue = resources.Sum(r => r.Item.ItemValue * r.Count);
         }
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace Albion.Model.Items.Requirements
             var summ = Resources.Sum(x => x.Cost);
 
             //TODO сделать красиво
-            var artefacts = Item.ShopCategory == ShopCategory.Artefacts ? 8 : 1;
+            var artefacts = Item.ShopCategory == ShopCategory.Artefacts ? 9 : 1;
 
             Cost = (summ + Silver + Tax) / AmountCrafted * artefacts;
         }
@@ -59,7 +60,7 @@ namespace Albion.Model.Items.Requirements
 
         private void BuildingDataOnUpdateTax()
         {
-            Tax = 10000 / 100 * Item.ItemBuilding.Tax * Item.ItemPower * 5;
+            Tax = 10000 / 100 * Item.ItemBuilding.Tax * Item.ItemValue * 5;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Albion.Db.Xml.Entity.Building;
+using Albion.Db.Xml.Enums;
 using Albion.Db.Xml.Requirements;
 using Albion.Model.Buildings;
 using Albion.Model.Items;
@@ -14,6 +15,16 @@ namespace Albion.Db.Xml
     public partial class XmlLoader
     {
         private const string LevelNameConst = "@";
+
+
+        private static readonly int[][] ResourceItemValues =
+        {
+            new[] {6, 14, 30, 62, 126, 254},
+            new[] {0, 30, 62, 126, 254, 510},
+            new[] {0, 54, 118, 246, 502, 1014},
+            new[] {0, 102, 230, 486, 998, 2022}
+        };
+
         private readonly IBuildingDataManager _buildingDataManager;
         private readonly IMarketDataManager _marketDataManager;
 
@@ -36,7 +47,8 @@ namespace Albion.Db.Xml
 
         private CommonItem CreateItem(IItem arg)
         {
-            var item = CreateCommonItem(arg, GetId(arg), CreateCraftingRequirements(arg.craftingrequirements), (arg as IItemEnchantmentLevel)?.enchantmentlevel ?? 0);
+            var item = CreateCommonItem(arg, GetId(arg), CreateCraftingRequirements(arg.craftingrequirements),
+                (arg as IItemEnchantmentLevel)?.enchantmentlevel ?? 0);
 
             return item;
         }
@@ -70,10 +82,11 @@ namespace Albion.Db.Xml
                 Enchant = enchant,
                 ShopCategory = (ShopCategory) iItem.shopcategory,
                 ShopSubCategory = (ShopSubCategory) iItem.shopsubcategory1,
+                ItemValue = GetItemValue(iItem, enchant),
                 ItemPower = enchantIp > 0
                     ? enchantIp
                     : (iItem as IItemPowered)?.itempower ?? (iItem as IItemPowered2)?.dummyitempower ??
-                      (iItem as IItemValued)?.itemvalue ?? 0
+                      (int?) (iItem as IItemValued)?.itemvalue * 100 ?? 0
             };
 
             item.Init();
@@ -81,6 +94,15 @@ namespace Albion.Db.Xml
             Items.Add(item.Id, item);
 
             return item;
+        }
+
+        private int GetItemValue(IItem iItem, int enchant)
+        {
+            if (iItem.shopcategory == shopCategory.resources)
+            {
+                return iItem.tier < 3 ? 0 : iItem.tier > 2 ? ResourceItemValues[enchant][iItem.tier-3] : iItem.tier;
+            }
+            return (int?) (iItem as IItemValued)?.itemvalue ?? 0;
         }
 
         private CraftBuilding BuildingByItem(string itemId)

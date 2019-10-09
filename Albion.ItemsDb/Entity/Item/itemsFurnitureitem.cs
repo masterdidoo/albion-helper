@@ -14,7 +14,7 @@ namespace Albion.Db.Xml.Entity.Item
     [DebuggerStepThrough]
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
-    public class ItemsFurnitureitem : IItem, IItemEnchantmentLevel
+    public class ItemsFurnitureitem : IItem, IItemEnchantmentLevel, IItemValued
     {
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string cheatprovider { get; set; }
@@ -79,7 +79,7 @@ namespace Albion.Db.Xml.Entity.Item
         [XmlAttribute] public string tile { get; set; }
 
 
-        [XmlAttribute] public string itemvalue { get; set; }
+        [XmlAttribute] public float itemvalue { get; set; }
 
 
         [XmlAttribute] public string showinmarketplace { get; set; }

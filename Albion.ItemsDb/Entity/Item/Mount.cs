@@ -15,7 +15,7 @@ namespace Albion.Db.Xml.Entity.Item
     [DebuggerStepThrough]
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
-    public class Mount : IItem, IItemPowered, IItemEnchantmentLevel
+    public class Mount : IItem, IItemPowered, IItemEnchantmentLevel, IItemValued
     {
         [XmlElement("craftingrequirements")] public Craftingrequirements[] craftingrequirements { get; set; }
 
@@ -173,7 +173,7 @@ namespace Albion.Db.Xml.Entity.Item
         [XmlAttribute] public string canuseingvg { get; set; }
 
 
-        [XmlAttribute] public string itemvalue { get; set; }
+        [XmlAttribute] public float itemvalue { get; set; }
 
 
         [XmlAttribute] public string nametagoffset { get; set; }

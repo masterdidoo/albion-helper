@@ -98,7 +98,7 @@
                         <TextBlock Style="{StaticResource TextBlockStyle}">
                             <TextBlock.Text>
                                 <MultiBinding StringFormat="CRAFT  tax: {0:#,##0}; silver: {1:#,##0}; cost: {2:#,##0}">
-                                    <Binding Path="Tax"/>
+                                    <Binding Path="Tax" Converter="{StaticResource PriceConverter}"/>
                                     <Binding Path="Silver" Converter="{StaticResource PriceConverter}"/>
                                     <Binding Path="Cost" Converter="{StaticResource PriceConverter}"/>
                                 </MultiBinding>
@@ -111,7 +111,7 @@
                     <DockPanel>
                         <TextBlock Text="{Binding Item.FullName, Mode=OneTime}" 
                                    Style="{StaticResource TextBlockStyle}"/>
-                        <TextBlock Text="{Binding Item.Profit, Converter={StaticResource PriceConverter}, StringFormat=profit: {0:#,##0}}" 
+                        <TextBlock Text="{Binding Item.Profit}" 
                                    Style="{StaticResource TextBlockStyle}"/>
                         <TextBlock Style="{StaticResource TextBlockStyle}">
                             <TextBlock.Text>

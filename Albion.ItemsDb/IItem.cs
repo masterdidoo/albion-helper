@@ -30,9 +30,9 @@ namespace Albion.Db.Xml
         int dummyitempower { get; }
     }
 
-    public interface IItemValued : IItem
+    public interface IItemValued : IItemEnchantmentLevel
     {
-        int itemvalue { get; }
+        float itemvalue { get; }
     }
 
     public interface IItemCraftingcategory : IItem

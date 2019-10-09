@@ -87,14 +87,22 @@ namespace UnitTests
                     }
                 }
             }
-//            Assert.IsTrue(list
-//                .Where(x=>
-//                    x.ShopCategory==ShopCategory.Armor
-//                          || x.ShopCategory == ShopCategory.Magic
-//                          || x.ShopCategory == ShopCategory.Melee
-//                          || x.ShopCategory == ShopCategory.Ranged
-//                    )
-//                .All(x=>x.Enchant > 0 && x.CraftingRequirements.All(c=>c.Resources.All(cr=>cr.Item.Enchant==x.Enchant))));
+
+            foreach (var item in list
+                .Where(x => x.ItemValue > 0))
+            {
+                Debug.WriteLine($"{item} {item.FullName} {item.ItemValue}");
+            }
+
+
+            //            Assert.IsTrue(list
+            //                .Where(x=>
+            //                    x.ShopCategory==ShopCategory.Armor
+            //                          || x.ShopCategory == ShopCategory.Magic
+            //                          || x.ShopCategory == ShopCategory.Melee
+            //                          || x.ShopCategory == ShopCategory.Ranged
+            //                    )
+            //                .All(x=>x.Enchant > 0 && x.CraftingRequirements.All(c=>c.Resources.All(cr=>cr.Item.Enchant==x.Enchant))));
         }
 
 

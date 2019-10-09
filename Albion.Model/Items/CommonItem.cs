@@ -214,6 +214,7 @@ namespace Albion.Model.Items
         public string FullName => $"{Tir}.{Enchant} {Name}";
 
         public BaseResorcedRequirement[] CraftingRequirements { get; }
+        public int ItemValue { get; set; }
 
         public override string ToString()
         {

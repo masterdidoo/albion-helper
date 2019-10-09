@@ -51,7 +51,7 @@ namespace Albion.GUI.ViewModels
                 if (items.Length > 1)
                 {
                     var bdprice = MdmGetData(item.Key);
-                    var min = item.Min(x => x.UnitPriceSilver);
+                    var min = item.Where(x=>x.QualityLevel <= 1).Select(x => x.UnitPriceSilver).DefaultIfEmpty(0).Min();
                     if (bdprice.SellLongPrice > min || bdprice.SellFastPrice == 0 && min > 0)
                         bdprice.SellLongPrice = min;
                 }
@@ -73,7 +73,7 @@ namespace Albion.GUI.ViewModels
             {
                 foreach (var item in items)
                 {
-                    MdmGetData(item.Key).SetBuyOffer(SellTown, item);
+                    MdmGetData(item.Key).AppendBuyOffers(SellTown, item);
                 }
                 //if(SellTown == )
             }
@@ -82,7 +82,7 @@ namespace Albion.GUI.ViewModels
                 if (items.Length > 1)
                 {
                     var bdprice = MdmGetData(item.Key);
-                    var max = item.Max(x => x.UnitPriceSilver);
+                    var max = item.Where(x => x.QualityLevel <= 1).Select(x => x.UnitPriceSilver).DefaultIfEmpty(0).Max();
                     if (bdprice.SellFastPrice < max)
                         bdprice.SellFastPrice = max;
                 }
