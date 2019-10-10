@@ -12,8 +12,7 @@ namespace Albion.Model.Items.Profits
 
         private void OnUpdatePrice()
         {
-            Silver = Item.ItemMarket.SellFastPrice;
-            Pos = Item.ItemMarket.SellFastPos;
+            UpdateSilver(Item.ItemMarket.SellFastPrice, Item.ItemMarket.SellFastPos);
         }
 
         protected override void OnUpdateSilver()

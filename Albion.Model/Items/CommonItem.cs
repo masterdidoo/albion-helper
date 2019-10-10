@@ -95,7 +95,7 @@ namespace Albion.Model.Items
 
         #region For UI
 
-        public bool IsExpanded { get; set; } = true;
+        public bool IsExpanded { get; set; } = false;
 
         #endregion
 
@@ -156,7 +156,7 @@ namespace Albion.Model.Items
                 Profit = -100;
             }
 
-            Pos = Components.Max(x => x.Pos).AddTicks(1);
+            //Pos = Components.Max(x => x.Pos).AddTicks(1);
         }
 
         public void UpdateMinCost(BaseRequirement requirement)
@@ -183,6 +183,9 @@ namespace Albion.Model.Items
                 }
             }
 
+            var pos = Components.Max(x => x.Pos);
+            Pos = (pos.Ticks > 1) ? pos.AddTicks(-1) : pos;
+
             if (minItem != null)
             {
                 minItem.IsSelected = true;
@@ -194,7 +197,6 @@ namespace Albion.Model.Items
                 Cost = 0;
             }
 
-            Pos = Components.Max(x => x.Pos).AddTicks(1);
             //Cost = Requirements.Select(x => x.Cost).Where(x => x > 0).DefaultIfEmpty(0).Min();
         }
 

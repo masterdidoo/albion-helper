@@ -15,7 +15,7 @@ namespace Albion.Model
             get => _pos;
             protected set
             {
-                if (_pos == value) return;
+                if (Equals(_pos, value)) return;
                 _pos = value;
                 OnPropertyChanged();
             }

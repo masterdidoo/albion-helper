@@ -1,4 +1,6 @@
-﻿namespace Albion.Model.Items.Requirements
+﻿using System;
+
+namespace Albion.Model.Items.Requirements
 {
     public abstract class BaseMarketRequirement : BaseRequirement
     {
@@ -7,13 +9,16 @@
         public long Silver
         {
             get => _silver;
-            set
-            {
-                if (_silver == value) return;
-                _silver = value;
-                OnPropertyChanged();
-                OnUpdateSilver();
-            }
+            set => UpdateSilver(value, DateTime.Now);
+        }
+
+        protected void UpdateSilver(long silver, DateTime pos)
+        {
+            if (_silver == silver) return;
+            _silver = silver;
+            Pos = pos;
+            OnUpdateSilver();
+            OnPropertyChanged(nameof(Silver));
         }
 
         protected abstract void OnUpdateSilver();

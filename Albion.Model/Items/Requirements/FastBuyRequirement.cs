@@ -10,8 +10,7 @@
 
         private void OnUpdateSellPrice()
         {
-            Silver = Item.ItemMarket.SellPrice;
-            Pos = Item.ItemMarket.SellPos;
+            UpdateSilver(Item.ItemMarket.SellPrice, Item.ItemMarket.SellPos);
         }
 
         protected override void OnUpdateSilver()
