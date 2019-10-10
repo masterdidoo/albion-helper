@@ -73,7 +73,7 @@ namespace Albion.Model.Data
             AuctionBuyOffers = auctionItems.ToList();
         }
 
-        public List<AuctionItem> AuctionBuyOffers { get; set; }
+        public List<AuctionItem> AuctionBuyOffers { get; set; } = new List<AuctionItem>();
 
         public void AppendBuyOffers(Location sellTown, IEnumerable<AuctionItem> auctionItems)
         {
