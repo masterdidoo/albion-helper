@@ -7,6 +7,11 @@ namespace Albion.Model.Data
 {
     public class ItemMarket
     {
+        public MarketData FastSaleItem { get; set; }
+        public MarketData LongSaleItem { get; set; }
+        public MarketData FastBuyItem { get; set; }
+        public MarketData LongBuyItem { get; set; }
+
         private long _buyPrice;
         private long _sellFastPrice;
         private long _sellLongPrice;
@@ -81,5 +86,22 @@ namespace Albion.Model.Data
             AuctionBuyOffers.RemoveAll(x=>items.ContainsKey(x.Id));
             AuctionBuyOffers.AddRange(items.Values);
         }
+    }
+
+    public class MarketData
+    {
+        public long BestPrice { get; set; }
+
+        public DateTime UpdateTime { get; set; }
+
+        public List<MarketOrder> Orders { get; set; }
+
+
+    }
+
+    public class MarketOrder
+    {
+        public long Price { get; set; }
+        public int Count { get; set; }
     }
 }
