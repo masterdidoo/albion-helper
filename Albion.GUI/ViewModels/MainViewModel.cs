@@ -139,8 +139,8 @@ namespace Albion.GUI.ViewModels
                     items = items.Where(x => x.Name.ToUpper().Contains(filterTest));
                 }
                 items = IsProfitOrder 
-                    ? items.OrderByDescending(x=>x.Profit).ThenBy(x => x.Pos).ThenBy(x=>x.FullName) 
-                    : items.OrderByDescending(x=>x.Pos).ThenBy(x=>x.FullName);
+                    ? items.OrderByDescending(x=>x.Profit).ThenBy(x => !x.IsExpanded).ThenByDescending(x => x.Pos).ThenBy(x=>x.FullName) 
+                    : items.OrderBy(x=>!x.IsExpanded).ThenByDescending(x => x.Pos).ThenBy(x=>x.FullName);
 
                 return items;
             }
