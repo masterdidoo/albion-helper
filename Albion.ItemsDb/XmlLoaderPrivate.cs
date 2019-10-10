@@ -82,7 +82,7 @@ namespace Albion.Db.Xml
                 Enchant = enchant,
                 ShopCategory = (ShopCategory) iItem.shopcategory,
                 ShopSubCategory = (ShopSubCategory) iItem.shopsubcategory1,
-                ItemValue = GetItemValue(iItem, enchant),
+                ItemValue = GetItemValue(iItem, enchant, enchantIp),
                 ItemPower = enchantIp > 0
                     ? enchantIp
                     : (iItem as IItemPowered)?.itempower ?? (iItem as IItemPowered2)?.dummyitempower ??
@@ -96,13 +96,19 @@ namespace Albion.Db.Xml
             return item;
         }
 
-        private int GetItemValue(IItem iItem, int enchant)
+        private int GetItemValue(IItem iItem, int enchant, int enchantIp)
         {
             if (iItem.shopcategory == shopCategory.resources)
-            {
-                return iItem.tier < 3 ? 0 : iItem.tier > 2 ? ResourceItemValues[enchant][iItem.tier-3] : iItem.tier;
-            }
-            return (int?) (iItem as IItemValued)?.itemvalue ?? 0;
+                return iItem.tier < 3 ? 0 : iItem.tier > 2 ? ResourceItemValues[enchant][iItem.tier - 3] : iItem.tier;
+
+            return (int?) (iItem as IItemValued)?.itemvalue
+                   ?? (
+                       enchantIp > 0
+                           ? enchantIp
+                           : (iItem as IItemPowered)?.itempower
+                             ?? (iItem as IItemPowered2)?.dummyitempower
+                             ?? 0
+                   );
         }
 
         private CraftBuilding BuildingByItem(string itemId)
