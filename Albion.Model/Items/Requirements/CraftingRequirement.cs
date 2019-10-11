@@ -91,18 +91,18 @@ namespace Albion.Model.Items.Requirements
         protected override void OnSetItem()
         {
             base.OnSetItem();
-            if (Silver > 0)
-            {
-                Tax = Silver;
-                return;
-            }
+//            if (Silver > 0)
+//            {
+//                Tax = Silver;
+//                return;
+//            }
             Item.ItemBuilding.UpdateTax += BuildingDataOnUpdateTax;
             BuildingDataOnUpdateTax();
         }
 
         private void BuildingDataOnUpdateTax()
         {
-            Tax = 10000 / 100 * Item.ItemBuilding.Tax * Item.ItemValue * 5;
+            Tax = 10000 / 100 * Item.ItemBuilding.Tax * Item.ItemValue * 5 + Silver;
         }
     }
 }

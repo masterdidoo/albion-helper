@@ -184,8 +184,14 @@ namespace Albion.Network
             var udp = ip.Udp;
 
             if (udp == null || udp.SourcePort != 5056 && udp.DestinationPort != 5056) return;
-
-            ReceivePacket(udp.Payload.ToArray());
+            try
+            {
+                ReceivePacket(udp.Payload.ToArray());
+            }
+            catch (Exception)
+            {
+                //skip errors
+            }
         }
 
         public void Dispose()

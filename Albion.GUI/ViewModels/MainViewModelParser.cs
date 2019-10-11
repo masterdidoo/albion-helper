@@ -57,6 +57,8 @@ namespace Albion.GUI.ViewModels
                 }
                 else
                 {
+                    var mm = MdmGetData(item.Key);
+                    mm.SellLongPos = DateTime.Now;
                     MdmGetData(item.Key).SellLongPrice = item.Min(x => x.UnitPriceSilver);
                 }
             RefreshTree();
@@ -88,7 +90,9 @@ namespace Albion.GUI.ViewModels
                 }
                 else
                 {
-                    MdmGetData(item.Key).SellFastPrice = item.Max(x => x.UnitPriceSilver);
+                    var mm = MdmGetData(item.Key);
+                    mm.SellFastPos = DateTime.Now;
+                    mm.SellFastPrice = item.Max(x => x.UnitPriceSilver);
                 }
             RefreshTree();
         }

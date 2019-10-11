@@ -6172,7 +6172,6 @@
     <craftingitemlist>
       <craftitem uniquename="T2_METALBAR" displaygroup="2" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T3_METALBAR" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_ORE" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
     </craftingitemlist>
     <AudioInfo name="NPC_SMELTER" />
   </craftbuilding>
@@ -6192,8 +6191,6 @@
       <craftitem uniquename="T4_METALBAR_LEVEL1" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T4_METALBAR_LEVEL2" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T4_METALBAR_LEVEL3" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_ORE" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
-      <craftitem uniquename="T4_ORE" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_ORE_LEVEL1" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_ORE_LEVEL2" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_ORE_LEVEL3" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
@@ -6220,8 +6217,6 @@
       <craftitem uniquename="T5_METALBAR_LEVEL1" displaygroup="5" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T5_METALBAR_LEVEL2" displaygroup="5" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T5_METALBAR_LEVEL3" displaygroup="5" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_ORE" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
-      <craftitem uniquename="T4_ORE" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_ORE_LEVEL1" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_ORE_LEVEL2" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_ORE_LEVEL3" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
@@ -6256,8 +6251,6 @@
       <craftitem uniquename="T6_METALBAR_LEVEL1" displaygroup="6" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T6_METALBAR_LEVEL2" displaygroup="6" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T6_METALBAR_LEVEL3" displaygroup="6" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_ORE" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
-      <craftitem uniquename="T4_ORE" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_ORE_LEVEL1" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_ORE_LEVEL2" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_ORE_LEVEL3" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
@@ -6300,8 +6293,6 @@
       <craftitem uniquename="T7_METALBAR_LEVEL1" displaygroup="7" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T7_METALBAR_LEVEL2" displaygroup="7" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T7_METALBAR_LEVEL3" displaygroup="7" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_ORE" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
-      <craftitem uniquename="T4_ORE" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_ORE_LEVEL1" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_ORE_LEVEL2" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_ORE_LEVEL3" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
@@ -6352,8 +6343,6 @@
       <craftitem uniquename="T8_METALBAR_LEVEL1" displaygroup="8" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T8_METALBAR_LEVEL2" displaygroup="8" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T8_METALBAR_LEVEL3" displaygroup="8" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_ORE" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
-      <craftitem uniquename="T4_ORE" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_ORE_LEVEL1" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_ORE_LEVEL2" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_ORE_LEVEL3" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
@@ -6426,8 +6415,6 @@
       <craftitem uniquename="T4_PLANKS_LEVEL1" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T4_PLANKS_LEVEL2" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T4_PLANKS_LEVEL3" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_WOOD" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
-      <craftitem uniquename="T4_WOOD" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_WOOD_LEVEL1" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_WOOD_LEVEL2" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_WOOD_LEVEL3" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
@@ -6454,8 +6441,6 @@
       <craftitem uniquename="T5_PLANKS_LEVEL1" displaygroup="5" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T5_PLANKS_LEVEL2" displaygroup="5" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T5_PLANKS_LEVEL3" displaygroup="5" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_WOOD" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
-      <craftitem uniquename="T4_WOOD" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_WOOD_LEVEL1" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_WOOD_LEVEL2" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_WOOD_LEVEL3" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
@@ -6490,8 +6475,6 @@
       <craftitem uniquename="T6_PLANKS_LEVEL1" displaygroup="6" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T6_PLANKS_LEVEL2" displaygroup="6" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T6_PLANKS_LEVEL3" displaygroup="6" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_WOOD" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
-      <craftitem uniquename="T4_WOOD" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_WOOD_LEVEL1" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_WOOD_LEVEL2" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_WOOD_LEVEL3" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
@@ -6534,8 +6517,6 @@
       <craftitem uniquename="T7_PLANKS_LEVEL1" displaygroup="7" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T7_PLANKS_LEVEL2" displaygroup="7" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T7_PLANKS_LEVEL3" displaygroup="7" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_WOOD" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
-      <craftitem uniquename="T4_WOOD" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_WOOD_LEVEL1" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_WOOD_LEVEL2" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_WOOD_LEVEL3" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
@@ -6586,8 +6567,6 @@
       <craftitem uniquename="T8_PLANKS_LEVEL1" displaygroup="8" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T8_PLANKS_LEVEL2" displaygroup="8" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T8_PLANKS_LEVEL3" displaygroup="8" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_WOOD" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
-      <craftitem uniquename="T4_WOOD" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_WOOD_LEVEL1" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_WOOD_LEVEL2" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_WOOD_LEVEL3" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
@@ -6638,7 +6617,6 @@
     <craftingitemlist>
       <craftitem uniquename="T2_STONEBLOCK" displaygroup="2" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T3_STONEBLOCK" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_ROCK" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
     </craftingitemlist>
     <AudioInfo name="NPC_STONEMASONRY" />
   </craftbuilding>
@@ -6655,8 +6633,6 @@
       <craftitem uniquename="T2_STONEBLOCK" displaygroup="2" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T3_STONEBLOCK" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T4_STONEBLOCK" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_ROCK" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
-      <craftitem uniquename="T4_ROCK" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
     </craftingitemlist>
     <AudioInfo name="NPC_STONEMASONRY" />
   </craftbuilding>
@@ -6674,8 +6650,6 @@
       <craftitem uniquename="T3_STONEBLOCK" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T4_STONEBLOCK" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T5_STONEBLOCK" displaygroup="5" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_ROCK" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
-      <craftitem uniquename="T4_ROCK" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T5_ROCK" displaygroup="5" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
     </craftingitemlist>
     <AudioInfo name="NPC_STONEMASONRY" />
@@ -6695,8 +6669,6 @@
       <craftitem uniquename="T4_STONEBLOCK" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T5_STONEBLOCK" displaygroup="5" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T6_STONEBLOCK" displaygroup="6" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_ROCK" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
-      <craftitem uniquename="T4_ROCK" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T5_ROCK" displaygroup="5" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T6_ROCK" displaygroup="6" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
     </craftingitemlist>
@@ -6713,8 +6685,6 @@
       <craftitem uniquename="T5_STONEBLOCK" displaygroup="5" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T6_STONEBLOCK" displaygroup="6" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T7_STONEBLOCK" displaygroup="7" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_ROCK" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
-      <craftitem uniquename="T4_ROCK" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T5_ROCK" displaygroup="5" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T6_ROCK" displaygroup="6" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T7_ROCK" displaygroup="7" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
@@ -6738,8 +6708,6 @@
       <craftitem uniquename="T6_STONEBLOCK" displaygroup="6" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T7_STONEBLOCK" displaygroup="7" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T8_STONEBLOCK" displaygroup="8" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_ROCK" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
-      <craftitem uniquename="T4_ROCK" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T5_ROCK" displaygroup="5" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T6_ROCK" displaygroup="6" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T7_ROCK" displaygroup="7" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
@@ -6780,7 +6748,6 @@
     <craftingitemlist>
       <craftitem uniquename="T2_LEATHER" displaygroup="2" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T3_LEATHER" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_HIDE" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
     </craftingitemlist>
     <AudioInfo name="NPC_TANNERY" />
   </craftbuilding>
@@ -6800,8 +6767,6 @@
       <craftitem uniquename="T4_LEATHER_LEVEL1" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T4_LEATHER_LEVEL2" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T4_LEATHER_LEVEL3" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_HIDE" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
-      <craftitem uniquename="T4_HIDE" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_HIDE_LEVEL1" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_HIDE_LEVEL2" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_HIDE_LEVEL3" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
@@ -6828,8 +6793,6 @@
       <craftitem uniquename="T5_LEATHER_LEVEL1" displaygroup="5" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T5_LEATHER_LEVEL2" displaygroup="5" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T5_LEATHER_LEVEL3" displaygroup="5" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_HIDE" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
-      <craftitem uniquename="T4_HIDE" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_HIDE_LEVEL1" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_HIDE_LEVEL2" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_HIDE_LEVEL3" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
@@ -6864,8 +6827,6 @@
       <craftitem uniquename="T6_LEATHER_LEVEL1" displaygroup="6" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T6_LEATHER_LEVEL2" displaygroup="6" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T6_LEATHER_LEVEL3" displaygroup="6" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_HIDE" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
-      <craftitem uniquename="T4_HIDE" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_HIDE_LEVEL1" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_HIDE_LEVEL2" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_HIDE_LEVEL3" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
@@ -6908,8 +6869,6 @@
       <craftitem uniquename="T7_LEATHER_LEVEL1" displaygroup="7" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T7_LEATHER_LEVEL2" displaygroup="7" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T7_LEATHER_LEVEL3" displaygroup="7" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_HIDE" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
-      <craftitem uniquename="T4_HIDE" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_HIDE_LEVEL1" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_HIDE_LEVEL2" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_HIDE_LEVEL3" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
@@ -6960,8 +6919,6 @@
       <craftitem uniquename="T8_LEATHER_LEVEL1" displaygroup="8" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T8_LEATHER_LEVEL2" displaygroup="8" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T8_LEATHER_LEVEL3" displaygroup="8" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_HIDE" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
-      <craftitem uniquename="T4_HIDE" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_HIDE_LEVEL1" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_HIDE_LEVEL2" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_HIDE_LEVEL3" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
@@ -7012,7 +6969,6 @@
     <craftingitemlist>
       <craftitem uniquename="T2_CLOTH" displaygroup="2" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T3_CLOTH" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_FIBER" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
     </craftingitemlist>
     <AudioInfo name="NPC_WEAVINGMILL" />
   </craftbuilding>
@@ -7032,8 +6988,6 @@
       <craftitem uniquename="T4_CLOTH_LEVEL1" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T4_CLOTH_LEVEL2" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T4_CLOTH_LEVEL3" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_FIBER" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
-      <craftitem uniquename="T4_FIBER" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_FIBER_LEVEL1" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_FIBER_LEVEL2" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_FIBER_LEVEL3" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
@@ -7060,8 +7014,6 @@
       <craftitem uniquename="T5_CLOTH_LEVEL1" displaygroup="5" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T5_CLOTH_LEVEL2" displaygroup="5" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T5_CLOTH_LEVEL3" displaygroup="5" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_FIBER" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
-      <craftitem uniquename="T4_FIBER" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_FIBER_LEVEL1" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_FIBER_LEVEL2" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_FIBER_LEVEL3" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
@@ -7096,8 +7048,6 @@
       <craftitem uniquename="T6_CLOTH_LEVEL1" displaygroup="6" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T6_CLOTH_LEVEL2" displaygroup="6" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T6_CLOTH_LEVEL3" displaygroup="6" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_FIBER" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
-      <craftitem uniquename="T4_FIBER" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_FIBER_LEVEL1" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_FIBER_LEVEL2" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_FIBER_LEVEL3" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
@@ -7140,8 +7090,6 @@
       <craftitem uniquename="T7_CLOTH_LEVEL1" displaygroup="7" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T7_CLOTH_LEVEL2" displaygroup="7" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T7_CLOTH_LEVEL3" displaygroup="7" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_FIBER" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
-      <craftitem uniquename="T4_FIBER" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_FIBER_LEVEL1" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_FIBER_LEVEL2" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_FIBER_LEVEL3" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
@@ -7192,8 +7140,6 @@
       <craftitem uniquename="T8_CLOTH_LEVEL1" displaygroup="8" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T8_CLOTH_LEVEL2" displaygroup="8" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
       <craftitem uniquename="T8_CLOTH_LEVEL3" displaygroup="8" category="@BUILDING_ITEMS_CATEGORY_RESOURCES" />
-      <craftitem uniquename="T3_FIBER" displaygroup="3" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
-      <craftitem uniquename="T4_FIBER" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_FIBER_LEVEL1" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_FIBER_LEVEL2" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
       <craftitem uniquename="T4_FIBER_LEVEL3" displaygroup="4" category="@BUILDING_ITEMS_CATEGORY_TRANSMUTATION" />
