@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Albion.Model.Buildings;
 using Albion.Model.Data;
@@ -11,10 +12,13 @@ namespace Albion.Model.Items
     public class CommonItem : BaseCostableEntity
     {
         private readonly FastBuyRequirement _fastBuyRequirement;
-        private readonly FastSellProfit _fastSellProfit;
+        public FastSellProfit FastSellProfit { get; }
+        public SalvageProfit SalvageProfit { get; }
+
         private readonly LongBuyRequirement _longBuyRequirement;
-        private readonly LongSellProfit _longSellProfit;
+        public LongSellProfit LongSellProfit { get; }
         private long _profit = -100;
+        private long _sale;
 
         public CommonItem(BaseResorcedRequirement[] craftingRequirements, ItemMarket itemMarket,
             CraftBuilding craftingBuilding)
@@ -26,8 +30,11 @@ namespace Albion.Model.Items
             _longBuyRequirement = new LongBuyRequirement();
             _fastBuyRequirement = new FastBuyRequirement();
 
-            _longSellProfit = new LongSellProfit();
-            _fastSellProfit = new FastSellProfit();
+            LongSellProfit = new LongSellProfit();
+            FastSellProfit = new FastSellProfit();
+
+            if (CraftingRequirements.Length > 0 && CraftingRequirements[0].Resources.Length > 0)
+                SalvageProfit = new SalvageProfit();
 
             CostCalcOptions.Instance.Changed += RequirementOnUpdateCost;
             CostCalcOptions.Instance.Changed += OnUpdateProfitOrCost;
@@ -60,8 +67,9 @@ namespace Albion.Model.Items
         {
             get
             {
-                yield return _fastSellProfit;
-                yield return _longSellProfit;
+                if (SalvageProfit != null) yield return SalvageProfit;
+                yield return FastSellProfit;
+                yield return LongSellProfit;
             }
         }
 
@@ -81,9 +89,10 @@ namespace Albion.Model.Items
         {
             get
             {
-                yield return _fastSellProfit;
+                if (SalvageProfit != null) yield return SalvageProfit;
+                yield return FastSellProfit;
                 if (!CostCalcOptions.Instance.IsLongSellDisabled)
-                    yield return _longSellProfit;
+                    yield return LongSellProfit;
             }
         }
 
@@ -126,8 +135,24 @@ namespace Albion.Model.Items
                 if (item != requirement)
                     item.IsSelected = false;
 
+            Sale = requirement.Cost;
+
             Profit = Cost > 0 ? (requirement.Cost - Cost) * 100 / Cost : -100;
         }
+
+        public long Sale
+        {
+            get => _sale;
+            set
+            {
+                if (_sale == value) return;
+                _sale = value;
+                UpdateSale?.Invoke();
+                OnPropertyChanged();
+            }
+        }
+
+        public event Action UpdateSale ;
 
         private void OnUpdateProfitOrCost()
         {

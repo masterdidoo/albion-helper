@@ -36,6 +36,10 @@
                 <views:OptionsView DataContext="{Binding CostCalcOptions}"/>
                 <!-- <local:ArtefactsViewControl DataContext="{Binding Artefacts}"/> -->
             </TabItem>
+            <TabItem Header="Artefacts">
+                <views:ArtefactsView DataContext="{Binding Artefacts}"/>
+                <!-- <local:ArtefactsViewControl DataContext="{Binding Artefacts}"/> -->
+            </TabItem>
         </TabControl>
         <StackPanel Grid.Row="2" Orientation="Horizontal">
             <TextBlock Text="Blue :" Margin="5,0" />

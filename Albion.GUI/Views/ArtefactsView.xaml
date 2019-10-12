@@ -1,0 +1,79 @@
+<UserControl x:Class="Albion.GUI.Views.ArtefactsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:items="clr-namespace:Albion.Model.Items;assembly=Albion.Model"
+             xmlns:requirements="clr-namespace:Albion.Model.Items.Requirements;assembly=Albion.Model"
+             xmlns:controls="clr-namespace:Albion.GUI.Controls">
+    <Grid Grid.IsSharedSizeScope="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <!-- Column headers -->
+        <TreeViewItem Grid.Row="0" BorderThickness="1">
+            <TreeViewItem.Header>
+                <Grid x:Name="TitleGrid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition SharedSizeGroup="Item" Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Task" Margin="2,0,5,0" />
+                    <GridSplitter Grid.Column="0" Width="3" Background="Black" />
+                    <Border Grid.Column="1" BorderThickness="0,0,3,0" BorderBrush="Black">
+                        <DockPanel>
+                            <TextBlock Text="Cost" Width="60" />
+                            <TextBlock Text="FastSale" Width="60" />
+                            <TextBlock Text="LongSale" Width="60" />
+                        </DockPanel>
+                    </Border>
+                </Grid>
+            </TreeViewItem.Header>
+        </TreeViewItem>
+
+        <TreeView Grid.Row="1" ItemsSource="{Binding}">
+            <TreeView.Resources>
+                <HierarchicalDataTemplate DataType="{x:Type items:ArtefactStat}" ItemsSource="{Binding Artefacts}">
+                    <Grid x:Name="TitleGrid">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition SharedSizeGroup="Item" Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Title}" Style="{StaticResource TextBlockStyle}" />
+                        <DockPanel Grid.Column="1">
+                            <TextBlock
+                                Text="{Binding Cost, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,##0}}"
+                                Style="{StaticResource IntBlockStyle}" />
+                            <TextBlock
+                                Text="{Binding FastSale, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,##0}}"
+                                Style="{StaticResource IntBlockStyle}" />
+                            <TextBlock
+                                Text="{Binding LongSale, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,##0}}"
+                                Style="{StaticResource IntBlockStyle}" />
+                        </DockPanel>
+                    </Grid>
+                </HierarchicalDataTemplate>
+
+                <HierarchicalDataTemplate DataType="{x:Type items:CommonItem}">
+                    <Grid x:Name="TitleGrid">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition SharedSizeGroup="Item" Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Name}" Style="{StaticResource TextBlockStyle}" />
+                        <DockPanel Grid.Column="1">
+                            <TextBlock
+                                Text="{Binding Cost, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,##0}}"
+                                Style="{StaticResource IntBlockStyle}" />
+                            <TextBlock
+                                Text="{Binding FastSellProfit.Cost, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,##0}}"
+                                Style="{StaticResource IntBlockStyle}" />
+                            <TextBlock
+                                Text="{Binding LongSellProfit.Cost, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,##0}}"
+                                Style="{StaticResource IntBlockStyle}" />
+                        </DockPanel>
+                    </Grid>
+                </HierarchicalDataTemplate>
+            </TreeView.Resources>
+        </TreeView>
+    </Grid>
+</UserControl>

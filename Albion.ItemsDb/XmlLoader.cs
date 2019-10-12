@@ -9,6 +9,7 @@ using Albion.Db.Xml.Entity.Item;
 using Albion.Model.Buildings;
 using Albion.Model.Data;
 using Albion.Model.Items;
+using Albion.Model.Items.Categories;
 using Albion.Model.Managers;
 
 namespace Albion.Db.Xml
@@ -102,8 +103,24 @@ namespace Albion.Db.Xml
 
             var items = XmlItems.Values.Select(CreateOrGetItem).Concat(enItems);
 
-            return items.Count();
+            var cnt = items.Count();
+
+            Artefacts =  Items.Values.SelectMany(x=>x.CraftingRequirements).SelectMany(x=>x.Resources.Where(a=>a.Item.ShopCategory==ShopCategory.Artefacts).Select(
+                a =>
+                new {
+                    x.Item.CraftingBuilding,
+                    art=a.Item
+                }))
+                .Distinct()
+//                .GroupBy(x=>new {x.CraftingBuilding, x.art.CraftingRequirements[0].Resources[0].Item})
+                .GroupBy(x=>x.art.CraftingRequirements[0].Resources[0].Item)
+                .Select(v=>new ArtefactStat(null, v.Key, v.Select(a=>a.art).ToArray()))
+                .ToArray();
+
+            return cnt;
         }
+
+        public ArtefactStat[] Artefacts { get; set; }
 
         public Dictionary<string, string> Localization { get; set; }
 
@@ -112,4 +129,5 @@ namespace Albion.Db.Xml
         public Dictionary<string, string> ItemIdToCraftBuildingId { get; private set; }
         public CraftBuilding NoneBuilding { get; private set; }
     }
+
 }

@@ -44,10 +44,12 @@
     <Compile Include="Buildings\CraftBuilding.cs" />
     <Compile Include="Data\ItemBuilding.cs" />
     <Compile Include="Data\CostCalcOptions.cs" />
+    <Compile Include="Items\ArtefactStat.cs" />
     <Compile Include="Items\Profits\FastSellProfit.cs" />
     <Compile Include="Items\CommonItem.cs" />
     <Compile Include="BaseCostableEntity.cs" />
     <Compile Include="Items\Profits\LongSellProfit.cs" />
+    <Compile Include="Items\Profits\SalvageProfit.cs" />
     <Compile Include="Items\Requirements\BaseMarketRequirement.cs" />
     <Compile Include="Managers\IBuildingDataManager.cs" />
     <Compile Include="Managers\IMarketDataManager.cs" />

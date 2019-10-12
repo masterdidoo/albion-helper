@@ -65,6 +65,18 @@
                 </HierarchicalDataTemplate>
 
                 <!--Profits-->
+                <HierarchicalDataTemplate DataType="{x:Type profits:SalvageProfit}">
+                    <DockPanel>
+                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" Margin="2" VerticalAlignment="Center"/>
+                        <TextBlock Text="Salvage" 
+                                   Style="{StaticResource TextBlockStyle}"
+                                   MinWidth="150" />
+                        <TextBox Visibility="Hidden" 
+                                 MinWidth="60" TextAlignment="Right" />
+                        <TextBlock Text="{Binding Cost, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,#}}" 
+                                   Style="{StaticResource IntBlockStyle}"/>
+                    </DockPanel>
+                </HierarchicalDataTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type profits:LongSellProfit}">
                     <controls:RequirementControl Title="Long Sell" />
                 </HierarchicalDataTemplate>

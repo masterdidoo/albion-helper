@@ -8,6 +8,7 @@ using Albion.DataStore.Managers;
 using Albion.Db.Xml;
 using Albion.Event;
 using Albion.GUI.Libs;
+using Albion.Model.Buildings;
 using Albion.Model.Data;
 using Albion.Model.Items;
 using Albion.Model.Items.Categories;
@@ -54,6 +55,7 @@ namespace Albion.GUI.ViewModels
 
             Items = loader.Items;
 
+            Artefacts = loader.Artefacts;
 
             _debounceDispatcher = new DebounceDispatcher();
 //            foreach (var item in Items.Values)
@@ -74,6 +76,8 @@ namespace Albion.GUI.ViewModels
 
             InitAlbionParser();
         }
+
+        public ArtefactStat[] Artefacts { get; set; }
 
         private void RefreshTree()
         {
