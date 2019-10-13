@@ -10,12 +10,12 @@
 
         private void OnUpdateSellPrice()
         {
-            UpdateSilver(Item.ItemMarket.SellPrice, Item.ItemMarket.SellPos);
+            UpdateSilver(Item.ItemMarket.FastBuyItem.BestPrice, Item.ItemMarket.FastBuyItem.UpdateTime);
         }
 
         protected override void OnUpdateSilver()
         {
-            Item.ItemMarket.SellPrice = Silver;
+            Item.ItemMarket.FastBuyItem.BestPrice = Silver;
             Cost = Silver;
         }
     }

@@ -47,20 +47,31 @@ namespace Albion.GUI.ViewModels
         {
             if (p.Items.Length == 0) return;
             var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
+
+            if (items.Length == 1)
+                MdmGetData(items[0].Key).LongSaleItem.SetOrders(items[0]);
+            else
+            {
+                foreach (var item in items)
+                {
+                    MdmGetData(item.Key).LongSaleItem.AppendOrders(item);
+                }
+            }
+
             foreach (var item in items)
             {
                 if (items.Length > 1)
                 {
                     var bdprice = MdmGetData(item.Key);
                     var min = item.Where(x=>x.QualityLevel <= 1).Select(x => x.UnitPriceSilver).DefaultIfEmpty(0).Min();
-                    if (bdprice.SellLongPrice > min || bdprice.SellFastPrice == 0 && min > 0)
-                        bdprice.SellLongPrice = min;
+                    if (bdprice.LongSaleItem.BestPrice > min || bdprice.FastSaleItem.BestPrice == 0 && min > 0)
+                        bdprice.LongSaleItem.BestPrice = min;
                 }
                 else
                 {
                     var mm = MdmGetData(item.Key);
                     mm.SellLongPos = DateTime.Now;
-                    MdmGetData(item.Key).SellLongPrice = item.Min(x => x.UnitPriceSilver);
+                    MdmGetData(item.Key).LongSaleItem.BestPrice = item.Min(x => x.UnitPriceSilver);
                 }
                 Items[item.Key].Pos = DateTime.Now;
             }
@@ -73,15 +84,13 @@ namespace Albion.GUI.ViewModels
             var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
 
             if (items.Length == 1)
-                MdmGetData(items[0].Key).SetBuyOffers(SellTown, items[0]);
+                MdmGetData(items[0].Key).FastSaleItem.SetOrders(items[0]);
             else
             {
                 foreach (var item in items)
                 {
-                    MdmGetData(item.Key).AppendBuyOffers(SellTown, item);
+                    MdmGetData(item.Key).FastSaleItem.AppendOrders(item);
                 }
-
-                //if(SellTown == )
             }
 
             foreach (var item in items) { 
@@ -90,14 +99,13 @@ namespace Albion.GUI.ViewModels
                     var bdprice = MdmGetData(item.Key);
                     var max = item.Where(x => x.QualityLevel <= 1).Select(x => x.UnitPriceSilver).DefaultIfEmpty(0)
                         .Max();
-                    if (bdprice.SellFastPrice < max)
-                        bdprice.SellFastPrice = max;
+                    if (bdprice.FastSaleItem.BestPrice < max)
+                        bdprice.FastSaleItem.BestPrice = max;
                 }
                 else
                 {
                     var mm = MdmGetData(item.Key);
-                    mm.SellFastPos = DateTime.Now;
-                    mm.SellFastPrice = item.Max(x => x.UnitPriceSilver);
+                    mm.FastSaleItem.BestPrice = item.Max(x => x.UnitPriceSilver);
                 }
                 Items[item.Key].Pos = DateTime.Now;
             }

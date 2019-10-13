@@ -7,26 +7,13 @@ namespace Albion.Model.Data
 {
     public class ItemMarket
     {
-        public MarketData FastSaleItem { get; set; }
-        public MarketData LongSaleItem { get; set; }
-        public MarketData FastBuyItem { get; set; }
-        public MarketData LongBuyItem { get; set; }
-
         private long _buyPrice;
         private long _sellFastPrice;
         private long _sellLongPrice;
-        private long _sellPrice;
-
-        public long SellPrice
-        {
-            get => _sellPrice;
-            set
-            {
-                if (_sellPrice == value) return;
-                _sellPrice = value;
-                UpdateSellPrice?.Invoke();
-            }
-        }
+        public ItemMarketData FastSaleItem { get; set; } = new ItemMarketData();
+        public ItemMarketData LongSaleItem { get; set; } = new ItemMarketData();
+        public ItemMarketData FastBuyItem { get; set; } = new ItemMarketData();
+        public ItemMarketData LongBuyItem { get; set; } = new ItemMarketData();
 
         public long BuyPrice
         {
@@ -66,6 +53,8 @@ namespace Albion.Model.Data
         public DateTime BuyPos { get; set; }
         public DateTime SellPos { get; set; }
 
+        public List<AuctionItem> AuctionBuyOffers { get; set; } = new List<AuctionItem>();
+
 
         public event Action UpdateSellFastPrice;
         public event Action UpdateSellLongPrice;
@@ -78,25 +67,12 @@ namespace Albion.Model.Data
             AuctionBuyOffers = auctionItems.ToList();
         }
 
-        public List<AuctionItem> AuctionBuyOffers { get; set; } = new List<AuctionItem>();
-
         public void AppendBuyOffers(Location sellTown, IEnumerable<AuctionItem> auctionItems)
         {
             var items = auctionItems.ToDictionary(k => k.Id);
-            AuctionBuyOffers.RemoveAll(x=>items.ContainsKey(x.Id));
+            AuctionBuyOffers.RemoveAll(x => items.ContainsKey(x.Id));
             AuctionBuyOffers.AddRange(items.Values);
         }
-    }
-
-    public class MarketData
-    {
-        public long BestPrice { get; set; }
-
-        public DateTime UpdateTime { get; set; }
-
-        public List<MarketOrder> Orders { get; set; }
-
-
     }
 
     public class MarketOrder
