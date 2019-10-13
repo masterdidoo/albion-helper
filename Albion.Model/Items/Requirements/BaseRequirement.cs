@@ -22,13 +22,15 @@ namespace Albion.Model.Items.Requirements
         public bool IsSelected
         {
             get => _isSelected;
-            set
-            {
-                if (_isSelected == value) return;
-                _isSelected = value;
-                OnPropertyChanged();
-                if (value) Selected?.Invoke(this);
-            }
+            set => SetSelected(value);
+        }
+
+        protected virtual void SetSelected(bool value)
+        {
+            if (_isSelected == value) return;
+            _isSelected = value;
+            OnPropertyChanged();
+            if (value) Selected?.Invoke(this);
         }
 
         public CommonItem Item { get; private set; }

@@ -24,7 +24,8 @@
                         <ColumnDefinition Width="2" />
                         <ColumnDefinition SharedSizeGroup="Item" Width="Auto" />
                         <ColumnDefinition />
-                        <ColumnDefinition SharedSizeGroup="Cost"/>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="1" Text="Task" Margin="2,0,5,0"/>
                     <GridSplitter Grid.Column="1" Width="3" Background="Black"/>
@@ -36,7 +37,8 @@
                         <!--            Width="57" -->
                         <!--            TextAlignment="Right" /> -->
                     </Border>
-                    <TextBlock Grid.Column="3" Text="Cost" Margin="2,0,2,0"/>
+                    <TextBlock Grid.Column="3" Text="Cost" Margin="2,0,2,0" Width="60"/>
+                    <TextBlock Grid.Column="4" Text="Sale" Margin="2,0,2,0" Width="60"/>
                 </Grid>
             </TreeViewItem.Header>
         </TreeViewItem>
@@ -45,13 +47,24 @@
                   VirtualizingStackPanel.VirtualizationMode="Recycling">
 
             <TreeView.Resources>
+                <Style TargetType="DockPanel" x:Key="DpStyle">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                            <DataTrigger.Setters>
+                                <Setter Property="Background" Value="GreenYellow"/>
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+
                 <HierarchicalDataTemplate DataType="{x:Type items:CommonItem}"
                                           ItemsSource="{Binding Components}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition SharedSizeGroup="Item" />
                             <ColumnDefinition />
-                            <ColumnDefinition SharedSizeGroup="Cost" />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="{Binding FullName, Mode=OneTime}" />
                         <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,1,0">
@@ -60,6 +73,9 @@
                         </Border>
                         <TextBlock Grid.Column="2"
                                    Text="{Binding Cost, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}"
+                                   Style="{StaticResource IntBlockStyle}" />
+                        <TextBlock Grid.Column="3"
+                                   Text="{Binding Sale, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}"
                                    Style="{StaticResource IntBlockStyle}" />
                     </Grid>
                 </HierarchicalDataTemplate>
@@ -105,7 +121,7 @@
 
                 <HierarchicalDataTemplate DataType="{x:Type requirements:CraftingRequirement}"
                                           ItemsSource="{Binding Resources}">
-                    <DockPanel>
+                    <DockPanel Style="{StaticResource DpStyle}">
                         <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"  Margin="2" VerticalAlignment="Center"/>
                         <TextBlock Style="{StaticResource TextBlockStyle}">
                             <TextBlock.Text>
@@ -119,7 +135,7 @@
                 </HierarchicalDataTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type requ:CraftingResource}"
                                           ItemsSource="{Binding Item.Components}">
-                    <DockPanel>
+                    <DockPanel Style="{StaticResource DpStyle}">
                         <TextBlock Text="{Binding Item.FullName, Mode=OneTime}" 
                                    Style="{StaticResource TextBlockStyle}"/>
                         <TextBlock Text="{Binding Item.Profit}" 
