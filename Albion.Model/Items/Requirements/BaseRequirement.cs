@@ -29,7 +29,7 @@ namespace Albion.Model.Items.Requirements
         {
             if (_isSelected == value) return;
             _isSelected = value;
-            OnPropertyChanged();
+            OnPropertyChanged(nameof(IsSelected));
             if (value) Selected?.Invoke(this);
         }
 
