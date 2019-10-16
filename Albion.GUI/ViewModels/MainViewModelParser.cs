@@ -48,6 +48,7 @@ namespace Albion.GUI.ViewModels
             if (p.Items.Length == 0) return;
             var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
             foreach (var item in items)
+            {
                 if (items.Length > 1)
                 {
                     var bdprice = MdmGetData(item.Key);
@@ -61,6 +62,8 @@ namespace Albion.GUI.ViewModels
                     mm.SellLongPos = DateTime.Now;
                     MdmGetData(item.Key).SellLongPrice = item.Min(x => x.UnitPriceSilver);
                 }
+                Items[item.Key].Pos = DateTime.Now;
+            }
             RefreshTree();
         }
 
@@ -77,14 +80,16 @@ namespace Albion.GUI.ViewModels
                 {
                     MdmGetData(item.Key).AppendBuyOffers(SellTown, item);
                 }
+
                 //if(SellTown == )
             }
 
-            foreach (var item in items)
+            foreach (var item in items) { 
                 if (items.Length > 1)
                 {
                     var bdprice = MdmGetData(item.Key);
-                    var max = item.Where(x => x.QualityLevel <= 1).Select(x => x.UnitPriceSilver).DefaultIfEmpty(0).Max();
+                    var max = item.Where(x => x.QualityLevel <= 1).Select(x => x.UnitPriceSilver).DefaultIfEmpty(0)
+                        .Max();
                     if (bdprice.SellFastPrice < max)
                         bdprice.SellFastPrice = max;
                 }
@@ -94,6 +99,9 @@ namespace Albion.GUI.ViewModels
                     mm.SellFastPos = DateTime.Now;
                     mm.SellFastPrice = item.Max(x => x.UnitPriceSilver);
                 }
+                Items[item.Key].Pos = DateTime.Now;
+            }
+
             RefreshTree();
         }
 

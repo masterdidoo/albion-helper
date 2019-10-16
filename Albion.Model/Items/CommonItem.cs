@@ -208,8 +208,8 @@ namespace Albion.Model.Items
                 }
             }
 
-            var pos = Components.Max(x => x.Pos);
-            Pos = (pos.Ticks > 1) ? pos.AddTicks(-1) : pos;
+//            var pos = Components.Max(x => x.Pos);
+//            Pos = (pos.Ticks > 1) ? pos.AddTicks(-1) : pos;
 
             if (minItem != null)
             {

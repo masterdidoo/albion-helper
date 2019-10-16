@@ -13,7 +13,7 @@ namespace Albion.Model
         public DateTime Pos
         {
             get => _pos;
-            protected set
+            set
             {
                 if (Equals(_pos, value)) return;
                 _pos = value;

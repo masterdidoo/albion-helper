@@ -52,11 +52,11 @@ namespace Albion.Model.Items.Requirements
             //TODO сделать красиво
             var artefacts = Item.ShopCategory == ShopCategory.Artefacts ? 9 : 1;
 
-            if (Resources.Length > 0)
-            {
-                var pos = Resources.Max(x => x.Item.Pos);
-                Pos = (pos.Ticks > 1) ? pos.AddTicks(-1) : pos;
-            }
+//            if (Resources.Length > 0)
+//            {
+//                var pos = Resources.Max(x => x.Item.Pos);
+//                Pos = (pos.Ticks > 1) ? pos.AddTicks(-1) : pos;
+//            }
 
             Cost = (summ + Tax) / AmountCrafted * artefacts;
         }
