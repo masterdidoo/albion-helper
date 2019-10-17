@@ -23,7 +23,8 @@ namespace Albion.DataStore.Model
 
         private void ManagerOnSellTownChanged()
         {
-            //            LongSaleItem.UpdateOrders -= 
+            LongSaleItem.UpdateOrders -= 
+                FastSaleItem.UpdateOrders -= 
 
             //TODO временно пока не перейдем на полный список ордеров
             LongSaleItem.BestPrice = _marketData.SellPriceDatas[_manager.SellTown].Price;
