@@ -4,7 +4,12 @@ namespace Albion.Model.Items.Requirements
 {
     public class LongBuyRequirement : BaseMarketRequirement
     {
-        protected override ItemMarketData ItemMarketData => Item.ItemMarket.LongBuyItem;
+        protected override ItemMarketData ItemMarketData => Item.ItemMarket.ToMarketItems[(int) CostCalcOptions.Instance.BuyTown];
+
+        public LongBuyRequirement()
+        {
+            CostCalcOptions.Instance.BuyTownChanged += OnSetItem;
+        }
 
         protected override void OnUpdateSilver()
         {

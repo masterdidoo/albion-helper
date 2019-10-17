@@ -5,7 +5,21 @@ using Albion.Common;
 
 namespace Albion.Model.Data
 {
-    public class ItemMarketData
+    public class MinItemMarketData : ItemMarketData
+    {
+        protected override long GetBestPrice()
+        {
+            return Orders.Min(x => x.UnitPriceSilver);
+        }
+    }
+    public class MaxItemMarketData : ItemMarketData
+    {
+        protected override long GetBestPrice()
+        {
+            return Orders.Min(x => x.UnitPriceSilver);
+        }
+    }
+    public abstract class ItemMarketData
     {
         private long _bestPrice;
 
@@ -35,13 +49,17 @@ namespace Albion.Model.Data
             Orders.RemoveAll(x => items.ContainsKey(x.Id));
             Orders.AddRange(items.Values);
             UpdateOrders?.Invoke();
+            BestPrice = GetBestPrice();
         }
 
-        public void SetOrders(IEnumerable<AuctionItem> auctionItems)
+        protected abstract long GetBestPrice();
+
+        public void SetOrders(IEnumerable<AuctionItem> auctionItems, DateTime time)
         {
-            UpdateTime = DateTime.Now;
+            UpdateTime = time;
             Orders = auctionItems.ToList();
             UpdateOrders?.Invoke();
+            BestPrice = GetBestPrice();
         }
     }
 }

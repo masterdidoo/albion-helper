@@ -49,12 +49,12 @@ namespace Albion.GUI.ViewModels
             var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
 
             if (items.Length == 1)
-                MdmGetData(items[0].Key).LongSaleItem.SetOrders(items[0]);
+                MdmGetData(items[0].Key).FromMarketItems[(int)Town].SetOrders(items[0], DateTime.Now);
             else
             {
                 foreach (var item in items)
                 {
-                    MdmGetData(item.Key).LongSaleItem.AppendOrders(item);
+                    MdmGetData(item.Key).FromMarketItems[(int)Town].AppendOrders(item);
                 }
             }
 
@@ -71,12 +71,12 @@ namespace Albion.GUI.ViewModels
             var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
 
             if (items.Length == 1)
-                MdmGetData(items[0].Key).FastSaleItem.SetOrders(items[0]);
+                MdmGetData(items[0].Key).ToMarketItems[(int) Town].SetOrders(items[0], DateTime.Now);
             else
             {
                 foreach (var item in items)
                 {
-                    MdmGetData(item.Key).FastSaleItem.AppendOrders(item);
+                    MdmGetData(item.Key).ToMarketItems[(int)Town].AppendOrders(item);
                 }
             }
 

@@ -39,8 +39,8 @@ namespace UnitTests
 
                 Assert.AreEqual(0, all["T4_OFF_SHIELD"].Cost);
 
-                all["T4_PLANKS"].ItemMarket.FastBuyItem.BestPrice = 10000;
-                all["T4_METALBAR"].ItemMarket.FastBuyItem.BestPrice = 10000;
+                all["T4_PLANKS"].ItemMarket.FromMarketItems[0].BestPrice = 10000;
+                all["T4_METALBAR"].ItemMarket.FromMarketItems[0].BestPrice = 10000;
                 Assert.AreEqual(1, fired);
                 Assert.AreEqual(80000, all["T4_OFF_SHIELD"].Cost);
 

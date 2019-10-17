@@ -44,12 +44,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataModel\MarketData.cs" />
     <Compile Include="DataModel\PriceData.cs" />
     <Compile Include="DataModel\BuildingData.cs" />
     <Compile Include="Managers\BaseDataManager.cs" />
     <Compile Include="Managers\BuildingDataManager.cs" />
     <Compile Include="Db\DataBase.cs" />
-    <Compile Include="DataModel\MarketData.cs" />
+    <Compile Include="DataModel\OrdersData.cs" />
     <Compile Include="Managers\MarketDataManager.cs" />
     <Compile Include="Model\ProxyBuildingData.cs" />
     <Compile Include="Model\ProxyMarketData.cs" />

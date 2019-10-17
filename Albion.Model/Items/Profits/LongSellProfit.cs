@@ -5,7 +5,12 @@ namespace Albion.Model.Items.Profits
 {
     public class LongSellProfit : BaseMarketRequirement
     {
-        protected override ItemMarketData ItemMarketData => Item.ItemMarket.LongSaleItem;
+        protected override ItemMarketData ItemMarketData => Item.ItemMarket.FromMarketItems[(int)CostCalcOptions.Instance.SellTown];
+
+        public LongSellProfit()
+        {
+            CostCalcOptions.Instance.SellTownChanged += OnSetItem;
+        }
 
         protected override void OnUpdateSilver()
         {

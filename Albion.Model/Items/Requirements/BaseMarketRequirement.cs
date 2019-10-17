@@ -6,6 +6,7 @@ namespace Albion.Model.Items.Requirements
     public abstract class BaseMarketRequirement : BaseRequirement
     {
         private long _silver;
+        private ItemMarketData _itemMarketData;
 
         protected abstract ItemMarketData ItemMarketData { get; }
 
@@ -28,6 +29,8 @@ namespace Albion.Model.Items.Requirements
 
         protected override void OnSetItem()
         {
+            if (_itemMarketData!=null) _itemMarketData.UpdateBestPrice -= OnUpdateSellPrice;
+            _itemMarketData = ItemMarketData;
             ItemMarketData.UpdateBestPrice += OnUpdateSellPrice;
             OnUpdateSellPrice();
         }
