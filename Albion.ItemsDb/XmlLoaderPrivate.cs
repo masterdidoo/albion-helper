@@ -72,9 +72,13 @@ namespace Albion.Db.Xml
         private CommonItem CreateCommonItem(IItem iItem, string itemId,
             IEnumerable<BaseResorcedRequirement> craftingRequirements, int enchant, int enchantIp = 0)
         {
-            var item = new CommonItem(craftingRequirements.ToArray(), _marketDataManager.GetData(itemId),
+            BaseResorcedRequirement[] crs = craftingRequirements.ToArray();
+            var item = new CommonItem(crs, _marketDataManager.GetData(itemId),
                 BuildingByItem(iItem.uniquename))
             {
+#if DEBUG
+                Debug = iItem,
+#endif
                 MemId = _memCounter++,
                 Id = itemId,
                 Name = Localization.TryGetValue(iItem.uniquename, out var name) ? name : itemId,
@@ -82,7 +86,7 @@ namespace Albion.Db.Xml
                 Enchant = enchant,
                 ShopCategory = (ShopCategory) iItem.shopcategory,
                 ShopSubCategory = (ShopSubCategory) iItem.shopsubcategory1,
-                ItemValue = GetItemValue(iItem, enchant, enchantIp),
+                ItemValue = GetItemValue(iItem, enchant, crs),
                 ItemPower = enchantIp > 0
                     ? enchantIp
                     : (iItem as IItemPowered)?.itempower ?? (iItem as IItemPowered2)?.dummyitempower ??
@@ -96,19 +100,22 @@ namespace Albion.Db.Xml
             return item;
         }
 
-        private int GetItemValue(IItem iItem, int enchant, int enchantIp)
+        private int GetItemValue(IItem iItem, int enchant, BaseResorcedRequirement[] crs)
         {
+            if (iItem.shopsubcategory1 == shopSubCategory.royalsigils && iItem.tier == 4)
+                return 128;
+
+            if (iItem.shopcategory == shopCategory.artefacts)
+                return 1000;
+
             if (iItem.shopcategory == shopCategory.resources)
                 return iItem.tier < 3 ? 0 : iItem.tier > 2 ? ResourceItemValues[enchant][iItem.tier - 3] : iItem.tier;
 
-            return (int?) (iItem as IItemValued)?.itemvalue
-                   ?? (
-                       enchantIp > 0
-                           ? enchantIp
-                           : (iItem as IItemPowered)?.itempower
-                             ?? (iItem as IItemPowered2)?.dummyitempower
-                             ?? 0
-                   );
+            int iv = (int?) (iItem as IItemValued)?.itemvalue ?? 0;
+            if (iv > 0) return iv;
+
+            if (crs.Length >0) return crs[0].Resources.Sum(r=>r.Item.ItemValue * r.Count);
+            return 0;
         }
 
         private CraftBuilding BuildingByItem(string itemId)

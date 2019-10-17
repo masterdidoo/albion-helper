@@ -58,7 +58,7 @@ namespace UnitTests
             
             var list = loader.Items.Values;
 
-            Assert.AreEqual(6282, list.Count);
+            Assert.AreEqual(6286, list.Count);
 
             Assert.AreEqual(405, list.Count(x => x.ShopCategory == ShopCategory.Artefacts));
             Assert.AreEqual(252, list.Count(x => x.ShopCategory == ShopCategory.Offhand));
@@ -88,12 +88,22 @@ namespace UnitTests
                 }
             }
 
-            foreach (var item in list
-                .Where(x => x.ItemValue > 0))
-            {
-                Debug.WriteLine($"{item} {item.FullName} {item.ItemValue}");
-            }
+//            foreach (var item in list
+//                .Where(x => x.CraftingRequirements.Length>0 && x.CraftingRequirements[0].Resources.Length>0  && x.ItemValue != x.CraftingRequirements[0].Resources.Sum(r=>r.Item.ItemValue * r.Count)).GroupBy(i => i.ShopSubCategory)
+//            )
+//            {
+//                Debug.WriteLine($"{item.Key} {item.Count()}");
+//            }
+//
+//            foreach (var item in list
+//                .Where(x => x.ShopSubCategory == ShopSubCategory.Royalsigils)
+//            )
+//            {
+//                var iv = item.CraftingRequirements.Length>0 ? item.CraftingRequirements[0].Resources.Sum(r => r.Item.ItemValue * r.Count) : -1;
+//                Debug.WriteLine($"{item}\t{item.FullName}\t{item.ItemValue} != {iv}");
+//            }
 
+//            foreach (var item in list) Debug.WriteLine($"{item}\t{item.FullName}\t{item.ItemValue}");
 
             //            Assert.IsTrue(list
             //                .Where(x=>

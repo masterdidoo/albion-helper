@@ -243,7 +243,9 @@ namespace Albion.Model.Items
         public BaseResorcedRequirement[] CraftingRequirements { get; }
         public int ItemValue { get; set; }
         public bool IsResource => ShopCategory == ShopCategory.Resources;
-
+#if DEBUG
+        public object Debug { get; set; }
+#endif
         public override string ToString()
         {
             return Id;

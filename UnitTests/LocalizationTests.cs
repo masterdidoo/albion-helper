@@ -12,7 +12,7 @@ namespace UnitTests
         {
             var tu = XmlLoader.LoadLocalizationXml();
 
-            Assert.AreEqual(6663, tu.Count());
+            Assert.AreEqual(6671, tu.Count());
         }
     }
 }
