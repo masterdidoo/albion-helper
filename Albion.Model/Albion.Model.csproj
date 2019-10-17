@@ -45,6 +45,8 @@
     <Compile Include="Data\ItemBuilding.cs" />
     <Compile Include="Data\CostCalcOptions.cs" />
     <Compile Include="Data\ItemMarketData.cs" />
+    <Compile Include="Data\MaxItemMarketData.cs" />
+    <Compile Include="Data\MinItemMarketData.cs" />
     <Compile Include="Items\ArtefactStat.cs" />
     <Compile Include="Items\Profits\FastSellProfit.cs" />
     <Compile Include="Items\CommonItem.cs" />

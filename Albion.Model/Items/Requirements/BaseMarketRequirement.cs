@@ -1,4 +1,5 @@
 ﻿using System;
+using Albion.Model.Data;
 
 namespace Albion.Model.Items.Requirements
 {
@@ -6,17 +7,39 @@ namespace Albion.Model.Items.Requirements
     {
         private long _silver;
 
+        protected abstract ItemMarketData ItemMarketData { get; }
+
+        /// <summary>
+        /// меняет только пользователь
+        /// </summary>
         public long Silver
         {
             get => _silver;
-            set => UpdateSilver(value, DateTime.Now);
+            set
+            {
+                if (_silver == value) return;
+                _silver = value;
+                ItemMarketData.BestPrice = Silver;
+                Pos = DateTime.Now;
+                OnUpdateSilver();
+                OnPropertyChanged(nameof(Silver));
+            }
         }
 
-        protected void UpdateSilver(long silver, DateTime pos)
+        protected override void OnSetItem()
         {
-            if (_silver == silver) return;
-            _silver = silver;
-            Pos = pos;
+            ItemMarketData.UpdateBestPrice += OnUpdateSellPrice;
+            OnUpdateSellPrice();
+        }
+
+        /// <summary>
+        /// вызывается при смене города и обновлении из net-пакета
+        /// </summary>
+        private void OnUpdateSellPrice()
+        {
+            if (_silver == ItemMarketData.BestPrice) return;
+            _silver = ItemMarketData.BestPrice;
+            Pos = ItemMarketData.UpdateTime;
             OnUpdateSilver();
             OnPropertyChanged(nameof(Silver));
         }

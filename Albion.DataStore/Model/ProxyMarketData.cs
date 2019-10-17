@@ -2,6 +2,7 @@
 using Albion.DataStore.DataModel;
 using Albion.DataStore.Managers;
 using Albion.Model.Data;
+using Albion.Model.Items.Profits;
 
 namespace Albion.DataStore.Model
 {
@@ -22,13 +23,16 @@ namespace Albion.DataStore.Model
 
         private void ManagerOnSellTownChanged()
         {
-            UpdateSellFastPrice -= OnUpdateSellFastPrice;
-            UpdateSellLongPrice -= OnUpdateSellLongPrice;
+            //            LongSaleItem.UpdateOrders -= 
 
-            SellLongPos = _marketData.SellPriceDatas[_manager.SellTown].Pos;
-            SellFastPos = _marketData.BuyPriceDatas[_manager.SellTown].Pos;
-            SellLongPrice = _marketData.SellPriceDatas[_manager.SellTown].Price;
-            SellFastPrice = _marketData.BuyPriceDatas[_manager.SellTown].Price;
+            //TODO временно пока не перейдем на полный список ордеров
+            LongSaleItem.BestPrice = _marketData.SellPriceDatas[_manager.SellTown].Price;
+            FastSaleItem.BestPrice = _marketData.BuyPriceDatas[_manager.SellTown].Price;
+            LongSaleItem.UpdateTime = _marketData.SellPriceDatas[_manager.SellTown].Pos;
+            FastSaleItem.UpdateTime = _marketData.BuyPriceDatas[_manager.SellTown].Pos;
+
+            LongSaleItem.SetOrders(_marketData.SellOrders[_manager.SellTown]) ;
+            FastSaleItem.SetOrders(_marketData.BuyOrders[_manager.SellTown]);
 
             UpdateSellFastPrice += OnUpdateSellFastPrice;
             UpdateSellLongPrice += OnUpdateSellLongPrice;

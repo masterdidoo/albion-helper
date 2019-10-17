@@ -1,21 +1,13 @@
-﻿namespace Albion.Model.Items.Requirements
+﻿using Albion.Model.Data;
+
+namespace Albion.Model.Items.Requirements
 {
     public class FastBuyRequirement : BaseMarketRequirement
     {
-        protected override void OnSetItem()
-        {
-            Item.ItemMarket.UpdateSellPrice += OnUpdateSellPrice;
-            OnUpdateSellPrice();
-        }
-
-        private void OnUpdateSellPrice()
-        {
-            UpdateSilver(Item.ItemMarket.FastBuyItem.BestPrice, Item.ItemMarket.FastBuyItem.UpdateTime);
-        }
+        protected override ItemMarketData ItemMarketData => Item.ItemMarket.FastBuyItem;
 
         protected override void OnUpdateSilver()
         {
-            Item.ItemMarket.FastBuyItem.BestPrice = Silver;
             Cost = Silver;
         }
     }

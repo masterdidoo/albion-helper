@@ -5,7 +5,7 @@ using Albion.Common;
 
 namespace Albion.Model.Data
 {
-    public class ItemMarketData
+    public abstract class ItemMarketData
     {
         private long _bestPrice;
 
@@ -35,13 +35,17 @@ namespace Albion.Model.Data
             Orders.RemoveAll(x => items.ContainsKey(x.Id));
             Orders.AddRange(items.Values);
             UpdateOrders?.Invoke();
+            BestPrice = GetBestPrice();
         }
+
+        protected abstract long GetBestPrice();
 
         public void SetOrders(IEnumerable<AuctionItem> auctionItems)
         {
             UpdateTime = DateTime.Now;
             Orders = auctionItems.ToList();
             UpdateOrders?.Invoke();
+            BestPrice = GetBestPrice();
         }
     }
 }

@@ -60,19 +60,6 @@ namespace Albion.GUI.ViewModels
 
             foreach (var item in items)
             {
-                if (items.Length > 1)
-                {
-                    var bdprice = MdmGetData(item.Key);
-                    var min = item.Where(x=>x.QualityLevel <= 1).Select(x => x.UnitPriceSilver).DefaultIfEmpty(0).Min();
-                    if (bdprice.LongSaleItem.BestPrice > min || bdprice.FastSaleItem.BestPrice == 0 && min > 0)
-                        bdprice.LongSaleItem.BestPrice = min;
-                }
-                else
-                {
-                    var mm = MdmGetData(item.Key);
-                    mm.SellLongPos = DateTime.Now;
-                    MdmGetData(item.Key).LongSaleItem.BestPrice = item.Min(x => x.UnitPriceSilver);
-                }
                 Items[item.Key].Pos = DateTime.Now;
             }
             RefreshTree();
@@ -94,19 +81,6 @@ namespace Albion.GUI.ViewModels
             }
 
             foreach (var item in items) { 
-                if (items.Length > 1)
-                {
-                    var bdprice = MdmGetData(item.Key);
-                    var max = item.Where(x => x.QualityLevel <= 1).Select(x => x.UnitPriceSilver).DefaultIfEmpty(0)
-                        .Max();
-                    if (bdprice.FastSaleItem.BestPrice < max)
-                        bdprice.FastSaleItem.BestPrice = max;
-                }
-                else
-                {
-                    var mm = MdmGetData(item.Key);
-                    mm.FastSaleItem.BestPrice = item.Max(x => x.UnitPriceSilver);
-                }
                 Items[item.Key].Pos = DateTime.Now;
             }
 
