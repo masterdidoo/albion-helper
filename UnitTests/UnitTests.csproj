@@ -77,6 +77,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Albion.Common\Albion.Common.csproj">
+      <Project>{BAD21844-F93F-4F46-B540-28631D7B0255}</Project>
+      <Name>Albion.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Albion.DataStore\Albion.DataStore.csproj">
       <Project>{1C5990CC-588F-4CA1-8708-1F4B4E0F523E}</Project>
       <Name>Albion.DataStore</Name>

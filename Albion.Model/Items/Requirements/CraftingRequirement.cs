@@ -81,7 +81,17 @@ namespace Albion.Model.Items.Requirements
                     if (CostCalcOptions.Instance.CraftTown == Location.Lymhurst) return Return35;
                     break;
             }
-            return Return15;
+
+            switch (Item.ShopCategory)
+            {
+                case ShopCategory.Offhand:
+                    if (CostCalcOptions.Instance.CraftTown == Location.Martlock) return Return25;
+                    break;
+            }
+
+            if (CostCalcOptions.Instance.CraftTown < Location.BlackMarket) return Return15;
+
+            return 1000;
         }
 
         private const long Return35 = 1533;

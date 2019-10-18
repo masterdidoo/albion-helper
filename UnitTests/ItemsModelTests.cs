@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using Albion.Common;
 using Albion.Db.Xml;
 using Albion.Db.Xml.Entity.Item;
 using Albion.Db.Xml.Enums;
@@ -20,6 +21,8 @@ namespace UnitTests
         [TestMethod]
         public void TestUpdatePrice()
         {
+            CostCalcOptions.Instance.CraftTown = Location.None;
+
             var mmdm = new Mock<IMarketDataManager>();
             mmdm.Setup(x => x.GetData(It.IsAny<string>())).Returns(() => new ItemMarket());
             var bdm = Mock.Of<IBuildingDataManager>(x=>x.GetData(It.IsAny<string>()) == new ItemBuilding());
@@ -38,6 +41,7 @@ namespace UnitTests
 
             Assert.AreEqual(0, all["T4_OFF_SHIELD"].Cost);
 
+            all["T4_PLANKS"].CraftingBuilding.Tax = 0;
             all["T4_PLANKS"].ItemMarket.FromMarketItems[0].BestPrice = 10000;
             all["T4_METALBAR"].ItemMarket.FromMarketItems[0].BestPrice = 10000;
             Assert.AreEqual(1, fired);
