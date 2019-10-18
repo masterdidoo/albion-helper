@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using Albion.DataStore.Managers;
-using Albion.GUI.ViewModels;
 using Albion.Model.Buildings;
+using Albion.Model.Managers;
 using GalaSoft.MvvmLight;
 
 namespace Albion.GUI
@@ -10,14 +9,11 @@ namespace Albion.GUI
     public class BuildingsViewModel : ObservableObject
     {
         private readonly Dictionary<string, CraftBuilding> _loaderCraftBuildings;
-        private readonly MainViewModel _main;
 
-        public BuildingsViewModel(MainViewModel main, Dictionary<string, CraftBuilding> loaderCraftBuildings,
-            BuildingDataManager bdm)
+        public BuildingsViewModel(Dictionary<string, CraftBuilding> loaderCraftBuildings, ITownManager townManager)
         {
-            _main = main;
             _loaderCraftBuildings = loaderCraftBuildings;
-            bdm.TownChanged += BdmOnTownChanged;
+            townManager.TownChanged += BdmOnTownChanged;
         }
 
         private void BdmOnTownChanged()

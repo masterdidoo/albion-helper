@@ -24,8 +24,10 @@ namespace Albion.GUI.ViewModels
             {
                 if (p.Town != Location.None)
                 {
-                    Town = p.Town;
-                    SellTown = p.Town;
+                    AuctionTownManager.Town = p.Town;
+//                    BuyTownManager.Town = p.Town;
+//                    SellTownManager.Town = p.Town;
+//                    CraftTownManager.Town = p.Town;
                 }
             });
 
@@ -49,12 +51,12 @@ namespace Albion.GUI.ViewModels
             var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
 
             if (items.Length == 1)
-                MdmGetData(items[0].Key).FromMarketItems[(int)Town].SetOrders(items[0], DateTime.Now);
+                MdmGetData(items[0].Key).FromMarketItems[AuctionTownManager.TownId].SetOrders(items[0], DateTime.Now);
             else
             {
                 foreach (var item in items)
                 {
-                    MdmGetData(item.Key).FromMarketItems[(int)Town].AppendOrders(item);
+                    MdmGetData(item.Key).FromMarketItems[AuctionTownManager.TownId].AppendOrders(item);
                 }
             }
 
@@ -71,12 +73,12 @@ namespace Albion.GUI.ViewModels
             var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
 
             if (items.Length == 1)
-                MdmGetData(items[0].Key).ToMarketItems[(int) Town].SetOrders(items[0], DateTime.Now);
+                MdmGetData(items[0].Key).ToMarketItems[AuctionTownManager.TownId].SetOrders(items[0], DateTime.Now);
             else
             {
                 foreach (var item in items)
                 {
-                    MdmGetData(item.Key).ToMarketItems[(int)Town].AppendOrders(item);
+                    MdmGetData(item.Key).ToMarketItems[AuctionTownManager.TownId].AppendOrders(item);
                 }
             }
 

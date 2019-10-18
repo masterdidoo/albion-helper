@@ -46,10 +46,14 @@
             <TextBlock Text="{Binding BluePlayers}" />
             <TextBlock Text="Red :" Margin="5,0" />
             <TextBlock Text="{Binding RedPlayers}" />
-            <TextBlock Text="Town :" Margin="5,0" />
-            <ComboBox SelectedItem="{Binding Town}" ItemsSource="{Binding Towns}" />
+            <TextBlock Text="UpTown :" Margin="5,0" />
+            <ComboBox SelectedItem="{Binding AuctionTownManager.Town}" ItemsSource="{Binding Towns}" />
+            <TextBlock Text="Buy Town :" Margin="5,0" />
+            <ComboBox SelectedItem="{Binding BuyTownManager.Town}" ItemsSource="{Binding Towns}" />
+            <TextBlock Text="Craft Town :" Margin="5,0" />
+            <ComboBox SelectedItem="{Binding CraftTownManager.Town}" ItemsSource="{Binding Towns}" />
             <TextBlock Text="SellTown :" Margin="5,0" />
-            <ComboBox SelectedItem="{Binding SellTown}" ItemsSource="{Binding Towns}" />
+            <ComboBox SelectedItem="{Binding SellTownManager.Town}" ItemsSource="{Binding Towns}" />
         </StackPanel>
     </Grid>
 </Window>

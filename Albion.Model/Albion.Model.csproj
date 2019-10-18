@@ -54,6 +54,7 @@
     <Compile Include="Items\Requirements\BaseMarketRequirement.cs" />
     <Compile Include="Managers\IBuildingDataManager.cs" />
     <Compile Include="Managers\IMarketDataManager.cs" />
+    <Compile Include="Managers\ITownManager.cs" />
     <Compile Include="NotifyEntity.cs" />
     <Compile Include="Items\Requirements\BaseResorcedRequirement.cs" />
     <Compile Include="Items\Requirements\FastBuyRequirement.cs" />

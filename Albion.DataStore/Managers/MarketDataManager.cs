@@ -10,20 +10,9 @@ namespace Albion.DataStore.Managers
 {
     public class MarketDataManager : BaseDataManager<OrdersData, ItemMarket>, IMarketDataManager
     {
-        public event Action SellTownChanged;
-
         protected override ItemMarket CreateData(string id)
         {
             return new ProxyMarketData(id, this);
-        }
-
-        public int SellTown { get; private set; }
-
-        public void SelectSellTown(int id)
-        {
-            if (SellTown == id) return;
-            SellTown = id;
-            SellTownChanged?.Invoke();
         }
 
         public IEnumerable<OrdersData> GetOrders(string id)

@@ -16,12 +16,19 @@ namespace Albion.Db.Xml
 {
     public partial class XmlLoader
     {
+        private readonly ITownManager _buyTownManager;
+        private readonly ITownManager _sellTownManager;
+        private readonly ITownManager _craftTownManager;
+
         public Dictionary<string, IItem> XmlItems { get; private set; }
 
         public Dictionary<string, CommonItem> Items { get; private set; }
 
-        public XmlLoader(IMarketDataManager marketDataManager, IBuildingDataManager buildingDataManager)
+        public XmlLoader(IMarketDataManager marketDataManager, IBuildingDataManager buildingDataManager, ITownManager craftTownManager, ITownManager buyTownManager, ITownManager sellTownManager)
         {
+            _buyTownManager = buyTownManager;
+            _sellTownManager = sellTownManager;
+            _craftTownManager = craftTownManager;
             _marketDataManager = marketDataManager;
             _buildingDataManager = buildingDataManager;
         }
@@ -129,5 +136,4 @@ namespace Albion.Db.Xml
         public Dictionary<string, string> ItemIdToCraftBuildingId { get; private set; }
         public CraftBuilding NoneBuilding { get; private set; }
     }
-
 }

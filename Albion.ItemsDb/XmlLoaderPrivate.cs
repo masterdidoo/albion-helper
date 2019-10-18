@@ -74,7 +74,10 @@ namespace Albion.Db.Xml
         {
             BaseResorcedRequirement[] crs = craftingRequirements.ToArray();
             var item = new CommonItem(crs, _marketDataManager.GetData(itemId),
-                BuildingByItem(iItem.uniquename))
+                BuildingByItem(iItem.uniquename),
+                _buyTownManager, 
+                _sellTownManager
+                )
             {
 #if DEBUG
                 Debug = iItem,

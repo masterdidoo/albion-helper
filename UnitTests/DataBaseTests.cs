@@ -2,6 +2,7 @@
 using Albion.DataStore.Db;
 using Albion.DataStore.Managers;
 using Albion.Db.Xml;
+using Albion.Model.Managers;
 using Castle.DynamicProxy.Generators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -17,17 +18,19 @@ namespace UnitTests
         {
             {
                 DataBase.Drop();
-                var mdm = new MarketDataManager();
-                var bdm = new BuildingDataManager();
+                var tm = new TownManager();
 
-                var loader = new XmlLoader(mdm, bdm);
+                var mdm = new MarketDataManager();
+                var bdm = new BuildingDataManager(tm);
+
+                var loader = new XmlLoader(mdm, bdm, tm, tm, tm);
                 loader.LoadModel();
 
                 var buildings = loader.CraftBuildings;
                 var all = loader.Items;
 
-                Assert.AreEqual(10, buildings["T8_FORGE"].ItemBuilding.Tax);
-                buildings["T8_FORGE"].ItemBuilding.Tax = 0;
+                Assert.AreEqual(10, buildings["T8_FORGE"].Tax);
+                buildings["T8_FORGE"].Tax = 0;
 
                 _exp = 80000;
                 var fired = 0;
@@ -46,17 +49,19 @@ namespace UnitTests
 
                 _exp = 3580000;
 
-                buildings["T8_FORGE"].ItemBuilding.Tax = 10;
+                buildings["T8_FORGE"].Tax = 10;
 
 //                all["T4_OFF_SHIELD"].Building.Tax= 10;
                 Assert.AreEqual(2, fired);
                 Assert.AreEqual(3580000, all["T4_OFF_SHIELD"].Cost);
             }
             {
-                var mdm = new MarketDataManager();
-                var bdm = new BuildingDataManager();
+                var tm = new TownManager();
 
-                var loader = new XmlLoader(mdm, bdm);
+                var mdm = new MarketDataManager();
+                var bdm = new BuildingDataManager(tm);
+
+                var loader = new XmlLoader(mdm, bdm, tm, tm, tm);
                 var model = loader.LoadModel();
 
                 var all = loader.Items;

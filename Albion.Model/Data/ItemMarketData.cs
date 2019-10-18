@@ -9,14 +9,14 @@ namespace Albion.Model.Data
     {
         protected override long GetBestPrice()
         {
-            return Orders.Min(x => x.UnitPriceSilver);
+            return Orders.Select(x => x.UnitPriceSilver).DefaultIfEmpty(0).Min(x => x);
         }
     }
     public class MaxItemMarketData : ItemMarketData
     {
         protected override long GetBestPrice()
         {
-            return Orders.Min(x => x.UnitPriceSilver);
+            return Orders.Select(x => x.UnitPriceSilver).DefaultIfEmpty(0).Max(x=>x);
         }
     }
     public abstract class ItemMarketData
@@ -60,6 +60,13 @@ namespace Albion.Model.Data
             Orders = auctionItems.ToList();
             UpdateOrders?.Invoke();
             BestPrice = GetBestPrice();
+        }
+
+        public void SetBestPrice(long silver)
+        {
+            if (BestPrice == silver) return;
+            BestPrice = silver;
+            UpdateOrders?.Invoke();
         }
     }
 }

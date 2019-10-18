@@ -10,7 +10,5 @@ namespace Albion.Model.Managers
     public interface IMarketDataManager
     {
         ItemMarket GetData(string itemId);
-
-        void SelectTown(int id);
     }
 }

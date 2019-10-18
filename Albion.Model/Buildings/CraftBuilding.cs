@@ -1,22 +1,25 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Albion.Common;
 using Albion.Model.Data;
 
 namespace Albion.Model.Buildings
 {
-    public class CraftBuilding : INotifyPropertyChanged
+    public class CraftBuilding : NotifyEntity
     {
+        private readonly ItemBuilding _itemBuilding;
+
         public CraftBuilding(ItemBuilding itemBuilding)
         {
-            ItemBuilding = itemBuilding;
-            ItemBuilding.UpdateTax += ItemBuildingOnUpdateTax;
+            _itemBuilding = itemBuilding;
+            _itemBuilding.UpdateTax += ItemBuildingOnUpdateTax;
         }
 
         public int Tax
         {
-            get => ItemBuilding.Tax;
-            set => ItemBuilding.Tax = value;
+            get => _itemBuilding.Tax;
+            set => _itemBuilding.Tax = value;
         }
 
         #region From Config
@@ -25,20 +28,14 @@ namespace Albion.Model.Buildings
 
         #endregion
 
-        public ItemBuilding ItemBuilding { get; }
-
         public Location Town { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event Action UpdateTax;
 
         private void ItemBuildingOnUpdateTax()
         {
             OnPropertyChanged(nameof(Tax));
-        }
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            UpdateTax?.Invoke();
         }
     }
 }

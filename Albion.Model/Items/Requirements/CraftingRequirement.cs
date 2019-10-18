@@ -66,33 +66,35 @@ namespace Albion.Model.Items.Requirements
             switch (Item.ShopSubCategory)
             {
                 case ShopSubCategory.Planks:
-                    if (CostCalcOptions.Instance.CraftTown == Location.FortSterling) return Return35;
+                    if (CraftTown == Location.FortSterling) return Return35;
                     break;
                 case ShopSubCategory.Stoneblock:
-                    if (CostCalcOptions.Instance.CraftTown == Location.Bridgewatch) return Return35;
+                    if (CraftTown == Location.Bridgewatch) return Return35;
                     break;
                 case ShopSubCategory.Metalbar:
-                    if (CostCalcOptions.Instance.CraftTown == Location.Thetford) return Return35;
+                    if (CraftTown == Location.Thetford) return Return35;
                     break;
                 case ShopSubCategory.Leather:
-                    if (CostCalcOptions.Instance.CraftTown == Location.Martlock) return Return35;
+                    if (CraftTown == Location.Martlock) return Return35;
                     break;
                 case ShopSubCategory.Cloth:
-                    if (CostCalcOptions.Instance.CraftTown == Location.Lymhurst) return Return35;
+                    if (CraftTown == Location.Lymhurst) return Return35;
                     break;
             }
 
             switch (Item.ShopCategory)
             {
                 case ShopCategory.Offhand:
-                    if (CostCalcOptions.Instance.CraftTown == Location.Martlock) return Return25;
+                    if (CraftTown == Location.Martlock) return Return25;
                     break;
             }
 
-            if (CostCalcOptions.Instance.CraftTown < Location.BlackMarket) return Return15;
+            if (CraftTown < Location.BlackMarket) return Return15;
 
             return 1000;
         }
+
+        public Location CraftTown => Item.CraftingBuilding.Town;
 
         private const long Return35 = 1533;
         private const long Return25 = 1330;
@@ -106,13 +108,13 @@ namespace Albion.Model.Items.Requirements
 //                Tax = Silver;
 //                return;
 //            }
-            Item.ItemBuilding.UpdateTax += BuildingDataOnUpdateTax;
+            Item.CraftingBuilding.UpdateTax += BuildingDataOnUpdateTax;
             BuildingDataOnUpdateTax();
         }
 
         private void BuildingDataOnUpdateTax()
         {
-            Tax = 10000 / 100 * Item.ItemBuilding.Tax * Item.ItemValue * 5 + Silver;
+            Tax = 10000 / 100 * Item.CraftingBuilding.Tax * Item.ItemValue * 5 + Silver;
         }
     }
 }

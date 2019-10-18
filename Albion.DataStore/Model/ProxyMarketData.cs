@@ -14,9 +14,15 @@ namespace Albion.DataStore.Model
             var orders = manager.GetOrders(id);
             foreach (var marketData in orders)
                 if (marketData.IsFrom)
+                {
                     FromMarketItems[marketData.TownId].SetOrders(marketData.Orders, marketData.UpdateTime);
+                    FromMarketItems[marketData.TownId].SetBestPrice(marketData.BestPrice);
+                }
                 else
+                {
                     ToMarketItems[marketData.TownId].SetOrders(marketData.Orders, marketData.UpdateTime);
+                    ToMarketItems[marketData.TownId].SetBestPrice(marketData.BestPrice);
+                }
 
             for (var i = 0; i < FromMarketItems.Length; i++)
             {

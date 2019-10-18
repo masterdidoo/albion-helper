@@ -12,6 +12,7 @@ using Albion.Model.Buildings;
 using Albion.Model.Data;
 using Albion.Model.Items;
 using Albion.Model.Items.Categories;
+using Albion.Model.Managers;
 using Albion.Network;
 using Albion.Operation;
 using GalaSoft.MvvmLight;
@@ -32,8 +33,6 @@ namespace Albion.GUI.ViewModels
         private ShopCategory? _shopCategory;
         private ShopSubCategory? _shopSubCategory;
         private int? _tir;
-        private Location _town;
-        private Location _sellTown;
         private readonly DebounceDispatcher _debounceDispatcher;
         private bool _isProfitOrder;
 
@@ -47,10 +46,15 @@ namespace Albion.GUI.ViewModels
             ShopCategories = Enumerable.Repeat(new Tuple<string, ShopCategory?>("-", null), 1).Concat(Enum.GetValues(typeof(ShopCategory)).Cast<ShopCategory?>().Select(x=> Tuple.Create(x.Value.ToString(), x)));
             ShopSubCategories = Enumerable.Repeat(new Tuple<string, ShopSubCategory?>("-", null), 1).Concat(Enum.GetValues(typeof(ShopSubCategory)).Cast<ShopSubCategory?>().Select(x => Tuple.Create(x.Value.ToString(), x)));
 
-            mdm = new MarketDataManager();
-            bdm = new BuildingDataManager();
+            BuyTownManager = new TownManager();
+            SellTownManager = new TownManager();
+            CraftTownManager = new TownManager();
+            AuctionTownManager = new TownManager();
 
-            var loader = new XmlLoader(mdm, bdm);
+            mdm = new MarketDataManager();
+            bdm = new BuildingDataManager(CraftTownManager);
+
+            var loader = new XmlLoader(mdm, bdm, CraftTownManager , BuyTownManager, SellTownManager);
             loader.LoadModel();
 
             Items = loader.Items;
@@ -67,15 +71,25 @@ namespace Albion.GUI.ViewModels
 //                };
 //            }
 
-            BuildingsViewModel = new BuildingsViewModel(this, loader.CraftBuildings, bdm);
+            BuildingsViewModel = new BuildingsViewModel(loader.CraftBuildings, CraftTownManager);
 
             _albionParser = new AlbionParser();
 
-            Town = Location.None;
-            SellTown = Location.None;
+            BuyTownManager.Town = Location.None;
+            SellTownManager.Town = Location.None;
+            CraftTownManager.Town = Location.None;
+            AuctionTownManager.Town = Location.None;
 
             InitAlbionParser();
         }
+
+        public TownManager AuctionTownManager { get; }
+
+        public TownManager SellTownManager { get; }
+
+        public TownManager BuyTownManager { get;  }
+
+        public TownManager CraftTownManager { get; }
 
         public ArtefactStat[] Artefacts { get; set; }
 
@@ -91,28 +105,6 @@ namespace Albion.GUI.ViewModels
 
         public Dictionary<string, CommonItem> Items { get; }
         public BuildingsViewModel BuildingsViewModel { get; }
-
-        public Location Town
-        {
-            get => _town;
-            set
-            {
-                if (!Set(ref _town, value)) return;
-                CostCalcOptions.Instance.CraftTown = _town;
-                mdm.SelectTown((int) _town);
-                bdm.SelectTown((int) _town);
-            }
-        }
-
-        public Location SellTown
-        {
-            get => _sellTown;
-            set
-            {
-                if (!Set(ref _sellTown, value)) return;
-                mdm.SelectSellTown((int)_sellTown);
-            }
-        }
 
         public int RedPlayers
         {
@@ -228,6 +220,4 @@ namespace Albion.GUI.ViewModels
             DataBase.Close();
         }
     }
-
-
 }

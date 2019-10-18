@@ -6,7 +6,6 @@ namespace Albion.Model.Data
     public class CostCalcOptions
     {
         private Location _buyTown;
-        private Location _craftTown;
         private bool _isArtefactsLongBuyEnabled = true;
         private bool _isLongBuyDisabled;
         private bool _isLongSellDisabled;
@@ -43,17 +42,6 @@ namespace Albion.Model.Data
                 if (_isLongSellDisabled == value) return;
                 _isLongSellDisabled = value;
                 Changed?.Invoke();
-            }
-        }
-
-        public Location CraftTown
-        {
-            get => _craftTown;
-            set
-            {
-                if (_craftTown == value) return;
-                _craftTown = value;
-                CraftTownChanged?.Invoke();
             }
         }
 

@@ -12,8 +12,8 @@ namespace Albion.Model.Data
 
         public ItemMarket()
         {
-            FromMarketItems = Enumerable.Repeat(0, (int)Location.None).Select(x => new MinItemMarketData()).ToArray();
-            ToMarketItems = Enumerable.Repeat(0, (int)Location.None).Select(x => new MaxItemMarketData()).ToArray();
+            FromMarketItems = Enumerable.Repeat(0, (int)Location.None+1).Select(x => new MinItemMarketData()).ToArray();
+            ToMarketItems = Enumerable.Repeat(0, (int)Location.None+1).Select(x => new MaxItemMarketData()).ToArray();
         }
 }
 }

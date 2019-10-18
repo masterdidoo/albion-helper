@@ -26,8 +26,9 @@ namespace UnitTests
             var mmdm = new Mock<IMarketDataManager>();
             mmdm.Setup(x => x.GetData(It.IsAny<string>())).Returns(() => new ItemMarket());
             var bdm = Mock.Of<IBuildingDataManager>(x=>x.GetData(It.IsAny<string>()) == new ItemBuilding());
+            var tm = Mock.Of<ITownManager>();
            
-            var loader = new XmlLoader(mmdm.Object, bdm);
+            var loader = new XmlLoader(mmdm.Object, bdm, tm, tm, tm);
             var model = loader.LoadModel();
 
             var all = loader.Items;
@@ -53,8 +54,9 @@ namespace UnitTests
         {
             var mdm = Mock.Of<IMarketDataManager>(x => x.GetData(It.IsAny<string>()) == new ItemMarket());
             var bdm = Mock.Of<IBuildingDataManager>(x => x.GetData(It.IsAny<string>()) == new ItemBuilding());
+            var tm = Mock.Of<ITownManager>();
 
-            var loader = new XmlLoader(mdm, bdm);
+            var loader = new XmlLoader(mdm, bdm, tm, tm, tm);
             var model = loader.LoadModel();
 
             Assert.IsNotNull(model);

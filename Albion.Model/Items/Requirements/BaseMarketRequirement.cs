@@ -1,14 +1,24 @@
 ﻿using System;
 using Albion.Model.Data;
+using Albion.Model.Managers;
 
 namespace Albion.Model.Items.Requirements
 {
     public abstract class BaseMarketRequirement : BaseRequirement
     {
+        private readonly ITownManager _townManager;
         private long _silver;
         private ItemMarketData _itemMarketData;
 
         protected abstract ItemMarketData ItemMarketData { get; }
+
+        public int TownId => _townManager.TownId;
+
+        protected BaseMarketRequirement(ITownManager townManager)
+        {
+            _townManager = townManager;
+            townManager.TownChanged += OnSetItem;
+        }
 
         /// <summary>
         /// меняет только пользователь
@@ -20,7 +30,7 @@ namespace Albion.Model.Items.Requirements
             {
                 if (_silver == value) return;
                 _silver = value;
-                ItemMarketData.BestPrice = Silver;
+                ItemMarketData.SetBestPrice(Silver);
                 Pos = DateTime.Now;
                 OnUpdateSilver();
                 OnPropertyChanged(nameof(Silver));

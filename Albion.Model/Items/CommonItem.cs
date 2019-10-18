@@ -6,6 +6,7 @@ using Albion.Model.Data;
 using Albion.Model.Items.Categories;
 using Albion.Model.Items.Profits;
 using Albion.Model.Items.Requirements;
+using Albion.Model.Managers;
 
 namespace Albion.Model.Items
 {
@@ -20,18 +21,22 @@ namespace Albion.Model.Items
         private long _profit = -100;
         private long _sale;
 
-        public CommonItem(BaseResorcedRequirement[] craftingRequirements, ItemMarket itemMarket,
-            CraftBuilding craftingBuilding)
+        public CommonItem(BaseResorcedRequirement[] craftingRequirements, 
+            ItemMarket itemMarket,
+            CraftBuilding craftingBuilding,
+            ITownManager buyTownManager,
+            ITownManager sellTownManager
+            )
         {
             CraftingRequirements = craftingRequirements;
             CraftingBuilding = craftingBuilding;
             ItemMarket = itemMarket;
 
-            _longBuyRequirement = new LongBuyRequirement();
-            _fastBuyRequirement = new FastBuyRequirement();
+            _longBuyRequirement = new LongBuyRequirement(buyTownManager);
+            _fastBuyRequirement = new FastBuyRequirement(buyTownManager);
 
-            LongSellProfit = new LongSellProfit();
-            FastSellProfit = new FastSellProfit();
+            LongSellProfit = new LongSellProfit(sellTownManager);
+            FastSellProfit = new FastSellProfit(sellTownManager);
 
             if (CraftingRequirements.Length > 0 && CraftingRequirements[0].Resources.Length > 0)
                 SalvageProfit = new SalvageProfit();
@@ -100,7 +105,6 @@ namespace Albion.Model.Items
         public int MemId { get; set; }
 
         public ItemMarket ItemMarket { get; }
-        internal ItemBuilding ItemBuilding => CraftingBuilding.ItemBuilding;
 
         #region For UI
 
