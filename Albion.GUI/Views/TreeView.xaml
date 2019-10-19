@@ -26,19 +26,28 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                         <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="1" Text="Task" Margin="2,0,5,0"/>
-                    <GridSplitter Grid.Column="1" Width="3" Background="Black"/>
+                    <TextBlock Grid.Column="1" Text="Task" Margin="2,0,5,0" />
+                    <GridSplitter Grid.Column="1" Width="3" Background="Black" />
                     <Border Grid.Column="2" BorderThickness="0,0,3,0" BorderBrush="Black">
-                        <CheckBox IsChecked="{Binding IsProfitOrder}"
-                            Width="60" Margin="2,0,2,0">Profit</CheckBox>
-                        <!-- <TextBlock Text="Profit" Style="{StaticResource TextBlockBoldStyle}" Margin="0 0 3 0" -->
-                        <!--            Background="Aqua"  -->
-                        <!--            Width="57" -->
-                        <!--            TextAlignment="Right" /> -->
+                        <TextBlock Text="Cost" Margin="2,0,2,0" Width="60" />
                     </Border>
-                    <TextBlock Grid.Column="3" Text="Cost" Margin="2,0,2,0" Width="60"/>
-                    <TextBlock Grid.Column="4" Text="Sale" Margin="2,0,2,0" Width="60"/>
+                    <CheckBox Grid.Column="3" IsChecked="{Binding IsProfitOrder}"
+                              Width="60" Margin="2,0,2,0">
+                        Profit LS
+                    </CheckBox>
+                    <Border Grid.Column="4" BorderThickness="1,0,1,0" BorderBrush="Black">
+                        <TextBlock Text="LSale" Margin="2,0,2,0" Width="60" />
+                    </Border>
+                    <CheckBox Grid.Column="5" IsChecked="{Binding IsProfitOrder}"
+                              Width="60" Margin="2,0,2,0">
+                        Profit FS
+                    </CheckBox>
+                    <Border Grid.Column="6" BorderThickness="1,0,1,0" BorderBrush="Black">
+                        <TextBlock Text="FSale" Margin="2,0,2,0" Width="60" />
+                    </Border>
                 </Grid>
             </TreeViewItem.Header>
         </TreeViewItem>
@@ -51,7 +60,7 @@
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsSelected}" Value="True">
                             <DataTrigger.Setters>
-                                <Setter Property="Background" Value="GreenYellow"/>
+                                <Setter Property="Background" Value="GreenYellow" />
                             </DataTrigger.Setters>
                         </DataTrigger>
                     </Style.Triggers>
@@ -65,32 +74,44 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                             <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="{Binding FullName, Mode=OneTime}" />
                         <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,1,0">
-                            <TextBlock Text="{Binding Profit, Mode=OneWay}"
-                                       Style="{StaticResource IntBlockStyle}" />
+                            <TextBlock
+                                Text="{Binding Cost, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}"
+                                Style="{StaticResource IntBlockStyle}" />
                         </Border>
-                        <TextBlock Grid.Column="2"
-                                   Text="{Binding Cost, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}"
+                        <TextBlock Grid.Column="2" Text="{Binding LongSellProfit.Profit, Mode=OneWay}"
                                    Style="{StaticResource IntBlockStyle}" />
-                        <TextBlock Grid.Column="3"
-                                   Text="{Binding Sale, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}"
+                        <Border Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,1,0">
+                            <TextBlock
+                                Text="{Binding LongSellProfit.Cost, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}"
+                                Style="{StaticResource IntBlockStyle}" />
+                        </Border>
+                        <TextBlock Grid.Column="4" Text="{Binding FastSellProfit.Profit, Mode=OneWay}"
                                    Style="{StaticResource IntBlockStyle}" />
+                        <Border Grid.Column="5" BorderBrush="Black" BorderThickness="1,0,1,0">
+                            <TextBlock
+                                Text="{Binding FastSellProfit.Cost, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}"
+                                Style="{StaticResource IntBlockStyle}" />
+                        </Border>
                     </Grid>
                 </HierarchicalDataTemplate>
 
                 <!--Profits-->
                 <HierarchicalDataTemplate DataType="{x:Type profits:SalvageProfit}">
                     <DockPanel>
-                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" Margin="2" VerticalAlignment="Center"/>
-                        <TextBlock Text="Salvage" 
+                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" Margin="2" VerticalAlignment="Center" />
+                        <TextBlock Text="Salvage"
                                    Style="{StaticResource TextBlockStyle}"
                                    MinWidth="150" />
-                        <TextBox Visibility="Hidden" 
+                        <TextBox Visibility="Hidden"
                                  MinWidth="60" TextAlignment="Right" />
-                        <TextBlock Text="{Binding Cost, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,#}}" 
-                                   Style="{StaticResource IntBlockStyle}"/>
+                        <TextBlock
+                            Text="{Binding Cost, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,#}}"
+                            Style="{StaticResource IntBlockStyle}" />
                     </DockPanel>
                 </HierarchicalDataTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type profits:LongSellProfit}">
@@ -111,23 +132,24 @@
                 <HierarchicalDataTemplate DataType="{x:Type requirements:UpgradeRequirement}"
                                           ItemsSource="{Binding Resources}">
                     <DockPanel>
-                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"  Margin="2" VerticalAlignment="Center"/>
-                        <TextBlock Text="UPGRADE " 
+                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" Margin="2" VerticalAlignment="Center" />
+                        <TextBlock Text="UPGRADE "
                                    Style="{StaticResource TextBlockStyle}" />
-                        <TextBlock Text="{Binding Cost, Converter={StaticResource PriceConverter}, StringFormat=Cost {0:#,##0}}" 
-                                   Style="{StaticResource TextBlockStyle}" />
+                        <TextBlock
+                            Text="{Binding Cost, Converter={StaticResource PriceConverter}, StringFormat=Cost {0:#,##0}}"
+                            Style="{StaticResource TextBlockStyle}" />
                     </DockPanel>
                 </HierarchicalDataTemplate>
 
                 <HierarchicalDataTemplate DataType="{x:Type requirements:CraftingRequirement}"
                                           ItemsSource="{Binding Resources}">
                     <DockPanel Style="{StaticResource DpStyle}">
-                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"  Margin="2" VerticalAlignment="Center"/>
+                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" Margin="2" VerticalAlignment="Center" />
                         <TextBlock Style="{StaticResource TextBlockStyle}">
                             <TextBlock.Text>
                                 <MultiBinding StringFormat="CRAFT  tax: {0:#,##0} cost: {1:#,##0}">
-                                    <Binding Path="Tax" Converter="{StaticResource PriceConverter}"/>
-                                    <Binding Path="Cost" Converter="{StaticResource PriceConverter}"/>
+                                    <Binding Path="Tax" Converter="{StaticResource PriceConverter}" />
+                                    <Binding Path="Cost" Converter="{StaticResource PriceConverter}" />
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
@@ -136,20 +158,20 @@
                 <HierarchicalDataTemplate DataType="{x:Type requ:CraftingResource}"
                                           ItemsSource="{Binding Item.Components}">
                     <DockPanel Style="{StaticResource DpStyle}">
-                        <TextBlock Text="{Binding Item.FullName, Mode=OneTime}" 
-                                   Style="{StaticResource TextBlockStyle}"/>
-                        <TextBlock Text="{Binding Item.Profit}" 
-                                   Style="{StaticResource TextBlockStyle}"/>
+                        <TextBlock Text="{Binding Item.FullName, Mode=OneTime}"
+                                   Style="{StaticResource TextBlockStyle}" />
+                        <TextBlock Text="{Binding Item.Profit}"
+                                   Style="{StaticResource TextBlockStyle}" />
                         <TextBlock Style="{StaticResource TextBlockStyle}">
                             <TextBlock.Text>
                                 <MultiBinding StringFormat="cost: {0} * {1:#,##0} = {2:#,##0}">
-                                    <Binding Path="Count"/>
-                                    <Binding Path="Item.Cost" Converter="{StaticResource PriceConverter}"/>
-                                    <Binding Path="Cost" Converter="{StaticResource PriceConverter}"/>
+                                    <Binding Path="Count" />
+                                    <Binding Path="Item.Cost" Converter="{StaticResource PriceConverter}" />
+                                    <Binding Path="Cost" Converter="{StaticResource PriceConverter}" />
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
-                    </DockPanel>                
+                    </DockPanel>
                 </HierarchicalDataTemplate>
             </TreeView.Resources>
 

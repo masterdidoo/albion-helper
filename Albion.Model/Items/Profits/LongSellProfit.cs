@@ -4,7 +4,7 @@ using Albion.Model.Managers;
 
 namespace Albion.Model.Items.Profits
 {
-    public class LongSellProfit : BaseMarketRequirement
+    public class LongSellProfit : BaseMarketProfit
     {
         protected override ItemMarketData ItemMarketData => Item.ItemMarket.FromMarketItems[TownId];
 

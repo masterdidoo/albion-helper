@@ -19,7 +19,6 @@ namespace Albion.Model.Items
         private readonly LongBuyRequirement _longBuyRequirement;
         public LongSellProfit LongSellProfit { get; }
         private long _profit = -100;
-        private long _sale;
 
         public CommonItem(BaseResorcedRequirement[] craftingRequirements, 
             ItemMarket itemMarket,
@@ -42,7 +41,6 @@ namespace Albion.Model.Items
                 SalvageProfit = new SalvageProfit();
 
             CostCalcOptions.Instance.Changed += RequirementOnUpdateCost;
-            CostCalcOptions.Instance.Changed += OnUpdateProfitOrCost;
         }
 
         public long Profit
@@ -90,18 +88,6 @@ namespace Albion.Model.Items
             }
         }
 
-        private IEnumerable<BaseRequirement> ProfitsAutoMax
-        {
-            get
-            {
-                if (SalvageProfit != null) yield return SalvageProfit;
-                yield return FastSellProfit;
-                if (!CostCalcOptions.Instance.IsLongSellDisabled)
-                    yield return LongSellProfit;
-            }
-        }
-
-
         public int MemId { get; set; }
 
         public ItemMarket ItemMarket { get; }
@@ -117,8 +103,6 @@ namespace Albion.Model.Items
             foreach (var profit in ProfitsAll)
             {
                 profit.SetItem(this);
-                profit.UpdateCost += OnUpdateProfitOrCost;
-                profit.Selected += UpdateMaxSale;
             }
 
             foreach (var cr in RequirementsAll)
@@ -128,64 +112,7 @@ namespace Albion.Model.Items
                 cr.Selected += UpdateMinCost;
             }
 
-            UpdateCost += OnUpdateProfitOrCost;
-
             RequirementOnUpdateCost();
-        }
-
-        private void UpdateMaxSale(BaseRequirement requirement)
-        {
-            foreach (var item in ProfitsAll)
-                if (item != requirement)
-                    item.IsSelected = false;
-
-            Sale = requirement.Cost;
-
-            Profit = Cost > 0 ? (requirement.Cost - Cost) * 100 / Cost : -100;
-        }
-
-        public long Sale
-        {
-            get => _sale;
-            set
-            {
-                if (_sale == value) return;
-                _sale = value;
-                UpdateSale?.Invoke();
-                OnPropertyChanged();
-            }
-        }
-
-        public event Action UpdateSale ;
-
-        private void OnUpdateProfitOrCost()
-        {
-            var max = 0L;
-            BaseRequirement maxItem = null;
-
-            foreach (var item in ProfitsAutoMax)
-            {
-                item.IsSelected = false;
-                if (max < item.Cost && item.Cost > 0)
-                {
-                    max = item.Cost;
-                    maxItem = item;
-                }
-            }
-
-            if (maxItem != null)
-            {
-                maxItem.IsSelected = true;
-                maxItem.IsExpanded = true;
-                //Cost = minItem.Cost; set from UpdateMaxProfit
-                Profit = Cost > 0 ? (max - Cost) * 100 / Cost : -100;
-            }
-            else
-            {
-                Profit = -100;
-            }
-
-            //Pos = Components.Max(x => x.Pos).AddTicks(1);
         }
 
         public void UpdateMinCost(BaseRequirement requirement)

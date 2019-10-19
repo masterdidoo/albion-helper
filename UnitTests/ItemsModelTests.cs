@@ -21,8 +21,6 @@ namespace UnitTests
         [TestMethod]
         public void TestUpdatePrice()
         {
-            CostCalcOptions.Instance.CraftTown = Location.None;
-
             var mmdm = new Mock<IMarketDataManager>();
             mmdm.Setup(x => x.GetData(It.IsAny<string>())).Returns(() => new ItemMarket());
             var bdm = Mock.Of<IBuildingDataManager>(x=>x.GetData(It.IsAny<string>()) == new ItemBuilding());

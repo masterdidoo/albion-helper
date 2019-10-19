@@ -6,12 +6,25 @@ namespace Albion.Model.Items.Profits
 {
     public class SalvageProfit : BaseRequirement
     {
+        private long _profit;
+
+        public long Profit
+        {
+            get => _profit;
+            protected set
+            {
+                if (_profit == value) return;
+                _profit = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public CraftingResource[] Resources => Item.CraftingRequirements[0].Resources;
+
         protected override void OnSetItem()
         {
-            foreach (var resource in Resources)
-            {
-                resource.Item.UpdateSale += ResOnUpdateSale;
-            }
+            //TODO сделать
+            foreach (var resource in Resources) resource.Item.LongSellProfit.UpdateCost += ResOnUpdateSale;
 
             ResOnUpdateSale();
         }
@@ -21,12 +34,12 @@ namespace Albion.Model.Items.Profits
             if (Resources.Any(s => s.Cost == 0))
             {
                 Cost = 0;
+                Profit = -100;
                 return;
             }
 
-            Cost = Resources.Sum(r => r.Item.LongSellProfit.Cost*r.Count/4);
+            Cost = Resources.Sum(r => r.Item.LongSellProfit.Cost * r.Count / 4);
+            Profit = Item.Cost > 0 && Cost > 0 ? (Cost - Item.Cost) * 100 / Item.Cost - 100 : -100;
         }
-
-        public CraftingResource[] Resources => Item.CraftingRequirements[0].Resources;
     }
 }

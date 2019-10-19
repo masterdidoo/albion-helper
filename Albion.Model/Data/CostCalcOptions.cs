@@ -1,15 +1,12 @@
 ﻿using System;
-using Albion.Common;
 
 namespace Albion.Model.Data
 {
     public class CostCalcOptions
     {
-        private Location _buyTown;
         private bool _isArtefactsLongBuyEnabled = true;
         private bool _isLongBuyDisabled;
         private bool _isLongSellDisabled;
-        private Location _sellTown;
         public static CostCalcOptions Instance { get; } = new CostCalcOptions();
 
         public bool IsLongBuyDisabled
@@ -45,31 +42,6 @@ namespace Albion.Model.Data
             }
         }
 
-        public Location SellTown
-        {
-            get => _sellTown;
-            set
-            {
-                if (_sellTown == value) return;
-                _sellTown = value;
-                SellTownChanged?.Invoke();
-            }
-        }
-
-        public Location BuyTown
-        {
-            get => _buyTown;
-            set
-            {
-                if (_buyTown == value) return;
-                _buyTown = value;
-                BuyTownChanged?.Invoke();
-            }
-        }
-
         public event Action Changed;
-        public event Action BuyTownChanged;
-        public event Action SellTownChanged;
-        public event Action CraftTownChanged;
     }
 }

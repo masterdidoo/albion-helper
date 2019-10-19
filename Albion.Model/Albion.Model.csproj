@@ -46,6 +46,7 @@
     <Compile Include="Data\CostCalcOptions.cs" />
     <Compile Include="Data\ItemMarketData.cs" />
     <Compile Include="Items\ArtefactStat.cs" />
+    <Compile Include="Items\Profits\BaseMarketProfit.cs" />
     <Compile Include="Items\Profits\FastSellProfit.cs" />
     <Compile Include="Items\CommonItem.cs" />
     <Compile Include="BaseCostableEntity.cs" />
