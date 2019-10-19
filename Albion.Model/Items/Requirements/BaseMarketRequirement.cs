@@ -14,6 +14,8 @@ namespace Albion.Model.Items.Requirements
 
         public int TownId => _townManager.TownId;
 
+        protected BaseMarketRequirement() { }
+
         protected BaseMarketRequirement(ITownManager townManager)
         {
             _townManager = townManager;

@@ -14,6 +14,7 @@ namespace Albion.Model.Items
     {
         private readonly FastBuyRequirement _fastBuyRequirement;
         public FastSellProfit FastSellProfit { get; }
+        public BmFastSellProfit BmFastSellProfit { get; }
         public SalvageProfit SalvageProfit { get; }
 
         private readonly LongBuyRequirement _longBuyRequirement;
@@ -36,6 +37,7 @@ namespace Albion.Model.Items
 
             LongSellProfit = new LongSellProfit(sellTownManager);
             FastSellProfit = new FastSellProfit(sellTownManager);
+            BmFastSellProfit = new BmFastSellProfit(sellTownManager);
 
             if (CraftingRequirements.Length > 0 && CraftingRequirements[0].Resources.Length > 0)
                 SalvageProfit = new SalvageProfit();
@@ -71,6 +73,7 @@ namespace Albion.Model.Items
             get
             {
                 if (SalvageProfit != null) yield return SalvageProfit;
+                yield return BmFastSellProfit;
                 yield return FastSellProfit;
                 yield return LongSellProfit;
             }

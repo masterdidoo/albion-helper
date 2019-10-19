@@ -32,7 +32,7 @@ namespace Albion.Model.Items.Profits
 
         private void OnUpdateCost()
         {
-            Profit = Item.Cost > 0 && Cost > 0 ? (Cost - Item.Cost) * 100 / Item.Cost - 100 : -100;
+            Profit = Item.Cost > 0 && Cost > 0 ? (Cost - Item.Cost) * 100 / Item.Cost : -100;
         }
     }
 }

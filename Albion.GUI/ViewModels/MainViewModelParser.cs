@@ -51,12 +51,18 @@ namespace Albion.GUI.ViewModels
             var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
 
             if (items.Length == 1)
-                MdmGetData(items[0].Key).FromMarketItems[AuctionTownManager.TownId].SetOrders(items[0], DateTime.Now);
+            {
+                var itemMarket = MdmGetData(items[0].Key).FromMarketItems[AuctionTownManager.TownId];
+                itemMarket.SetOrders(items[0], DateTime.Now);
+                mdm.Save(items[0].Key, AuctionTownManager.TownId, true, itemMarket);
+            }
             else
             {
                 foreach (var item in items)
                 {
-                    MdmGetData(item.Key).FromMarketItems[AuctionTownManager.TownId].AppendOrders(item);
+                    var itemMarket = MdmGetData(item.Key).FromMarketItems[AuctionTownManager.TownId];
+                    itemMarket.AppendOrders(item);
+                    mdm.Save(item.Key, AuctionTownManager.TownId, true, itemMarket);
                 }
             }
 
@@ -73,12 +79,18 @@ namespace Albion.GUI.ViewModels
             var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
 
             if (items.Length == 1)
-                MdmGetData(items[0].Key).ToMarketItems[AuctionTownManager.TownId].SetOrders(items[0], DateTime.Now);
+            {
+                var itemMarket = MdmGetData(items[0].Key).ToMarketItems[AuctionTownManager.TownId];
+                itemMarket.SetOrders(items[0], DateTime.Now);
+                mdm.Save(items[0].Key, AuctionTownManager.TownId, false, itemMarket);
+            }
             else
             {
                 foreach (var item in items)
                 {
-                    MdmGetData(item.Key).ToMarketItems[AuctionTownManager.TownId].AppendOrders(item);
+                    var itemMarket = MdmGetData(item.Key).ToMarketItems[AuctionTownManager.TownId];
+                    itemMarket.AppendOrders(item);
+                    mdm.Save(item.Key, AuctionTownManager.TownId, false, itemMarket);
                 }
             }
 

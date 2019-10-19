@@ -48,8 +48,8 @@ namespace Albion.Model.Data
             var items = auctionItems.ToDictionary(k => k.Id);
             Orders.RemoveAll(x => items.ContainsKey(x.Id));
             Orders.AddRange(items.Values);
-            UpdateOrders?.Invoke();
             BestPrice = GetBestPrice();
+            UpdateOrders?.Invoke();
         }
 
         protected abstract long GetBestPrice();
@@ -58,8 +58,8 @@ namespace Albion.Model.Data
         {
             UpdateTime = time;
             Orders = auctionItems.ToList();
-            UpdateOrders?.Invoke();
             BestPrice = GetBestPrice();
+            UpdateOrders?.Invoke();
         }
 
         public void SetBestPrice(long silver)

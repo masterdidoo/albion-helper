@@ -22,6 +22,7 @@ namespace Albion.Model.Managers
                 if (_town == value) return;
                 _town = value;
                 TownChanged?.Invoke();
+                OnPropertyChanged(nameof(Town));
             }
         }
 

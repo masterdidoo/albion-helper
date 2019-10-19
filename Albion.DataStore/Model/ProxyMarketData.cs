@@ -24,19 +24,19 @@ namespace Albion.DataStore.Model
                     ToMarketItems[marketData.TownId].SetBestPrice(marketData.BestPrice);
                 }
 
-            for (var i = 0; i < FromMarketItems.Length; i++)
-            {
-                var item = FromMarketItems[i];
-                var townId = i;
-                item.UpdateOrders += () => manager.Save(id, townId, true, item);
-            }
-
-            for (var i = 0; i < ToMarketItems.Length; i++)
-            {
-                var item = ToMarketItems[i];
-                var townId = i;
-                item.UpdateOrders += () => manager.Save(id, townId, false, item);
-            }
+//            for (var i = 0; i < FromMarketItems.Length; i++)
+//            {
+//                var item = FromMarketItems[i];
+//                var townId = i;
+//                item.UpdateOrders += () => manager.Save(id, townId, true, item);
+//            }
+//
+//            for (var i = 0; i < ToMarketItems.Length; i++)
+//            {
+//                var item = ToMarketItems[i];
+//                var townId = i;
+//                item.UpdateOrders += () => manager.Save(id, townId, false, item);
+//            }
         }
     }
 }

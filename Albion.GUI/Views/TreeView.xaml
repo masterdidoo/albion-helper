@@ -28,6 +28,9 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                         <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="1" Text="Task" Margin="2,0,5,0" />
                     <GridSplitter Grid.Column="1" Width="3" Background="Black" />
@@ -36,17 +39,24 @@
                     </Border>
                     <CheckBox Grid.Column="3" IsChecked="{Binding IsProfitOrder}"
                               Width="60" Margin="2,0,2,0">
-                        Profit LS
+                        LS
                     </CheckBox>
                     <Border Grid.Column="4" BorderThickness="1,0,1,0" BorderBrush="Black">
-                        <TextBlock Text="LSale" Margin="2,0,2,0" Width="60" />
+                        <TextBlock Text="LSale" Margin="3,0,3,0" Width="60" />
                     </Border>
                     <CheckBox Grid.Column="5" IsChecked="{Binding IsProfitOrder}"
-                              Width="60" Margin="2,0,2,0">
-                        Profit FS
+                              Width="60" Margin="3,0,3,0">
+                        FS
                     </CheckBox>
                     <Border Grid.Column="6" BorderThickness="1,0,1,0" BorderBrush="Black">
-                        <TextBlock Text="FSale" Margin="2,0,2,0" Width="60" />
+                        <TextBlock Text="FSale" Margin="3,0,3,0" Width="60" />
+                    </Border>
+                    <CheckBox Grid.Column="7" IsChecked="{Binding IsProfitOrder}"
+                              Width="60" Margin="3,0,3,0">
+                        BM
+                    </CheckBox>
+                    <Border Grid.Column="8" BorderThickness="1,0,1,0" BorderBrush="Black">
+                        <TextBlock Text="BmSale" Margin="3,0,3,0" Width="60" />
                     </Border>
                 </Grid>
             </TreeViewItem.Header>
@@ -76,6 +86,10 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                             <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="{Binding FullName, Mode=OneTime}" />
                         <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,1,0">
@@ -95,6 +109,20 @@
                         <Border Grid.Column="5" BorderBrush="Black" BorderThickness="1,0,1,0">
                             <TextBlock
                                 Text="{Binding FastSellProfit.Cost, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}"
+                                Style="{StaticResource IntBlockStyle}" />
+                        </Border>
+                        <TextBlock Grid.Column="6" Text="{Binding BmFastSellProfit.Profit, Mode=OneWay}"
+                                   Style="{StaticResource IntBlockStyle}" />
+                        <Border Grid.Column="7" BorderBrush="Black" BorderThickness="1,0,1,0">
+                            <TextBlock
+                                Text="{Binding BmFastSellProfit.Cost, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}"
+                                Style="{StaticResource IntBlockStyle}" />
+                        </Border>
+                        <TextBlock Grid.Column="8" Text="{Binding BmFastSellProfit.Count, Mode=OneWay}"
+                                   Style="{StaticResource IntBlockStyle}" />
+                        <Border Grid.Column="9" BorderBrush="Black" BorderThickness="1,0,1,0">
+                            <TextBlock
+                                Text="{Binding BmFastSellProfit.ProfitSum, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}"
                                 Style="{StaticResource IntBlockStyle}" />
                         </Border>
                     </Grid>
