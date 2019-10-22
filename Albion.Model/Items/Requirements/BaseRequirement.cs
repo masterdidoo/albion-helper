@@ -15,7 +15,7 @@ namespace Albion.Model.Items.Requirements
             {
                 if (_isExpanded == value) return;
                 _isExpanded = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -29,7 +29,7 @@ namespace Albion.Model.Items.Requirements
         {
             if (_isSelected == value) return;
             _isSelected = value;
-            OnPropertyChanged(nameof(IsSelected));
+            RaisePropertyChanged(nameof(IsSelected));
             if (value) Selected?.Invoke(this);
         }
 

@@ -33,12 +33,12 @@ namespace Albion.Model.Items.Requirements
             {
                 if (_tax == value) return;
                 _tax = value;
-                OnPropertyChanged();
-                ResourcesOnUpdateCost();
+                RaisePropertyChanged();
+                ResourcesOnCostUpdate();
             }
         }
 
-        protected override void ResourcesOnUpdateCost()
+        protected override void ResourcesOnCostUpdate()
         {
             if (Resources.Any(x => x.Item.Cost == 0))
             {

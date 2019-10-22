@@ -15,7 +15,7 @@ namespace Albion.Model.Items.Profits
             {
                 if (_profit == value) return;
                 _profit = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -24,12 +24,12 @@ namespace Albion.Model.Items.Profits
         protected override void OnSetItem()
         {
             //TODO сделать
-            foreach (var resource in Resources) resource.Item.LongSellProfit.UpdateCost += ResOnUpdateSale;
+            foreach (var resource in Resources) resource.Item.LongSellProfit.CostUpdate += ResOnCostUpdateSale;
 
-            ResOnUpdateSale();
+            ResOnCostUpdateSale();
         }
 
-        private void ResOnUpdateSale()
+        private void ResOnCostUpdateSale()
         {
             if (Resources.Any(s => s.Cost == 0))
             {

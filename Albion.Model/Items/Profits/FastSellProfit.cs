@@ -19,7 +19,7 @@ namespace Albion.Model.Items.Profits
             {
                 if (_count == value) return;
                 _count = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -30,11 +30,11 @@ namespace Albion.Model.Items.Profits
             {
                 if (_profitSum == value) return;
                 _profitSum = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
-        private void OnUpdateCosts()
+        private void OnCostUpdate()
         {
             Count = ItemMarketData.Orders.OrderByDescending(x=>x.UnitPriceSilver).FirstOrDefault()?.Amount ?? 0;
             ProfitSum = (Cost - Item.Cost) * Count;
@@ -47,11 +47,11 @@ namespace Albion.Model.Items.Profits
         protected override void OnSetItem()
         {
             base.OnSetItem();
-            ItemMarketData.UpdateOrders += OnUpdateCosts;
-            Item.UpdateCost += OnUpdateCosts;
-            UpdateCost += OnUpdateCosts;
+            ItemMarketData.UpdateOrders += OnCostUpdate;
+            Item.CostUpdate += OnCostUpdate;
+            CostUpdate += OnCostUpdate;
 
-            OnUpdateCosts();
+            OnCostUpdate();
         }
     }
 

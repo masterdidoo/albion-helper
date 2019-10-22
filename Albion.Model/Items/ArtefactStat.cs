@@ -15,19 +15,19 @@ namespace Albion.Model.Items
             Material = material;
             Artefacts = artefacts;
 
-            Material.UpdateCost += MaterialOnUpdateCost;
+            Material.CostUpdate += MaterialOnCostUpdate;
             //            foreach (var item in Artefacts.Select(x => x.CraftingRequirements[0]).Distinct())
             //                item.UpdateCost += MaterialOnUpdateCost;
 
             foreach (var item in Artefacts)
             {
-                item.FastSellProfit.UpdateCost += FastSellProfitOnUpdateCost;
-                item.LongSellProfit.UpdateCost += LongSellProfitOnUpdateCost;
+                item.FastSellProfit.CostUpdate += FastSellProfitOnCostUpdate;
+                item.LongSellProfit.CostUpdate += LongSellProfitOnCostUpdate;
             }
 
-            FastSellProfitOnUpdateCost();
-            LongSellProfitOnUpdateCost();
-            MaterialOnUpdateCost();
+            FastSellProfitOnCostUpdate();
+            LongSellProfitOnCostUpdate();
+            MaterialOnCostUpdate();
         }
 
         public CraftBuilding CraftingBuilding { get; }
@@ -44,7 +44,7 @@ namespace Albion.Model.Items
             {
                 if (_cost == value) return;
                 _cost = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -55,7 +55,7 @@ namespace Albion.Model.Items
             {
                 if (_fastSale == value) return;
                 _fastSale = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -66,21 +66,21 @@ namespace Albion.Model.Items
             {
                 if (_longSale == value) return;
                 _longSale = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
-        private void LongSellProfitOnUpdateCost()
+        private void LongSellProfitOnCostUpdate()
         {
             LongSale = Artefacts.Sum(x => x.LongSellProfit.Cost);
         }
 
-        private void FastSellProfitOnUpdateCost()
+        private void FastSellProfitOnCostUpdate()
         {
             FastSale = Artefacts.Sum(x => x.FastSellProfit.Cost);
         }
 
-        private void MaterialOnUpdateCost()
+        private void MaterialOnCostUpdate()
         {
             //Cost = Artefacts.SelectMany(x=>x.CraftingRequirements[0].Resources).Sum(x => x.Cost);
             Cost = Material.Cost*Artefacts.Length*36;

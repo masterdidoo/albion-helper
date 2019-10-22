@@ -34,7 +34,7 @@ namespace UnitTests
 
                 _exp = 80000;
                 var fired = 0;
-                all["T4_OFF_SHIELD"].UpdateCost += () =>
+                all["T4_OFF_SHIELD"].CostUpdate += () =>
                 {
                     Assert.AreEqual(_exp, all["T4_OFF_SHIELD"].Cost);
                     fired++;

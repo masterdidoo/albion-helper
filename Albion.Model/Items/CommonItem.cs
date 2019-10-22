@@ -38,7 +38,7 @@ namespace Albion.Model.Items
             if (CraftingRequirements.Length > 0 && CraftingRequirements[0].Resources.Length > 0)
                 SalvageProfit = new SalvageProfit();
 
-            CostCalcOptions.Instance.Changed += RequirementOnUpdateCost;
+            CostCalcOptions.Instance.Changed += RequirementOnCostUpdate;
         }
 
         public FastSellProfit FastSellProfit { get; }
@@ -53,7 +53,7 @@ namespace Albion.Model.Items
             {
                 if (_profit == value) return;
                 _profit = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -109,30 +109,32 @@ namespace Albion.Model.Items
             {
                 if (_requirement == value) return;
                 _requirement = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
+
+        public BaseProfit Profitt { get; set; }
 
         public void Init()
         {
             foreach (var cr in ProfitsAll)
             {
                 cr.SetItem(this);
-                cr.UpdateCost += ProfitOnUpdateCost;
+                cr.CostUpdate += ProfitOnCostUpdate;
                 cr.Selected += OnProfitSelect;
             }
 
             foreach (var cr in RequirementsAll)
             {
                 cr.SetItem(this);
-                cr.UpdateCost += RequirementOnUpdateCost;
+                cr.CostUpdate += RequirementOnCostUpdate;
                 cr.Selected += OnRequirementSelect;
             }
 
-            RequirementOnUpdateCost();
+            RequirementOnCostUpdate();
         }
 
-        private void ProfitOnUpdateCost()
+        private void ProfitOnCostUpdate()
         {
 //            throw new System.NotImplementedException();
         }
@@ -146,8 +148,6 @@ namespace Albion.Model.Items
 //            Profitt = profit;
         }
 
-        public BaseProfit Profitt { get; set; }
-
         public void OnRequirementSelect(BaseRequirement requirement)
         {
             foreach (var item in RequirementsAll)
@@ -157,7 +157,7 @@ namespace Albion.Model.Items
             Requirement = requirement;
         }
 
-        private void RequirementOnUpdateCost()
+        private void RequirementOnCostUpdate()
         {
             var min = long.MaxValue;
             BaseRequirement minItem = null;
@@ -217,30 +217,8 @@ namespace Albion.Model.Items
         }
 
         #endregion
-    }
 
-    public class BaseProfit : NotifyEntity
-    {
+        public IEnumerable<BaseProfit> Profits { get; }
 
-        public CommonItem Item { get; set; }
-
-        public long ProfitPercent => Profit * 100 / Item.Cost;
-
-        public long Profit => Income - Item.Cost;
-
-        private long _income;
-
-        public long Income
-        {
-            get => _income;
-            protected set
-            {
-                if (_income == value) return;
-                _income = value;
-                //Pos = _cost == 0 ? DateTime.MinValue : DateTime.Now;
-                //UpdateCost?.Invoke();
-                OnPropertyChanged();
-            }
-        }
     }
 }

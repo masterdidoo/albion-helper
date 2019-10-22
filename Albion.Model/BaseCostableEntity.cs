@@ -8,7 +8,7 @@ namespace Albion.Model
         private long _cost;
         private DateTime _pos;
 
-        public event Action UpdateCost;
+        public event Action CostUpdate;
 
         public DateTime Pos
         {
@@ -17,7 +17,7 @@ namespace Albion.Model
             {
                 if (Equals(_pos, value)) return;
                 _pos = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -29,8 +29,8 @@ namespace Albion.Model
                 if (_cost == value) return;
                 _cost = value;
                 //Pos = _cost == 0 ? DateTime.MinValue : DateTime.Now;
-                UpdateCost?.Invoke();
-                OnPropertyChanged();
+                CostUpdate?.Invoke();
+                RaisePropertyChanged();
             }
         }
     }

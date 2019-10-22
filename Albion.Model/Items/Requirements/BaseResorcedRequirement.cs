@@ -7,7 +7,7 @@ namespace Albion.Model.Items.Requirements
         protected BaseResorcedRequirement(CraftingResource[] resources)
         {
             Resources = resources;
-            foreach (var resource in Resources) resource.Item.UpdateCost += ResourcesOnUpdateCost;
+            foreach (var resource in Resources) resource.Item.CostUpdate += ResourcesOnCostUpdate;
         }
 
         protected override void SetSelected(bool value)
@@ -20,11 +20,11 @@ namespace Albion.Model.Items.Requirements
         }
 
         public CraftingResource[] Resources { get; }
-        protected abstract void ResourcesOnUpdateCost();
+        protected abstract void ResourcesOnCostUpdate();
 
         protected override void OnSetItem()
         {
-            ResourcesOnUpdateCost();
+            ResourcesOnCostUpdate();
         }
     }
 }

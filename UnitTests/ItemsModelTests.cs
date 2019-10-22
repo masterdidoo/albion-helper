@@ -32,7 +32,7 @@ namespace UnitTests
             var all = loader.Items;
 
             int fired = 0;
-            all["T4_OFF_SHIELD"].UpdateCost += () =>
+            all["T4_OFF_SHIELD"].CostUpdate += () =>
             {
                 Assert.AreEqual(80000, all["T4_OFF_SHIELD"].Cost);
                 fired++;

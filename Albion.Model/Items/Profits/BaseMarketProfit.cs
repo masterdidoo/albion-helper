@@ -9,14 +9,14 @@ namespace Albion.Model.Items.Profits
 
         protected BaseMarketProfit(ITownManager townManager) : base(townManager)
         {
-            UpdateCost += OnUpdateCost;
+            CostUpdate += OnCostUpdate;
         }
 
         protected override void OnSetItem()
         {
             base.OnSetItem();
-            Item.UpdateCost += OnUpdateCost;
-            OnUpdateCost();
+            Item.CostUpdate += OnCostUpdate;
+            OnCostUpdate();
         }
 
         public long Profit
@@ -26,11 +26,11 @@ namespace Albion.Model.Items.Profits
             {
                 if (_profit == value) return;
                 _profit = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
-        private void OnUpdateCost()
+        private void OnCostUpdate()
         {
             Profit = Item.Cost > 0 && Cost > 0 ? (Cost - Item.Cost) * 100 / Item.Cost : -100;
         }
