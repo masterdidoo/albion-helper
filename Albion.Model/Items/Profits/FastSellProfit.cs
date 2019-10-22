@@ -3,13 +3,13 @@ using System.Linq;
 using Albion.Common;
 using Albion.Model.Data;
 using Albion.Model.Managers;
+using ReactiveUI;
 
 namespace Albion.Model.Items.Profits
 {
     public class BmFastSellProfit : FastSellProfit
     {
         private int _count;
-        private long _profitSum;
         protected override ItemMarketData ItemMarketData => Item.ItemMarket.ToMarketItems[(int)Location.BlackMarket];
 
         public int Count
@@ -23,33 +23,28 @@ namespace Albion.Model.Items.Profits
             }
         }
 
-        public long ProfitSum
-        {
-            get => _profitSum;
-            set
-            {
-                if (_profitSum == value) return;
-                _profitSum = value;
-                OnPropertyChanged();
-            }
-        }
+        readonly ObservableAsPropertyHelper<long> _profitSum;
+        public long ProfitSum => _profitSum.Value;
 
         private void OnUpdateCosts()
         {
             Count = ItemMarketData.Orders.OrderByDescending(x=>x.UnitPriceSilver).FirstOrDefault()?.Amount ?? 0;
-            ProfitSum = (Cost - Item.Cost) * Count;
         }
 
         public BmFastSellProfit(ITownManager townManager) : base(townManager)
         {
+            _profitSum = this.WhenAnyValue(
+                x => x.Item.Cost, 
+                x => x.Cost, 
+                x => x.Count, 
+                (ic, cost, count) => (cost - ic) * count)
+                .ToProperty(this, x=>x.ProfitSum);
         }
 
         protected override void OnSetItem()
         {
             base.OnSetItem();
             ItemMarketData.UpdateOrders += OnUpdateCosts;
-            Item.UpdateCost += OnUpdateCosts;
-            UpdateCost += OnUpdateCosts;
 
             OnUpdateCosts();
         }

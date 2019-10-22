@@ -1,4 +1,7 @@
-﻿using Albion.Model.Items.Requirements.Resources;
+﻿using System.Security.Cryptography.X509Certificates;
+using Albion.Model.Items.Requirements.Resources;
+using DynamicData;
+using ReactiveUI;
 
 namespace Albion.Model.Items.Requirements
 {
@@ -7,7 +10,10 @@ namespace Albion.Model.Items.Requirements
         protected BaseResorcedRequirement(CraftingResource[] resources)
         {
             Resources = resources;
-            foreach (var resource in Resources) resource.Item.UpdateCost += ResourcesOnUpdateCost;
+            foreach (var resource in Resources)
+            {
+                //resource.WhenAnyValue(x => x.Item.Cost).Subscribe(_ => ResourcesOnUpdateCost());
+            }
         }
 
         protected override void SetSelected(bool value)

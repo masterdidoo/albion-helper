@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Albion.Model.Buildings;
 using Albion.Model.Data;
@@ -6,6 +7,7 @@ using Albion.Model.Items.Categories;
 using Albion.Model.Items.Profits;
 using Albion.Model.Items.Requirements;
 using Albion.Model.Managers;
+using ReactiveUI;
 
 namespace Albion.Model.Items
 {
@@ -49,12 +51,7 @@ namespace Albion.Model.Items
         public long Profit
         {
             get => _profit;
-            protected set
-            {
-                if (_profit == value) return;
-                _profit = value;
-                OnPropertyChanged();
-            }
+            protected set => this.RaiseAndSetIfChanged(ref _profit, value);
         }
 
         public IEnumerable<BaseRequirement> Components => ProfitsAll.Concat(RequirementsAll);
@@ -107,9 +104,7 @@ namespace Albion.Model.Items
             get => _requirement;
             set
             {
-                if (_requirement == value) return;
-                _requirement = value;
-                OnPropertyChanged();
+                this.RaiseAndSetIfChanged(ref _requirement, value);
             }
         }
 
@@ -118,21 +113,21 @@ namespace Albion.Model.Items
             foreach (var cr in ProfitsAll)
             {
                 cr.SetItem(this);
-                cr.UpdateCost += ProfitOnUpdateCost;
+                cr.WhenAnyValue(x=>x.Cost).Subscribe(ProfitOnUpdateCost);
                 cr.Selected += OnProfitSelect;
             }
 
             foreach (var cr in RequirementsAll)
             {
                 cr.SetItem(this);
-                cr.UpdateCost += RequirementOnUpdateCost;
+                cr.WhenAnyValue(x=>x.Cost).Subscribe(_=> RequirementOnUpdateCost());
                 cr.Selected += OnRequirementSelect;
             }
 
             RequirementOnUpdateCost();
         }
 
-        private void ProfitOnUpdateCost()
+        private void ProfitOnUpdateCost(long x)
         {
 //            throw new System.NotImplementedException();
         }
@@ -235,11 +230,7 @@ namespace Albion.Model.Items
             get => _income;
             protected set
             {
-                if (_income == value) return;
-                _income = value;
-                //Pos = _cost == 0 ? DateTime.MinValue : DateTime.Now;
-                //UpdateCost?.Invoke();
-                OnPropertyChanged();
+                this.RaiseAndSetIfChanged(ref _income, value);
             }
         }
     }

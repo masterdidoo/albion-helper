@@ -24,7 +24,7 @@ namespace Albion.Model.Items.Profits
         protected override void OnSetItem()
         {
             //TODO сделать
-            foreach (var resource in Resources) resource.Item.LongSellProfit.UpdateCost += ResOnUpdateSale;
+           // foreach (var resource in Resources) resource.Item.LongSellProfit.UpdateCost += ResOnUpdateSale;
 
             ResOnUpdateSale();
         }

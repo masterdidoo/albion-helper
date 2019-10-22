@@ -1,38 +1,24 @@
-﻿using Albion.Model.Items.Requirements;
+﻿using System.Reactive.Linq;
+using Albion.Model.Items.Requirements;
 using Albion.Model.Managers;
+using ReactiveUI;
 
 namespace Albion.Model.Items.Profits
 {
     public abstract class BaseMarketProfit : BaseMarketRequirement
     {
-        private long _profit;
+        private readonly ObservableAsPropertyHelper<long> _profit;
 
         protected BaseMarketProfit(ITownManager townManager) : base(townManager)
         {
-            UpdateCost += OnUpdateCost;
+            _profit = this.WhenAnyValue(
+                    x => x.Item.Cost, 
+                    x => x.Cost,
+                    (ic, cost) => ic > 0 && cost > 0 ? (cost - ic) * 100 / ic : -100)
+                .ToProperty(this, x => x.Profit);
+            //UpdateCost += OnUpdateCost;
         }
 
-        protected override void OnSetItem()
-        {
-            base.OnSetItem();
-            Item.UpdateCost += OnUpdateCost;
-            OnUpdateCost();
-        }
-
-        public long Profit
-        {
-            get => _profit;
-            protected set
-            {
-                if (_profit == value) return;
-                _profit = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private void OnUpdateCost()
-        {
-            Profit = Item.Cost > 0 && Cost > 0 ? (Cost - Item.Cost) * 100 / Item.Cost : -100;
-        }
+        public long Profit => _profit.Value;
     }
 }

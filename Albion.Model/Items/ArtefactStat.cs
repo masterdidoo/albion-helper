@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Albion.Model.Buildings;
+using ReactiveUI;
 
 namespace Albion.Model.Items
 {
@@ -15,14 +17,14 @@ namespace Albion.Model.Items
             Material = material;
             Artefacts = artefacts;
 
-            Material.UpdateCost += MaterialOnUpdateCost;
+            this.WhenAnyValue(x => x.Material.Cost).Subscribe(_ => MaterialOnUpdateCost());
             //            foreach (var item in Artefacts.Select(x => x.CraftingRequirements[0]).Distinct())
             //                item.UpdateCost += MaterialOnUpdateCost;
 
             foreach (var item in Artefacts)
             {
-                item.FastSellProfit.UpdateCost += FastSellProfitOnUpdateCost;
-                item.LongSellProfit.UpdateCost += LongSellProfitOnUpdateCost;
+//                item.FastSellProfit.UpdateCost += FastSellProfitOnUpdateCost;
+//                item.LongSellProfit.UpdateCost += LongSellProfitOnUpdateCost;
             }
 
             FastSellProfitOnUpdateCost();

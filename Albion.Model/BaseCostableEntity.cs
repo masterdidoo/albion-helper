@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using ReactiveUI;
 
 namespace Albion.Model
 {
@@ -8,30 +9,16 @@ namespace Albion.Model
         private long _cost;
         private DateTime _pos;
 
-        public event Action UpdateCost;
-
         public DateTime Pos
         {
             get => _pos;
-            set
-            {
-                if (Equals(_pos, value)) return;
-                _pos = value;
-                OnPropertyChanged();
-            }
+            set => this.RaiseAndSetIfChanged(ref _pos, value);
         }
 
         public long Cost
         {
             get => _cost;
-            protected set
-            {
-                if (_cost == value) return;
-                _cost = value;
-                //Pos = _cost == 0 ? DateTime.MinValue : DateTime.Now;
-                UpdateCost?.Invoke();
-                OnPropertyChanged();
-            }
+            protected set =>this.RaiseAndSetIfChanged(ref _cost, value);
         }
     }
 }
