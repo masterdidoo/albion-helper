@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Albion.Model.Buildings;
 using Albion.Model.Data;
@@ -13,20 +12,17 @@ namespace Albion.Model.Items
     public class CommonItem : BaseCostableEntity
     {
         private readonly FastBuyRequirement _fastBuyRequirement;
-        public FastSellProfit FastSellProfit { get; }
-        public BmFastSellProfit BmFastSellProfit { get; }
-        public SalvageProfit SalvageProfit { get; }
 
         private readonly LongBuyRequirement _longBuyRequirement;
-        public LongSellProfit LongSellProfit { get; }
         private long _profit = -100;
+        private BaseRequirement _requirement;
 
-        public CommonItem(BaseResorcedRequirement[] craftingRequirements, 
+        public CommonItem(BaseResorcedRequirement[] craftingRequirements,
             ItemMarket itemMarket,
             CraftBuilding craftingBuilding,
             ITownManager buyTownManager,
             ITownManager sellTownManager
-            )
+        )
         {
             CraftingRequirements = craftingRequirements;
             CraftingBuilding = craftingBuilding;
@@ -44,6 +40,11 @@ namespace Albion.Model.Items
 
             CostCalcOptions.Instance.Changed += RequirementOnUpdateCost;
         }
+
+        public FastSellProfit FastSellProfit { get; }
+        public BmFastSellProfit BmFastSellProfit { get; }
+        public SalvageProfit SalvageProfit { get; }
+        public LongSellProfit LongSellProfit { get; }
 
         public long Profit
         {
@@ -101,29 +102,59 @@ namespace Albion.Model.Items
 
         #endregion
 
+        public BaseRequirement Requirement
+        {
+            get => _requirement;
+            set
+            {
+                if (_requirement == value) return;
+                _requirement = value;
+                OnPropertyChanged();
+            }
+        }
+
         public void Init()
         {
-            foreach (var profit in ProfitsAll)
+            foreach (var cr in ProfitsAll)
             {
-                profit.SetItem(this);
+                cr.SetItem(this);
+                cr.UpdateCost += ProfitOnUpdateCost;
+                cr.Selected += OnProfitSelect;
             }
 
             foreach (var cr in RequirementsAll)
             {
                 cr.SetItem(this);
                 cr.UpdateCost += RequirementOnUpdateCost;
-                cr.Selected += UpdateMinCost;
+                cr.Selected += OnRequirementSelect;
             }
 
             RequirementOnUpdateCost();
         }
 
-        public void UpdateMinCost(BaseRequirement requirement)
+        private void ProfitOnUpdateCost()
+        {
+//            throw new System.NotImplementedException();
+        }
+
+        private void OnProfitSelect(BaseRequirement profit)
+        {
+            foreach (var item in ProfitsAll)
+                if (item != profit)
+                    item.IsSelected = false;
+            Cost = profit.Cost;
+//            Profitt = profit;
+        }
+
+        public BaseProfit Profitt { get; set; }
+
+        public void OnRequirementSelect(BaseRequirement requirement)
         {
             foreach (var item in RequirementsAll)
                 if (item != requirement)
                     item.IsSelected = false;
             Cost = requirement.Cost;
+            Requirement = requirement;
         }
 
         private void RequirementOnUpdateCost()
@@ -186,5 +217,30 @@ namespace Albion.Model.Items
         }
 
         #endregion
+    }
+
+    public class BaseProfit : NotifyEntity
+    {
+
+        public CommonItem Item { get; set; }
+
+        public long ProfitPercent => Profit * 100 / Item.Cost;
+
+        public long Profit => Income - Item.Cost;
+
+        private long _income;
+
+        public long Income
+        {
+            get => _income;
+            protected set
+            {
+                if (_income == value) return;
+                _income = value;
+                //Pos = _cost == 0 ? DateTime.MinValue : DateTime.Now;
+                //UpdateCost?.Invoke();
+                OnPropertyChanged();
+            }
+        }
     }
 }
