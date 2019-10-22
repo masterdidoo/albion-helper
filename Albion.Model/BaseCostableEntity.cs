@@ -8,8 +8,6 @@ namespace Albion.Model
         private long _cost;
         private DateTime _pos;
 
-        public event Action UpdateCost;
-
         public DateTime Pos
         {
             get => _pos;
@@ -24,14 +22,18 @@ namespace Albion.Model
         public long Cost
         {
             get => _cost;
-            protected set
+            set
             {
                 if (_cost == value) return;
                 _cost = value;
                 //Pos = _cost == 0 ? DateTime.MinValue : DateTime.Now;
-                UpdateCost?.Invoke();
                 OnPropertyChanged();
+                OnCostChanged();
             }
+        }
+
+        protected virtual void OnCostChanged()
+        {
         }
     }
 }

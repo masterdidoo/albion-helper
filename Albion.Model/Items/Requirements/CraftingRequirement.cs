@@ -40,7 +40,7 @@ namespace Albion.Model.Items.Requirements
 
         protected override void ResourcesOnUpdateCost()
         {
-            if (Resources.Any(x => x.Item.Cost == 0))
+            if (Resources.Any(x => x.Item.Requirement.Cost == 0))
             {
                 Cost = 0;
                 return;

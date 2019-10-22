@@ -10,7 +10,7 @@ using Albion.Model.Managers;
 
 namespace Albion.Model.Items
 {
-    public class CommonItem : BaseCostableEntity
+    public class CommonItem : NotifyEntity
     {
         private readonly FastBuyRequirement _fastBuyRequirement;
         public FastSellProfit FastSellProfit { get; }
@@ -20,6 +20,7 @@ namespace Albion.Model.Items
         private readonly LongBuyRequirement _longBuyRequirement;
         public LongSellProfit LongSellProfit { get; }
         private long _profit = -100;
+        private BaseRequirement _requirement = EmptyRequirement.Empty;
 
         public CommonItem(BaseResorcedRequirement[] craftingRequirements, 
             ItemMarket itemMarket,
@@ -56,9 +57,9 @@ namespace Albion.Model.Items
             }
         }
 
-        public IEnumerable<BaseRequirement> Components => ProfitsAll.Concat(RequirementsAll);
+        public IEnumerable<BaseRequirement> Components => ProfitsAll.Concat(Requirements);
 
-        private IEnumerable<BaseRequirement> RequirementsAll
+        public IEnumerable<BaseRequirement> Requirements
         {
             get
             {
@@ -108,56 +109,32 @@ namespace Albion.Model.Items
                 profit.SetItem(this);
             }
 
-            foreach (var cr in RequirementsAll)
+            foreach (var cr in Requirements)
             {
                 cr.SetItem(this);
-                cr.UpdateCost += RequirementOnUpdateCost;
-                cr.Selected += UpdateMinCost;
             }
 
             RequirementOnUpdateCost();
         }
 
-        public void UpdateMinCost(BaseRequirement requirement)
+        public BaseRequirement Requirement
         {
-            foreach (var item in RequirementsAll)
-                if (item != requirement)
-                    item.IsSelected = false;
-            Cost = requirement.Cost;
+            get => _requirement;
+            set
+            {
+                if (_requirement == value) return;
+                _requirement = value;
+                OnPropertyChanged();
+                RaiseCostChanged();
+            }
         }
 
-        private void RequirementOnUpdateCost()
+        public void RaiseCostChanged()
         {
-            var min = long.MaxValue;
-            BaseRequirement minItem = null;
-
-            foreach (var item in RequirementsAutoMin)
-            {
-                item.IsSelected = false;
-                item.IsExpanded = false;
-                if (min > item.Cost && item.Cost > 0)
-                {
-                    min = item.Cost;
-                    minItem = item;
-                }
-            }
-
-//            var pos = Components.Max(x => x.Pos);
-//            Pos = (pos.Ticks > 1) ? pos.AddTicks(-1) : pos;
-
-            if (minItem != null)
-            {
-                minItem.IsSelected = true;
-                minItem.IsExpanded = true;
-                //Cost = minItem.Cost; set from UpdateMinCost
-            }
-            else
-            {
-                Cost = 0;
-            }
-
-            //Cost = Requirements.Select(x => x.Cost).Where(x => x > 0).DefaultIfEmpty(0).Min();
+            CostChanged?.Invoke();
         }
+
+        public event Action CostChanged;
 
         #region From Config
 

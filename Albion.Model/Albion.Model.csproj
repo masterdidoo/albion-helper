@@ -53,6 +53,7 @@
     <Compile Include="Items\Profits\LongSellProfit.cs" />
     <Compile Include="Items\Profits\SalvageProfit.cs" />
     <Compile Include="Items\Requirements\BaseMarketRequirement.cs" />
+    <Compile Include="Items\Requirements\EmptyRequirement.cs" />
     <Compile Include="Managers\IBuildingDataManager.cs" />
     <Compile Include="Managers\IMarketDataManager.cs" />
     <Compile Include="Managers\ITownManager.cs" />

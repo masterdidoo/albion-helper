@@ -4,10 +4,17 @@ namespace Albion.Model.Items.Requirements
 {
     public abstract class BaseRequirement : BaseCostableEntity
     {
+        public CommonItem Item { get; private set; }
+
+        internal void SetItem(CommonItem item)
+        {
+            Item = item;
+            //OnCostChanged(); нужно если значения будут грузиться сразу при создании
+        }
+
+        #region prop IsExpanded
+
         private bool _isExpanded;
-
-        private bool _isSelected;
-
         public bool IsExpanded
         {
             get => _isExpanded;
@@ -19,30 +26,56 @@ namespace Albion.Model.Items.Requirements
             }
         }
 
+        #endregion
+
+        #region prop IsSelected
+
+        private bool _isSelected;
+
         public bool IsSelected
         {
             get => _isSelected;
-            set => SetSelected(value);
+            set
+            {
+                if (_isSelected == value) return;
+                _isSelected = value;
+                OnPropertyChanged();
+                OnSelected();
+            }
         }
+        #endregion
 
-        protected virtual void SetSelected(bool value)
+        protected virtual void OnSelected()
         {
-            if (_isSelected == value) return;
-            _isSelected = value;
-            OnPropertyChanged(nameof(IsSelected));
-            if (value) Selected?.Invoke(this);
+            if (!IsSelected) return;
+            foreach (var item in Item.Requirements)
+                if (item != this)
+                    item.IsSelected = false;
+            Item.Requirement = this;
         }
 
-        public CommonItem Item { get; private set; }
-
-        public event Action<BaseRequirement> Selected;
-
-        internal void SetItem(CommonItem item)
+        protected override void OnCostChanged()
         {
-            Item = item;
-            OnSetItem();
-        }
+            var min = long.MaxValue;
+            BaseRequirement minItem = null;
 
-        protected abstract void OnSetItem();
+            foreach (var requirement in Item.Requirements)
+            {
+//                requirement.IsSelected = false;
+//                requirement.IsExpanded = false;
+                if (min > requirement.Cost && requirement.Cost > 0)
+                {
+                    min = requirement.Cost;
+                    minItem = requirement;
+                }
+            }
+
+            if (minItem != null)
+            {
+                if (minItem == this && IsSelected) Item.RaiseCostChanged();
+                minItem.IsSelected = true;
+//                minItem.IsExpanded = true;
+            }
+        }
     }
 }
