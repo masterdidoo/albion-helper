@@ -21,8 +21,8 @@ namespace Albion.Model.Items
 
             foreach (var item in Artefacts)
             {
-                item.FastSellProfit.CostUpdate += FastSellProfitOnCostUpdate;
-                item.LongSellProfit.CostUpdate += LongSellProfitOnCostUpdate;
+                item.FastSellProfit.Updated += FastSellProfitOnCostUpdate;
+                item.LongSellProfit.Updated += LongSellProfitOnCostUpdate;
             }
 
             FastSellProfitOnCostUpdate();
@@ -72,12 +72,12 @@ namespace Albion.Model.Items
 
         private void LongSellProfitOnCostUpdate()
         {
-            LongSale = Artefacts.Sum(x => x.LongSellProfit.Cost);
+            LongSale = Artefacts.Sum(x => x.LongSellProfit.Income);
         }
 
         private void FastSellProfitOnCostUpdate()
         {
-            FastSale = Artefacts.Sum(x => x.FastSellProfit.Cost);
+            FastSale = Artefacts.Sum(x => x.FastSellProfit.Income);
         }
 
         private void MaterialOnCostUpdate()

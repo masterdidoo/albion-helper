@@ -31,12 +31,12 @@ namespace Albion.Model.Items
             _longBuyRequirement = new LongBuyRequirement(buyTownManager);
             _fastBuyRequirement = new FastBuyRequirement(buyTownManager);
 
-            LongSellProfit = new LongSellProfit(sellTownManager);
-            FastSellProfit = new FastSellProfit(sellTownManager);
-            BmFastSellProfit = new BmFastSellProfit(sellTownManager);
+            LongSellProfit = new LongSellProfit(this,sellTownManager);
+            FastSellProfit = new FastSellProfit(this,sellTownManager);
+            BmFastSellProfit = new BmFastSellProfit(this);
 
             if (CraftingRequirements.Length > 0 && CraftingRequirements[0].Resources.Length > 0)
-                SalvageProfit = new SalvageProfit();
+                SalvageProfit = new SalvageProfit(this);
 
             CostCalcOptions.Instance.Changed += RequirementOnCostUpdate;
         }
@@ -57,7 +57,7 @@ namespace Albion.Model.Items
             }
         }
 
-        public IEnumerable<BaseRequirement> Components => ProfitsAll.Concat(RequirementsAll);
+        public IEnumerable<object> Components => ProfitsAll.Cast<object>().Concat(RequirementsAll);
 
         private IEnumerable<BaseRequirement> RequirementsAll
         {
@@ -69,7 +69,7 @@ namespace Albion.Model.Items
             }
         }
 
-        private IEnumerable<BaseRequirement> ProfitsAll
+        private IEnumerable<BaseProfit> ProfitsAll
         {
             get
             {
@@ -119,16 +119,14 @@ namespace Albion.Model.Items
         {
             foreach (var cr in ProfitsAll)
             {
-                cr.SetItem(this);
-                cr.CostUpdate += ProfitOnCostUpdate;
-                cr.Selected += OnProfitSelect;
+                //cr.SetItem(this);
+                cr.Updated += ProfitOnCostUpdate;
             }
 
             foreach (var cr in RequirementsAll)
             {
-                cr.SetItem(this);
+                //cr.SetItem(this);
                 cr.CostUpdate += RequirementOnCostUpdate;
-                cr.Selected += OnRequirementSelect;
             }
 
             RequirementOnCostUpdate();
@@ -137,24 +135,6 @@ namespace Albion.Model.Items
         private void ProfitOnCostUpdate()
         {
 //            throw new System.NotImplementedException();
-        }
-
-        private void OnProfitSelect(BaseRequirement profit)
-        {
-            foreach (var item in ProfitsAll)
-                if (item != profit)
-                    item.IsSelected = false;
-            Cost = profit.Cost;
-//            Profitt = profit;
-        }
-
-        public void OnRequirementSelect(BaseRequirement requirement)
-        {
-            foreach (var item in RequirementsAll)
-                if (item != requirement)
-                    item.IsSelected = false;
-            Cost = requirement.Cost;
-            Requirement = requirement;
         }
 
         private void RequirementOnCostUpdate()

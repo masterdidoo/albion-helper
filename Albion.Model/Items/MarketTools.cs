@@ -1,4 +1,4 @@
-﻿namespace Albion.Model.Items.Profits
+﻿namespace Albion.Model.Items
 {
     public static class MarketTools
     {

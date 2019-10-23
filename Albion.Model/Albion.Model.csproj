@@ -53,7 +53,7 @@
     <Compile Include="Items\CommonItem.cs" />
     <Compile Include="BaseCostableEntity.cs" />
     <Compile Include="Items\Profits\LongSellProfit.cs" />
-    <Compile Include="Items\Profits\MarketTools.cs" />
+    <Compile Include="Items\MarketTools.cs" />
     <Compile Include="Items\Profits\SalvageProfit.cs" />
     <Compile Include="Items\TreeProps.cs" />
     <Compile Include="Items\Requirements\BaseMarketRequirement.cs" />

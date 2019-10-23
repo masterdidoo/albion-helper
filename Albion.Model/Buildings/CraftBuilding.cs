@@ -34,7 +34,7 @@ namespace Albion.Model.Buildings
 
         private void ItemBuildingOnUpdateTax()
         {
-            OnPropertyChanged(nameof(Tax));
+            RaisePropertyChanged(nameof(Tax));
             UpdateTax?.Invoke();
         }
     }

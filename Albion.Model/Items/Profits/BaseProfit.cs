@@ -5,6 +5,7 @@ namespace Albion.Model.Items.Profits
 {
     public class BaseProfit : NotifyEntity
     {
+        private bool _isChanged;
         public BaseProfit(CommonItem item)
         {
             Item = item;
@@ -26,6 +27,7 @@ namespace Albion.Model.Items.Profits
 
         private void ItemOnCostUpdate()
         {
+            _isChanged = false;
             if (Item.Cost == 0)
             {
                 Profit = 0;
@@ -39,7 +41,7 @@ namespace Albion.Model.Items.Profits
                 ProfitSum = Profit * Count;
             }
 
-            Updated?.Invoke();
+            if (_isChanged) Updated?.Invoke();
         }
 
         protected void SetIncome(long income, int count)
@@ -63,6 +65,7 @@ namespace Albion.Model.Items.Profits
                 if (_profitPercent == value) return;
                 _profitPercent = value;
                 RaisePropertyChanged();
+                _isChanged = true;
             }
         }
 
@@ -80,6 +83,7 @@ namespace Albion.Model.Items.Profits
                 if (_profit == value) return;
                 _profit = value;
                 RaisePropertyChanged();
+                _isChanged = true;
             }
         }
 
@@ -97,6 +101,7 @@ namespace Albion.Model.Items.Profits
                 if (_income == value) return;
                 _income = value;
                 RaisePropertyChanged();
+                _isChanged = true;
             }
         }
 
@@ -114,6 +119,7 @@ namespace Albion.Model.Items.Profits
                 if (_count == value) return;
                 _count = value;
                 RaisePropertyChanged();
+                _isChanged = true;
             }
         }
 
@@ -131,6 +137,7 @@ namespace Albion.Model.Items.Profits
                 if (_profitSum == value) return;
                 _profitSum = value;
                 RaisePropertyChanged();
+                _isChanged = true;
             }
         }
 
