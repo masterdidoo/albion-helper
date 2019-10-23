@@ -38,7 +38,7 @@ namespace Albion.Model.Items
             if (CraftingRequirements.Length > 0 && CraftingRequirements[0].Resources.Length > 0)
                 SalvageProfit = new SalvageProfit(this);
 
-            CostCalcOptions.Instance.Changed += RequirementOnCostUpdate;
+            CostCalcOptions.Instance.Changed += RequirementsOnUpdated;
         }
 
         public FastSellProfit FastSellProfit { get; }
@@ -57,9 +57,9 @@ namespace Albion.Model.Items
             }
         }
 
-        public IEnumerable<object> Components => ProfitsAll.Cast<object>().Concat(RequirementsAll);
+        public IEnumerable<object> Components => Profits.Cast<object>().Concat(Requirements);
 
-        private IEnumerable<BaseRequirement> RequirementsAll
+        public IEnumerable<BaseRequirement> Requirements
         {
             get
             {
@@ -69,7 +69,7 @@ namespace Albion.Model.Items
             }
         }
 
-        private IEnumerable<BaseProfit> ProfitsAll
+        public IEnumerable<BaseProfit> Profits
         {
             get
             {
@@ -89,6 +89,18 @@ namespace Albion.Model.Items
                     ShopCategory == ShopCategory.Artefacts)
                     yield return _longBuyRequirement;
                 foreach (var cr in CraftingRequirements) yield return cr;
+            }
+        }
+
+        private IEnumerable<BaseProfit> ProfitsAutoMin
+        {
+            get
+            {
+                if (SalvageProfit != null) yield return SalvageProfit;
+                yield return BmFastSellProfit;
+                yield return FastSellProfit;
+                if (!CostCalcOptions.Instance.IsLongSellDisabled)
+                    yield return LongSellProfit;
             }
         }
 
@@ -117,35 +129,57 @@ namespace Albion.Model.Items
 
         public void Init()
         {
-            foreach (var cr in ProfitsAll)
+            foreach (var cr in Profits)
             {
                 //cr.SetItem(this);
-                cr.Updated += ProfitOnCostUpdate;
+                cr.Updated += ProfitsOnUpdated;
             }
 
-            foreach (var cr in RequirementsAll)
+            foreach (var cr in Requirements)
             {
-                //cr.SetItem(this);
-                cr.CostUpdate += RequirementOnCostUpdate;
+                cr.SetItem(this);
+                cr.Updated += RequirementsOnUpdated;
             }
 
-            RequirementOnCostUpdate();
+            RequirementsOnUpdated();
         }
 
-        private void ProfitOnCostUpdate()
+        private void ProfitsOnUpdated()
         {
-//            throw new System.NotImplementedException();
+            var max = long.MinValue;
+            BaseProfit maxItem = null;
+
+            foreach (var item in ProfitsAutoMin)
+            {
+                item.TreeProps.IsSelected = false;
+                item.TreeProps.IsExpanded = false;
+                if (max < item.Income && item.Income > 0)
+                {
+                    max = item.Income;
+                    maxItem = item;
+                }
+            }
+
+            if (maxItem != null)
+            {
+                maxItem.TreeProps.IsSelected = true;
+                maxItem.TreeProps.IsExpanded = true;
+            }
+            else
+            {
+                Cost = 0;
+            }
         }
 
-        private void RequirementOnCostUpdate()
+        private void RequirementsOnUpdated()
         {
             var min = long.MaxValue;
             BaseRequirement minItem = null;
 
             foreach (var item in RequirementsAutoMin)
             {
-                item.IsSelected = false;
-                item.IsExpanded = false;
+                item.TreeProps.IsSelected = false;
+                item.TreeProps.IsExpanded = false;
                 if (min > item.Cost && item.Cost > 0)
                 {
                     min = item.Cost;
@@ -158,8 +192,8 @@ namespace Albion.Model.Items
 
             if (minItem != null)
             {
-                minItem.IsSelected = true;
-                minItem.IsExpanded = true;
+                minItem.TreeProps.IsSelected = true;
+                minItem.TreeProps.IsExpanded = true;
                 //Cost = minItem.Cost; set from UpdateMinCost
             }
             else
@@ -197,8 +231,5 @@ namespace Albion.Model.Items
         }
 
         #endregion
-
-        public IEnumerable<BaseProfit> Profits { get; }
-
     }
 }

@@ -2,22 +2,16 @@
 {
     public class CraftingResource : NotifyEntity
     {
-        private bool _isSelected;
-        public bool IsExpanded { get; set; } = true;
+        protected CraftingResource()
+        {
+            TreeProps = new TreeProps {IsExpanded = true};
+        }
 
         public CommonItem Item { get; set; }
         public int Count { get; set; }
         public long Cost => Item.Cost * Count;
-        public bool IsSelected
-        {
-            get => _isSelected;
-            set
-            {
-                if (_isSelected == value) return;
-                _isSelected = value;
-                RaisePropertyChanged();
-            }
-        }
+
+        public TreeProps TreeProps { get; }
 
         public override string ToString() => $"{Item}[{Count}]";
     }

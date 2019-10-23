@@ -1,48 +1,81 @@
 ﻿using System;
+using System.Linq;
 
 namespace Albion.Model.Items.Requirements
 {
-    public abstract class BaseRequirement : BaseCostableEntity
+    public abstract class BaseRequirement : NotifyEntity
     {
-        private bool _isExpanded;
+        private bool _isChanged;
 
-        private bool _isSelected;
-
-        public bool IsExpanded
+        protected BaseRequirement()
         {
-            get => _isExpanded;
-            set
-            {
-                if (_isExpanded == value) return;
-                _isExpanded = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public bool IsSelected
-        {
-            get => _isSelected;
-            set => SetSelected(value);
-        }
-
-        protected virtual void SetSelected(bool value)
-        {
-            if (_isSelected == value) return;
-            _isSelected = value;
-            RaisePropertyChanged(nameof(IsSelected));
-            if (value) Selected?.Invoke(this);
+            TreeProps = new TreeProps();
+            TreeProps.IsSelectedUpdate += TreePropsOnIsSelectedUpdate;
         }
 
         public CommonItem Item { get; private set; }
 
-        public event Action<BaseRequirement> Selected;
+        public TreeProps TreeProps { get; }
+
+        private void TreePropsOnIsSelectedUpdate()
+        {
+            if (!TreeProps.IsSelected) return;
+            foreach (var profit in Item.Requirements.Where(x => x != this)) profit.TreeProps.IsSelected = false;
+            Item.Requirement = this;
+        }
 
         internal void SetItem(CommonItem item)
         {
             Item = item;
-            OnSetItem();
         }
 
         protected abstract void OnSetItem();
+
+        protected void SetCost(long cost, int count)
+        {
+            _isChanged = false;
+
+            Cost = cost;
+            Count = count;
+            if (_isChanged) Updated?.Invoke();
+        }
+
+        public event Action Updated;
+
+        #region Cost
+
+        private long _cost;
+
+        public long Cost
+        {
+            get => _cost;
+            private set
+            {
+                if (_cost == value) return;
+                _cost = value;
+                RaisePropertyChanged();
+                _isChanged = true;
+            }
+        }
+
+        #endregion
+
+        #region Count
+
+        private int _count;
+
+        public int Count
+        {
+            get => _count;
+            private set
+            {
+                if (_count == value) return;
+                _count = value;
+                RaisePropertyChanged();
+                _isChanged = true;
+            }
+        }
+
+        #endregion
     }
 }

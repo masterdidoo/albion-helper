@@ -1,7 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Albion.Common;
-using Albion.Model.Data;
 using Albion.Model.Items.Categories;
 using Albion.Model.Items.Requirements.Resources;
 
@@ -9,56 +7,34 @@ namespace Albion.Model.Items.Requirements
 {
     public class CraftingRequirement : BaseResorcedRequirement
     {
-        private long _tax;
+        private const long Return35 = 1533;
+        private const long Return25 = 1330;
+        private const long Return15 = 1175;
 
         public CraftingRequirement(CraftingResource[] resources) : base(resources)
         {
             //ItemValue = resources.Sum(r => r.Item.ItemValue * r.Count);
         }
 
-        /// <summary>
-        /// silver * 10000
-        /// </summary>
-        public long Silver { get; set; }
-
-        public int AmountCrafted { get; set; }
-
-        /// <summary>
-        /// tax * 10000
-        /// </summary>
-        public long Tax
-        {
-            get => _tax;
-            private set
-            {
-                if (_tax == value) return;
-                _tax = value;
-                RaisePropertyChanged();
-                ResourcesOnCostUpdate();
-            }
-        }
+        public Location CraftTown => Item.CraftingBuilding.Town;
 
         protected override void ResourcesOnCostUpdate()
         {
             if (Resources.Any(x => x.Item.Cost == 0))
             {
-                Cost = 0;
+                SetCost(0, 1);
                 return;
             }
 
-            var resourceCost = Resources.Where(r=>r.Item.IsResource).Sum(x => x.Cost) * 1000 / GetReturnCoeff();
+            var resourceCost = Resources.Where(r => r.Item.IsResource).Sum(x => x.Cost) * 1000 / GetReturnCoeff();
             var summ = Resources.Where(r => !r.Item.IsResource).Sum(x => x.Cost) + resourceCost;
 
             //TODO сделать красиво
             var artefacts = Item.ShopCategory == ShopCategory.Artefacts ? 9 : 1;
 
-//            if (Resources.Length > 0)
-//            {
-//                var pos = Resources.Max(x => x.Item.Pos);
-//                Pos = (pos.Ticks > 1) ? pos.AddTicks(-1) : pos;
-//            }
+            var cost = (summ + Tax) / AmountCrafted * artefacts;
 
-            Cost = (summ + Tax) / AmountCrafted * artefacts;
+            SetCost(cost, 1);
         }
 
         private long GetReturnCoeff()
@@ -94,27 +70,49 @@ namespace Albion.Model.Items.Requirements
             return 1000;
         }
 
-        public Location CraftTown => Item.CraftingBuilding.Town;
-
-        private const long Return35 = 1533;
-        private const long Return25 = 1330;
-        private const long Return15 = 1175;
-
         protected override void OnSetItem()
         {
-            base.OnSetItem();
-//            if (Silver > 0)
-//            {
-//                Tax = Silver;
-//                return;
-//            }
             Item.CraftingBuilding.UpdateTax += BuildingDataOnUpdateTax;
             BuildingDataOnUpdateTax();
+            base.OnSetItem();
         }
 
         private void BuildingDataOnUpdateTax()
         {
             Tax = 10000 / 100 * Item.CraftingBuilding.Tax * Item.ItemValue * 5 + Silver;
         }
+
+        /// <summary>
+        ///     tax * 10000
+        /// </summary>
+
+        #region Tax
+
+        private long _tax;
+
+        public long Tax
+        {
+            get => _tax;
+            private set
+            {
+                if (_tax == value) return;
+                _tax = value;
+                RaisePropertyChanged();
+                ResourcesOnCostUpdate();
+            }
+        }
+
+        #endregion
+
+        #region Config
+
+        /// <summary>
+        ///     silver * 10000
+        /// </summary>
+        public long Silver { get; set; }
+
+        public int AmountCrafted { get; set; }
+
+        #endregion
     }
 }
