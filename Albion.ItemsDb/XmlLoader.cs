@@ -24,12 +24,11 @@ namespace Albion.Db.Xml
 
         public Dictionary<string, CommonItem> Items { get; private set; }
 
-        public XmlLoader(IMarketDataManager marketDataManager, IBuildingDataManager buildingDataManager, ITownManager craftTownManager, ITownManager buyTownManager, ITownManager sellTownManager)
+        public XmlLoader(IBuildingDataManager buildingDataManager, ITownManager craftTownManager, ITownManager buyTownManager, ITownManager sellTownManager)
         {
             _buyTownManager = buyTownManager;
             _sellTownManager = sellTownManager;
             _craftTownManager = craftTownManager;
-            _marketDataManager = marketDataManager;
             _buildingDataManager = buildingDataManager;
         }
 

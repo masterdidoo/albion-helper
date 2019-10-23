@@ -12,12 +12,12 @@ namespace Albion.DataStore.Managers
     {
         protected override ItemMarket CreateData(string id)
         {
-            return new ProxyMarketData(id, this);
+            throw new NotImplementedException();
         }
 
-        public IEnumerable<OrdersData> GetOrders(string id)
+        public IEnumerable<OrdersData> GetOrders()
         {
-            return Rep.Find(e => e.ItemId == id);
+            return Rep.FindAll();
         }
 
         public void Save(string id, int townId, bool isFrom, ItemMarketData item)

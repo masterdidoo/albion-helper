@@ -23,7 +23,7 @@ namespace UnitTests
                 var mdm = new MarketDataManager();
                 var bdm = new BuildingDataManager(tm);
 
-                var loader = new XmlLoader(mdm, bdm, tm, tm, tm);
+                var loader = new XmlLoader(bdm, tm, tm, tm);
                 loader.LoadModel();
 
                 var buildings = loader.CraftBuildings;
@@ -61,7 +61,7 @@ namespace UnitTests
                 var mdm = new MarketDataManager();
                 var bdm = new BuildingDataManager(tm);
 
-                var loader = new XmlLoader(mdm, bdm, tm, tm, tm);
+                var loader = new XmlLoader(bdm, tm, tm, tm);
                 var model = loader.LoadModel();
 
                 var all = loader.Items;

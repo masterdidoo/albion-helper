@@ -4,6 +4,7 @@ using Albion.Db.Xml.Entity.Building;
 using Albion.Db.Xml.Enums;
 using Albion.Db.Xml.Requirements;
 using Albion.Model.Buildings;
+using Albion.Model.Data;
 using Albion.Model.Items;
 using Albion.Model.Items.Categories;
 using Albion.Model.Items.Requirements;
@@ -26,7 +27,6 @@ namespace Albion.Db.Xml
         };
 
         private readonly IBuildingDataManager _buildingDataManager;
-        private readonly IMarketDataManager _marketDataManager;
 
         private int _memCounter;
 
@@ -73,7 +73,8 @@ namespace Albion.Db.Xml
             IEnumerable<BaseResorcedRequirement> craftingRequirements, int enchant, int enchantIp = 0)
         {
             BaseResorcedRequirement[] crs = craftingRequirements.ToArray();
-            var item = new CommonItem(crs, _marketDataManager.GetData(itemId),
+//            var item = new CommonItem(crs, _marketDataManager.GetData(itemId),
+            var item = new CommonItem(crs, new ItemMarket(), 
                 BuildingByItem(iItem.uniquename),
                 _buyTownManager, 
                 _sellTownManager

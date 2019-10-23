@@ -54,10 +54,12 @@ namespace Albion.GUI.ViewModels
             mdm = new MarketDataManager();
             bdm = new BuildingDataManager(CraftTownManager);
 
-            var loader = new XmlLoader(mdm, bdm, CraftTownManager , BuyTownManager, SellTownManager);
+            var loader = new XmlLoader(bdm, CraftTownManager , BuyTownManager, SellTownManager);
             loader.LoadModel();
 
             Items = loader.Items;
+
+            LoadData();
 
             Artefacts = loader.Artefacts;
 
@@ -81,6 +83,20 @@ namespace Albion.GUI.ViewModels
             AuctionTownManager.Town = Location.None;
 
             InitAlbionParser();
+        }
+
+        private void LoadData()
+        {
+            foreach (var ordersData in mdm.GetOrders())
+            {
+                if (!Items.TryGetValue(ordersData.ItemId, out var item)) continue;
+
+                var itemMarket = item.ItemMarket;
+                var ordersItem = ordersData.IsFrom ? (ItemMarketData) itemMarket.ToMarketItems[ordersData.TownId] : itemMarket.FromMarketItems[ordersData.TownId];
+
+                ordersItem.SetOrders(ordersData.Orders, ordersData.UpdateTime);
+                ordersItem.BestPrice = ordersItem.BestPrice;
+            }
         }
 
         public TownManager AuctionTownManager { get; }
@@ -139,6 +155,8 @@ namespace Albion.GUI.ViewModels
                     ? items.OrderByDescending(x=>x.BmFastSellProfit.ProfitSum).ThenBy(x => !x.TtreeProps.IsExpanded) 
                     : items.OrderBy(x=>!x.TtreeProps.IsExpanded);
 
+//                var tmp = items.OrderByDescending(x => x.Pos).ThenBy(x => x.FullName).ToArray();
+//                return tmp;
                 return orderedItems.ThenByDescending(x => x.Pos).ThenBy(x => x.FullName);
             }
         }

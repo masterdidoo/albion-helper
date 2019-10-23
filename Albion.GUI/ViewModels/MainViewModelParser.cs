@@ -106,7 +106,11 @@ namespace Albion.GUI.ViewModels
 //            if (id[id.Length - 2] == '@' && id.Length - Level.Length - 3 > 0 &&
 //                id.Substring(id.Length - Level.Length - 3, Level.Length) == Level)
 //                id = id.Substring(0, id.Length - 2);
-            return mdm.GetData(id);
+            if (Items.TryGetValue(id, out var item)) return item.ItemMarket;
+            //TODO обработать ошибку
+            return new ItemMarket();
+//            return Items[id].ItemMarket;
+            //return mdm.GetData(id);
         }
     }
 }
