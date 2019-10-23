@@ -21,26 +21,13 @@ namespace Albion.Model.Data
     }
     public abstract class ItemMarketData
     {
-        private long _bestPrice;
-
-        public long BestPrice
-        {
-            get => _bestPrice;
-            set
-            {
-                if (_bestPrice == value) return;
-                _bestPrice = value;
-                UpdateBestPrice?.Invoke();
-            }
-        }
+        public long BestPrice { get; set; }
 
         public DateTime UpdateTime { get; set; }
 
         public List<AuctionItem> Orders { get; set; } = new List<AuctionItem>();
 
-        public event Action UpdateBestPrice;
-
-        public event Action UpdateOrders;
+        public event Action<ItemMarketData> OrdersUpdated;
 
         public void AppendOrders(IEnumerable<AuctionItem> auctionItems)
         {
@@ -49,7 +36,7 @@ namespace Albion.Model.Data
             Orders.RemoveAll(x => items.ContainsKey(x.Id));
             Orders.AddRange(items.Values);
             BestPrice = GetBestPrice();
-            UpdateOrders?.Invoke();
+            OrdersUpdated?.Invoke(this);
         }
 
         protected abstract long GetBestPrice();
@@ -59,14 +46,14 @@ namespace Albion.Model.Data
             UpdateTime = time;
             Orders = auctionItems.ToList();
             BestPrice = GetBestPrice();
-            UpdateOrders?.Invoke();
+            OrdersUpdated?.Invoke(this);
         }
 
         public void SetBestPrice(long silver)
         {
             if (BestPrice == silver) return;
             BestPrice = silver;
-            UpdateOrders?.Invoke();
+            OrdersUpdated?.Invoke(this);
         }
     }
 }

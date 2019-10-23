@@ -1,38 +1,40 @@
-﻿using Albion.Model.Items.Requirements;
+﻿using Albion.Model.Data;
 using Albion.Model.Managers;
 
 namespace Albion.Model.Items.Profits
 {
-    public abstract class BaseMarketProfit : BaseMarketRequirement
+    public abstract class BaseMarketProfit : BaseProfit
     {
-        private long _profit;
+        private int _townId;
 
-        protected BaseMarketProfit(ITownManager townManager) : base(townManager)
+        protected BaseMarketProfit(CommonItem item, ITownManager townManager) : base(item)
         {
-            CostUpdate += OnCostUpdate;
+            townManager.TownChanged += TownManagerOnTownChanged;
+            GetMarketData().OrdersUpdated += OrdersUpdated;
+
+            TownManagerOnTownChanged(townManager);
+            OrdersUpdated(GetMarketData());
         }
 
-        protected override void OnSetItem()
+        protected int TownId
         {
-            base.OnSetItem();
-            Item.CostUpdate += OnCostUpdate;
-            OnCostUpdate();
-        }
-
-        public long Profit
-        {
-            get => _profit;
-            protected set
+            get => _townId;
+            private set
             {
-                if (_profit == value) return;
-                _profit = value;
-                RaisePropertyChanged();
+                if (_townId == value) return;
+                GetMarketData().OrdersUpdated -= OrdersUpdated;
+                _townId = value;
+                GetMarketData().OrdersUpdated += OrdersUpdated;
             }
         }
 
-        private void OnCostUpdate()
+        private void TownManagerOnTownChanged(ITownManager tm)
         {
-            Profit = Item.Cost > 0 && Cost > 0 ? (Cost - Item.Cost) * 100 / Item.Cost : -100;
+            TownId = tm.TownId;
         }
+
+        protected abstract void OrdersUpdated(ItemMarketData imd);
+
+        protected abstract ItemMarketData GetMarketData();
     }
 }

@@ -41,16 +41,16 @@ namespace Albion.Model.Items.Requirements
 
         protected override void OnSetItem()
         {
-            if (_itemMarketData!=null) _itemMarketData.UpdateBestPrice -= OnUpdateSellPrice;
+            if (_itemMarketData!=null) _itemMarketData.BestPriceUpdated -= OnSellPriceUpdated;
             _itemMarketData = ItemMarketData;
-            ItemMarketData.UpdateBestPrice += OnUpdateSellPrice;
-            OnUpdateSellPrice();
+            ItemMarketData.BestPriceUpdated += OnSellPriceUpdated;
+            OnSellPriceUpdated();
         }
 
         /// <summary>
         /// вызывается при смене города и обновлении из net-пакета
         /// </summary>
-        private void OnUpdateSellPrice()
+        private void OnSellPriceUpdated()
         {
             if (_silver == ItemMarketData.BestPrice) return;
             _silver = ItemMarketData.BestPrice;

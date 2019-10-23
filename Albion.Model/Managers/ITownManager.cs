@@ -7,7 +7,7 @@ namespace Albion.Model.Managers
     {
         Location Town { get; }
         int TownId { get; }
-        event Action TownChanged;
+        event Action<ITownManager> TownChanged;
     }
 
     public class TownManager : NotifyEntity, ITownManager
@@ -21,13 +21,14 @@ namespace Albion.Model.Managers
             {
                 if (_town == value) return;
                 _town = value;
-                TownChanged?.Invoke();
-                OnPropertyChanged(nameof(Town));
+                TownChanged?.Invoke(this);
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(TownId));
             }
         }
 
         public int TownId => (int) _town;
 
-        public event Action TownChanged;
+        public event Action<ITownManager> TownChanged;
     }
 }

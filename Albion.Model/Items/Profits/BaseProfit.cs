@@ -3,46 +3,6 @@ using System.Linq;
 
 namespace Albion.Model.Items.Profits
 {
-    public class TreeProps : NotifyEntity
-    {
-        #region IsSelected
-
-        private bool _isSelected;
-
-        public bool IsSelected
-        {
-            get => _isSelected;
-            set
-            {
-                if (_isSelected == value) return;
-                _isSelected = value;
-                RaisePropertyChanged();
-                IsSelectedUpdate?.Invoke();
-            }
-        }
-
-        #endregion
-
-        #region IsExpanded
-
-        private bool _isExpanded;
-
-        public bool IsExpanded
-        {
-            get => _isExpanded;
-            set
-            {
-                if (_isExpanded == value) return;
-                _isExpanded = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public event Action IsSelectedUpdate;
-
-        #endregion
-    }
-
     public class BaseProfit : NotifyEntity
     {
         public BaseProfit(CommonItem item)
@@ -53,30 +13,39 @@ namespace Albion.Model.Items.Profits
             TreeProps.IsSelectedUpdate += TreePropsOnIsSelectedUpdate;
         }
 
-        private void TreePropsOnIsSelectedUpdate()
-        {
-            if (!TreeProps.IsSelected) return;
-            foreach (var profit in Item.Profits.Where(x=>x!=this))
-            {
-                profit.TreeProps.IsSelected = false;
-            }
-            Item.Profitt = this;
-        }
-
         public CommonItem Item { get; }
 
         public TreeProps TreeProps { get; }
 
+        private void TreePropsOnIsSelectedUpdate()
+        {
+            if (!TreeProps.IsSelected) return;
+            foreach (var profit in Item.Profits.Where(x => x != this)) profit.TreeProps.IsSelected = false;
+            Item.Profitt = this;
+        }
+
         private void ItemOnCostUpdate()
         {
-            Profit = Income - Item.Cost;
-            ProfitPercent = Profit * 100 / Item.Cost;
+            if (Item.Cost == 0)
+            {
+                Profit = 0;
+                ProfitPercent = 0;
+                ProfitSum = 0;
+            }
+            else
+            {
+                Profit = Income - Item.Cost;
+                ProfitPercent = Profit * 100 / Item.Cost;
+                ProfitSum = Profit * Count;
+            }
+
             Updated?.Invoke();
         }
 
-        protected void SetIncome(long income)
+        protected void SetIncome(long income, int count)
         {
             Income = income;
+            Count = count;
             ItemOnCostUpdate();
         }
 
@@ -127,6 +96,40 @@ namespace Albion.Model.Items.Profits
             {
                 if (_income == value) return;
                 _income = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region Count
+
+        private int _count;
+
+        public int Count
+        {
+            get => _count;
+            private set
+            {
+                if (_count == value) return;
+                _count = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region ProfitSum
+
+        private long _profitSum;
+
+        public long ProfitSum
+        {
+            get => _profitSum;
+            private set
+            {
+                if (_profitSum == value) return;
+                _profitSum = value;
                 RaisePropertyChanged();
             }
         }

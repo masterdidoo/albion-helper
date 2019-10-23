@@ -4,42 +4,28 @@ using Albion.Model.Items.Requirements.Resources;
 
 namespace Albion.Model.Items.Profits
 {
-    public class SalvageProfit : BaseRequirement
+    public class SalvageProfit : BaseProfit
     {
-        private long _profit;
-
-        public long Profit
-        {
-            get => _profit;
-            protected set
-            {
-                if (_profit == value) return;
-                _profit = value;
-                RaisePropertyChanged();
-            }
-        }
-
         public CraftingResource[] Resources => Item.CraftingRequirements[0].Resources;
-
-        protected override void OnSetItem()
-        {
-            //TODO сделать
-            foreach (var resource in Resources) resource.Item.LongSellProfit.CostUpdate += ResOnCostUpdateSale;
-
-            ResOnCostUpdateSale();
-        }
 
         private void ResOnCostUpdateSale()
         {
             if (Resources.Any(s => s.Cost == 0))
             {
-                Cost = 0;
-                Profit = -100;
+                SetIncome(0,1);
                 return;
             }
 
-            Cost = Resources.Sum(r => r.Item.LongSellProfit.Cost * r.Count / 4);
-            Profit = Item.Cost > 0 && Cost > 0 ? (Cost - Item.Cost) * 100 / Item.Cost - 100 : -100;
+            var income = Resources.Sum(r => r.Item.LongSellProfit.Income * r.Count / 4);
+            SetIncome(income, 1);
+        }
+
+        public SalvageProfit(CommonItem item) : base(item)
+        {
+            //TODO сделать
+            foreach (var resource in Resources) resource.Item.LongSellProfit.Updated += ResOnCostUpdateSale;
+
+            ResOnCostUpdateSale();
         }
     }
 }
