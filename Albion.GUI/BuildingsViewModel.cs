@@ -16,7 +16,7 @@ namespace Albion.GUI
             townManager.TownChanged += BdmOnTownChanged;
         }
 
-        private void BdmOnTownChanged()
+        private void BdmOnTownChanged(ITownManager tm)
         {
             RaisePropertyChanged(nameof(Buildings));
         }

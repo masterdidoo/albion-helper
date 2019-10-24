@@ -14,7 +14,6 @@ namespace Albion.Model.Items
         private readonly FastBuyRequirement _fastBuyRequirement;
 
         private readonly LongBuyRequirement _longBuyRequirement;
-        private long _profit = -100;
         private BaseRequirement _requirement;
 
         public CommonItem(BaseResorcedRequirement[] craftingRequirements,
@@ -45,17 +44,6 @@ namespace Albion.Model.Items
         public BmFastSellProfit BmFastSellProfit { get; }
         public SalvageProfit SalvageProfit { get; }
         public LongSellProfit LongSellProfit { get; }
-
-        public long Profit
-        {
-            get => _profit;
-            protected set
-            {
-                if (_profit == value) return;
-                _profit = value;
-                RaisePropertyChanged();
-            }
-        }
 
         public IEnumerable<object> Components => Profits.Cast<object>().Concat(Requirements);
 
@@ -110,7 +98,7 @@ namespace Albion.Model.Items
 
         #region For UI
 
-        public bool IsExpanded { get; set; } = false;
+        public TreeProps TtreeProps { get; } = new TreeProps(){ IsExpanded = false };
 
         #endregion
 
@@ -119,13 +107,29 @@ namespace Albion.Model.Items
             get => _requirement;
             set
             {
+                Cost = value.Cost;
                 if (_requirement == value) return;
                 _requirement = value;
                 RaisePropertyChanged();
             }
         }
 
-        public BaseProfit Profitt { get; set; }
+        #region Profitt
+
+        private BaseProfit _profitt;
+
+        public BaseProfit Profitt
+        {
+            get => _profitt;
+            set
+            {
+                if (_profitt == value) return;
+                _profitt = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
         public void Init()
         {
@@ -167,7 +171,7 @@ namespace Albion.Model.Items
             }
             else
             {
-                Cost = 0;
+                //Income = 0;
             }
         }
 
@@ -187,21 +191,15 @@ namespace Albion.Model.Items
                 }
             }
 
-//            var pos = Components.Max(x => x.Pos);
-//            Pos = (pos.Ticks > 1) ? pos.AddTicks(-1) : pos;
-
             if (minItem != null)
             {
                 minItem.TreeProps.IsSelected = true;
                 minItem.TreeProps.IsExpanded = true;
-                //Cost = minItem.Cost; set from UpdateMinCost
             }
             else
             {
                 Cost = 0;
             }
-
-            //Cost = Requirements.Select(x => x.Cost).Where(x => x > 0).DefaultIfEmpty(0).Min();
         }
 
         #region From Config

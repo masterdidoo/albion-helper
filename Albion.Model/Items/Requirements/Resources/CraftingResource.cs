@@ -2,13 +2,21 @@
 {
     public class CraftingResource : NotifyEntity
     {
-        protected CraftingResource()
+        public CraftingResource(CommonItem item, int count)
         {
-            TreeProps = new TreeProps {IsExpanded = true};
+            TreeProps = new TreeProps {IsExpanded = false};
+            Item = item;
+            Count = count;
+            Item.CostUpdate += ItemOnCostUpdate;
         }
 
-        public CommonItem Item { get; set; }
-        public int Count { get; set; }
+        private void ItemOnCostUpdate()
+        {
+            RaisePropertyChanged(nameof(Cost));
+        }
+
+        public CommonItem Item { get; }
+        public int Count { get; }
         public long Cost => Item.Cost * Count;
 
         public TreeProps TreeProps { get; }

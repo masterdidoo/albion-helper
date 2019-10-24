@@ -18,10 +18,10 @@ namespace Albion.DataStore.Model
             _buildingData = manager.Rep.FindById(id) ?? new BuildingData(id);
             _crafTownManager.TownChanged += ManagerOnTownChanged;
             UpdateTax += OnUpdateTax;
-            ManagerOnTownChanged();
+            ManagerOnTownChanged(crafTownManager);
         }
 
-        private void ManagerOnTownChanged()
+        private void ManagerOnTownChanged(ITownManager townManager)
         {
             UpdateTax -= OnUpdateTax;
             Tax = _buildingData.TaxDatas[_crafTownManager.TownId];

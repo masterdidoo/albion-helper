@@ -7,14 +7,14 @@
              mc:Ignorable="d" 
              Name="Root">
     <DockPanel>
-        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" Margin="2" VerticalAlignment="Center"/>
+        <CheckBox IsChecked="{Binding TreeProps.IsSelected, Mode=TwoWay}" Margin="2" VerticalAlignment="Center"/>
         <!-- <TextBlock Name="TitleBox" Text="{Binding Title, ElementName=Root}" /> -->
         <TextBlock Name="TitleBox" Text="{Binding Title, ElementName=Root}" 
                    Style="{StaticResource TextBlockStyle}"
                    MinWidth="150" />
-        <TextBox KeyDown="UIElement_OnKeyDown" Text="{Binding Silver, Mode=TwoWay, Converter={StaticResource PriceConverter}}" 
+        <TextBox KeyDown="UIElement_OnKeyDown" Text="{Binding Price, Mode=TwoWay, Converter={StaticResource PriceConverter}}" 
                  MinWidth="60" TextAlignment="Right" />
-        <TextBlock Text="{Binding Cost, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,#}}" 
+        <TextBlock Text="{Binding Income, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,#}}" 
                    Style="{StaticResource IntBlockStyle}"/>
     </DockPanel>
 </UserControl>

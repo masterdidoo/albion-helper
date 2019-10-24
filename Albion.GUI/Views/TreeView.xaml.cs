@@ -1,4 +1,6 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Input;
 
 namespace Albion.GUI.Views
 {
@@ -10,6 +12,14 @@ namespace Albion.GUI.Views
         public TreeView()
         {
             InitializeComponent();
+        }
+
+        private void UIElement_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key != Key.Enter) return;
+
+            BindingExpression be = ((TextBox)sender).GetBindingExpression(TextBox.TextProperty);
+            be?.UpdateSource();
         }
     }
 }

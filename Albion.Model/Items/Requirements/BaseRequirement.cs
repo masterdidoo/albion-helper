@@ -27,6 +27,7 @@ namespace Albion.Model.Items.Requirements
         internal void SetItem(CommonItem item)
         {
             Item = item;
+            OnSetItem();
         }
 
         protected abstract void OnSetItem();

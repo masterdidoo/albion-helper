@@ -153,11 +153,7 @@ namespace Albion.Db.Xml
         {
             var id = GetId(itemId, enchantment.enchantmentlevel - 1);
             var res = CreateResources(enchantment.upgraderequirements).ToList();
-            res.Add(new CraftingResource
-            {
-                Item = Items[id],
-                Count = 1
-            });
+            res.Add(new CraftingResource(Items[id],1));
 
             return new UpgradeRequirement(res.ToArray());
         }
@@ -194,10 +190,10 @@ namespace Albion.Db.Xml
 
             foreach (var crr in craftresource)
                 yield return new CraftingResource
-                {
-                    Item = CreateOrGetItem(GetId(crr.uniquename, crr.enchantmentlevel)),
-                    Count = crr.count
-                };
+                (
+                    CreateOrGetItem(GetId(crr.uniquename, crr.enchantmentlevel)),
+                    crr.count
+                );
         }
 
         private string GetId(string uniquename, int enchantmentlevel)

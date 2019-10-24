@@ -136,8 +136,8 @@ namespace Albion.GUI.ViewModels
                 }
 
                 var orderedItems = IsProfitOrder 
-                    ? items.OrderByDescending(x=>x.BmFastSellProfit.ProfitSum).ThenBy(x => !x.IsExpanded) 
-                    : items.OrderBy(x=>!x.IsExpanded);
+                    ? items.OrderByDescending(x=>x.BmFastSellProfit.ProfitSum).ThenBy(x => !x.TtreeProps.IsExpanded) 
+                    : items.OrderBy(x=>!x.TtreeProps.IsExpanded);
 
                 return orderedItems.ThenByDescending(x => x.Pos).ThenBy(x => x.FullName);
             }
