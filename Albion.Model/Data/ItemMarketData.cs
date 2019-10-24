@@ -41,17 +41,17 @@ namespace Albion.Model.Data
 
         protected abstract long GetBestPrice();
 
-        public void SetOrders(IEnumerable<AuctionItem> auctionItems, DateTime time)
+        public void SetOrders(IEnumerable<AuctionItem> auctionItems, DateTime time, bool isSilent = false)
         {
             UpdateTime = time;
             Orders = auctionItems.ToList();
             BestPrice = GetBestPrice();
-            OrdersUpdated?.Invoke(this);
+            if (!isSilent) OrdersUpdated?.Invoke(this);
         }
 
         public void SetBestPrice(long silver)
         {
-            if (BestPrice == silver) return;
+            //if (BestPrice == silver) return;
             BestPrice = silver;
             OrdersUpdated?.Invoke(this);
         }

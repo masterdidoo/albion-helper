@@ -31,7 +31,9 @@ namespace Albion.Model.Items.Requirements
                 if (_townId == value) return;
                 GetMarketData().OrdersUpdated -= OrdersUpdated;
                 _townId = value;
-                GetMarketData().OrdersUpdated += OrdersUpdated;
+                var md = GetMarketData();
+                md.OrdersUpdated += OrdersUpdated;
+                OrdersUpdated(md);
             }
         }
 

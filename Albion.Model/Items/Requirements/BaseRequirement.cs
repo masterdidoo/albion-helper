@@ -26,6 +26,7 @@ namespace Albion.Model.Items.Requirements
 
         internal void SetItem(CommonItem item)
         {
+            if (Item == item) return;
             Item = item;
             OnSetItem();
         }

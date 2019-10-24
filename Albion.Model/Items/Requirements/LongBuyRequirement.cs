@@ -38,6 +38,8 @@ namespace Albion.Model.Items.Requirements
                 _price = value;
                 RaisePropertyChanged();
                 OnUpdatePrice();
+                if (_price != GetMarketData().BestPrice)
+                    GetMarketData().SetBestPrice(_price);
             }
         }
 

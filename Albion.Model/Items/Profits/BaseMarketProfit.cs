@@ -25,6 +25,7 @@ namespace Albion.Model.Items.Profits
                 GetMarketData().OrdersUpdated -= OrdersUpdated;
                 _townId = value;
                 GetMarketData().OrdersUpdated += OrdersUpdated;
+                OrdersUpdated(GetMarketData());
             }
         }
 

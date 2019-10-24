@@ -94,8 +94,11 @@ namespace Albion.GUI.ViewModels
                 var itemMarket = item.ItemMarket;
                 var ordersItem = ordersData.IsFrom ? (ItemMarketData) itemMarket.ToMarketItems[ordersData.TownId] : itemMarket.FromMarketItems[ordersData.TownId];
 
-                ordersItem.SetOrders(ordersData.Orders, ordersData.UpdateTime);
-                ordersItem.BestPrice = ordersItem.BestPrice;
+                ordersItem.SetOrders(ordersData.Orders, ordersData.UpdateTime, true);
+                ordersItem.SetBestPrice(ordersItem.BestPrice);
+
+                if (item.Pos < ordersItem.UpdateTime)
+                    item.Pos = ordersItem.UpdateTime;
             }
         }
 
