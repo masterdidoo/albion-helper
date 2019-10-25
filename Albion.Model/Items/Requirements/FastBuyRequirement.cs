@@ -21,5 +21,7 @@ namespace Albion.Model.Items.Requirements
         {
             return Item.ItemMarket.FromMarketItems[TownId];
         }
+
+        public override string Type => "FB";
     }
 }

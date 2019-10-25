@@ -6,6 +6,8 @@ namespace Albion.Model.Items.Profits
 {
     public class SalvageProfit : BaseProfit
     {
+        public override string Type => "SL";
+
         public CraftingResource[] Resources => Item.CraftingRequirements[0].Resources;
 
         private void ResOnCostUpdateSale()

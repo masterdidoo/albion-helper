@@ -72,6 +72,8 @@ namespace Albion.Model.Items.Requirements
             return 1000;
         }
 
+        public override string Type => "CR";
+
         protected override void OnSetItem()
         {
             Item.CraftingBuilding.UpdateTax += ResourcesOnCostUpdate;

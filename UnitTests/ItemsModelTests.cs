@@ -62,6 +62,13 @@ namespace UnitTests
             
             var list = loader.Items.Values;
 
+            var id = 0;
+            foreach (var n in list)
+            {
+                id+=1000;
+                Debug.WriteLine("{{\"{0}\", {1}}},",n.Id, id);
+            }
+
             Assert.AreEqual(6286, list.Count);
 
             Assert.AreEqual(405, list.Count(x => x.ShopCategory == ShopCategory.Artefacts));

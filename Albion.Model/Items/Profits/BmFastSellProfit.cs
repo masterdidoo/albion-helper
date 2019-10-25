@@ -6,6 +6,8 @@ namespace Albion.Model.Items.Profits
 {
     public class BmFastSellProfit : BaseProfit
     {
+        public override string Type => "BF";
+
         public BmFastSellProfit(CommonItem item) : base(item)
         {
             Item.ItemMarket.ToMarketItems[(int) Location.BlackMarket].OrdersUpdated += OnOrdersUpdated;

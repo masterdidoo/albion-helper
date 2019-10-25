@@ -7,6 +7,8 @@ namespace Albion.Model.Items.Requirements
     {
         private bool _isChanged;
 
+        public abstract string Type { get; }
+
         protected BaseRequirement()
         {
             TreeProps = new TreeProps();
@@ -79,5 +81,13 @@ namespace Albion.Model.Items.Requirements
         }
 
         #endregion
+    }
+
+    public enum RequirementType
+    {
+        LB,
+        FB,
+        CR,
+        UP
     }
 }

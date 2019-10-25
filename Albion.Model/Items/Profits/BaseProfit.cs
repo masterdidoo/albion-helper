@@ -3,10 +3,11 @@ using System.Linq;
 
 namespace Albion.Model.Items.Profits
 {
-    public class BaseProfit : NotifyEntity
+    public abstract class BaseProfit : NotifyEntity
     {
         private bool _isChanged;
-        public BaseProfit(CommonItem item)
+
+        protected BaseProfit(CommonItem item)
         {
             Item = item;
             Item.CostUpdate += ItemOnCostUpdate;
@@ -140,6 +141,8 @@ namespace Albion.Model.Items.Profits
                 _isChanged = true;
             }
         }
+
+        public abstract string Type { get; }
 
         #endregion
     }

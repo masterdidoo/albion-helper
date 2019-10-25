@@ -5,6 +5,8 @@ namespace Albion.Model.Items.Profits
 {
     public class LongSellProfit : BaseMarketProfit
     {
+        public override string Type => "LS";
+
         public LongSellProfit(CommonItem item, ITownManager townManager) : base(item, townManager)
         {
         }

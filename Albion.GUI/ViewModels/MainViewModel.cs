@@ -92,7 +92,7 @@ namespace Albion.GUI.ViewModels
                 if (!Items.TryGetValue(ordersData.ItemId, out var item)) continue;
 
                 var itemMarket = item.ItemMarket;
-                var ordersItem = ordersData.IsFrom ? (ItemMarketData) itemMarket.ToMarketItems[ordersData.TownId] : itemMarket.FromMarketItems[ordersData.TownId];
+                var ordersItem = !ordersData.IsFrom ? (ItemMarketData) itemMarket.ToMarketItems[ordersData.TownId] : itemMarket.FromMarketItems[ordersData.TownId];
 
                 ordersItem.SetOrders(ordersData.Orders, ordersData.UpdateTime, true);
                 ordersItem.SetBestPrice(ordersItem.BestPrice);
@@ -155,7 +155,7 @@ namespace Albion.GUI.ViewModels
                 }
 
                 var orderedItems = IsProfitOrder 
-                    ? items.OrderByDescending(x=>x.BmFastSellProfit.ProfitSum).ThenBy(x => !x.TtreeProps.IsExpanded) 
+                    ? items.OrderByDescending(x=>x.Profitt?.ProfitSum).ThenBy(x => !x.TtreeProps.IsExpanded) 
                     : items.OrderBy(x=>!x.TtreeProps.IsExpanded);
 
 //                var tmp = items.OrderByDescending(x => x.Pos).ThenBy(x => x.FullName).ToArray();

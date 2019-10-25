@@ -21,5 +21,7 @@ namespace Albion.Model.Items.Profits
         {
             return Item.ItemMarket.ToMarketItems[TownId];
         }
+
+        public override string Type => "FS";
     }
 }

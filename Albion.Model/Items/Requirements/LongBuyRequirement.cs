@@ -44,5 +44,7 @@ namespace Albion.Model.Items.Requirements
         }
 
         #endregion
+
+        public override string Type => "LB";
     }
 }

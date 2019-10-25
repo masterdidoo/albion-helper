@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using LiteDB;
 
 namespace Albion.DataStore.Db
@@ -20,6 +21,8 @@ namespace Albion.DataStore.Db
 
         public static void Close()
         {
+//            var x = Instance.LiteDatabase.GetCollection("OrdersData").Find(Query.EQ("ItemId", "T4_2H_FIRESTAF_HELL@3")).ToArray();
+//            var x2 = Instance.LiteDatabase.GetCollection("OrdersData").Delete(Query.EQ("ItemId", "T4_2H_FIRESTAF_HELL@3"));
             Instance.LiteDatabase.Shrink();
             Instance.LiteDatabase.Dispose();
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Albion.Model.Buildings;
 using Albion.Model.Data;
@@ -111,6 +112,7 @@ namespace Albion.Model.Items
                 if (_requirement == value) return;
                 _requirement = value;
                 RaisePropertyChanged();
+                RequirementUpdated?.Invoke();
             }
         }
 
@@ -156,7 +158,7 @@ namespace Albion.Model.Items
             foreach (var item in ProfitsAutoMin)
             {
                 item.TreeProps.IsSelected = false;
-                item.TreeProps.IsExpanded = false;
+                //item.TreeProps.IsExpanded = false;
                 if (max < item.Income && item.Income > 0)
                 {
                     max = item.Income;
@@ -167,7 +169,7 @@ namespace Albion.Model.Items
             if (maxItem != null)
             {
                 maxItem.TreeProps.IsSelected = true;
-                maxItem.TreeProps.IsExpanded = true;
+                //maxItem.TreeProps.IsExpanded = true;
             }
             else
             {
@@ -183,7 +185,7 @@ namespace Albion.Model.Items
             foreach (var item in RequirementsAutoMin)
             {
                 item.TreeProps.IsSelected = false;
-                item.TreeProps.IsExpanded = false;
+                //item.TreeProps.IsExpanded = false;
                 if (min > item.Cost && item.Cost > 0)
                 {
                     min = item.Cost;
@@ -194,13 +196,15 @@ namespace Albion.Model.Items
             if (minItem != null)
             {
                 minItem.TreeProps.IsSelected = true;
-                minItem.TreeProps.IsExpanded = true;
+                //minItem.TreeProps.IsExpanded = true;
             }
             else
             {
                 Cost = 0;
             }
         }
+
+        public event Action RequirementUpdated;
 
         #region From Config
 

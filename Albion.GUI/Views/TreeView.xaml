@@ -28,23 +28,31 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                         <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="1" Text="Task" Margin="2,0,5,0" />
                     <GridSplitter Grid.Column="1" Width="3" Background="Black" />
                     <Border Grid.Column="2" BorderThickness="0,0,1,0" BorderBrush="Black">
-                        <TextBlock Text="Cost" Margin="2,0,2,0" Width="60" />
+                        <TextBlock Text="X" Width="38" />
                     </Border>
                     <Border Grid.Column="3" BorderThickness="0,0,1,0" BorderBrush="Black">
-                        <TextBlock Text="Income" Margin="3,0,3,0" Width="60" />
+                        <TextBlock Text="Cost" Margin="3,0,3,0" Width="60" />
                     </Border>
                     <Border Grid.Column="4" BorderThickness="0,0,1,0" BorderBrush="Black">
-                        <TextBlock Text="Profit" Margin="3,0,3,0" Width="60" />
+                        <TextBlock Text="X2" Margin="3,0,3,0" Width="20" />
                     </Border>
                     <Border Grid.Column="5" BorderThickness="0,0,1,0" BorderBrush="Black">
-                        <TextBlock Text="%" Margin="3,0,3,0" Width="60" />
+                        <TextBlock Text="Profit" Margin="3,0,3,0" Width="60" />
                     </Border>
                     <Border Grid.Column="6" BorderThickness="0,0,1,0" BorderBrush="Black">
-                        <TextBlock Text="Sum" Margin="3,0,3,0" Width="60" />
+                        <TextBlock Text="%" Margin="3,0,3,0" Width="60" />
+                    </Border>
+                    <Border Grid.Column="7" BorderThickness="0,0,1,0" BorderBrush="Black">
+                        <CheckBox IsChecked="{Binding IsProfitOrder}" Content="Sum" Margin="3,0,3,0" Width="60" />
+                    </Border>
+                    <Border Grid.Column="8" BorderThickness="0,0,1,0" BorderBrush="Black">
+                        <TextBlock Text="Count" Margin="3,0,3,0" Width="60" />
                     </Border>
                 </Grid>
             </TreeViewItem.Header>
@@ -74,29 +82,39 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                             <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="{Binding FullName, Mode=OneTime}" />
                         <Border Grid.Column="1" BorderBrush="Black" BorderThickness="0,0,1,0">
+                            <TextBlock 
+                                Text="{Binding Requirement.Type, Mode=OneWay}" Width="40" />
+                        </Border>
+                        <Border Grid.Column="2" BorderBrush="Black" BorderThickness="0,0,1,0">
                             <TextBlock
                                 Text="{Binding Requirement.Cost, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}"
                                 Style="{StaticResource IntBlockStyle}" />
                         </Border>
-                        <Border Grid.Column="2" BorderBrush="Black" BorderThickness="0,0,1,0">
-                            <TextBlock Text="{Binding Profitt.Income, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}"
-                                       Style="{StaticResource IntBlockStyle}" />
-                        </Border>
                         <Border Grid.Column="3" BorderBrush="Black" BorderThickness="0,0,1,0">
+                            <TextBlock Text="{Binding Profitt.Type, Mode=OneWay}" Width="26" TextAlignment="Center"/>
+                        </Border>
+                        <Border Grid.Column="4" BorderBrush="Black" BorderThickness="0,0,1,0">
                             <TextBlock
                                 Text="{Binding Profitt.Profit, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}"
                                 Style="{StaticResource IntBlockStyle}" />
                         </Border>
-                        <Border Grid.Column="4" BorderBrush="Black" BorderThickness="0,0,1,0">
+                        <Border Grid.Column="5" BorderBrush="Black" BorderThickness="0,0,1,0">
                             <TextBlock Text="{Binding Profitt.ProfitPercent, Mode=OneWay}"
                                    Style="{StaticResource IntBlockStyle}" />
                         </Border>
-                        <Border Grid.Column="5" BorderBrush="Black" BorderThickness="0,0,1,0">
+                        <Border Grid.Column="6" BorderBrush="Black" BorderThickness="0,0,1,0">
                             <TextBlock
                                 Text="{Binding Profitt.ProfitSum, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}"
+                                Style="{StaticResource IntBlockStyle}" />
+                        </Border>
+                        <Border Grid.Column="7" BorderBrush="Black" BorderThickness="0,0,1,0">
+                            <TextBlock
+                                Text="{Binding Profitt.Count, Mode=OneWay}"
                                 Style="{StaticResource IntBlockStyle}" />
                         </Border>
                     </Grid>
