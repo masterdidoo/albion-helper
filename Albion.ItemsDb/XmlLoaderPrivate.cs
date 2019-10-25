@@ -215,7 +215,7 @@ namespace Albion.Db.Xml
         {
             var id = craftBuilding.uniquename;
             var itemBuilding = _buildingDataManager.GetData(id);
-            return new CraftBuilding(itemBuilding)
+            return new CraftBuilding(itemBuilding, _craftTownManager)
             {
                 Id = id
             };

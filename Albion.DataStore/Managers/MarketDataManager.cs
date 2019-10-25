@@ -22,7 +22,7 @@ namespace Albion.DataStore.Managers
 
         public void Save(string id, int townId, bool isFrom, ItemMarketData item)
         {
-            Rep.Upsert(new OrdersData()
+            var ord = new OrdersData()
             {
                 Id = $"{id}-{isFrom}-{townId}",
                 ItemId = id,
@@ -31,7 +31,8 @@ namespace Albion.DataStore.Managers
                 Orders = item.Orders,
                 UpdateTime = item.UpdateTime,
                 BestPrice = item.BestPrice,
-            });
+            };
+            Rep.Upsert(ord.Id, ord);
         }
     }
 }

@@ -20,6 +20,8 @@ namespace Albion.Model.Items.Requirements
 
         protected override void ResourcesOnCostUpdate()
         {
+            Tax = 10000 / 100 * Item.CraftingBuilding.Tax * Item.ItemValue * 5 + Silver;
+
             if (Resources.Any(x => x.Item.Cost == 0))
             {
                 SetCost(0, 1);
@@ -72,14 +74,9 @@ namespace Albion.Model.Items.Requirements
 
         protected override void OnSetItem()
         {
-            Item.CraftingBuilding.UpdateTax += BuildingDataOnUpdateTax;
-            BuildingDataOnUpdateTax();
+            Item.CraftingBuilding.UpdateTax += ResourcesOnCostUpdate;
+            ResourcesOnCostUpdate();
             base.OnSetItem();
-        }
-
-        private void BuildingDataOnUpdateTax()
-        {
-            Tax = 10000 / 100 * Item.CraftingBuilding.Tax * Item.ItemValue * 5 + Silver;
         }
 
         /// <summary>
@@ -98,7 +95,6 @@ namespace Albion.Model.Items.Requirements
                 if (_tax == value) return;
                 _tax = value;
                 RaisePropertyChanged();
-                ResourcesOnCostUpdate();
             }
         }
 

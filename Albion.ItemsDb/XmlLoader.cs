@@ -78,7 +78,7 @@ namespace Albion.Db.Xml
 
         public int LoadModel()
         {
-            NoneBuilding = new CraftBuilding(new ItemBuilding());
+            NoneBuilding = new CraftBuilding(new ItemBuilding(), _craftTownManager);
             var buildingsDb = LoadBuildingsXml();
             var itemsDb = LoadItemsXml();
 

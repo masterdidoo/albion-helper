@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Albion.Common;
 using Albion.Model.Data;
+using Albion.Model.Managers;
 
 namespace Albion.Model.Buildings
 {
@@ -10,10 +11,17 @@ namespace Albion.Model.Buildings
     {
         private readonly ItemBuilding _itemBuilding;
 
-        public CraftBuilding(ItemBuilding itemBuilding)
+        public CraftBuilding(ItemBuilding itemBuilding, ITownManager craftTownManager)
         {
             _itemBuilding = itemBuilding;
             _itemBuilding.UpdateTax += ItemBuildingOnUpdateTax;
+            craftTownManager.TownChanged += CraftTownManagerOnTownChanged;
+        }
+
+        private void CraftTownManagerOnTownChanged(ITownManager ctm)
+        {
+            Town = ctm.Town;
+            ItemBuildingOnUpdateTax();
         }
 
         public int Tax
