@@ -5,8 +5,10 @@ namespace Albion.Model.Data
     public class CostCalcOptions
     {
         private bool _isArtefactsLongBuyEnabled = true;
+        private bool _isBmDisabled;
         private bool _isLongBuyDisabled;
         private bool _isLongSellDisabled;
+        private bool _isSalvageDisabled;
         public static CostCalcOptions Instance { get; } = new CostCalcOptions();
 
         public bool IsLongBuyDisabled
@@ -38,6 +40,28 @@ namespace Albion.Model.Data
             {
                 if (_isLongSellDisabled == value) return;
                 _isLongSellDisabled = value;
+                Changed?.Invoke();
+            }
+        }
+
+        public bool IsBmDisabled
+        {
+            get => _isBmDisabled;
+            set
+            {
+                if (_isBmDisabled == value) return;
+                _isBmDisabled = value;
+                Changed?.Invoke();
+            }
+        }
+
+        public bool IsSalvageDisabled
+        {
+            get => _isSalvageDisabled;
+            set
+            {
+                if (_isSalvageDisabled == value) return;
+                _isSalvageDisabled = value;
                 Changed?.Invoke();
             }
         }

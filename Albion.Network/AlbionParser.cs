@@ -22,7 +22,8 @@ namespace Albion.Network
         private readonly Dictionary<OperationCodes, BaseHandler> _operationHandlers =
             new Dictionary<OperationCodes, BaseHandler>();
 
-        private CancellationTokenSource[] _treads;
+        private Thread[] _treads;
+        private CancellationTokenSource cts;
 
         protected override void OnEvent(byte code, Dictionary<byte, object> parameters)
         {
@@ -157,10 +158,10 @@ namespace Albion.Network
         public void Start()
         {
             var devices = LivePacketDevice.AllLocalMachine;
+            cts = new CancellationTokenSource();
             _treads = devices.Select(device =>
             {
 
-                var cts = new CancellationTokenSource();
                 var token = cts.Token;
                 var tread = new Thread(() =>
                     {
@@ -174,7 +175,7 @@ namespace Albion.Network
                         }
                     });
                     tread.Start();
-                return cts;
+                return tread;
             }).ToArray();
         }
 
@@ -197,10 +198,11 @@ namespace Albion.Network
         public void Dispose()
         {
             if (_treads==null) return;
-            foreach (var thread in _treads)
-            {
-                thread.Cancel();
-            }
+            cts.Cancel();
+//            foreach (var thread in _treads)
+//            {
+//                thread.Abort();
+//            }
         }
     }
 }

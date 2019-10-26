@@ -34,6 +34,7 @@ namespace Albion.Model.Items
             LongSellProfit = new LongSellProfit(this,sellTownManager);
             FastSellProfit = new FastSellProfit(this,sellTownManager);
             BmFastSellProfit = new BmFastSellProfit(this);
+            BmLongSellProfit = new BmLongSellProfit(this);
 
             if (CraftingRequirements.Length > 0 && CraftingRequirements[0].Resources.Length > 0)
                 SalvageProfit = new SalvageProfit(this);
@@ -43,6 +44,9 @@ namespace Albion.Model.Items
 
         public FastSellProfit FastSellProfit { get; }
         public BmFastSellProfit BmFastSellProfit { get; }
+
+        public BmLongSellProfit BmLongSellProfit { get; }
+
         public SalvageProfit SalvageProfit { get; }
         public LongSellProfit LongSellProfit { get; }
 
@@ -64,6 +68,7 @@ namespace Albion.Model.Items
             {
                 if (SalvageProfit != null) yield return SalvageProfit;
                 yield return BmFastSellProfit;
+                yield return BmLongSellProfit;
                 yield return FastSellProfit;
                 yield return LongSellProfit;
             }
@@ -85,8 +90,14 @@ namespace Albion.Model.Items
         {
             get
             {
-                if (SalvageProfit != null) yield return SalvageProfit;
-                yield return BmFastSellProfit;
+                if (!CostCalcOptions.Instance.IsSalvageDisabled)
+                    if (SalvageProfit != null) yield return SalvageProfit;
+                if (!CostCalcOptions.Instance.IsBmDisabled)
+                {
+                    yield return BmFastSellProfit;
+                    if (!CostCalcOptions.Instance.IsLongSellDisabled)
+                        yield return BmLongSellProfit;
+                }
                 yield return FastSellProfit;
                 if (!CostCalcOptions.Instance.IsLongSellDisabled)
                     yield return LongSellProfit;

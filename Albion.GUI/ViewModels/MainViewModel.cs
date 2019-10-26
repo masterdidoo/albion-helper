@@ -84,6 +84,8 @@ namespace Albion.GUI.ViewModels
             AuctionTownManager.Town = Location.None;
 
             InitAlbionParser();
+
+            CostCalcOptions.Instance.Changed += RefreshTree;
         }
 
         private void ClearBm()
@@ -249,8 +251,8 @@ namespace Albion.GUI.ViewModels
 
         public void Dispose()
         {
-            _albionParser.Dispose();
             DataBase.Close();
+            _albionParser.Dispose();
         }
     }
 }

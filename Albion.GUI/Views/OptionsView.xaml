@@ -15,5 +15,7 @@
             IsEnabled="{Binding IsChecked, ElementName=LongBuy}"
             Margin="16,0,0,0"/>
         <CheckBox Content="Disable long sell" IsChecked="{Binding IsLongSellDisabled}"/>
+        <CheckBox Content="Disable Black Market" IsChecked="{Binding IsBmDisabled}"/>
+        <CheckBox Content="Disable Salvage" IsChecked="{Binding IsSalvageDisabled}"/>
     </StackPanel>
 </UserControl>

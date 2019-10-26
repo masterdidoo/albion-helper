@@ -152,6 +152,7 @@
                             Style="{StaticResource IntBlockStyle}" />
                     </DockPanel>
                 </HierarchicalDataTemplate>
+
                 <HierarchicalDataTemplate DataType="{x:Type profits:FastSellProfit}">
                     <DockPanel>
                         <CheckBox IsChecked="{Binding TreeProps.IsSelected, Mode=TwoWay}" Margin="2" VerticalAlignment="Center"/>
@@ -162,6 +163,22 @@
                                  MinWidth="60" TextAlignment="Right" />
                         <TextBlock Text="{Binding Income, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,#}}" 
                                    Style="{StaticResource IntBlockStyle}"/>
+                    </DockPanel>
+                </HierarchicalDataTemplate>
+
+                <HierarchicalDataTemplate DataType="{x:Type profits:BmLongSellProfit}">
+                    <DockPanel>
+                        <CheckBox IsChecked="{Binding TreeProps.IsSelected, Mode=TwoWay}" Margin="2" VerticalAlignment="Center"/>
+                        <TextBlock Text="BM Long" 
+                                   Style="{StaticResource TextBlockStyle}"
+                                   MinWidth="150" />
+                        <TextBox KeyDown="UIElement_OnKeyDown" Text="{Binding Price, Mode=TwoWay, Converter={StaticResource PriceConverter}}" 
+                                 MinWidth="60" TextAlignment="Right" />
+                        <TextBlock Text="{Binding Income, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,#}}" 
+                                   Style="{StaticResource IntBlockStyle}"/>
+                        <TextBlock
+                            Text="{Binding Profit, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,#}}"
+                            Style="{StaticResource IntBlockStyle}" />
                     </DockPanel>
                 </HierarchicalDataTemplate>
 
