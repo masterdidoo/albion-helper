@@ -170,7 +170,7 @@ namespace Albion.Model.Items
             {
                 item.TreeProps.IsSelected = false;
                 //item.TreeProps.IsExpanded = false;
-                if (max < item.Income && item.Income > 0)
+                if (max < item.Income)
                 {
                     max = item.Income;
                     maxItem = item;
