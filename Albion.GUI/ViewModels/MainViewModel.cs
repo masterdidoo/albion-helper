@@ -152,6 +152,14 @@ namespace Albion.GUI.ViewModels
 
         public IEnumerable<Location> Towns => typeof(Location).GetEnumValues().Cast<Location>();
 
+        private static readonly HashSet<ShopCategory> _simpleItems = new HashSet<ShopCategory>()
+        {
+            Model.Items.Categories.ShopCategory.Armor,
+            Model.Items.Categories.ShopCategory.Melee,
+            Model.Items.Categories.ShopCategory.Ranged,
+            Model.Items.Categories.ShopCategory.Magic,
+        };
+
         public IEnumerable<CommonItem> CommonItems
         {
             get
@@ -159,7 +167,21 @@ namespace Albion.GUI.ViewModels
                 IEnumerable<CommonItem> items = Items.Values;
                 if (Tir >= 0) items = items.Where(x => x.Tir == Tir);
                 if (Enchant >= 0) items = items.Where(x => x.Enchant == Enchant);
-                if (ShopCategory != null) items = items.Where(x => x.ShopCategory == ShopCategory);
+                if (ShopCategory != null)
+                {
+                    switch (ShopCategory)
+                    {
+                        case Model.Items.Categories.ShopCategory.SimpleItems:
+                            items = items.Where(x => _simpleItems.Contains(x.ShopCategory)).Where(x=>!x.IsArtefacted);
+                            break;
+                        case Model.Items.Categories.ShopCategory.ArtefactsItems:
+                            items = items.Where(x => _simpleItems.Contains(x.ShopCategory)).Where(x => x.IsArtefacted);
+                            break;
+                        default:
+                            items = items.Where(x => x.ShopCategory == ShopCategory);
+                            break;
+                    }
+                }
                 if (ShopSubCategory != null) items = items.Where(x => x.ShopSubCategory == ShopSubCategory);
                 if (!_filterTest.IsNullOrEmpty())
                 {

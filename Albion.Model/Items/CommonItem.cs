@@ -25,14 +25,17 @@ namespace Albion.Model.Items
         )
         {
             CraftingRequirements = craftingRequirements;
+            IsArtefacted = CraftingRequirements.SelectMany(x => x.Resources)
+                .Any(r => r.Item.ShopCategory == ShopCategory.Artefacts);
+
             CraftingBuilding = craftingBuilding;
             ItemMarket = itemMarket;
 
             _longBuyRequirement = new LongBuyRequirement(buyTownManager);
             _fastBuyRequirement = new FastBuyRequirement(buyTownManager);
 
-            LongSellProfit = new LongSellProfit(this,sellTownManager);
-            FastSellProfit = new FastSellProfit(this,sellTownManager);
+            LongSellProfit = new LongSellProfit(this, sellTownManager);
+            FastSellProfit = new FastSellProfit(this, sellTownManager);
             BmFastSellProfit = new BmFastSellProfit(this);
             BmLongSellProfit = new BmLongSellProfit(this);
 
@@ -91,13 +94,15 @@ namespace Albion.Model.Items
             get
             {
                 if (!CostCalcOptions.Instance.IsSalvageDisabled)
-                    if (SalvageProfit != null) yield return SalvageProfit;
+                    if (SalvageProfit != null)
+                        yield return SalvageProfit;
                 if (!CostCalcOptions.Instance.IsBmDisabled)
                 {
                     yield return BmFastSellProfit;
                     if (!CostCalcOptions.Instance.IsLongSellDisabled)
                         yield return BmLongSellProfit;
                 }
+
                 yield return FastSellProfit;
                 if (!CostCalcOptions.Instance.IsLongSellDisabled)
                     yield return LongSellProfit;
@@ -110,7 +115,7 @@ namespace Albion.Model.Items
 
         #region For UI
 
-        public TreeProps TreeProps { get; } = new TreeProps(){ IsExpanded = false };
+        public TreeProps TreeProps { get; } = new TreeProps {IsExpanded = false};
 
         #endregion
 
@@ -127,30 +132,13 @@ namespace Albion.Model.Items
             }
         }
 
-        #region Profitt
-
-        private BaseProfit _profitt;
-
-        public BaseProfit Profitt
-        {
-            get => _profitt;
-            set
-            {
-                if (_profitt == value) return;
-                _profitt = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        #endregion
+        public bool IsArtefacted { get; }
 
         public void Init()
         {
             foreach (var cr in Profits)
-            {
                 //cr.SetItem(this);
                 cr.Updated += ProfitsOnUpdated;
-            }
 
             foreach (var cr in Requirements)
             {
@@ -182,10 +170,6 @@ namespace Albion.Model.Items
                 maxItem.TreeProps.IsSelected = true;
                 //maxItem.TreeProps.IsExpanded = true;
             }
-            else
-            {
-                //Income = 0;
-            }
         }
 
         private void RequirementsOnUpdated()
@@ -205,17 +189,29 @@ namespace Albion.Model.Items
             }
 
             if (minItem != null)
-            {
                 minItem.TreeProps.IsSelected = true;
-                //minItem.TreeProps.IsExpanded = true;
-            }
             else
-            {
                 Cost = 0;
-            }
         }
 
         public event Action RequirementUpdated;
+
+        #region Profitt
+
+        private BaseProfit _profitt;
+
+        public BaseProfit Profitt
+        {
+            get => _profitt;
+            set
+            {
+                if (_profitt == value) return;
+                _profitt = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
         #region From Config
 

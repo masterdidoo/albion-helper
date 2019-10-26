@@ -23,5 +23,7 @@
         Magic,
         Melee,
         Cityresources,
+        SimpleItems,
+        ArtefactsItems,
     }
 }
