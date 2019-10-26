@@ -6333,5 +6333,10 @@ namespace Albion.DataStore.Managers
 
 
         #endregion
+
+        public void DeleteOrders(int id, bool isFrom)
+        {
+            Rep.Delete(x => x.TownId == id && x.IsFrom == isFrom);
+        }
     }
 }

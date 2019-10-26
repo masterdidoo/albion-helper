@@ -29,6 +29,7 @@ namespace Albion.Db.Xml
         private readonly IBuildingDataManager _buildingDataManager;
 
         private int _memCounter;
+        private BaseResorcedRequirement[] _empty = new BaseResorcedRequirement[0];
 
 
         private CommonItem CreateOrGetItem(IItem arg)
@@ -72,7 +73,8 @@ namespace Albion.Db.Xml
         private CommonItem CreateCommonItem(IItem iItem, string itemId,
             IEnumerable<BaseResorcedRequirement> craftingRequirements, int enchant, int enchantIp = 0)
         {
-            BaseResorcedRequirement[] crs = craftingRequirements.ToArray();
+            
+            BaseResorcedRequirement[] crs = (iItem.shopcategory == shopCategory.token) ? _empty : craftingRequirements.ToArray();
 //            var item = new CommonItem(crs, _marketDataManager.GetData(itemId),
             var item = new CommonItem(crs, new ItemMarket(), 
                 BuildingByItem(iItem.uniquename),
@@ -110,7 +112,7 @@ namespace Albion.Db.Xml
                 return 128;
 
             if (iItem.shopcategory == shopCategory.artefacts)
-                return 1000;
+                return (int?)(iItem as IItemValued)?.itemvalue ?? 1000;
 
             if (iItem.shopcategory == shopCategory.resources)
                 return iItem.tier < 3 ? 0 : iItem.tier > 2 ? ResourceItemValues[enchant][iItem.tier - 3] : iItem.tier;

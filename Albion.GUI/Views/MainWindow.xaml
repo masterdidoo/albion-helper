@@ -20,6 +20,7 @@
             <ComboBox SelectedValue="{Binding ShopCategory}" DisplayMemberPath="Item1" ItemsSource="{Binding ShopCategories}" SelectedValuePath="Item2"/>
             <ComboBox SelectedValue="{Binding ShopSubCategory}" DisplayMemberPath="Item1" ItemsSource="{Binding ShopSubCategories}" SelectedValuePath="Item2"/>
             <Button Command="{Binding RefreshCommand}">REFRESH</Button>
+            <Button Command="{Binding ClearBmCommand}">Clear BM</Button>
             <TextBlock VerticalAlignment="Center">Filter:</TextBlock>
             <TextBox Text="{Binding FilterTest, UpdateSourceTrigger=PropertyChanged, Delay=100}" />
         </DockPanel>

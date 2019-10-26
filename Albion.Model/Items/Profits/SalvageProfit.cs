@@ -18,7 +18,7 @@ namespace Albion.Model.Items.Profits
                 return;
             }
 
-            var income = Resources.Sum(r => r.Item.LongSellProfit.Income * r.Count / 4);
+            var income = Resources.Sum(r => r.Item.Profitt?.Income ?? 0 * r.Count / 4);
             SetIncome(income, 1);
         }
 

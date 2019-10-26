@@ -41,9 +41,9 @@ namespace Albion.Model.Data
 
         protected abstract long GetBestPrice();
 
-        public void SetOrders(IEnumerable<AuctionItem> auctionItems, DateTime time, bool isSilent = false)
+        public void SetOrders(IEnumerable<AuctionItem> auctionItems, DateTime? time = null, bool isSilent = false)
         {
-            UpdateTime = time;
+            if (time != null) UpdateTime = time.Value;
             Orders = auctionItems.ToList();
             BestPrice = GetBestPrice();
             if (!isSilent) OrdersUpdated?.Invoke(this);

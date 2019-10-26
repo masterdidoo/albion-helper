@@ -99,7 +99,7 @@ namespace Albion.Model.Items
 
         #region For UI
 
-        public TreeProps TtreeProps { get; } = new TreeProps(){ IsExpanded = false };
+        public TreeProps TreeProps { get; } = new TreeProps(){ IsExpanded = false };
 
         #endregion
 

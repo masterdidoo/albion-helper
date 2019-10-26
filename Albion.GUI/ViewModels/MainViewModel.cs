@@ -39,6 +39,7 @@ namespace Albion.GUI.ViewModels
         public MainViewModel()
         {
             RefreshCommand = new RelayCommand(() => RaisePropertyChanged(nameof(CommonItems)));
+            ClearBmCommand = new RelayCommand(ClearBm);
 
             Tirs = Enumerable.Repeat(new Tuple<string,int?>("-",null),1).Concat(Enumerable.Range(1,8).Select(x=>Tuple.Create(x.ToString(),(int?) x)));
             Enchants = Enumerable.Repeat(new Tuple<string,int?>("-",null),1).Concat(Enumerable.Range(0,4).Select(x=>Tuple.Create(x.ToString(),(int?) x)));
@@ -83,6 +84,15 @@ namespace Albion.GUI.ViewModels
             AuctionTownManager.Town = Location.None;
 
             InitAlbionParser();
+        }
+
+        private void ClearBm()
+        {
+            mdm.DeleteOrders((int)Location.BlackMarket, false);
+            foreach (var item in Items.Values)
+            {
+                item.ItemMarket.ToMarketItems[(int)Location.BlackMarket].SetOrders(Enumerable.Empty<AuctionItem>());
+            }
         }
 
         private void LoadData()
@@ -155,8 +165,8 @@ namespace Albion.GUI.ViewModels
                 }
 
                 var orderedItems = IsProfitOrder 
-                    ? items.OrderByDescending(x=>x.Profitt?.ProfitSum).ThenBy(x => !x.TtreeProps.IsExpanded) 
-                    : items.OrderBy(x=>!x.TtreeProps.IsExpanded);
+                    ? items.OrderByDescending(x=>x.Profitt?.ProfitSum).ThenBy(x => !x.TreeProps.IsExpanded) 
+                    : items.OrderBy(x=>!x.TreeProps.IsExpanded);
 
 //                var tmp = items.OrderByDescending(x => x.Pos).ThenBy(x => x.FullName).ToArray();
 //                return tmp;
@@ -233,6 +243,7 @@ namespace Albion.GUI.ViewModels
         public IEnumerable<Tuple<string, int?>> Enchants { get; }
 
         public ICommand RefreshCommand { get; }
+        public ICommand ClearBmCommand { get; }
 
         public CostCalcOptions CostCalcOptions => CostCalcOptions.Instance;
 
