@@ -43,6 +43,12 @@ namespace Albion.Model.Items.Requirements
         {
             switch (Item.ShopSubCategory)
             {
+                case ShopSubCategory.Wood:
+                case ShopSubCategory.Ore:
+                case ShopSubCategory.Fiber:
+                case ShopSubCategory.Hide:
+                    //TODO add transmut
+                    return 1000;
                 case ShopSubCategory.Planks:
                     if (CraftTown == Location.FortSterling) return Return35;
                     break;

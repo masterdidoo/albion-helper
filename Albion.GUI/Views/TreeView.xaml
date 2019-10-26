@@ -46,7 +46,7 @@
                         <TextBlock Text="Profit" Margin="3,0,3,0" Width="60" />
                     </Border>
                     <Border Grid.Column="6" BorderThickness="0,0,1,0" BorderBrush="Black">
-                        <TextBlock Text="%" Margin="3,0,3,0" Width="60" />
+                        <CheckBox IsChecked="{Binding IsProfitPercentOrder}" Content="%" Margin="3,0,3,0" Width="60" />
                     </Border>
                     <Border Grid.Column="7" BorderThickness="0,0,1,0" BorderBrush="Black">
                         <CheckBox IsChecked="{Binding IsProfitOrder}" Content="Sum" Margin="3,0,3,0" Width="60" />

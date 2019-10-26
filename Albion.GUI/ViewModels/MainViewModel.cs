@@ -35,6 +35,7 @@ namespace Albion.GUI.ViewModels
         private int? _tir;
         private readonly DebounceDispatcher _debounceDispatcher;
         private bool _isProfitOrder;
+        private bool _isProfitPercentOrder;
 
         public MainViewModel()
         {
@@ -166,13 +167,28 @@ namespace Albion.GUI.ViewModels
                     items = items.Where(x => x.Name.ToUpper().Contains(filterTest));
                 }
 
-                var orderedItems = IsProfitOrder 
-                    ? items.OrderByDescending(x=>x.Profitt?.ProfitSum).ThenBy(x => !x.TreeProps.IsExpanded) 
-                    : items.OrderBy(x=>!x.TreeProps.IsExpanded);
+                var orderedItems =
+                    IsProfitPercentOrder 
+                        ? items.OrderByDescending(x => x.Profitt?.ProfitPercent)
+                            : IsProfitOrder 
+                                ? items.OrderByDescending(x=>x.Profitt?.ProfitSum) 
+                                : items.OrderBy(x=>!x.TreeProps.IsExpanded);
 
 //                var tmp = items.OrderByDescending(x => x.Pos).ThenBy(x => x.FullName).ToArray();
 //                return tmp;
                 return orderedItems.ThenByDescending(x => x.Pos).ThenBy(x => x.FullName);
+            }
+        }
+
+        
+
+        public bool IsProfitPercentOrder
+        {
+            get => _isProfitPercentOrder;
+            set
+            {
+                if (!Set(ref _isProfitPercentOrder, value)) return;
+                RefreshTree();
             }
         }
 
