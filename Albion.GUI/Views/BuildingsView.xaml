@@ -27,7 +27,7 @@
                             <ColumnDefinition SharedSizeGroup="Item" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Id}" />
+                        <TextBlock Text="{Binding Name}" />
                         <TextBox Grid.Column="1" Text="{Binding Tax}" TextAlignment="Right" />
                     </Grid>
                 </DataTemplate>

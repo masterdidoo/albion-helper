@@ -21,6 +21,6 @@ namespace Albion.GUI
             RaisePropertyChanged(nameof(Buildings));
         }
 
-        public IEnumerable<CraftBuilding> Buildings => _loaderCraftBuildings.Values.OrderBy(x=>x.Id);
+        public IEnumerable<CraftBuilding> Buildings => _loaderCraftBuildings.Values.OrderBy(x=>x.Name);
     }
 }

@@ -88,7 +88,7 @@ namespace Albion.Db.Xml
 #endif
                 MemId = _memCounter++,
                 Id = itemId,
-                Name = Localization.TryGetValue(iItem.uniquename, out var name) ? name : itemId,
+                Name = Localization.TryGetValue("@ITEMS_"+iItem.uniquename, out var name) ? name : itemId,
                 Tir = iItem.tier,
                 Enchant = enchant,
                 ShopCategory = (ShopCategory) iItem.shopcategory,
@@ -101,7 +101,7 @@ namespace Albion.Db.Xml
                       (int?) (iItem as IItemValued)?.itemvalue * 100 ?? 0
             };
 
-            item.IsCraftable = iItem.unlockedtocraft &&
+            item.IsCraftable = //iItem.unlockedtocraft &&
                                !(itemId.Contains("_CAPEITEM_") && itemId.EndsWith("_BP") &&
                                  item.CraftingBuilding == NoneBuilding);
 //            item.IsCraftable = item.CraftingBuilding != NoneBuilding || item.CraftingRequirements.Length > 0 && (item.CraftingRequirements[0] as CraftingRequirement)?.Silver > 0;
@@ -229,7 +229,8 @@ namespace Albion.Db.Xml
             var itemBuilding = _buildingDataManager.GetData(id);
             return new CraftBuilding(itemBuilding, _craftTownManager)
             {
-                Id = id
+                Id = id,
+                Name = Localization.TryGetValue("@BUILDINGS_"+id, out var name) ? name : id,
             };
         }
     }

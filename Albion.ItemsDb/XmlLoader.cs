@@ -67,17 +67,21 @@ namespace Albion.Db.Xml
                 var xml = new XmlSerializer(typeof(tmx));
                 var items = (tmx) xml.Deserialize(tr);
 
-                return items.body.Where(s => s.tuid.StartsWith("@ITEMS_")).SelectMany(x => x.tuv
+                return items.body.Where(s => s.tuid.StartsWith("@ITEMS_") || s.tuid.StartsWith("@BUILDINGS_")).SelectMany(x => x.tuv
                     .Where(lr => lr.lang == "RU-RU").Select(lr => new
                     {
-                        tuid = x.tuid.Substring(7),
+//                        tuid = x.tuid.Substring(7),
+                        x.tuid,
                         lr.seg
-                    })).ToDictionary(k => k.tuid, v => v.seg);
+                    }))
+                    .ToDictionary(k => k.tuid, v => v.seg);
             }
         }
 
         public int LoadModel()
         {
+            Localization = XmlLoader.LoadLocalizationXml();
+
             NoneBuilding = new CraftBuilding(new ItemBuilding(), _craftTownManager);
             var buildingsDb = LoadBuildingsXml();
             var itemsDb = LoadItemsXml();
@@ -102,8 +106,6 @@ namespace Albion.Db.Xml
             XmlItems = itemsDb.Items.Cast<IItem>().ToDictionary(k => k.uniquename, v => v);
 
             Items = new Dictionary<string, CommonItem>();
-
-            Localization = XmlLoader.LoadLocalizationXml();
 
             var enItems = XmlItems.Values.OfType<IItemEnchantments>().SelectMany(CreateEnchantedItems);
 

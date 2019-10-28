@@ -33,6 +33,7 @@ namespace Albion.Model.Buildings
         #region From Config
 
         public string Id { get; set; }
+        public string Name { get; set; }
 
         #endregion
 
