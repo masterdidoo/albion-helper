@@ -103,9 +103,10 @@ namespace Albion.Db.Xml
 
             item.IsCraftable = //iItem.unlockedtocraft &&
                                !(itemId.Contains("_CAPEITEM_") && itemId.EndsWith("_BP") &&
-                                 item.CraftingBuilding == NoneBuilding);
-//            item.IsCraftable = item.CraftingBuilding != NoneBuilding || item.CraftingRequirements.Length > 0 && (item.CraftingRequirements[0] as CraftingRequirement)?.Silver > 0;
-//                               || item.ShopCategory == ShopCategory.Artefacts;
+                                 item.CraftingBuilding == NoneBuilding)
+                               && item.CraftingRequirements.Length > 0;
+            //            item.IsCraftable = item.CraftingBuilding != NoneBuilding || item.CraftingRequirements.Length > 0 && (item.CraftingRequirements[0] as CraftingRequirement)?.Silver > 0;
+            //                               || item.ShopCategory == ShopCategory.Artefacts;
 
             item.Init();
 
