@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Albion.Db.Xml.Entity.Building;
 using Albion.Db.Xml.Enums;
@@ -73,7 +74,7 @@ namespace Albion.Db.Xml
         private CommonItem CreateCommonItem(IItem iItem, string itemId,
             IEnumerable<BaseResorcedRequirement> craftingRequirements, int enchant, int enchantIp = 0)
         {
-            
+
 //            BaseResorcedRequirement[] crs = (iItem.shopcategory == shopCategory.token) ? _empty : craftingRequirements.ToArray();
             BaseResorcedRequirement[] crs = craftingRequirements.ToArray();
             var item = new CommonItem(crs, new ItemMarket(), 
@@ -93,7 +94,6 @@ namespace Albion.Db.Xml
                 ShopCategory = (ShopCategory) iItem.shopcategory,
                 ShopSubCategory = (ShopSubCategory) iItem.shopsubcategory1,
                 IsSalvageable = (iItem as IItemSalvageable)?.salvageable ?? false,
-                IsCraftable = iItem.unlockedtocraft,
                 ItemValue = GetItemValue(iItem, enchant, crs),
                 ItemPower = enchantIp > 0
                     ? enchantIp
@@ -101,12 +101,17 @@ namespace Albion.Db.Xml
                       (int?) (iItem as IItemValued)?.itemvalue * 100 ?? 0
             };
 
+            item.IsCraftable = iItem.unlockedtocraft &&
+                               !(itemId.Contains("_CAPEITEM_") && itemId.EndsWith("_BP") &&
+                                 item.CraftingBuilding == NoneBuilding);
 //            item.IsCraftable = item.CraftingBuilding != NoneBuilding || item.CraftingRequirements.Length > 0 && (item.CraftingRequirements[0] as CraftingRequirement)?.Silver > 0;
 //                               || item.ShopCategory == ShopCategory.Artefacts;
 
             item.Init();
 
             Items.Add(item.Id, item);
+
+//            if (iItem.shopcategory == shopCategory.token && iItem.unlockedtocraft) Debug.WriteLine("tk");
 
             return item;
         }
