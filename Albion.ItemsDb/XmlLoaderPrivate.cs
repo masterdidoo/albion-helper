@@ -92,6 +92,7 @@ namespace Albion.Db.Xml
                 Enchant = enchant,
                 ShopCategory = (ShopCategory) iItem.shopcategory,
                 ShopSubCategory = (ShopSubCategory) iItem.shopsubcategory1,
+                IsSalvageable = (iItem as IItemSalvageable)?.salvageable ?? false,
                 ItemValue = GetItemValue(iItem, enchant, crs),
                 ItemPower = enchantIp > 0
                     ? enchantIp

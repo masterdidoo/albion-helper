@@ -39,7 +39,8 @@ namespace Albion.Model.Items
             BmFastSellProfit = new BmFastSellProfit(this);
             BmLongSellProfit = new BmLongSellProfit(this);
 
-            if (CraftingRequirements.Length > 0 && CraftingRequirements[0].Resources.Length > 0)
+            if (//IsSalvageable && 
+                CraftingRequirements.Length > 0 && CraftingRequirements[0].Resources.Length > 0)
                 SalvageProfit = new SalvageProfit(this);
 
             CostCalcOptions.Instance.Changed += RequirementsOnUpdated;
@@ -125,9 +126,11 @@ namespace Albion.Model.Items
             set
             {
                 Cost = value.Cost;
-                if (_requirement == value) return;
-                _requirement = value;
-                RaisePropertyChanged();
+                if (_requirement != value)
+                {
+                    _requirement = value;
+                    RaisePropertyChanged();
+                }
                 RequirementUpdated?.Invoke();
             }
         }
@@ -208,12 +211,18 @@ namespace Albion.Model.Items
                 if (_profitt == value) return;
                 _profitt = value;
                 RaisePropertyChanged();
+                ProfitUpdated?.Invoke();
             }
         }
+
+        public event Action ProfitUpdated;
 
         #endregion
 
         #region From Config
+#if DEBUG
+        public object Debug { get; set; }
+#endif
 
         public string Id { get; set; }
         public ShopCategory ShopCategory { get; set; }
@@ -231,9 +240,7 @@ namespace Albion.Model.Items
         public BaseResorcedRequirement[] CraftingRequirements { get; }
         public int ItemValue { get; set; }
         public bool IsResource => ShopCategory == ShopCategory.Resources;
-#if DEBUG
-        public object Debug { get; set; }
-#endif
+        public bool IsSalvageable { get; set; }
         public override string ToString()
         {
             return Id;

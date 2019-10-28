@@ -14,7 +14,7 @@ namespace Albion.Db.Xml.Entity.Item
     [DebuggerStepThrough]
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
-    public class ItemsConsumablefrominventoryitem : IItem, IItemPowered2, IItemEnchantmentLevel, IItemValued
+    public class ItemsConsumablefrominventoryitem : IItem, IItemPowered2, IItemEnchantmentLevel, IItemValued, IItemSalvageable
     {
         [XmlElement("craftingrequirements")] public Craftingrequirements[] craftingrequirements { get; set; }
 
@@ -63,7 +63,7 @@ namespace Albion.Db.Xml.Entity.Item
         [XmlAttribute] public string descriptionlocatag { get; set; }
 
 
-        [XmlAttribute] public string salvageable { get; set; }
+        [XmlAttribute] public bool salvageable { get; set; }
 
 
         [XmlAttribute] public string showinmarketplace { get; set; }

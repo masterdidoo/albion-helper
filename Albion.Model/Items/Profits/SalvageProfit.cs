@@ -24,8 +24,7 @@ namespace Albion.Model.Items.Profits
 
         public SalvageProfit(CommonItem item) : base(item)
         {
-            //TODO сделать
-            foreach (var resource in Resources) resource.Item.LongSellProfit.Updated += ResOnCostUpdateSale;
+            foreach (var resource in Resources) resource.Item.ProfitUpdated += ResOnCostUpdateSale;
 
             ResOnCostUpdateSale();
         }

@@ -15,6 +15,11 @@ namespace Albion.Db.Xml
         int tier { get; }
     }
 
+    public interface IItemSalvageable : IItem
+    {
+        bool salvageable { get; }
+    }
+
     public interface IItemEnchantmentLevel : IItem
     {
         int enchantmentlevel { get; }

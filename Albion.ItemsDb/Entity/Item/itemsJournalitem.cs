@@ -14,7 +14,7 @@ namespace Albion.Db.Xml.Entity.Item
     [DebuggerStepThrough]
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
-    public class ItemsJournalitem : IItem
+    public class ItemsJournalitem : IItem, IItemSalvageable
     {
         [XmlElement("craftingrequirements")] public Craftingrequirements[] craftingrequirements { get; set; }
 
@@ -29,7 +29,7 @@ namespace Albion.Db.Xml.Entity.Item
         public itemsJournalitemLootlistLoot[] lootlist { get; set; }
 
 
-        [XmlAttribute] public string salvageable { get; set; }
+        [XmlAttribute] public bool salvageable { get; set; }
 
 
         [XmlAttribute] public int tier { get; set; }

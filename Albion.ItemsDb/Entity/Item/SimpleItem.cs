@@ -14,7 +14,7 @@ namespace Albion.Db.Xml.Entity.Item
     [DebuggerStepThrough]
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
-    public class SimpleItem : IItem, IItemCraftingcategory, IItemEnchantmentLevel, IItemValued
+    public class SimpleItem : IItem, IItemCraftingcategory, IItemEnchantmentLevel, IItemValued, IItemSalvageable
     {
         [XmlArray(Form = XmlSchemaForm.Unqualified)]
         [XmlArrayItem("replacementitem", typeof(itemsSimpleitemReplaceondeathReplacementitem),
@@ -70,7 +70,7 @@ namespace Albion.Db.Xml.Entity.Item
         [XmlAttribute] public string namelocatag { get; set; }
 
 
-        [XmlAttribute] public string salvageable { get; set; }
+        [XmlAttribute] public bool salvageable { get; set; }
 
 
         [XmlAttribute] public string descvariable0 { get; set; }
