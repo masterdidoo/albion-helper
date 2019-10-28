@@ -76,7 +76,7 @@ namespace Albion.Db.Xml.Entity.Item
         [XmlAttribute] public string weight { get; set; }
 
 
-        [XmlAttribute] public string unlockedtocraft { get; set; }
+        [XmlAttribute] public bool unlockedtocraft { get; set; }
 
 
         [XmlAttribute] public string animationid { get; set; }

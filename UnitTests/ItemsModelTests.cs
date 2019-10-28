@@ -62,11 +62,9 @@ namespace UnitTests
             
             var list = loader.Items.Values;
 
-            var id = 0;
-            foreach (var n in list)
+            foreach (var n in list.Where(x=>x.IsCraftable))
             {
-                id+=1000;
-                Debug.WriteLine("{{\"{0}\", {1}}},",n.Id, id);
+                Debug.WriteLine("\"{0}\" {1}, {2}",n.Id, (n.CraftingRequirements.FirstOrDefault() as CraftingRequirement)?.Silver,  n.CraftingRequirements.FirstOrDefault()?.Resources.Length);
             }
 
             Assert.AreEqual(6286, list.Count);

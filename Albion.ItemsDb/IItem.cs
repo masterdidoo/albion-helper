@@ -13,6 +13,7 @@ namespace Albion.Db.Xml
         Craftingrequirements[] craftingrequirements { get; }
 
         int tier { get; }
+        bool unlockedtocraft { get; }
     }
 
     public interface IItemSalvageable : IItem

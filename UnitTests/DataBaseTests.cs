@@ -14,13 +14,29 @@ namespace UnitTests
         private long _exp;
 
         [TestMethod]
+        public void TestItemIds()
+        {
+            var tm = new TownManager();
+
+            var bdm = new BuildingDataManager(tm);
+
+            var loader = new XmlLoader(bdm, tm, tm, tm);
+            loader.LoadModel();
+
+            foreach (var x in loader.Items.Values)
+            {
+                Assert.IsTrue(MarketDataManager.Items.ContainsKey(x.Id), x.Id);
+            }
+//            Assert.IsTrue(loader.Items.Values.All(x => MarketDataManager.Items.ContainsKey(x.Id)));
+        }
+
+        [TestMethod]
         public void TestUpdatePrice()
         {
             {
                 DataBase.Drop();
                 var tm = new TownManager();
 
-                var mdm = new MarketDataManager();
                 var bdm = new BuildingDataManager(tm);
 
                 var loader = new XmlLoader(bdm, tm, tm, tm);

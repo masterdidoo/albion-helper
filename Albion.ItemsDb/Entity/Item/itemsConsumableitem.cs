@@ -52,7 +52,7 @@ namespace Albion.Db.Xml.Entity.Item
         [XmlAttribute] public string maxstacksize { get; set; }
 
 
-        [XmlAttribute] public string unlockedtocraft { get; set; }
+        [XmlAttribute] public bool unlockedtocraft { get; set; }
 
 
         [XmlAttribute] public string unlockedtoequip { get; set; }

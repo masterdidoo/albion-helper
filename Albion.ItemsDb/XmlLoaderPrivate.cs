@@ -74,8 +74,8 @@ namespace Albion.Db.Xml
             IEnumerable<BaseResorcedRequirement> craftingRequirements, int enchant, int enchantIp = 0)
         {
             
-            BaseResorcedRequirement[] crs = (iItem.shopcategory == shopCategory.token) ? _empty : craftingRequirements.ToArray();
-//            var item = new CommonItem(crs, _marketDataManager.GetData(itemId),
+//            BaseResorcedRequirement[] crs = (iItem.shopcategory == shopCategory.token) ? _empty : craftingRequirements.ToArray();
+            BaseResorcedRequirement[] crs = craftingRequirements.ToArray();
             var item = new CommonItem(crs, new ItemMarket(), 
                 BuildingByItem(iItem.uniquename),
                 _buyTownManager, 
@@ -93,12 +93,16 @@ namespace Albion.Db.Xml
                 ShopCategory = (ShopCategory) iItem.shopcategory,
                 ShopSubCategory = (ShopSubCategory) iItem.shopsubcategory1,
                 IsSalvageable = (iItem as IItemSalvageable)?.salvageable ?? false,
+                IsCraftable = iItem.unlockedtocraft,
                 ItemValue = GetItemValue(iItem, enchant, crs),
                 ItemPower = enchantIp > 0
                     ? enchantIp
                     : (iItem as IItemPowered)?.itempower ?? (iItem as IItemPowered2)?.dummyitempower ??
                       (int?) (iItem as IItemValued)?.itemvalue * 100 ?? 0
             };
+
+//            item.IsCraftable = item.CraftingBuilding != NoneBuilding || item.CraftingRequirements.Length > 0 && (item.CraftingRequirements[0] as CraftingRequirement)?.Silver > 0;
+//                               || item.ShopCategory == ShopCategory.Artefacts;
 
             item.Init();
 

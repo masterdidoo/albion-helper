@@ -98,7 +98,7 @@ namespace Albion.Db.Xml.Entity.Item
         [XmlAttribute] public string mainhandanimationtype { get; set; }
 
 
-        [XmlAttribute] public string unlockedtocraft { get; set; }
+        [XmlAttribute] public bool unlockedtocraft { get; set; }
 
 
         [XmlAttribute] public string unlockedtoequip { get; set; }

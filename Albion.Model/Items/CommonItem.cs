@@ -56,13 +56,24 @@ namespace Albion.Model.Items
 
         public IEnumerable<object> Components => Profits.Cast<object>().Concat(Requirements);
 
-        public IEnumerable<BaseRequirement> Requirements
+        private IEnumerable<BaseRequirement> FullRequirements
         {
             get
             {
                 yield return _fastBuyRequirement;
                 yield return _longBuyRequirement;
                 foreach (var cr in CraftingRequirements) yield return cr;
+            }
+        }
+
+        public IEnumerable<BaseRequirement> Requirements
+        {
+            get
+            {
+                yield return _fastBuyRequirement;
+                yield return _longBuyRequirement;
+                if (IsCraftable)
+                    foreach (var cr in CraftingRequirements) yield return cr;
             }
         }
 
@@ -86,7 +97,8 @@ namespace Albion.Model.Items
                 if (!CostCalcOptions.Instance.IsLongBuyDisabled || CostCalcOptions.Instance.IsArtefactsLongBuyEnabled &&
                     ShopCategory == ShopCategory.Artefacts)
                     yield return _longBuyRequirement;
-                foreach (var cr in CraftingRequirements) yield return cr;
+                if (IsCraftable)
+                    foreach (var cr in CraftingRequirements) yield return cr;
             }
         }
 
@@ -143,7 +155,7 @@ namespace Albion.Model.Items
                 //cr.SetItem(this);
                 cr.Updated += ProfitsOnUpdated;
 
-            foreach (var cr in Requirements)
+            foreach (var cr in FullRequirements)
             {
                 cr.SetItem(this);
                 cr.Updated += RequirementsOnUpdated;
@@ -241,6 +253,7 @@ namespace Albion.Model.Items
         public int ItemValue { get; set; }
         public bool IsResource => ShopCategory == ShopCategory.Resources;
         public bool IsSalvageable { get; set; }
+        public bool IsCraftable { get; set; }
         public override string ToString()
         {
             return Id;
