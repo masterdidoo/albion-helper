@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Albion.Db.Xml.Entity.Building;
+using Albion.Db.Xml.Entity.Item;
 using Albion.Db.Xml.Enums;
 using Albion.Db.Xml.Requirements;
 using Albion.Model.Buildings;
@@ -119,6 +121,9 @@ namespace Albion.Db.Xml
 
         private int GetItemValue(IItem iItem, int enchant, BaseResorcedRequirement[] crs)
         {
+            if (iItem is SimpleItem item && item.foodcategory == "plants")
+                return 4;
+
             if (iItem.shopsubcategory1 == shopSubCategory.royalsigils && iItem.tier == 4)
                 return 128;
 
