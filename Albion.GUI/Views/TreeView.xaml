@@ -252,7 +252,7 @@
                     <DockPanel Style="{StaticResource DpStyle}">
                         <TextBlock Text="{Binding Item.FullName, Mode=OneTime}"
                                    Style="{StaticResource TextBlockStyle}" />
-                        <TextBlock Text="{Binding Item.Profitt.Profit}"
+                        <TextBlock Text="{Binding Item.Profitt.ProfitPercent}"
                                    Style="{StaticResource TextBlockStyle}" />
                         <TextBlock Style="{StaticResource TextBlockStyle}">
                             <TextBlock.Text>
