@@ -97,6 +97,7 @@ namespace Albion.Model.Items
                 if (!CostCalcOptions.Instance.IsLongBuyDisabled || CostCalcOptions.Instance.IsArtefactsLongBuyEnabled &&
                     ShopCategory == ShopCategory.Artefacts)
                     yield return _longBuyRequirement;
+                if (!CostCalcOptions.Instance.IsCraftDisabled)
                 if (IsCraftable)
                     foreach (var cr in CraftingRequirements) yield return cr;
             }
