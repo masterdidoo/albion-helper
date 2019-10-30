@@ -76,11 +76,27 @@ namespace Albion.Db.Xml
         private CommonItem CreateCommonItem(IItem iItem, string itemId,
             IEnumerable<BaseResorcedRequirement> craftingRequirements, int enchant, int enchantIp = 0)
         {
+            var im = new ItemMarket();
+            var main = CreateCommonItemExt(iItem, itemId, craftingRequirements, enchant, 0, im, enchantIp);
+            if (main.CraftingRequirements.Length == 0 || main.CraftingBuilding == NoneBuilding) return main;
+
+            for (int i = 1; i < 5; i++)
+            {
+                CreateCommonItemExt(iItem, itemId, craftingRequirements, enchant, i, im, enchantIp);
+            }
+            return main;
+        }
+
+        private CommonItem CreateCommonItemExt(IItem iItem, string itemId,
+            IEnumerable<BaseResorcedRequirement> craftingRequirements, int enchant, int qualityLevel,
+            ItemMarket itemMarket, int enchantIp = 0)
+        {
 
 //            BaseResorcedRequirement[] crs = (iItem.shopcategory == shopCategory.token) ? _empty : craftingRequirements.ToArray();
             BaseResorcedRequirement[] crs = craftingRequirements.ToArray();
-            var item = new CommonItem(crs, new ItemMarket(), 
+            var item = new CommonItem(crs, itemMarket,
                 BuildingByItem(iItem.uniquename),
+                qualityLevel,
                 _buyTownManager, 
                 _sellTownManager
                 )
@@ -112,7 +128,7 @@ namespace Albion.Db.Xml
 
             item.Init();
 
-            Items.Add(item.Id, item);
+            Items.Add(item.Id + (qualityLevel > 0 ? $"_{qualityLevel}" : ""), item);
 
 //            if (iItem.shopcategory == shopCategory.token && iItem.unlockedtocraft) Debug.WriteLine("tk");
 

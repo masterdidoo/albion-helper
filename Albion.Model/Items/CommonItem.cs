@@ -10,13 +10,6 @@ using Albion.Model.Managers;
 
 namespace Albion.Model.Items
 {
-    public class QualityItem : CommonItem
-    {
-        public QualityItem(BaseResorcedRequirement[] craftingRequirements, ItemMarket itemMarket, CraftBuilding craftingBuilding, ITownManager buyTownManager, ITownManager sellTownManager) : base(craftingRequirements, itemMarket, craftingBuilding, buyTownManager, sellTownManager)
-        {
-        }
-    }
-
     public class CommonItem : BaseCostableEntity
     {
         public int QualityLevel { get; }
@@ -29,10 +22,12 @@ namespace Albion.Model.Items
         public CommonItem(BaseResorcedRequirement[] craftingRequirements,
             ItemMarket itemMarket,
             CraftBuilding craftingBuilding,
+            int qualityLevel,
             ITownManager buyTownManager,
             ITownManager sellTownManager
         )
         {
+            QualityLevel = qualityLevel;
             CraftingRequirements = craftingRequirements;
             IsArtefacted = CraftingRequirements.SelectMany(x => x.Resources)
                 .Any(r => r.Item.ShopCategory == ShopCategory.Artefacts);
@@ -257,7 +252,7 @@ namespace Albion.Model.Items
 
         public string Name { get; set; }
 
-        public string FullName => $"{Tir}.{Enchant} {Name}";
+        public string FullName => $"{Tir}.{Enchant}.{QualityLevel} {Name}";
 
         public BaseResorcedRequirement[] CraftingRequirements { get; }
         public int ItemValue { get; set; }
