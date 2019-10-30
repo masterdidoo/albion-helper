@@ -43,13 +43,13 @@
                         <TextBlock Text="X2" Margin="3,0,3,0" Width="20" />
                     </Border>
                     <Border Grid.Column="5" BorderThickness="0,0,1,0" BorderBrush="Black">
-                        <TextBlock Text="Profit" Margin="3,0,3,0" Width="60" />
+                        <CheckBox IsChecked="{Binding IsProfitOrder}" Content="Profit" Margin="3,0,3,0" Width="60" />
                     </Border>
                     <Border Grid.Column="6" BorderThickness="0,0,1,0" BorderBrush="Black">
                         <CheckBox IsChecked="{Binding IsProfitPercentOrder}" Content="%" Margin="3,0,3,0" Width="60" />
                     </Border>
                     <Border Grid.Column="7" BorderThickness="0,0,1,0" BorderBrush="Black">
-                        <CheckBox IsChecked="{Binding IsProfitOrder}" Content="Sum" Margin="3,0,3,0" Width="60" />
+                        <CheckBox IsChecked="{Binding IsProfitSumOrder}" Content="Sum" Margin="3,0,3,0" Width="60" />
                     </Border>
                     <Border Grid.Column="8" BorderThickness="0,0,1,0" BorderBrush="Black">
                         <TextBlock Text="Count" Margin="3,0,3,0" Width="60" />
@@ -85,7 +85,7 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding FullName, Mode=OneTime}" />
+                        <CheckBox IsChecked="{Binding TreeProps.IsSelected}" Content="{Binding FullName, Mode=OneTime}" />
                         <Border Grid.Column="1" BorderBrush="Black" BorderThickness="0,0,1,0">
                             <TextBlock 
                                 Text="{Binding Requirement.Type, Mode=OneWay}" Width="40" />

@@ -2,19 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using System.Xml.Linq;
 using Albion.Common;
 using Albion.DataStore.Db;
 using Albion.DataStore.Managers;
 using Albion.Db.Xml;
-using Albion.Event;
 using Albion.GUI.Libs;
-using Albion.Model.Buildings;
 using Albion.Model.Data;
 using Albion.Model.Items;
 using Albion.Model.Items.Categories;
 using Albion.Model.Managers;
 using Albion.Network;
-using Albion.Operation;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using PcapDotNet.Base;
@@ -23,30 +21,45 @@ namespace Albion.GUI.ViewModels
 {
     public partial class MainViewModel : ViewModelBase, IDisposable
     {
+        private static readonly HashSet<ShopCategory> _simpleItems = new HashSet<ShopCategory>
+        {
+            Model.Items.Categories.ShopCategory.Armor,
+            Model.Items.Categories.ShopCategory.Melee,
+            Model.Items.Categories.ShopCategory.Ranged,
+            Model.Items.Categories.ShopCategory.Magic
+        };
+
         private readonly AlbionParser _albionParser;
+        private readonly DebounceDispatcher _debounceDispatcher;
         private readonly BuildingDataManager bdm;
         private readonly MarketDataManager mdm;
         private int _bluePlayers;
         private int? _enchant;
         private string _filterTest;
+        private bool _isProfitOrder;
+        private bool _isProfitPercentOrder;
+        private bool _isProfitSumOrder;
         private int _redPlayers;
         private ShopCategory? _shopCategory;
         private ShopSubCategory? _shopSubCategory;
         private int? _tir;
-        private readonly DebounceDispatcher _debounceDispatcher;
-        private bool _isProfitOrder;
-        private bool _isProfitPercentOrder;
 
         public MainViewModel()
         {
             RefreshCommand = new RelayCommand(() => RaisePropertyChanged(nameof(CommonItems)));
             ClearBmCommand = new RelayCommand(ClearBm);
 
-            Tirs = Enumerable.Repeat(new Tuple<string,int?>("-",null),1).Concat(Enumerable.Range(1,8).Select(x=>Tuple.Create(x.ToString(),(int?) x)));
-            Enchants = Enumerable.Repeat(new Tuple<string,int?>("-",null),1).Concat(Enumerable.Range(0,4).Select(x=>Tuple.Create(x.ToString(),(int?) x)));
+            Tirs = Enumerable.Repeat(new Tuple<string, int?>("-", null), 1)
+                .Concat(Enumerable.Range(1, 8).Select(x => Tuple.Create(x.ToString(), (int?) x)));
+            Enchants = Enumerable.Repeat(new Tuple<string, int?>("-", null), 1)
+                .Concat(Enumerable.Range(0, 4).Select(x => Tuple.Create(x.ToString(), (int?) x)));
 
-            ShopCategories = Enumerable.Repeat(new Tuple<string, ShopCategory?>("-", null), 1).Concat(Enum.GetValues(typeof(ShopCategory)).Cast<ShopCategory?>().Select(x=> Tuple.Create(x.Value.ToString(), x)));
-            ShopSubCategories = Enumerable.Repeat(new Tuple<string, ShopSubCategory?>("-", null), 1).Concat(Enum.GetValues(typeof(ShopSubCategory)).Cast<ShopSubCategory?>().Select(x => Tuple.Create(x.Value.ToString(), x)));
+            ShopCategories = Enumerable.Repeat(new Tuple<string, ShopCategory?>("-", null), 1).Concat(Enum
+                .GetValues(typeof(ShopCategory)).Cast<ShopCategory?>()
+                .Select(x => Tuple.Create(x.Value.ToString(), x)));
+            ShopSubCategories = Enumerable.Repeat(new Tuple<string, ShopSubCategory?>("-", null), 1)
+                .Concat(Enum.GetValues(typeof(ShopSubCategory)).Cast<ShopSubCategory?>()
+                    .Select(x => Tuple.Create(x.Value.ToString(), x)));
 
             BuyTownManager = new TownManager();
             SellTownManager = new TownManager();
@@ -56,7 +69,7 @@ namespace Albion.GUI.ViewModels
             mdm = new MarketDataManager();
             bdm = new BuildingDataManager(CraftTownManager);
 
-            var loader = new XmlLoader(bdm, CraftTownManager , BuyTownManager, SellTownManager);
+            var loader = new XmlLoader(bdm, CraftTownManager, BuyTownManager, SellTownManager);
             loader.LoadModel();
 
             Items = loader.Items;
@@ -89,51 +102,15 @@ namespace Albion.GUI.ViewModels
             CostCalcOptions.Instance.Changed += RefreshTree;
         }
 
-        private void ClearBm()
-        {
-            mdm.DeleteOrders((int)Location.BlackMarket, false);
-            foreach (var item in Items.Values)
-            {
-                item.ItemMarket.ToMarketItems[(int)Location.BlackMarket].SetOrders(Enumerable.Empty<AuctionItem>());
-            }
-        }
-
-        private void LoadData()
-        {
-            foreach (var ordersData in mdm.GetOrders())
-            {
-                if (!Items.TryGetValue(ordersData.ItemId, out var item)) continue;
-
-                var itemMarket = item.ItemMarket;
-                var ordersItem = !ordersData.IsFrom ? (ItemMarketData) itemMarket.ToMarketItems[ordersData.TownId] : itemMarket.FromMarketItems[ordersData.TownId];
-
-                ordersItem.SetOrders(ordersData.Orders, ordersData.UpdateTime, true);
-                ordersItem.SetBestPrice(ordersItem.BestPrice);
-
-                if (item.Pos < ordersItem.UpdateTime)
-                    item.Pos = ordersItem.UpdateTime;
-            }
-        }
-
         public TownManager AuctionTownManager { get; }
 
         public TownManager SellTownManager { get; }
 
-        public TownManager BuyTownManager { get;  }
+        public TownManager BuyTownManager { get; }
 
         public TownManager CraftTownManager { get; }
 
         public ArtefactStat[] Artefacts { get; set; }
-
-        private void RefreshTree()
-        {
-            _debounceDispatcher.Debounce(200, RaiseRefreshTree);
-        }
-
-        private void RaiseRefreshTree(object obj)
-        {
-            RaisePropertyChanged(nameof(CommonItems));
-        }
 
         public Dictionary<string, CommonItem> Items { get; }
         public BuildingsViewModel BuildingsViewModel { get; }
@@ -152,13 +129,6 @@ namespace Albion.GUI.ViewModels
 
         public IEnumerable<Location> Towns => typeof(Location).GetEnumValues().Cast<Location>();
 
-        private static readonly HashSet<ShopCategory> _simpleItems = new HashSet<ShopCategory>()
-        {
-            Model.Items.Categories.ShopCategory.Armor,
-            Model.Items.Categories.ShopCategory.Melee,
-            Model.Items.Categories.ShopCategory.Ranged,
-            Model.Items.Categories.ShopCategory.Magic,
-        };
 
         public IEnumerable<CommonItem> CommonItems
         {
@@ -168,11 +138,10 @@ namespace Albion.GUI.ViewModels
                 if (Tir >= 0) items = items.Where(x => x.Tir == Tir);
                 if (Enchant >= 0) items = items.Where(x => x.Enchant == Enchant);
                 if (ShopCategory != null)
-                {
                     switch (ShopCategory)
                     {
                         case Model.Items.Categories.ShopCategory.SimpleItems:
-                            items = items.Where(x => _simpleItems.Contains(x.ShopCategory)).Where(x=>!x.IsArtefacted);
+                            items = items.Where(x => _simpleItems.Contains(x.ShopCategory)).Where(x => !x.IsArtefacted);
                             break;
                         case Model.Items.Categories.ShopCategory.ArtefactsItems:
                             items = items.Where(x => _simpleItems.Contains(x.ShopCategory)).Where(x => x.IsArtefacted);
@@ -181,7 +150,6 @@ namespace Albion.GUI.ViewModels
                             items = items.Where(x => x.ShopCategory == ShopCategory);
                             break;
                     }
-                }
                 if (ShopSubCategory != null) items = items.Where(x => x.ShopSubCategory == ShopSubCategory);
                 if (!_filterTest.IsNullOrEmpty())
                 {
@@ -190,11 +158,13 @@ namespace Albion.GUI.ViewModels
                 }
 
                 var orderedItems =
-                    IsProfitPercentOrder 
-                        ? items.OrderByDescending(x => x.Profitt?.ProfitPercent)
-                            : IsProfitOrder 
-                                ? items.OrderByDescending(x=>x.Profitt?.ProfitSum) 
-                                : items.OrderBy(x=>!x.TreeProps.IsExpanded);
+                    IsProfitOrder
+                        ? items.OrderByDescending(x => x.Profitt?.Profit)
+                        : IsProfitPercentOrder
+                            ? items.OrderByDescending(x => x.Profitt?.ProfitPercent)
+                            : IsProfitSumOrder
+                                ? items.OrderByDescending(x => x.Profitt?.ProfitSum)
+                                : items.OrderBy(x => !x.TreeProps.IsSelected);
 
 //                var tmp = items.OrderByDescending(x => x.Pos).ThenBy(x => x.FullName).ToArray();
 //                return tmp;
@@ -202,7 +172,6 @@ namespace Albion.GUI.ViewModels
             }
         }
 
-        
 
         public bool IsProfitPercentOrder
         {
@@ -210,6 +179,16 @@ namespace Albion.GUI.ViewModels
             set
             {
                 if (!Set(ref _isProfitPercentOrder, value)) return;
+                RefreshTree();
+            }
+        }
+
+        public bool IsProfitSumOrder
+        {
+            get => _isProfitSumOrder;
+            set
+            {
+                if (!Set(ref _isProfitSumOrder, value)) return;
                 RefreshTree();
             }
         }
@@ -289,8 +268,57 @@ namespace Albion.GUI.ViewModels
 
         public void Dispose()
         {
+            SaveOptions();
             DataBase.Close();
             _albionParser.Dispose();
+        }
+
+        private void SaveOptions()
+        {
+            mdm.SetSelectedItems(Items.Values.Where(x=>x.TreeProps.IsSelected).Select(x=>x.Id));
+        }
+
+        private void ClearBm()
+        {
+            mdm.DeleteOrders((int) Location.BlackMarket, false);
+            foreach (var item in Items.Values)
+                item.ItemMarket.ToMarketItems[(int) Location.BlackMarket].SetOrders(Enumerable.Empty<AuctionItem>());
+        }
+
+        private void LoadData()
+        {
+            foreach (var ordersData in mdm.GetOrders())
+            {
+                if (!Items.TryGetValue(ordersData.ItemId, out var item)) continue;
+
+                var itemMarket = item.ItemMarket;
+                var ordersItem = !ordersData.IsFrom
+                    ? (ItemMarketData) itemMarket.ToMarketItems[ordersData.TownId]
+                    : itemMarket.FromMarketItems[ordersData.TownId];
+
+                ordersItem.SetOrders(ordersData.Orders, ordersData.UpdateTime, true);
+                ordersItem.SetBestPrice(ordersItem.BestPrice);
+
+                if (item.Pos < ordersItem.UpdateTime)
+                    item.Pos = ordersItem.UpdateTime;
+            }
+
+            foreach (var id in mdm.GetSelectedItems())
+            {
+                if (!Items.TryGetValue(id, out var item)) continue;
+
+                item.TreeProps.IsSelected = true;
+            }
+        }
+
+        private void RefreshTree()
+        {
+            _debounceDispatcher.Debounce(200, RaiseRefreshTree);
+        }
+
+        private void RaiseRefreshTree(object obj)
+        {
+            RaisePropertyChanged(nameof(CommonItems));
         }
     }
 }

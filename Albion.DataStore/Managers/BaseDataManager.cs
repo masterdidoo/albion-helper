@@ -8,12 +8,13 @@ namespace Albion.DataStore.Managers
     public abstract class BaseDataManager<TData, TItem>
     {
         protected readonly Dictionary<string, TItem> Data;
+        protected DataBase Db;
 
         protected BaseDataManager()
         {
             Data = new Dictionary<string, TItem>();
-            var db = DataBase.Instance;
-            Rep = db.GetCollection<TData>();
+            Db = DataBase.Instance;
+            Rep = Db.GetCollection<TData>();
         }
 
         internal LiteCollection<TData> Rep { get; }

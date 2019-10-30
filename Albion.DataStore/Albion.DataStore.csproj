@@ -52,6 +52,7 @@
     <Compile Include="Db\DataBase.cs" />
     <Compile Include="DataModel\OrdersData.cs" />
     <Compile Include="Managers\MarketDataManager.cs" />
+    <Compile Include="DataModel\SelectedItem.cs" />
     <Compile Include="Model\ProxyBuildingData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
