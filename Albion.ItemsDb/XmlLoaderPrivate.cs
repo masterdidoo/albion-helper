@@ -77,14 +77,21 @@ namespace Albion.Db.Xml
             IEnumerable<BaseResorcedRequirement> craftingRequirements, int enchant, int enchantIp = 0)
         {
             var im = new ItemMarket();
-            var main = CreateCommonItemExt(iItem, itemId, craftingRequirements, enchant, 0, im, enchantIp);
-            if (iItem is IItemPowered) 
+            var main = CreateCommonItemExt(iItem, itemId, craftingRequirements, enchant, 1, im, enchantIp);
+            main.QualityLevels = Empty;
+            if (iItem is IItemPowered)
+            {
+                main.QualityLevels = new CommonItem[4];
                 for (int i = 1; i < 5; i++)
                 {
-                    CreateCommonItemExt(iItem, itemId, craftingRequirements, enchant, i, im, enchantIp);
+                    main.QualityLevels[i-1] =
+                    CreateCommonItemExt(iItem, itemId, craftingRequirements, enchant, i+1, im, enchantIp);
                 }
+            }
             return main;
         }
+
+        CommonItem[] Empty = new CommonItem[0];
 
         private CommonItem CreateCommonItemExt(IItem iItem, string itemId,
             IEnumerable<BaseResorcedRequirement> craftingRequirements, int enchant, int qualityLevel,
@@ -127,7 +134,7 @@ namespace Albion.Db.Xml
 
             item.Init();
 
-            Items.Add(item.Id + (qualityLevel > 0 ? $"_{qualityLevel}" : ""), item);
+            Items.Add(item.Id + (qualityLevel > 1 ? $"_{qualityLevel}" : ""), item);
 
 //            if (iItem.shopcategory == shopCategory.token && iItem.unlockedtocraft) Debug.WriteLine("tk");
 

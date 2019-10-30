@@ -69,6 +69,10 @@ namespace Albion.GUI.ViewModels
             foreach (var item in items)
             {
                 Items[item.Key].Pos = DateTime.Now;
+                foreach (var ci in Items[item.Key].QualityLevels)
+                {
+                    ci.Pos = DateTime.Now;
+                }
             }
             RefreshTree();
         }
@@ -94,8 +98,13 @@ namespace Albion.GUI.ViewModels
                 }
             }
 
-            foreach (var item in items) { 
+            foreach (var item in items)
+            {
                 Items[item.Key].Pos = DateTime.Now;
+                foreach (var ci in Items[item.Key].QualityLevels)
+                {
+                    ci.Pos = DateTime.Now;
+                }
             }
 
             RefreshTree();

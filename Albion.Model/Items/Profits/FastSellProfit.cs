@@ -21,7 +21,7 @@ namespace Albion.Model.Items.Profits
             }
 
             var income = bestOrder.UnitPriceSilver.FastSell();
-            var count = imd.Orders.Where(x => x.QualityLevel <= Item.QualityLevel && x.UnitPriceSilver == income)
+            var count = imd.Orders.Where(x => x.QualityLevel <= Item.QualityLevel && x.UnitPriceSilver == bestOrder.UnitPriceSilver)
                 .Select(x => x.Amount).DefaultIfEmpty(0).Sum();
 //            var count = bestOrder?.Amount ?? 0;
 //            var income = bestOrder?.UnitPriceSilver.FastSell() ?? 0;

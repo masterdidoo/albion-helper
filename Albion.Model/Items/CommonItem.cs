@@ -236,6 +236,8 @@ namespace Albion.Model.Items
 
         #endregion
 
+        public CommonItem[] QualityLevels { get; set; }
+
         #region From Config
 #if DEBUG
         public object Debug { get; set; }
@@ -252,13 +254,14 @@ namespace Albion.Model.Items
 
         public string Name { get; set; }
 
-        public string FullName => QualityLevel > 0 ? $"{Tir}.{Enchant}.{QualityLevel} {Name}" : $"{Tir}.{Enchant} {Name}";
+        public string FullName => QualityLevel > 1 ? $"{Tir}.{Enchant}.{QualityLevel} {Name}" : $"{Tir}.{Enchant} {Name}";
 
         public BaseResorcedRequirement[] CraftingRequirements { get; }
         public int ItemValue { get; set; }
         public bool IsResource => ShopCategory == ShopCategory.Resources;
         public bool IsSalvageable { get; set; }
         public bool IsCraftable { get; set; }
+
         public override string ToString()
         {
             return Id;
