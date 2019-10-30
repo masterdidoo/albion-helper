@@ -13,6 +13,5 @@ namespace Albion.DataStore.DataModel
         public List<AuctionItem> Orders { get; set; }
         public bool IsFrom { get; set; }
         public DateTime UpdateTime { get; set; }
-        public long BestPrice { get; set; }
     }
 }

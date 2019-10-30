@@ -48,6 +48,7 @@
     <Compile Include="Items\ArtefactStat.cs" />
     <Compile Include="Items\Profits\BaseProfit.cs" />
     <Compile Include="Items\Profits\BaseMarketProfit.cs" />
+    <Compile Include="Managers\BlackMarketTownManager.cs" />
     <Compile Include="Items\Profits\BmFastSellProfit.cs" />
     <Compile Include="Items\Profits\BmLongSellProfit.cs" />
     <Compile Include="Items\Profits\FastSellProfit.cs" />

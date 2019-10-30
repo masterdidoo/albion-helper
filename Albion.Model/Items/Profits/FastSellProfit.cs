@@ -12,8 +12,21 @@ namespace Albion.Model.Items.Profits
 
         protected override void OrdersUpdated(ItemMarketData imd)
         {
-            var count = imd.Orders.OrderByDescending(x => x.UnitPriceSilver).FirstOrDefault()?.Amount ?? 0;
-            var income = imd.BestPrice.FastSell();
+            var bestOrder = imd.Orders.Where(x => x.QualityLevel <= Item.QualityLevel)
+                .OrderByDescending(x => x.UnitPriceSilver).FirstOrDefault();
+            if (bestOrder == null)
+            {
+                SetIncome(0, 0);
+                return;
+            }
+
+            var income = bestOrder.UnitPriceSilver.FastSell();
+            var count = imd.Orders.Where(x => x.QualityLevel <= Item.QualityLevel && x.UnitPriceSilver == income)
+                .Select(x => x.Amount).DefaultIfEmpty(0).Sum();
+//            var count = bestOrder?.Amount ?? 0;
+//            var income = bestOrder?.UnitPriceSilver.FastSell() ?? 0;
+//            var count = imd.Orders.Where(x=>x.QualityLevel <= Item.QualityLevel).OrderByDescending(x => x.UnitPriceSilver).FirstOrDefault()?.Amount ?? 0;
+//            var income = imd.BestPrice.FastSell();
             SetIncome(income, count);
         }
 

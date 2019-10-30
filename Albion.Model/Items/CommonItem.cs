@@ -10,8 +10,17 @@ using Albion.Model.Managers;
 
 namespace Albion.Model.Items
 {
+    public class QualityItem : CommonItem
+    {
+        public QualityItem(BaseResorcedRequirement[] craftingRequirements, ItemMarket itemMarket, CraftBuilding craftingBuilding, ITownManager buyTownManager, ITownManager sellTownManager) : base(craftingRequirements, itemMarket, craftingBuilding, buyTownManager, sellTownManager)
+        {
+        }
+    }
+
     public class CommonItem : BaseCostableEntity
     {
+        public int QualityLevel { get; }
+
         private readonly FastBuyRequirement _fastBuyRequirement;
 
         private readonly LongBuyRequirement _longBuyRequirement;

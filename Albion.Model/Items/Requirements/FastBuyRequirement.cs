@@ -12,8 +12,20 @@ namespace Albion.Model.Items.Requirements
 
         protected override void OrdersUpdated(ItemMarketData imd)
         {
-            var count = imd.Orders.OrderByDescending(x => x.UnitPriceSilver).FirstOrDefault()?.Amount ?? 0;
-            var cost = imd.BestPrice;
+            var bestOrder = imd.Orders.Where(x => x.QualityLevel >= Item.QualityLevel)
+                .OrderBy(x => x.UnitPriceSilver).FirstOrDefault();
+            if (bestOrder == null)
+            {
+                SetCost(0, 0);
+                return;
+            }
+
+            var cost = bestOrder.UnitPriceSilver.FastSell();
+            var count = imd.Orders.Where(x => x.QualityLevel >= Item.QualityLevel && x.UnitPriceSilver == cost)
+                .Select(x => x.Amount).DefaultIfEmpty(0).Sum();
+
+//            var count = imd.Orders.OrderBy(x => x.UnitPriceSilver).FirstOrDefault()?.Amount ?? 0;
+//            var cost = imd.BestPrice;
             SetCost(cost, count);
         }
 

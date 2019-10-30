@@ -1,5 +1,6 @@
 ﻿using Albion.Model.Data;
 using Albion.Model.Managers;
+using System.Linq;
 
 namespace Albion.Model.Items.Requirements
 {
@@ -11,7 +12,15 @@ namespace Albion.Model.Items.Requirements
 
         protected override void OrdersUpdated(ItemMarketData imd)
         {
-            Price = imd.BestPrice;
+            var bestOrder = imd.Orders.Where(x => x.QualityLevel <= Item.QualityLevel)
+                .OrderByDescending(x => x.UnitPriceSilver).FirstOrDefault();
+            if (bestOrder == null)
+            {
+                Price = 0;
+                return;
+            }
+
+            Price = bestOrder.UnitPriceSilver;
         }
 
         protected override ItemMarketData GetMarketData()
@@ -38,8 +47,6 @@ namespace Albion.Model.Items.Requirements
                 _price = value;
                 RaisePropertyChanged();
                 OnUpdatePrice();
-                if (_price != GetMarketData().BestPrice)
-                    GetMarketData().SetBestPrice(_price);
             }
         }
 

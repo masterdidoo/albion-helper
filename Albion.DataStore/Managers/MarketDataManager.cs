@@ -6344,7 +6344,6 @@ namespace Albion.DataStore.Managers
                 IsFrom = isFrom,
                 Orders = item.Orders,
                 UpdateTime = item.UpdateTime,
-                BestPrice = item.BestPrice
             };
             lock (_lockObject)
             {

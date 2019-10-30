@@ -1,4 +1,5 @@
-﻿using Albion.Model.Data;
+﻿using System.Linq;
+using Albion.Model.Data;
 using Albion.Model.Managers;
 
 namespace Albion.Model.Items.Profits
@@ -13,7 +14,15 @@ namespace Albion.Model.Items.Profits
 
         protected override void OrdersUpdated(ItemMarketData imd)
         {
-            Price = imd.BestPrice;
+            var bestOrder = imd.Orders.Where(x => x.QualityLevel >= Item.QualityLevel)
+                .OrderBy(x => x.UnitPriceSilver).FirstOrDefault();
+            if (bestOrder == null)
+            {
+                Price = 0;
+                return;
+            }
+
+            Price = bestOrder.UnitPriceSilver.FastSell();
         }
 
         protected override ItemMarketData GetMarketData()
@@ -40,8 +49,6 @@ namespace Albion.Model.Items.Profits
                 _price = value;
                 RaisePropertyChanged();
                 OnUpdatePrice();
-                if (_price != GetMarketData().BestPrice)
-                    GetMarketData().SetBestPrice(_price);
             }
         }
 

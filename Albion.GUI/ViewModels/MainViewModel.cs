@@ -296,8 +296,7 @@ namespace Albion.GUI.ViewModels
                     ? (ItemMarketData) itemMarket.ToMarketItems[ordersData.TownId]
                     : itemMarket.FromMarketItems[ordersData.TownId];
 
-                ordersItem.SetOrders(ordersData.Orders, ordersData.UpdateTime, true);
-                ordersItem.SetBestPrice(ordersItem.BestPrice);
+                ordersItem.SetOrders(ordersData.Orders, ordersData.UpdateTime);
 
                 if (item.Pos < ordersItem.UpdateTime)
                     item.Pos = ordersItem.UpdateTime;

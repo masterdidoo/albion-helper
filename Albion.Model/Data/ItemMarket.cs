@@ -7,13 +7,13 @@ namespace Albion.Model.Data
 {
     public class ItemMarket
     {
-        public MinItemMarketData[] FromMarketItems { get; }
-        public MaxItemMarketData[] ToMarketItems { get; }
+        public ItemMarketData[] FromMarketItems { get; }
+        public ItemMarketData[] ToMarketItems { get; }
 
         public ItemMarket()
         {
-            FromMarketItems = Enumerable.Repeat(0, (int)Location.None+1).Select(x => new MinItemMarketData()).ToArray();
-            ToMarketItems = Enumerable.Repeat(0, (int)Location.None+1).Select(x => new MaxItemMarketData()).ToArray();
+            FromMarketItems = Enumerable.Repeat(0, (int)Location.None+1).Select(x => new ItemMarketData()).ToArray();
+            ToMarketItems = Enumerable.Repeat(0, (int)Location.None+1).Select(x => new ItemMarketData()).ToArray();
         }
 }
 }
