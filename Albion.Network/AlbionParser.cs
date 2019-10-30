@@ -81,7 +81,7 @@ namespace Albion.Network
                     Debug.WriteLine($"{eventCode.ToString()}: {parameters[0]}");
                     break;
                 default:
-                    Debug.WriteLine($"case EventCodes.{eventCode.ToString()}:");
+                    //Debug.WriteLine($"case EventCodes.{eventCode.ToString()}:");
                     break;
             }
 
@@ -100,6 +100,7 @@ namespace Albion.Network
 
             if (_operationHandlers.TryGetValue(operationCode, out var handler))
             {
+                Debug.WriteLine($"handled OperationCodes.{operationCode.ToString()}:");
                 handler.Run(parameters);
                 return;
             }
