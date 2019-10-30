@@ -252,7 +252,7 @@ namespace Albion.Model.Items
 
         public string Name { get; set; }
 
-        public string FullName => $"{Tir}.{Enchant}.{QualityLevel} {Name}";
+        public string FullName => QualityLevel > 0 ? $"{Tir}.{Enchant}.{QualityLevel} {Name}" : $"{Tir}.{Enchant} {Name}";
 
         public BaseResorcedRequirement[] CraftingRequirements { get; }
         public int ItemValue { get; set; }

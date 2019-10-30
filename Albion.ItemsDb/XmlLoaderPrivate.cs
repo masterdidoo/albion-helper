@@ -78,12 +78,11 @@ namespace Albion.Db.Xml
         {
             var im = new ItemMarket();
             var main = CreateCommonItemExt(iItem, itemId, craftingRequirements, enchant, 0, im, enchantIp);
-            if (main.CraftingRequirements.Length == 0 || main.CraftingBuilding == NoneBuilding) return main;
-
-            for (int i = 1; i < 5; i++)
-            {
-                CreateCommonItemExt(iItem, itemId, craftingRequirements, enchant, i, im, enchantIp);
-            }
+            if (iItem is IItemPowered) 
+                for (int i = 1; i < 5; i++)
+                {
+                    CreateCommonItemExt(iItem, itemId, craftingRequirements, enchant, i, im, enchantIp);
+                }
             return main;
         }
 
