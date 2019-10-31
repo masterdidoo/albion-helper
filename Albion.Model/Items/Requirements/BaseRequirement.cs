@@ -82,12 +82,4 @@ namespace Albion.Model.Items.Requirements
 
         #endregion
     }
-
-    public enum RequirementType
-    {
-        LB,
-        FB,
-        CR,
-        UP
-    }
 }
