@@ -285,6 +285,12 @@ namespace Albion.GUI.ViewModels
                 item.ItemMarket.ToMarketItems[(int) Location.BlackMarket].SetOrders(Enumerable.Empty<AuctionItem>());
         }
 
+        private void ClearBm(CommonItem item)
+        {
+            mdm.DeleteOrders(item.Id, (int) Location.BlackMarket, false);
+            item.ItemMarket.ToMarketItems[(int) Location.BlackMarket].SetOrders(Enumerable.Empty<AuctionItem>());
+        }
+
         private void LoadData()
         {
             foreach (var ordersData in mdm.GetOrders())

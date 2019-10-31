@@ -6299,7 +6299,24 @@ namespace Albion.DataStore.Managers
             {"T8_2H_MACE_MORGANA@3", 6283000},
             {"T7_MAIN_SUMMONERSTAFF_PROTOTYPE@1", 6284000},
             {"T7_MAIN_SUMMONERSTAFF_PROTOTYPE@2", 6285000},
-            {"T7_MAIN_SUMMONERSTAFF_PROTOTYPE@3", 6286000}
+            {"T7_MAIN_SUMMONERSTAFF_PROTOTYPE@3", 6286000},
+            {"QUESTITEM_TOKEN_ADC_FRAME", 6287000 },
+            {"UNIQUE_MOUNT_BEETLE_SILVER", 6288000 },
+            {"UNIQUE_MOUNT_BEETLE_SILVER", 6289000 },
+            {"UNIQUE_MOUNT_BEETLE_SILVER", 6290000 },
+            {"UNIQUE_MOUNT_BEETLE_SILVER", 6291000 },
+            {"UNIQUE_MOUNT_BEETLE_SILVER", 6292000 },
+            {"UNIQUE_MOUNT_BEETLE_GOLD", 6293000 },
+            {"UNIQUE_MOUNT_BEETLE_GOLD", 6294000 },
+            {"UNIQUE_MOUNT_BEETLE_GOLD", 6295000 },
+            {"UNIQUE_MOUNT_BEETLE_GOLD", 6296000 },
+            {"UNIQUE_MOUNT_BEETLE_GOLD", 6297000 },
+            {"UNIQUE_MOUNT_BEETLE_CRYSTAL", 6298000 },
+            {"UNIQUE_MOUNT_BEETLE_CRYSTAL", 6299000 },
+            {"UNIQUE_MOUNT_BEETLE_CRYSTAL", 6300000 },
+            {"UNIQUE_MOUNT_BEETLE_CRYSTAL", 6301000 },
+            {"UNIQUE_MOUNT_BEETLE_CRYSTAL", 6302000 },
+            {"UNIQUE_AVATARRING_ADC_TOKENLOCKED_01", 6303000 },
         };
 
         #endregion
@@ -6351,9 +6368,14 @@ namespace Albion.DataStore.Managers
             }
         }
 
-        public void DeleteOrders(int id, bool isFrom)
+        public void DeleteOrders(int townId, bool isFrom)
         {
-            Rep.Delete(x => x.TownId == id && x.IsFrom == isFrom);
+            Rep.Delete(x => x.TownId == townId && x.IsFrom == isFrom);
+        }
+
+        public void DeleteOrders(string id, int townId, bool isFrom)
+        {
+            Rep.Delete(Items[id] + townId + (isFrom ? 100 : 0));
         }
     }
 }

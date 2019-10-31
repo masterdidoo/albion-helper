@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using Albion.DataStore.Db;
 using Albion.DataStore.Managers;
 using Albion.Db.Xml;
@@ -23,8 +24,11 @@ namespace UnitTests
             var loader = new XmlLoader(bdm, tm, tm, tm);
             loader.LoadModel();
 
+            var id = MarketDataManager.Items.Values.Max() / 1000;
+
             foreach (var x in loader.Items.Values)
             {
+                //if (!MarketDataManager.Items.ContainsKey(x.Id)) Debug.WriteLine("{{\"{0}\", {1} }},", x.Id, (++id)*1000);
                 Assert.IsTrue(MarketDataManager.Items.ContainsKey(x.Id), x.Id);
             }
 //            Assert.IsTrue(loader.Items.Values.All(x => MarketDataManager.Items.ContainsKey(x.Id)));

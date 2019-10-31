@@ -86,6 +86,7 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                             <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <CheckBox IsChecked="{Binding TreeProps.IsSelected}" Margin="0,2,2,0"/>
                         <TextBlock Grid.Column="1" Text="{Binding FullName, Mode=OneTime}" />
@@ -119,6 +120,9 @@
                             <TextBlock
                                 Text="{Binding Profitt.Count, Mode=OneWay}"
                                 Style="{StaticResource IntBlockStyle}" />
+                        </Border>
+                        <Border Grid.Column="8" BorderBrush="Black" BorderThickness="0,0,1,0">
+                            <Button Command="{Binding }" Content="CBM" ToolTip="Clear Black Market" />
                         </Border>
                     </Grid>
                 </HierarchicalDataTemplate>
