@@ -20,8 +20,10 @@ namespace Albion.Model.Items.Profits
                 return;
             }
 
-            var income = bestOrder.UnitPriceSilver.FastSell();
-            var count = imd.Orders.Where(x => x.QualityLevel <= Item.QualityLevel && x.UnitPriceSilver == bestOrder.UnitPriceSilver)
+            Price = bestOrder.UnitPriceSilver;
+
+            var income = Price.FastSell();
+            var count = imd.Orders.Where(x => x.QualityLevel <= Item.QualityLevel && x.UnitPriceSilver == Price)
                 .Select(x => x.Amount).DefaultIfEmpty(0).Sum();
 //            var count = bestOrder?.Amount ?? 0;
 //            var income = bestOrder?.UnitPriceSilver.FastSell() ?? 0;
@@ -36,5 +38,9 @@ namespace Albion.Model.Items.Profits
         }
 
         public override string Type => "FS";
+
+        protected override void OnUpdatePrice()
+        {
+        }
     }
 }

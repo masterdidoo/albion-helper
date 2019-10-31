@@ -145,5 +145,6 @@ namespace Albion.Model.Items.Profits
         public abstract string Type { get; }
 
         #endregion
+
     }
 }

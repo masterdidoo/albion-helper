@@ -28,29 +28,12 @@ namespace Albion.Model.Items.Requirements
             return Item.ItemMarket.ToMarketItems[TownId];
         }
 
-        protected void OnUpdatePrice()
+        protected override void OnUpdatePrice()
         {
             var cost = Price == 0 ? 0 : Price + 10000 + (Price + 10000) * 15 / 1000; //+1 silver and +1,5%
             SetCost(cost, 1);
         }
 
-        #region Price
-
-        private long _price;
-
-        public long Price
-        {
-            get => _price;
-            set
-            {
-                if (_price == value) return;
-                _price = value;
-                RaisePropertyChanged();
-                OnUpdatePrice();
-            }
-        }
-
-        #endregion
 
         public override string Type => "LB";
     }

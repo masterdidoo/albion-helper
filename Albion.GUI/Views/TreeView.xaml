@@ -141,7 +141,7 @@
                         <TextBlock Text="Salvage"
                                    Style="{StaticResource TextBlockStyle}"
                                    MinWidth="150" />
-                        <TextBox Visibility="Hidden" MinWidth="60"/>
+                        <FrameworkElement Visibility="Hidden" Width="66" />
                         <TextBlock
                             Text="{Binding Income, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,#}}"
                             Style="{StaticResource IntBlockStyle}" />
@@ -157,7 +157,7 @@
                                    Style="{StaticResource TextBlockStyle}"
                                    MinWidth="150" />
                         <TextBox KeyDown="UIElement_OnKeyDown" Text="{Binding Price, Mode=TwoWay, Converter={StaticResource PriceConverter}}" 
-                                 MinWidth="60" TextAlignment="Right" />
+                                 MinWidth="66" TextAlignment="Right" />
                         <TextBlock Text="{Binding Income, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,#}}" 
                                    Style="{StaticResource IntBlockStyle}"/>
                         <TextBlock
@@ -172,7 +172,8 @@
                         <TextBlock Text="Fast Sell" 
                                    Style="{StaticResource TextBlockStyle}"
                                    MinWidth="150" />
-                        <TextBox Visibility="Hidden" MinWidth="60"/>
+                        <TextBlock Text="{Binding Price, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,#}}" 
+                                   Style="{StaticResource IntBlockStyle}"/>
                         <TextBlock Text="{Binding Income, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,#}}" 
                                    Style="{StaticResource IntBlockStyle}"/>
                         <TextBlock
@@ -191,7 +192,7 @@
                                    Style="{StaticResource TextBlockStyle}"
                                    MinWidth="150" />
                         <TextBox KeyDown="UIElement_OnKeyDown" Text="{Binding Price, Mode=TwoWay, Converter={StaticResource PriceConverter}}" 
-                                 MinWidth="60" TextAlignment="Right" />
+                                 MinWidth="66" TextAlignment="Right" />
                         <TextBlock Text="{Binding Income, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,#}}" 
                                    Style="{StaticResource IntBlockStyle}"/>
                         <TextBlock
@@ -206,7 +207,8 @@
                         <TextBlock Text="BM Fast" 
                                    Style="{StaticResource TextBlockStyle}"
                                    MinWidth="150" />
-                        <TextBox Visibility="Hidden" MinWidth="60"/>
+                        <TextBlock Text="{Binding Price, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,#}}" 
+                                   Style="{StaticResource IntBlockStyle}"/>
                         <TextBlock Text="{Binding Income, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,#}}" 
                                    Style="{StaticResource IntBlockStyle}"/>
                         <TextBlock
@@ -226,7 +228,7 @@
                                    Style="{StaticResource TextBlockStyle}"
                                    MinWidth="150" />
                         <TextBox KeyDown="UIElement_OnKeyDown" Text="{Binding Price, Mode=TwoWay, Converter={StaticResource PriceConverter}}" 
-                                 MinWidth="60" TextAlignment="Right" />
+                                 MinWidth="66" TextAlignment="Right" />
                         <TextBlock Text="{Binding Cost, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,#}}" 
                                    Style="{StaticResource IntBlockStyle}"/>
                     </DockPanel>
@@ -238,10 +240,11 @@
                         <TextBlock Text="Fast Buy" 
                                    Style="{StaticResource TextBlockStyle}"
                                    MinWidth="150" />
-                        <TextBox Visibility="Hidden" MinWidth="60"/>
+                        <TextBlock Text="{Binding Price, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,#}}" 
+                                   Style="{StaticResource IntBlockStyle}"/>
                         <TextBlock Text="{Binding Cost, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,#}}" 
                                    Style="{StaticResource IntBlockStyle}"/>
-                        <TextBlock Visibility="Hidden" Style="{StaticResource IntBlockStyle}"/>
+                        <FrameworkElement Visibility="Hidden" Width="66" />
                         <TextBlock
                             Text="{Binding Count}"
                             Style="{StaticResource IntBlockStyle}" />
@@ -253,13 +256,12 @@
                                           ItemsSource="{Binding Resources}">
                     <DockPanel>
                         <CheckBox IsChecked="{Binding TreeProps.IsSelected, Mode=TwoWay}" Margin="2" VerticalAlignment="Center" />
-                        <TextBlock Text="UPGRADE "
+                        <TextBlock Text="UPGRADE"
                                    Style="{StaticResource TextBlockStyle}" 
-                                   MinWidth="150" />
-                        <TextBox Visibility="Hidden" MinWidth="60"/>
+                                   MinWidth="216" />
                         <TextBlock
-                            Text="{Binding Cost, Converter={StaticResource PriceConverter}, StringFormat=Cost {0:#,##0}}"
-                            Style="{StaticResource TextBlockStyle}" />
+                            Text="{Binding Cost, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,##0}}"
+                            Style="{StaticResource IntBlockStyle}" />
                     </DockPanel>
                 </HierarchicalDataTemplate>
 
@@ -267,14 +269,16 @@
                                           ItemsSource="{Binding Resources}">
                     <DockPanel Style="{StaticResource DpStyle}">
                         <CheckBox IsChecked="{Binding TreeProps.IsSelected, Mode=TwoWay}" Margin="2" VerticalAlignment="Center" />
-                        <TextBlock Style="{StaticResource TextBlockStyle}">
-                            <TextBlock.Text>
-                                <MultiBinding StringFormat="CRAFT  tax: {0:#,##0} cost: {1:#,##0}">
-                                    <Binding Path="Tax" Converter="{StaticResource PriceConverter}" />
-                                    <Binding Path="Cost" Converter="{StaticResource PriceConverter}" />
-                                </MultiBinding>
-                            </TextBlock.Text>
-                        </TextBlock>
+                        <TextBlock Text="Craft"
+                                   Style="{StaticResource TextBlockStyle}" 
+                                   MinWidth="84" />
+                        <TextBlock
+                            Text="{Binding Tax, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,##0}}"
+                            Style="{StaticResource IntBlockStyle}" />
+                        <FrameworkElement Visibility="Hidden" Width="66" />
+                        <TextBlock
+                            Text="{Binding Cost, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,##0}}"
+                            Style="{StaticResource IntBlockStyle}" />
                     </DockPanel>
                 </HierarchicalDataTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type requ:CraftingResource}"

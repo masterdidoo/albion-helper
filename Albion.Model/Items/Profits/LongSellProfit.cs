@@ -30,28 +30,10 @@ namespace Albion.Model.Items.Profits
             return Item.ItemMarket.FromMarketItems[TownId];
         }
 
-        protected void OnUpdatePrice()
+        protected override void OnUpdatePrice()
         {
             var cost = Price == 0 ? 0 : (Price - 10000).LongSell(); //-1.5% and -3%
             SetIncome(cost, 1);
         }
-
-        #region Price
-
-        private long _price;
-
-        public long Price
-        {
-            get => _price;
-            set
-            {
-                if (_price == value) return;
-                _price = value;
-                RaisePropertyChanged();
-                OnUpdatePrice();
-            }
-        }
-
-        #endregion
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Albion.Model.Items.Requirements;
 using Albion.Model.Items.Requirements.Resources;
 
 namespace Albion.Model.Items.Profits

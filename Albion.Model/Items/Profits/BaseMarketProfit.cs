@@ -37,5 +37,26 @@ namespace Albion.Model.Items.Profits
         protected abstract void OrdersUpdated(ItemMarketData imd);
 
         protected abstract ItemMarketData GetMarketData();
+
+
+        #region Price
+
+        private long _price;
+
+        public long Price
+        {
+            get => _price;
+            set
+            {
+                if (_price == value) return;
+                _price = value;
+                RaisePropertyChanged();
+                OnUpdatePrice();
+            }
+        }
+
+        protected abstract void OnUpdatePrice();
+
+        #endregion
     }
 }
