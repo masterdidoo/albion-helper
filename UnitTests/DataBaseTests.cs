@@ -26,10 +26,10 @@ namespace UnitTests
 
             var id = MarketDataManager.Items.Values.Max() / 1000;
 
-            foreach (var x in loader.Items.Values)
+            foreach (var x in loader.Items.Values.Select(x=>x.Id).Distinct())
             {
-                //if (!MarketDataManager.Items.ContainsKey(x.Id)) Debug.WriteLine("{{\"{0}\", {1} }},", x.Id, (++id)*1000);
-                Assert.IsTrue(MarketDataManager.Items.ContainsKey(x.Id), x.Id);
+                //if (!MarketDataManager.Items.ContainsKey(x)) Debug.WriteLine("{{\"{0}\", {1} }},", x, (++id)*1000);
+                Assert.IsTrue(MarketDataManager.Items.ContainsKey(x), x);
             }
 //            Assert.IsTrue(loader.Items.Values.All(x => MarketDataManager.Items.ContainsKey(x.Id)));
         }

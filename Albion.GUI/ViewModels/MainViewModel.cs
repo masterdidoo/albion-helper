@@ -48,6 +48,7 @@ namespace Albion.GUI.ViewModels
         {
             RefreshCommand = new RelayCommand(() => RaisePropertyChanged(nameof(CommonItems)));
             ClearBmCommand = new RelayCommand(ClearBm);
+            ClearItemBmCommand = new RelayCommand<CommonItem>(ClearItemBm);
 
             Tirs = Enumerable.Repeat(new Tuple<string, int?>("-", null), 1)
                 .Concat(Enumerable.Range(1, 8).Select(x => Tuple.Create(x.ToString(), (int?) x)));
@@ -72,7 +73,7 @@ namespace Albion.GUI.ViewModels
             var loader = new XmlLoader(bdm, CraftTownManager, BuyTownManager, SellTownManager);
             loader.LoadModel();
 
-            Items = loader.Items;
+            Items = loader.Items.Values.Where(x=>x.ShopSubCategory != Model.Items.Categories.ShopSubCategory.Event).ToDictionary(k=>k.Id + (k.QualityLevel > 1 ? $"_{k.QualityLevel}" : ""));
 
             LoadData();
 
@@ -101,6 +102,8 @@ namespace Albion.GUI.ViewModels
 
             CostCalcOptions.Instance.Changed += RefreshTree;
         }
+
+        public ICommand ClearItemBmCommand { get; set; }
 
         public TownManager AuctionTownManager { get; }
 
@@ -285,7 +288,7 @@ namespace Albion.GUI.ViewModels
                 item.ItemMarket.ToMarketItems[(int) Location.BlackMarket].SetOrders(Enumerable.Empty<AuctionItem>());
         }
 
-        private void ClearBm(CommonItem item)
+        private void ClearItemBm(CommonItem item)
         {
             mdm.DeleteOrders(item.Id, (int) Location.BlackMarket, false);
             item.ItemMarket.ToMarketItems[(int) Location.BlackMarket].SetOrders(Enumerable.Empty<AuctionItem>());

@@ -30,6 +30,7 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                         <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <CheckBox IsEnabled="False" Margin="0,2,4,0" />
                     <TextBlock Grid.Column="1" Text="Task" Margin="2,0,5,0" />
@@ -41,7 +42,7 @@
                         <TextBlock Text="Cost" Margin="3,0,3,0" Width="60" />
                     </Border>
                     <Border Grid.Column="4" BorderThickness="0,0,1,0" BorderBrush="Black">
-                        <TextBlock Text="X2" Margin="3,0,3,0" Width="20" />
+                        <TextBlock Text="X2" Margin="3,0,3,0" Width="25"/>
                     </Border>
                     <Border Grid.Column="5" BorderThickness="0,0,1,0" BorderBrush="Black">
                         <CheckBox IsChecked="{Binding IsProfitOrder}" Content="Profit" Margin="3,1,3,0" Width="60" />
@@ -100,7 +101,7 @@
                                 Style="{StaticResource IntBlockStyle}" />
                         </Border>
                         <Border Grid.Column="4" BorderBrush="Black" BorderThickness="0,0,1,0">
-                            <TextBlock Text="{Binding Profitt.Type, Mode=OneWay}" Width="26" TextAlignment="Center"/>
+                            <TextBlock Text="{Binding Profitt.Type, Mode=OneWay}" Width="20" TextAlignment="Center"/>
                         </Border>
                         <Border Grid.Column="5" BorderBrush="Black" BorderThickness="0,0,1,0">
                             <TextBlock
@@ -121,8 +122,14 @@
                                 Text="{Binding Profitt.Count, Mode=OneWay}"
                                 Style="{StaticResource IntBlockStyle}" />
                         </Border>
-                        <Border Grid.Column="8" BorderBrush="Black" BorderThickness="0,0,1,0">
-                            <Button Command="{Binding }" Content="CBM" ToolTip="Clear Black Market" />
+                        <Border Grid.Column="9" BorderBrush="Black" BorderThickness="0,0,1,0">
+                            <Button Command="{Binding DataContext.ClearItemBmCommand, ElementName=TitleGrid}" 
+                                    CommandParameter="{Binding}" 
+                                    Height="16"
+                                    Background="DarkRed"
+                                    Content="x" 
+                                    ToolTip="Clear Black Market" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                            </Button>
                         </Border>
                     </Grid>
                 </HierarchicalDataTemplate>
