@@ -43,6 +43,7 @@ namespace Albion.GUI.ViewModels
         private ShopCategory? _shopCategory;
         private ShopSubCategory? _shopSubCategory;
         private int? _tir;
+        private int _gridWidth = 300;
 
         public MainViewModel()
         {
