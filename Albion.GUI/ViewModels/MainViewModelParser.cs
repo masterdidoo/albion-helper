@@ -53,7 +53,7 @@ namespace Albion.GUI.ViewModels
             if (items.Length == 1)
             {
                 var itemMarket = MdmGetData(items[0].Key).FromMarketItems[AuctionTownManager.TownId];
-                itemMarket.SetOrders(items[0], DateTime.Now);
+                itemMarket.AppendOrders(items[0]);//, DateTime.Now);
                 mdm.Save(items[0].Key, AuctionTownManager.TownId, true, itemMarket);
             }
             else
@@ -85,7 +85,7 @@ namespace Albion.GUI.ViewModels
             if (items.Length == 1)
             {
                 var itemMarket = MdmGetData(items[0].Key).ToMarketItems[AuctionTownManager.TownId];
-                itemMarket.SetOrders(items[0], DateTime.Now);
+                itemMarket.AppendOrders(items[0]);//, DateTime.Now);
                 mdm.Save(items[0].Key, AuctionTownManager.TownId, false, itemMarket);
             }
             else

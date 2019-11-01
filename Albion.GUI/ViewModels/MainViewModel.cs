@@ -49,6 +49,7 @@ namespace Albion.GUI.ViewModels
             RefreshCommand = new RelayCommand(() => RaisePropertyChanged(nameof(CommonItems)));
             ClearBmCommand = new RelayCommand(ClearBm);
             ClearItemBmCommand = new RelayCommand<CommonItem>(ClearItemBm);
+            ClearItemCommand = new RelayCommand<CommonItem>(ClearItem);
 
             Tirs = Enumerable.Repeat(new Tuple<string, int?>("-", null), 1)
                 .Concat(Enumerable.Range(1, 8).Select(x => Tuple.Create(x.ToString(), (int?) x)));
@@ -104,6 +105,8 @@ namespace Albion.GUI.ViewModels
         }
 
         public ICommand ClearItemBmCommand { get; set; }
+
+        public ICommand ClearItemCommand { get; set; }
 
         public TownManager AuctionTownManager { get; }
 
@@ -292,6 +295,18 @@ namespace Albion.GUI.ViewModels
         {
             mdm.DeleteOrders(item.Id, (int) Location.BlackMarket, false);
             item.ItemMarket.ToMarketItems[(int) Location.BlackMarket].SetOrders(Enumerable.Empty<AuctionItem>());
+
+            mdm.DeleteOrders(item.Id, (int) Location.BlackMarket, true);
+            item.ItemMarket.FromMarketItems[(int) Location.BlackMarket].SetOrders(Enumerable.Empty<AuctionItem>());
+        }
+
+        private void ClearItem(CommonItem item)
+        {
+            mdm.DeleteOrders(item.Id, SellTownManager.TownId, false);
+            item.ItemMarket.ToMarketItems[SellTownManager.TownId].SetOrders(Enumerable.Empty<AuctionItem>());
+
+            mdm.DeleteOrders(item.Id, SellTownManager.TownId, true);
+            item.ItemMarket.FromMarketItems[SellTownManager.TownId].SetOrders(Enumerable.Empty<AuctionItem>());
         }
 
         private void LoadData()
