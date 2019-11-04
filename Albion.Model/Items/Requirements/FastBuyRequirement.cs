@@ -21,7 +21,7 @@ namespace Albion.Model.Items.Requirements
             }
 
             Price = bestOrder.UnitPriceSilver;
-            var cost = Price.FastSell();
+            var cost = Price;
             var count = imd.Orders.Where(x => x.QualityLevel >= Item.QualityLevel && x.UnitPriceSilver == Price)
                 .Select(x => x.Amount).DefaultIfEmpty(0).Sum();
 

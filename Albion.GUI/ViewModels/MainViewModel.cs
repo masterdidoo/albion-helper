@@ -44,6 +44,7 @@ namespace Albion.GUI.ViewModels
         private ShopSubCategory? _shopSubCategory;
         private int? _tir;
         private int _gridWidth = 300;
+        private int? _Quality;
 
         public MainViewModel()
         {
@@ -56,6 +57,8 @@ namespace Albion.GUI.ViewModels
                 .Concat(Enumerable.Range(1, 8).Select(x => Tuple.Create(x.ToString(), (int?) x)));
             Enchants = Enumerable.Repeat(new Tuple<string, int?>("-", null), 1)
                 .Concat(Enumerable.Range(0, 4).Select(x => Tuple.Create(x.ToString(), (int?) x)));
+            Qualities = Enumerable.Repeat(new Tuple<string, int?>("-", null), 1)
+                .Concat(Enumerable.Range(1, 5).Select(x => Tuple.Create(x.ToString(), (int?) x)));
 
             ShopCategories = Enumerable.Repeat(new Tuple<string, ShopCategory?>("-", null), 1).Concat(Enum
                 .GetValues(typeof(ShopCategory)).Cast<ShopCategory?>()
@@ -144,6 +147,7 @@ namespace Albion.GUI.ViewModels
                 IEnumerable<CommonItem> items = Items.Values;
                 if (Tir >= 0) items = items.Where(x => x.Tir == Tir);
                 if (Enchant >= 0) items = items.Where(x => x.Enchant == Enchant);
+                if (Quality >= 0) items = items.Where(x => x.QualityLevel == Quality);
                 if (ShopCategory != null)
                     switch (ShopCategory)
                     {
@@ -266,7 +270,19 @@ namespace Albion.GUI.ViewModels
             }
         }
 
+        public int? Quality
+        {
+            get => _Quality;
+            set
+            {
+                if (!Set(ref _Quality, value)) return;
+                RaisePropertyChanged(nameof(CommonItems));
+            }
+        }
+
         public IEnumerable<Tuple<string, int?>> Enchants { get; }
+
+        public IEnumerable<Tuple<string, int?>> Qualities { get; }
 
         public ICommand RefreshCommand { get; }
         public ICommand ClearBmCommand { get; }

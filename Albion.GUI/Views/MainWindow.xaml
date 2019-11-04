@@ -17,6 +17,7 @@
         <DockPanel>
             <ComboBox SelectedValue="{Binding Tir}" DisplayMemberPath="Item1" ItemsSource="{Binding Tirs}" SelectedValuePath="Item2"/>
             <ComboBox SelectedValue="{Binding Enchant}" DisplayMemberPath="Item1" ItemsSource="{Binding Enchants}" SelectedValuePath="Item2"/>
+            <ComboBox SelectedValue="{Binding Quality}" DisplayMemberPath="Item1" ItemsSource="{Binding Qualities}" SelectedValuePath="Item2"/>
             <ComboBox SelectedValue="{Binding ShopCategory}" DisplayMemberPath="Item1" ItemsSource="{Binding ShopCategories}" SelectedValuePath="Item2"/>
             <ComboBox SelectedValue="{Binding ShopSubCategory}" DisplayMemberPath="Item1" ItemsSource="{Binding ShopSubCategories}" SelectedValuePath="Item2"/>
             <Button Command="{Binding RefreshCommand}">REFRESH</Button>
