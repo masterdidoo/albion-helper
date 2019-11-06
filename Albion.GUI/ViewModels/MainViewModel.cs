@@ -305,25 +305,25 @@ namespace Albion.GUI.ViewModels
         {
             mdm.DeleteOrders((int) Location.BlackMarket, false);
             foreach (var item in Items.Values)
-                item.ItemMarket.ToMarketItems[(int) Location.BlackMarket].SetOrders(Enumerable.Empty<AuctionItem>());
+                item.ItemMarket.ToMarketItems[(int) Location.BlackMarket].ClearOrders();
         }
 
         private void ClearItemBm(CommonItem item)
         {
             mdm.DeleteOrders(item.Id, (int) Location.BlackMarket, false);
-            item.ItemMarket.ToMarketItems[(int) Location.BlackMarket].SetOrders(Enumerable.Empty<AuctionItem>());
+            item.ItemMarket.ToMarketItems[(int) Location.BlackMarket].ClearOrders();
 
             mdm.DeleteOrders(item.Id, (int) Location.BlackMarket, true);
-            item.ItemMarket.FromMarketItems[(int) Location.BlackMarket].SetOrders(Enumerable.Empty<AuctionItem>());
+            item.ItemMarket.FromMarketItems[(int) Location.BlackMarket].ClearOrders();
         }
 
         private void ClearItem(CommonItem item)
         {
             mdm.DeleteOrders(item.Id, SellTownManager.TownId, false);
-            item.ItemMarket.ToMarketItems[SellTownManager.TownId].SetOrders(Enumerable.Empty<AuctionItem>());
+            item.ItemMarket.ToMarketItems[SellTownManager.TownId].ClearOrders();
 
             mdm.DeleteOrders(item.Id, SellTownManager.TownId, true);
-            item.ItemMarket.FromMarketItems[SellTownManager.TownId].SetOrders(Enumerable.Empty<AuctionItem>());
+            item.ItemMarket.FromMarketItems[SellTownManager.TownId].ClearOrders();
         }
 
         private void LoadData()

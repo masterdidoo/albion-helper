@@ -48,25 +48,27 @@ namespace Albion.GUI.ViewModels
         private void AuctionGetRequestsHandler(AuctionGetRequests p)
         {
             if (p.Items.Length == 0) return;
-            var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
+            var ordersGroups = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
 
-            if (items.Length == 1)
+            if (ordersGroups.Length == 1)
             {
-                var itemMarket = MdmGetData(items[0].Key).FromMarketItems[AuctionTownManager.TownId];
-                itemMarket.SetOrders(items[0], DateTime.Now);
-                mdm.Save(items[0].Key, AuctionTownManager.TownId, true, itemMarket);
+                var orders = ordersGroups[0];
+                var itemMarket = MdmGetData(orders.Key).FromMarketItems[AuctionTownManager.TownId];
+                itemMarket.AppendOrSetOrders(orders);
+                    //itemMarket.SetOrders(items[0], DateTime.Now);
+                mdm.Save(orders.Key, AuctionTownManager.TownId, true, itemMarket);
             }
             else
             {
-                foreach (var item in items)
+                foreach (var orders in ordersGroups)
                 {
-                    var itemMarket = MdmGetData(item.Key).FromMarketItems[AuctionTownManager.TownId];
-                    itemMarket.AppendOrders(item);
-                    mdm.Save(item.Key, AuctionTownManager.TownId, true, itemMarket);
+                    var itemMarket = MdmGetData(orders.Key).FromMarketItems[AuctionTownManager.TownId];
+                    itemMarket.AppendOrders(orders);
+                    mdm.Save(orders.Key, AuctionTownManager.TownId, true, itemMarket);
                 }
             }
 
-            foreach (var item in items)
+            foreach (var item in ordersGroups)
             {
                 Items[item.Key].Pos = DateTime.Now;
                 foreach (var ci in Items[item.Key].QualityLevels)
@@ -80,25 +82,27 @@ namespace Albion.GUI.ViewModels
         private void AuctionBuyOfferHandler(AuctionBuyOffer p)
         {
             if (p.Items.Length == 0) return;
-            var items = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
+            var ordersGroups = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
 
-            if (items.Length == 1)
+            if (ordersGroups.Length == 1)
             {
-                var itemMarket = MdmGetData(items[0].Key).ToMarketItems[AuctionTownManager.TownId];
-                itemMarket.SetOrders(items[0], DateTime.Now);
-                mdm.Save(items[0].Key, AuctionTownManager.TownId, false, itemMarket);
+                var orders = ordersGroups[0];
+                var itemMarket = MdmGetData(orders.Key).ToMarketItems[AuctionTownManager.TownId];
+                itemMarket.AppendOrSetOrders(orders);
+                //itemMarket.SetOrders(items[0], DateTime.Now);
+                mdm.Save(orders.Key, AuctionTownManager.TownId, false, itemMarket);
             }
             else
             {
-                foreach (var item in items)
+                foreach (var orders in ordersGroups)
                 {
-                    var itemMarket = MdmGetData(item.Key).ToMarketItems[AuctionTownManager.TownId];
-                    itemMarket.AppendOrders(item);
-                    mdm.Save(item.Key, AuctionTownManager.TownId, false, itemMarket);
+                    var itemMarket = MdmGetData(orders.Key).ToMarketItems[AuctionTownManager.TownId];
+                    itemMarket.AppendOrders(orders);
+                    mdm.Save(orders.Key, AuctionTownManager.TownId, false, itemMarket);
                 }
             }
 
-            foreach (var item in items)
+            foreach (var item in ordersGroups)
             {
                 Items[item.Key].Pos = DateTime.Now;
                 foreach (var ci in Items[item.Key].QualityLevels)
