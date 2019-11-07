@@ -16,6 +16,7 @@ namespace Albion.Model.Items.Profits
                 .OrderByDescending(x => x.UnitPriceSilver).FirstOrDefault();
             if (bestOrder == null)
             {
+                Price = 0;
                 SetIncome(0, 0);
                 return;
             }
