@@ -54,7 +54,7 @@
                         <CheckBox IsChecked="{Binding IsProfitSumOrder}" Content="Sum" Margin="3,0,3,0" Width="60" />
                     </Border>
                     <Border Grid.Column="8" BorderThickness="0,0,1,0" BorderBrush="Black">
-                        <TextBlock Text="Count" Margin="3,0,3,0" Width="60" />
+                        <CheckBox IsChecked="{Binding IsCountOrder}" Content="Count" Margin="3,0,3,0" Width="60" />
                     </Border>
                 </Grid>
             </TreeViewItem.Header>

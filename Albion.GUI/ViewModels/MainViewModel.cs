@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Windows.Input;
 using System.Xml.Linq;
 using Albion.Common;
@@ -45,6 +46,7 @@ namespace Albion.GUI.ViewModels
         private int? _tir;
         private int _gridWidth = 300;
         private int? _Quality;
+        private bool _isCountOrder;
 
         public MainViewModel()
         {
@@ -175,6 +177,8 @@ namespace Albion.GUI.ViewModels
                             ? items.OrderByDescending(x => x.Profitt?.ProfitPercent)
                             : IsProfitSumOrder
                                 ? items.OrderByDescending(x => x.Profitt?.ProfitSum)
+                            : IsCountOrder
+                                ? items.OrderByDescending(x => x.Profitt?.Count)
                                 : items.OrderBy(x => !x.TreeProps.IsSelected);
 
 //                var tmp = items.OrderByDescending(x => x.Pos).ThenBy(x => x.FullName).ToArray();
@@ -183,6 +187,16 @@ namespace Albion.GUI.ViewModels
             }
         }
 
+
+        public bool IsCountOrder
+        {
+            get => _isCountOrder;
+            set
+            {
+                if (!Set(ref _isCountOrder, value)) return;
+                RefreshTree();
+            }
+        }
 
         public bool IsProfitPercentOrder
         {
