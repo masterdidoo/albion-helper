@@ -22,7 +22,7 @@ namespace Albion.Model.Items.Profits
                 return;
             }
 
-            Price = bestOrder.UnitPriceSilver.FastSell();
+            Price = bestOrder.UnitPriceSilver;
         }
 
         protected override ItemMarketData GetMarketData()
