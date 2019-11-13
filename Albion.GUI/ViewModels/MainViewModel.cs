@@ -48,6 +48,7 @@ namespace Albion.GUI.ViewModels
         private int _gridWidth = 300;
         private int? _Quality;
         private bool _isCountOrder;
+        private bool _IsSameTir;
 
         public MainViewModel()
         {
@@ -165,8 +166,16 @@ namespace Albion.GUI.ViewModels
             get
             {
                 IEnumerable<CommonItem> items = Items.Values;
-                if (Tir >= 0) items = items.Where(x => x.Tir == Tir);
-                if (Enchant >= 0) items = items.Where(x => x.Enchant == Enchant);
+                if (Tir >= 0 && Enchant >= 0 && IsSameTir)
+                {
+                    items = items.Where(x => IsSameFor(x, Tir.Value, Enchant.Value));
+                }
+                else
+                {
+                    if (Tir >= 0) items = items.Where(x => x.Tir == Tir);
+                    if (Enchant >= 0) items = items.Where(x => x.Enchant == Enchant);
+                }
+
                 if (Quality >= 0) items = items.Where(x => x.QualityLevel == Quality);
                 if (ShopCategory != null)
                     switch (ShopCategory)
@@ -203,6 +212,16 @@ namespace Albion.GUI.ViewModels
 //                return tmp;
                 return orderedItems.ThenByDescending(x => x.Pos).ThenBy(x => x.FullName);
             }
+        }
+
+        private bool IsSameFor(CommonItem item, int tir, int enchant)
+        {
+            tir = tir + enchant;
+            for (var i = 0; i <= 3; i++)
+            {
+                if (item.Tir == tir-i && item.Enchant == i) return true;
+            }
+            return false;
         }
 
 
@@ -286,6 +305,16 @@ namespace Albion.GUI.ViewModels
             set
             {
                 if (!Set(ref _tir, value)) return;
+                RaisePropertyChanged(nameof(CommonItems));
+            }
+        }
+
+        public bool IsSameTir
+        {
+            get => _IsSameTir;
+            set
+            {
+                if (!Set(ref _IsSameTir, value)) return;
                 RaisePropertyChanged(nameof(CommonItems));
             }
         }

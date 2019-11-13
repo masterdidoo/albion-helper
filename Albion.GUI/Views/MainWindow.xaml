@@ -15,6 +15,7 @@
         </Grid.RowDefinitions>
 
         <DockPanel>
+            <CheckBox IsChecked="{Binding IsSameTir}" Margin="3" VerticalAlignment="Center"/>
             <ComboBox SelectedValue="{Binding Tir}" DisplayMemberPath="Item1" ItemsSource="{Binding Tirs}" SelectedValuePath="Item2"/>
             <ComboBox SelectedValue="{Binding Enchant}" DisplayMemberPath="Item1" ItemsSource="{Binding Enchants}" SelectedValuePath="Item2"/>
             <ComboBox SelectedValue="{Binding Quality}" DisplayMemberPath="Item1" ItemsSource="{Binding Qualities}" SelectedValuePath="Item2"/>
