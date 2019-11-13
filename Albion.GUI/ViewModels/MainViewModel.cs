@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Media;
 using System.Windows.Input;
-using System.Xml.Linq;
 using Albion.Common;
 using Albion.DataStore.Db;
 using Albion.DataStore.Managers;
 using Albion.Db.Xml;
 using Albion.GUI.Libs;
+using Albion.GUI.Views;
 using Albion.Model.Data;
 using Albion.Model.Items;
 using Albion.Model.Items.Categories;
@@ -38,18 +37,18 @@ namespace Albion.GUI.ViewModels
         private int _bluePlayers;
         private int? _enchant;
         private string _filterTest;
+        private int _gridWidth = 300;
+        private bool _isCostOrder;
+        private bool _isCountOrder;
         private bool _isProfitOrder;
         private bool _isProfitPercentOrder;
         private bool _isProfitSumOrder;
+        private bool _IsSameTir;
+        private int? _Quality;
         private int _redPlayers;
         private ShopCategory? _shopCategory;
         private ShopSubCategory? _shopSubCategory;
         private int? _tir;
-        private int _gridWidth = 300;
-        private int? _Quality;
-        private bool _isCountOrder;
-        private bool _IsSameTir;
-        private bool _isCostOrder;
 
         public MainViewModel()
         {
@@ -57,6 +56,7 @@ namespace Albion.GUI.ViewModels
             ClearBmCommand = new RelayCommand(ClearBm);
             ClearItemBmCommand = new RelayCommand<CommonItem>(ClearItemBm);
             ClearItemCommand = new RelayCommand<CommonItem>(ClearItem);
+            OpenItemCommand = new RelayCommand<CommonItem>(OpenItem);
 
             Tirs = Enumerable.Repeat(new Tuple<string, int?>("-", null), 1)
                 .Concat(Enumerable.Range(1, 8).Select(x => Tuple.Create(x.ToString(), (int?) x)));
@@ -83,7 +83,8 @@ namespace Albion.GUI.ViewModels
             var loader = new XmlLoader(bdm, CraftTownManager, BuyTownManager, SellTownManager);
             loader.LoadModel();
 
-            Items = loader.Items.Values.Where(x=>x.ShopSubCategory != Model.Items.Categories.ShopSubCategory.Event).ToDictionary(k=>k.Id + (k.QualityLevel > 1 ? $"_{k.QualityLevel}" : ""));
+            Items = loader.Items.Values.Where(x => x.ShopSubCategory != Model.Items.Categories.ShopSubCategory.Event)
+                .ToDictionary(k => k.Id + (k.QualityLevel > 1 ? $"_{k.QualityLevel}" : ""));
 
             LoadData();
 
@@ -124,6 +125,8 @@ namespace Albion.GUI.ViewModels
 
         public ICommand ClearItemCommand { get; set; }
 
+        public ICommand OpenItemCommand { get; set; }
+
         public TownManager AuctionTownManager { get; }
 
         public TownManager SellTownManager { get; }
@@ -147,18 +150,13 @@ namespace Albion.GUI.ViewModels
             }
         }
 
-        private void BeepRed()
-        {
-            SystemSounds.Beep.Play();
-        }
-
         public int BluePlayers
         {
             get => _bluePlayers;
             set => Set(ref _bluePlayers, value);
         }
 
-        public IEnumerable<Location> Towns => TownsAndBz.Where(x=>x!=Location.BlackZone);
+        public IEnumerable<Location> Towns => TownsAndBz.Where(x => x != Location.BlackZone);
 
         public IEnumerable<Location> TownsAndBz => typeof(Location).GetEnumValues().Cast<Location>();
 
@@ -207,24 +205,14 @@ namespace Albion.GUI.ViewModels
                                 ? items.OrderByDescending(x => x.Profitt?.ProfitPercent)
                                 : IsProfitSumOrder
                                     ? items.OrderByDescending(x => x.Profitt?.ProfitSum)
-                                : IsCountOrder
-                                    ? items.OrderByDescending(x => x.Profitt?.Count)
-                                    : items.OrderBy(x => !x.TreeProps.IsSelected);
+                                    : IsCountOrder
+                                        ? items.OrderByDescending(x => x.Profitt?.Count)
+                                        : items.OrderBy(x => !x.TreeProps.IsSelected);
 
 //                var tmp = items.OrderByDescending(x => x.Pos).ThenBy(x => x.FullName).ToArray();
 //                return tmp;
                 return orderedItems.ThenByDescending(x => x.Pos).ThenBy(x => x.FullName);
             }
-        }
-
-        private bool IsSameFor(CommonItem item, int tir, int enchant)
-        {
-            tir = tir + enchant;
-            for (var i = 0; i <= 3; i++)
-            {
-                if (item.Tir == tir-i && item.Enchant == i) return true;
-            }
-            return false;
         }
 
 
@@ -370,9 +358,30 @@ namespace Albion.GUI.ViewModels
             _albionParser.Dispose();
         }
 
+        private void OpenItem(CommonItem item)
+        {
+            var vm = new ItemViewModel(item);
+            var window = new ItemWindow() {DataContext = vm};
+            window.Show();
+        }
+
+        private void BeepRed()
+        {
+            SystemSounds.Beep.Play();
+        }
+
+        private bool IsSameFor(CommonItem item, int tir, int enchant)
+        {
+            tir = tir + enchant;
+            for (var i = 0; i <= 3; i++)
+                if (item.Tir == tir - i && item.Enchant == i)
+                    return true;
+            return false;
+        }
+
         private void SaveOptions()
         {
-            mdm.SetSelectedItems(Items.Values.Where(x=>x.TreeProps.IsSelected).Select(x=>x.Id));
+            mdm.SetSelectedItems(Items.Values.Where(x => x.TreeProps.IsSelected).Select(x => x.Id));
         }
 
         private void ClearBm()
@@ -408,7 +417,7 @@ namespace Albion.GUI.ViewModels
 
                 var itemMarket = item.ItemMarket;
                 var ordersItem = !ordersData.IsFrom
-                    ? (ItemMarketData) itemMarket.ToMarketItems[ordersData.TownId]
+                    ? itemMarket.ToMarketItems[ordersData.TownId]
                     : itemMarket.FromMarketItems[ordersData.TownId];
 
                 ordersItem.SetOrders(ordersData.Orders, ordersData.UpdateTime);

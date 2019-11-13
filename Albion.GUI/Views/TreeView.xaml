@@ -131,6 +131,7 @@
                                 <Button Command="{Binding DataContext.ClearItemBmCommand, ElementName=TitleGrid}" 
                                         CommandParameter="{Binding}" 
                                         Height="16"
+                                        Width="16"
                                         Background="DarkRed"
                                         IsTabStop="False"
                                         Content="B" 
@@ -139,9 +140,19 @@
                                 <Button Command="{Binding DataContext.ClearItemCommand, ElementName=TitleGrid}" 
                                         CommandParameter="{Binding}" 
                                         Height="16"
+                                        Width="16"
                                         Background="OrangeRed"
                                         IsTabStop="False"
                                         Content="T" 
+                                        ToolTip="Clear Item Market" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                                </Button>
+                                <Button Command="{Binding DataContext.OpenItemCommand, ElementName=TitleGrid}" 
+                                        CommandParameter="{Binding}" 
+                                        Height="16"
+                                        Width="16"
+                                        Background="Green"
+                                        IsTabStop="False"
+                                        Content="I" 
                                         ToolTip="Clear Item Market" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
                                 </Button>
                             </DockPanel>

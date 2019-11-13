@@ -102,11 +102,15 @@
     </Compile>
     <Compile Include="Libs\DebounceDispatcher.cs" />
     <Compile Include="PriceConverter.cs" />
+    <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="Views\ArtefactsView.xaml.cs">
       <DependentUpon>ArtefactsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BuildingsView.xaml.cs">
       <DependentUpon>BuildingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ItemWindow.xaml.cs">
+      <DependentUpon>ItemWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\OptionsView.xaml.cs">
       <DependentUpon>OptionsView.xaml</DependentUpon>
@@ -129,6 +133,10 @@
     <Page Include="Views\BuildingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ItemWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
