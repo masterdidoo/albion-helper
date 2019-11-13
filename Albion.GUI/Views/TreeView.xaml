@@ -106,7 +106,11 @@
                         <Border Grid.Column="5" BorderBrush="Black" BorderThickness="0,0,1,0">
                             <TextBlock
                                 Text="{Binding Profitt.Profit, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}"
-                                Style="{StaticResource IntBlockStyle}" />
+                                Style="{StaticResource IntBlockStyle}" >
+                                <TextBlock.ToolTip>
+                                    <TextBlock Text="{Binding Profitt.Income, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}"></TextBlock>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
                         </Border>
                         <Border Grid.Column="6" BorderBrush="Black" BorderThickness="0,0,1,0">
                             <TextBlock Text="{Binding Profitt.ProfitPercent, Mode=OneWay}"
