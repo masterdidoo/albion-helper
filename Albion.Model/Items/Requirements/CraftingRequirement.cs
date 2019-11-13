@@ -43,6 +43,13 @@ namespace Albion.Model.Items.Requirements
 
         private long GetReturnCoeff()
         {
+            switch (Item.ShopCategory)
+            {
+                case ShopCategory.Offhand:
+                    if (CraftTown == Location.Martlock) return Return25;
+                    break;
+            }
+
             switch (Item.ShopSubCategory)
             {
                 case ShopSubCategory.Wood:
@@ -53,28 +60,62 @@ namespace Albion.Model.Items.Requirements
                     return 1000;
                 case ShopSubCategory.Planks:
                     if (CraftTown == Location.FortSterling) return Return35;
+                    if (CraftTown == Location.BlackZone) return Return20;
                     break;
                 case ShopSubCategory.Stoneblock:
                     if (CraftTown == Location.Bridgewatch) return Return35;
+                    if (CraftTown == Location.BlackZone) return Return20;
                     break;
                 case ShopSubCategory.Metalbar:
                     if (CraftTown == Location.Thetford) return Return35;
+                    if (CraftTown == Location.BlackZone) return Return20;
                     break;
                 case ShopSubCategory.Leather:
                     if (CraftTown == Location.Martlock) return Return35;
+                    if (CraftTown == Location.BlackZone) return Return20;
                     break;
                 case ShopSubCategory.Cloth:
                     if (CraftTown == Location.Lymhurst) return Return35;
+                    if (CraftTown == Location.BlackZone) return Return20;
                     break;
-            }
 
-            switch (Item.ShopCategory)
-            {
-                case ShopCategory.Offhand:
+                case ShopSubCategory.Froststaff:
+                case ShopSubCategory.Quarterstaff:
+                case ShopSubCategory.Axe:
+                case ShopSubCategory.PlateShoes:
                     if (CraftTown == Location.Martlock) return Return25;
                     break;
+                case ShopSubCategory.Cursestaff:
+                case ShopSubCategory.Dagger:
+                case ShopSubCategory.Crossbow:
+                case ShopSubCategory.PlateArmor:
+                case ShopSubCategory.ClothShoes:
+                    if (CraftTown == Location.Bridgewatch) return Return25;
+                    break;
+                case ShopSubCategory.Arcanestaff:
+                case ShopSubCategory.Bow:
+                case ShopSubCategory.Sword:
+                case ShopSubCategory.LeatherHelmet:
+                case ShopSubCategory.LeatherShoes:
+                    if (CraftTown == Location.Lymhurst) return Return25;
+                    break;
+                case ShopSubCategory.Hammer:
+                case ShopSubCategory.Spear:
+                case ShopSubCategory.Holystaff:
+                case ShopSubCategory.ClothArmor:
+                case ShopSubCategory.PlateHelmet:
+                    if (CraftTown == Location.FortSterling) return Return25;
+                    break;
+                case ShopSubCategory.Mace:
+                case ShopSubCategory.Naturestaff:
+                case ShopSubCategory.Firestaff:
+                case ShopSubCategory.LeatherArmor:
+                case ShopSubCategory.ClothHelmet:
+                    if (CraftTown == Location.Thetford) return Return25;
+                    break;
             }
 
+            if (CraftTown == Location.BlackZone) return Return25;
             if (CraftTown < Location.BlackMarket) return Return15;
 
             return 1000;

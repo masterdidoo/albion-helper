@@ -106,6 +106,13 @@ namespace Albion.GUI.ViewModels
             CraftTownManager.Town = Location.None;
             AuctionTownManager.Town = Location.None;
 
+            AuctionTownManager.TownChanged += p =>
+            {
+                if (BuyTownManager.Town == Location.None) BuyTownManager.Town = p.Town;
+                if (SellTownManager.Town == Location.None) SellTownManager.Town = p.Town;
+                if (CraftTownManager.Town == Location.None) CraftTownManager.Town = p.Town;
+            };
+
             InitAlbionParser();
 
             CostCalcOptions.Instance.Changed += RefreshTree;

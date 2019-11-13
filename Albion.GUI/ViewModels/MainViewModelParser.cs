@@ -25,9 +25,6 @@ namespace Albion.GUI.ViewModels
                 if (p.Town != Location.None)
                 {
                     AuctionTownManager.Town = p.Town;
-//                    BuyTownManager.Town = p.Town;
-//                    SellTownManager.Town = p.Town;
-//                    CraftTownManager.Town = p.Town;
                 }
             });
 

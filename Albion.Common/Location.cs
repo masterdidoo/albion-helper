@@ -15,6 +15,7 @@
         HighlandCross, // = 3002,
         //Caerleon2, // = 3013,
         MountainCross, // = 4006,
+        BlackZone,
         None
     }
 }
