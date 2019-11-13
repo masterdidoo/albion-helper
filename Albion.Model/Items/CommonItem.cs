@@ -93,13 +93,16 @@ namespace Albion.Model.Items
         {
             get
             {
+                if (!CostCalcOptions.Instance.IsCraftDisabled || CostCalcOptions.Instance.IsCraftOnly)
+                    if (IsCraftable)
+                    {
+                        foreach (var cr in CraftingRequirements) yield return cr;
+                        if (CostCalcOptions.Instance.IsCraftOnly) yield break;
+                    }
                 yield return _fastBuyRequirement;
                 if (!CostCalcOptions.Instance.IsLongBuyDisabled || CostCalcOptions.Instance.IsArtefactsLongBuyEnabled &&
                     ShopCategory == ShopCategory.Artefacts)
                     yield return _longBuyRequirement;
-                if (!CostCalcOptions.Instance.IsCraftDisabled)
-                if (IsCraftable)
-                    foreach (var cr in CraftingRequirements) yield return cr;
             }
         }
 
