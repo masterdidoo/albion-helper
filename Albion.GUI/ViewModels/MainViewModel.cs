@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Media;
 using System.Windows.Input;
 using System.Xml.Linq;
 using Albion.Common;
@@ -130,7 +131,16 @@ namespace Albion.GUI.ViewModels
         public int RedPlayers
         {
             get => _redPlayers;
-            set => Set(ref _redPlayers, value);
+            set
+            {
+                var old = _redPlayers;
+                if (Set(ref _redPlayers, value) && old < _redPlayers) BeepRed();
+            }
+        }
+
+        private void BeepRed()
+        {
+            SystemSounds.Beep.Play();
         }
 
         public int BluePlayers
