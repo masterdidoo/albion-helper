@@ -227,10 +227,17 @@ namespace Albion.Model.Items
             set
             {
                 if (_profitt == value) return;
+                if (_profitt != null) _profitt.Updated -= ProfittOnUpdated;
                 _profitt = value;
+                if (_profitt != null) _profitt.Updated += ProfittOnUpdated;
                 RaisePropertyChanged();
-                ProfitUpdated?.Invoke();
+                ProfittOnUpdated();
             }
+        }
+
+        private void ProfittOnUpdated()
+        {
+            ProfitUpdated?.Invoke();
         }
 
         public event Action ProfitUpdated;
