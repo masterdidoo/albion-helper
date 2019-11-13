@@ -86,10 +86,11 @@ namespace Albion.Model.Data
             {
                 if (_isFocus == value) return;
                 _isFocus = value;
-                Changed?.Invoke();
+                IsFocusChanged?.Invoke();
             }
         }
 
         public event Action Changed;
+        public event Action IsFocusChanged;
     }
 }

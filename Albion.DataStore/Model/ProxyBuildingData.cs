@@ -1,4 +1,5 @@
-﻿using Albion.DataStore.DataModel;
+﻿using Albion.Common;
+using Albion.DataStore.DataModel;
 using Albion.DataStore.Managers;
 using Albion.Model.Data;
 using Albion.Model.Managers;
@@ -15,7 +16,17 @@ namespace Albion.DataStore.Model
         {
             _manager = manager;
             _crafTownManager = crafTownManager;
-            _buildingData = manager.Rep.FindById(id) ?? new BuildingData(id);
+            _buildingData = new BuildingData(id);
+            var data = manager.Rep.FindById(id);
+            if (data != null)
+            {
+                var i = 0;
+                foreach (var dataTaxData in data.TaxDatas)
+                {
+                    _buildingData.TaxDatas[i++] = dataTaxData;
+                    if (i >= _buildingData.TaxDatas.Length) break;
+                }
+            }
             _crafTownManager.TownChanged += ManagerOnTownChanged;
             UpdateTax += OnUpdateTax;
             ManagerOnTownChanged(crafTownManager);

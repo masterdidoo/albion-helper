@@ -18,5 +18,6 @@
         <CheckBox Content="Disable Black Market" IsChecked="{Binding IsBmDisabled}"/>
         <CheckBox Content="Disable Craft" IsChecked="{Binding IsCraftDisabled}"/>
         <CheckBox Content="Disable Salvage" IsChecked="{Binding IsSalvageDisabled}"/>
+        <CheckBox Content="Used Focus" IsChecked="{Binding IsFocus}"/>
     </StackPanel>
 </UserControl>

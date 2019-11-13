@@ -156,8 +156,9 @@ namespace Albion.GUI.ViewModels
             set => Set(ref _bluePlayers, value);
         }
 
-        public IEnumerable<Location> Towns => typeof(Location).GetEnumValues().Cast<Location>();
+        public IEnumerable<Location> Towns => TownsAndBz.Where(x=>x!=Location.BlackZone);
 
+        public IEnumerable<Location> TownsAndBz => typeof(Location).GetEnumValues().Cast<Location>();
 
         public IEnumerable<CommonItem> CommonItems
         {

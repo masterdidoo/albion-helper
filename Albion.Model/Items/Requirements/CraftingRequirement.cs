@@ -126,6 +126,7 @@ namespace Albion.Model.Items.Requirements
         protected override void OnSetItem()
         {
             Item.CraftingBuilding.UpdateTax += ResourcesOnCostUpdate;
+            CostCalcOptions.Instance.IsFocusChanged += ResourcesOnCostUpdate;
             ResourcesOnCostUpdate();
             base.OnSetItem();
         }
