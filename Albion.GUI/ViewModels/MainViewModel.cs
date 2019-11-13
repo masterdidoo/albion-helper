@@ -49,6 +49,7 @@ namespace Albion.GUI.ViewModels
         private int? _Quality;
         private bool _isCountOrder;
         private bool _IsSameTir;
+        private bool _isCostOrder;
 
         public MainViewModel()
         {
@@ -198,15 +199,17 @@ namespace Albion.GUI.ViewModels
                 }
 
                 var orderedItems =
-                    IsProfitOrder
-                        ? items.OrderByDescending(x => x.Profitt?.Profit)
-                        : IsProfitPercentOrder
-                            ? items.OrderByDescending(x => x.Profitt?.ProfitPercent)
-                            : IsProfitSumOrder
-                                ? items.OrderByDescending(x => x.Profitt?.ProfitSum)
-                            : IsCountOrder
-                                ? items.OrderByDescending(x => x.Profitt?.Count)
-                                : items.OrderBy(x => !x.TreeProps.IsSelected);
+                    IsCostOrder
+                        ? items.OrderBy(x => x.Requirement?.Cost)
+                        : IsProfitOrder
+                            ? items.OrderByDescending(x => x.Profitt?.Profit)
+                            : IsProfitPercentOrder
+                                ? items.OrderByDescending(x => x.Profitt?.ProfitPercent)
+                                : IsProfitSumOrder
+                                    ? items.OrderByDescending(x => x.Profitt?.ProfitSum)
+                                : IsCountOrder
+                                    ? items.OrderByDescending(x => x.Profitt?.Count)
+                                    : items.OrderBy(x => !x.TreeProps.IsSelected);
 
 //                var tmp = items.OrderByDescending(x => x.Pos).ThenBy(x => x.FullName).ToArray();
 //                return tmp;
@@ -261,6 +264,16 @@ namespace Albion.GUI.ViewModels
             set
             {
                 if (!Set(ref _isProfitOrder, value)) return;
+                RefreshTree();
+            }
+        }
+
+        public bool IsCostOrder
+        {
+            get => _isCostOrder;
+            set
+            {
+                if (!Set(ref _isCostOrder, value)) return;
                 RefreshTree();
             }
         }

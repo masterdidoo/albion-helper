@@ -39,7 +39,7 @@
                         <TextBlock Text="X" Width="38" />
                     </Border>
                     <Border Grid.Column="3" BorderThickness="0,0,1,0" BorderBrush="Black">
-                        <TextBlock Text="Cost" Margin="3,0,3,0" Width="60" />
+                        <CheckBox IsChecked="{Binding IsCostOrder}" Content="Cost" Margin="3,1,3,0" Width="60" />
                     </Border>
                     <Border Grid.Column="4" BorderThickness="0,0,1,0" BorderBrush="Black">
                         <TextBlock Text="X2" Margin="3,0,3,0" Width="34"/>
@@ -89,7 +89,7 @@
                             <ColumnDefinition />
                             <ColumnDefinition Width="40"/>
                         </Grid.ColumnDefinitions>
-                        <CheckBox IsChecked="{Binding TreeProps.IsSelected}" Margin="0,2,2,0"/>
+                        <CheckBox IsChecked="{Binding TreeProps.IsSelected}" Margin="0,2,2,0" IsTabStop="False"/>
                         <TextBlock Grid.Column="1" Text="{Binding FullName, Mode=OneTime}" />
                         <Border Grid.Column="2" BorderBrush="Black" BorderThickness="0,0,1,0">
                             <TextBlock 
@@ -132,6 +132,7 @@
                                         CommandParameter="{Binding}" 
                                         Height="16"
                                         Background="DarkRed"
+                                        IsTabStop="False"
                                         Content="B" 
                                         ToolTip="Clear Black Market" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
                                 </Button>
@@ -139,6 +140,7 @@
                                         CommandParameter="{Binding}" 
                                         Height="16"
                                         Background="OrangeRed"
+                                        IsTabStop="False"
                                         Content="T" 
                                         ToolTip="Clear Item Market" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
                                 </Button>
