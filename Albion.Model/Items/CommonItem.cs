@@ -43,10 +43,6 @@ namespace Albion.Model.Items
             BmFastSellProfit = new BmFastSellProfit(this);
             BmLongSellProfit = new BmLongSellProfit(this);
 
-            if (//IsSalvageable && 
-                CraftingRequirements.Length > 0 && CraftingRequirements[0].Resources.Length > 0)
-                SalvageProfit = new SalvageProfit(this);
-
             CostCalcOptions.Instance.Changed += RequirementsOnUpdated;
         }
 
@@ -55,7 +51,7 @@ namespace Albion.Model.Items
 
         public BmLongSellProfit BmLongSellProfit { get; }
 
-        public SalvageProfit SalvageProfit { get; }
+        public SalvageProfit SalvageProfit { get; private set; }
         public LongSellProfit LongSellProfit { get; }
 
         public IEnumerable<object> Components => Profits.Cast<object>().Concat(Requirements);
@@ -156,6 +152,11 @@ namespace Albion.Model.Items
 
         public void Init()
         {
+            if (IsSalvageable &&
+                //!IsResource &&
+                CraftingRequirements.Length > 0 && CraftingRequirements[0].Resources.Length > 0)
+                SalvageProfit = new SalvageProfit(this);
+
             foreach (var cr in Profits)
                 //cr.SetItem(this);
                 cr.Updated += ProfitsOnUpdated;

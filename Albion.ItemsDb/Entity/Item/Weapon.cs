@@ -15,7 +15,7 @@ namespace Albion.Db.Xml.Entity.Item
     [DebuggerStepThrough]
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
-    public class Weapon : IItem, IItemCraftingcategory, IItemEnchantments, IItemPowered
+    public class Weapon : IItem, IItemCraftingcategory, IItemEnchantments, IItemPowered, IItemSalvageable
     {
         [XmlElement("projectile", Form = XmlSchemaForm.Unqualified)]
         public itemsWeaponProjectile[] projectile { get; set; }
@@ -179,5 +179,7 @@ namespace Albion.Db.Xml.Entity.Item
         [XmlArrayItem("enchantment", typeof(EnchantmentsEnchantment), Form = XmlSchemaForm.Unqualified,
             IsNullable = false)]
         public EnchantmentsEnchantment[] enchantments { get; set; }
+
+        public bool salvageable => true;
     }
 }

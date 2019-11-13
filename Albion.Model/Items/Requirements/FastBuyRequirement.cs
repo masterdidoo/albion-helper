@@ -16,6 +16,7 @@ namespace Albion.Model.Items.Requirements
                 .OrderBy(x => x.UnitPriceSilver).FirstOrDefault();
             if (bestOrder == null)
             {
+                Price = 0;
                 SetCost(0, 0);
                 return;
             }

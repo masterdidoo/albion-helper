@@ -15,7 +15,7 @@ namespace Albion.Db.Xml.Entity.Item
     [DebuggerStepThrough]
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
-    public class Equipmentitem : IItem, IItemCraftingcategory, IItemEnchantments, IItemPowered, IItemEnchantmentLevel
+    public class Equipmentitem : IItem, IItemCraftingcategory, IItemEnchantments, IItemPowered, IItemEnchantmentLevel, IItemSalvageable
     {
         [XmlElement("craftingrequirements")] public Craftingrequirements[] craftingrequirements { get; set; }
 
@@ -223,5 +223,7 @@ namespace Albion.Db.Xml.Entity.Item
 
 
         [XmlAttribute] public string craftingcategory { get; set; }
+
+        public bool salvageable => true;
     }
 }

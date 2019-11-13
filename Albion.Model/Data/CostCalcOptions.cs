@@ -10,6 +10,7 @@ namespace Albion.Model.Data
         private bool _isLongSellDisabled;
         private bool _isSalvageDisabled;
         private bool _isCraftDisabled;
+        private bool _isFocus;
         public static CostCalcOptions Instance { get; } = new CostCalcOptions();
 
         public bool IsLongBuyDisabled
@@ -74,6 +75,17 @@ namespace Albion.Model.Data
             {
                 if (_isCraftDisabled == value) return;
                 _isCraftDisabled = value;
+                Changed?.Invoke();
+            }
+        }
+
+        public bool IsFocus
+        {
+            get => _isFocus;
+            set
+            {
+                if (_isFocus == value) return;
+                _isFocus = value;
                 Changed?.Invoke();
             }
         }

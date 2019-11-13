@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Albion.Common;
+using Albion.Model.Data;
 using Albion.Model.Items.Categories;
 using Albion.Model.Items.Requirements.Resources;
 
@@ -7,9 +8,10 @@ namespace Albion.Model.Items.Requirements
 {
     public class CraftingRequirement : BaseResorcedRequirement
     {
-        private const long Return35 = 1533;
-        private const long Return25 = 1330;
-        private const long Return15 = 1175;
+        public static long Return35 => 100000 / (100 - (CostCalcOptions.Instance.IsFocus ? 53 : 35)); //Refining Royal City With Bonus
+        public static long Return25 => 100000 / (100 - (CostCalcOptions.Instance.IsFocus ? 48 : 25)); //Crafting Royal City With Bonus, Black Zone Territory
+        public static long Return20 => 100000 / (100 - (CostCalcOptions.Instance.IsFocus ? 46 : 20)); //Refining Black Zone
+        public static long Return15 => 100000 / (100 - (CostCalcOptions.Instance.IsFocus ? 44 : 15)); //Royal City
 
         public CraftingRequirement(CraftingResource[] resources) : base(resources)
         {
@@ -116,6 +118,7 @@ namespace Albion.Model.Items.Requirements
         public long Silver { get; set; }
 
         public int AmountCrafted { get; set; }
+
 
         #endregion
     }
