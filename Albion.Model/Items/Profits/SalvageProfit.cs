@@ -13,11 +13,11 @@ namespace Albion.Model.Items.Profits
         {
             if (Resources.Any(s => s.Cost == 0))
             {
-                SetIncome(0,1);
+                SetIncome(0, 1);
                 return;
             }
 
-            var income = Resources.Sum(r => r.Item.Profitt?.Income ?? 0 * r.Count / 4);
+            var income = Resources.Sum(r => (r.Item.Profitt?.Income ?? 0) * r.Count / 4);
             SetIncome(income, 1);
         }
 
