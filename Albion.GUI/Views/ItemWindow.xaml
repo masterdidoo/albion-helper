@@ -8,11 +8,49 @@
         mc:Ignorable="d"
         Title="{Binding Item.FullName}" Height="450" Width="800" d:DataContext="{d:DesignInstance viewModels:ItemViewModel}">
     <StackPanel>
-        <TextBlock Text="{Binding Item.Requirement.Cost}"></TextBlock>
-        <DockPanel>
-            <TextBlock Text="Count:"></TextBlock>
-            <TextBox Text="{Binding Count}"></TextBox>
+        <DockPanel Margin="2">
+            <TextBlock Text="Cost:" Width="60"/>
+            <TextBlock Text="{Binding Item.Requirement.Cost, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}" Style="{StaticResource IntBlockStyle}"/>
+            <FrameworkElement Visibility="Hidden"/>
         </DockPanel>
-        <ListView ItemsSource="{Binding Item.Requirements}"></ListView>
+        <DockPanel Margin="2">
+            <TextBlock Text="Full Cost:" Width="60"/>
+            <TextBlock Style="{StaticResource IntBlockStyle}">
+                <TextBlock.Text>
+                    <MultiBinding Converter="{StaticResource MultiplierConverter}" StringFormat="{}{0:#,##0}" Mode="OneWay">
+                        <Binding Path="Item.Requirement.Cost"/>
+                        <Binding Path="Count"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+            <FrameworkElement Visibility="Hidden"/>
+        </DockPanel>
+        <DockPanel Margin="2">
+            <TextBlock Text="Count:" Width="60" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding Count}" KeyDown="UIElement_OnKeyDown"  Width="66" TextAlignment="Right" HorizontalAlignment="Left" />
+        </DockPanel>
+        <DataGrid ItemsSource="{Binding Items}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Item.FullName}"/>
+                <DataGridTextColumn Header="Count" Binding="{Binding Count}" />
+                <DataGridTextColumn Header="Price" Binding="{Binding Item.Requirement.Cost, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}"/>
+                <DataGridTextColumn Header="Total">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource MultiplierConverter}" StringFormat="{}{0:#,##0}" Mode="OneWay">
+                            <Binding Path="Item.Requirement.Cost"/>
+                            <Binding Path="Count"/>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <!-- <ListView ItemsSource="{Binding Items}"> -->
+        <!--     <ListView.ItemTemplate> -->
+        <!--         <DataTemplate> -->
+        <!--             <Grid></Grid> -->
+        <!--         </DataTemplate> -->
+        <!--     </ListView.ItemTemplate> -->
+        <!-- </ListView> -->
     </StackPanel>
 </Window>
+

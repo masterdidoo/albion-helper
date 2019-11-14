@@ -1,6 +1,7 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using Albion.GUI.Libs;
 
 namespace Albion.GUI.Views
 {
@@ -16,10 +17,7 @@ namespace Albion.GUI.Views
 
         private void UIElement_OnKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key != Key.Enter) return;
-
-            BindingExpression be = ((TextBox)sender).GetBindingExpression(TextBox.TextProperty);
-            be?.UpdateSource();
+            CommonHelpers.OnKeyDownHandler(sender, e);
         }
     }
 }

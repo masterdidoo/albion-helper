@@ -101,7 +101,9 @@
       <DependentUpon>CommonItemControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Libs\DebounceDispatcher.cs" />
-    <Compile Include="PriceConverter.cs" />
+    <Compile Include="Converters\Multiplier.cs" />
+    <Compile Include="Converters\PriceConverter.cs" />
+    <Compile Include="ViewModels\CraftingResourceVm.cs" />
     <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="Views\ArtefactsView.xaml.cs">
       <DependentUpon>ArtefactsView.xaml</DependentUpon>
@@ -109,6 +111,7 @@
     <Compile Include="Views\BuildingsView.xaml.cs">
       <DependentUpon>BuildingsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Libs\CommonHelpers.cs" />
     <Compile Include="Views\ItemWindow.xaml.cs">
       <DependentUpon>ItemWindow.xaml</DependentUpon>
     </Compile>
