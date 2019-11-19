@@ -35,7 +35,6 @@ namespace Albion.Operation
         public override void Init(Dictionary<byte, object> parameters)
         {
             LocId = Convert.ToString(parameters[0]);
-//            Locations.TryGetValue(LocId, out _town);
             if (!Locations.TryGetValue(LocId, out _town)) _town = Location.None;
         }
     }
