@@ -32,6 +32,7 @@ namespace Albion.GUI.ViewModels
 
         private void UpdateCount(int count)
         {
+            //TODO возвраты
             foreach (var item in Items) item.Count = item.BaseCount * count;
         }
 
@@ -40,6 +41,7 @@ namespace Albion.GUI.ViewModels
             switch (item.Requirement)
             {
                 case BaseResorcedRequirement craftingRequirement:
+                    //TODO возвраты
                     AddCraftingRequirement(craftingRequirement, count);
                     return;
             }
