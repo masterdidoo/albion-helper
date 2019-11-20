@@ -51,7 +51,7 @@ namespace Albion.Db.Xml
 
         private CommonItem CreateItem(IItem arg)
         {
-            var item = CreateCommonItem(arg, GetId(arg), CreateCraftingRequirements(arg.craftingrequirements),
+            var item = CreateCommonItem(arg, GetId(arg), CreateCraftingRequirements(arg.craftingrequirements, (arg as SimpleItem)?.resourcetype != null),
                 (arg as IItemEnchantmentLevel)?.enchantmentlevel ?? 0);
 
             return item;
@@ -177,7 +177,7 @@ namespace Albion.Db.Xml
         private IEnumerable<BaseResorcedRequirement> EnCreateCraftingRequirements(string itemId,
             EnchantmentsEnchantment enchantment)
         {
-            foreach (var c in CreateCraftingRequirements(enchantment.craftingrequirements))
+            foreach (var c in CreateCraftingRequirements(enchantment.craftingrequirements, false))
                 yield return c;
             if (enchantment.upgraderequirements != null)
                 yield return CreateUpgradeRequirements(itemId, enchantment);
@@ -200,17 +200,24 @@ namespace Albion.Db.Xml
         }
 
 
-        private IEnumerable<CraftingRequirement> CreateCraftingRequirements(Craftingrequirements[] arg)
+        private IEnumerable<CraftingRequirement> CreateCraftingRequirements(Craftingrequirements[] arg, bool isTransmut)
         {
             if (arg == null) yield break;
             foreach (var cr in arg)
             {
                 var res = CreateResources(cr.craftresource, cr.currency, cr.playerfactionstanding);
-                yield return new CraftingRequirement(res.ToArray())
-                {
-                    Silver = cr.silver * 10000,
-                    AmountCrafted = cr.amountcrafted
-                };
+                if (isTransmut)
+                    yield return new TransmutRequirement(res.ToArray())
+                    {
+                        Silver = cr.silver * 10000,
+                        AmountCrafted = cr.amountcrafted
+                    };
+                else
+                    yield return new CraftingRequirement(res.ToArray())
+                    {
+                        Silver = cr.silver * 10000,
+                        AmountCrafted = cr.amountcrafted
+                    };
             }
         }
 

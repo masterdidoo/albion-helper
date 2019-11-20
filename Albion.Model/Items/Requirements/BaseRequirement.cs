@@ -71,7 +71,7 @@ namespace Albion.Model.Items.Requirements
         public int Count
         {
             get => _count;
-            private set
+            protected set
             {
                 if (_count == value) return;
                 _count = value;

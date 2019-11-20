@@ -30,8 +30,9 @@ namespace Albion.Model.Items.Requirements
                 return;
             }
 
-            var resourceCost = Resources.Where(r => r.Item.IsResource).Sum(x => x.Cost) * 1000 / GetReturnCoeff();
-            var summ = Resources.Where(r => !r.Item.IsResource).Sum(x => x.Cost) + resourceCost;
+//            var resourceCost = Resources.Where(r => r.Item.IsResource).Sum(x => x.Cost) * 1000 / GetReturnCoeff();
+//            var summ = Resources.Where(r => !r.Item.IsResource).Sum(x => x.Cost) + resourceCost;
+            var summ = Resources.Sum(x => x.Cost) * 1000 / GetReturnCoeff();
 
             //TODO сделать красиво
             var artefacts = Item.ShopCategory == ShopCategory.Artefacts ? 9 : 1;
@@ -52,12 +53,6 @@ namespace Albion.Model.Items.Requirements
 
             switch (Item.ShopSubCategory)
             {
-                case ShopSubCategory.Wood:
-                case ShopSubCategory.Ore:
-                case ShopSubCategory.Fiber:
-                case ShopSubCategory.Hide:
-                    //TODO add transmut
-                    return 1000;
                 case ShopSubCategory.Planks:
                     if (CraftTown == Location.FortSterling) return Return35;
                     if (CraftTown == Location.BlackZone) return Return20;
@@ -142,7 +137,7 @@ namespace Albion.Model.Items.Requirements
         public long Tax
         {
             get => _tax;
-            private set
+            protected set
             {
                 if (_tax == value) return;
                 _tax = value;
