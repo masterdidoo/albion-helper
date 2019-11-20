@@ -16,19 +16,15 @@ namespace Albion.Model.Items.Requirements
                 .OrderBy(x => x.UnitPriceSilver).FirstOrDefault();
             if (bestOrder == null)
             {
+                Count = 0;
                 Price = 0;
-                SetCost(0, 0);
                 return;
             }
 
-            Price = bestOrder.UnitPriceSilver;
-            var cost = Price;
-            var count = imd.Orders.Where(x => x.QualityLevel >= Item.QualityLevel && x.UnitPriceSilver == Price)
+            Count = imd.Orders.Where(x => x.QualityLevel >= Item.QualityLevel && x.UnitPriceSilver == Price)
                 .Select(x => x.Amount).DefaultIfEmpty(0).Sum();
 
-//            var count = imd.Orders.OrderBy(x => x.UnitPriceSilver).FirstOrDefault()?.Amount ?? 0;
-//            var cost = imd.BestPrice;
-            SetCost(cost, count);
+            Price = bestOrder.UnitPriceSilver;
         }
 
         protected override ItemMarketData GetMarketData()
@@ -38,6 +34,7 @@ namespace Albion.Model.Items.Requirements
 
         protected override void OnUpdatePrice()
         {
+            SetCost(Price, Count);
         }
 
         public override string Type => "FB";
