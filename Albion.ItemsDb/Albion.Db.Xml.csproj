@@ -70,7 +70,9 @@
     <Compile Include="Entity\Building\buildingsAll.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Xmls\items.xml" />
+    <Content Include="Xmls\items.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Albion.Model\Albion.Model.csproj">
@@ -79,10 +81,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Xmls\localization.xml" />
+    <Content Include="Xmls\localization.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Xmls\buildings.xml" />
+    <Content Include="Xmls\buildings.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -17,14 +16,11 @@ namespace Albion.Db.Xml
     public partial class XmlLoader
     {
         private readonly ITownManager _buyTownManager;
-        private readonly ITownManager _sellTownManager;
         private readonly ITownManager _craftTownManager;
+        private readonly ITownManager _sellTownManager;
 
-        public Dictionary<string, IItem> XmlItems { get; private set; }
-
-        public Dictionary<string, CommonItem> Items { get; private set; }
-
-        public XmlLoader(IBuildingDataManager buildingDataManager, ITownManager craftTownManager, ITownManager buyTownManager, ITownManager sellTownManager)
+        public XmlLoader(IBuildingDataManager buildingDataManager, ITownManager craftTownManager,
+            ITownManager buyTownManager, ITownManager sellTownManager)
         {
             _buyTownManager = buyTownManager;
             _sellTownManager = sellTownManager;
@@ -32,10 +28,23 @@ namespace Albion.Db.Xml
             _buildingDataManager = buildingDataManager;
         }
 
+        public Dictionary<string, IItem> XmlItems { get; private set; }
+
+        public Dictionary<string, CommonItem> Items { get; private set; }
+
+        public ArtefactStat[] Artefacts { get; set; }
+
+        public Dictionary<string, string> Localization { get; set; }
+
+        public Dictionary<string, CraftBuilding> CraftBuildings { get; set; }
+
+        public Dictionary<string, string> ItemIdToCraftBuildingId { get; private set; }
+        public CraftBuilding NoneBuilding { get; private set; }
+
         public static items LoadItemsXml()
         {
-            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Albion.Db.Xml.Xmls.items.xml");
-            if (stream == null) return null;
+            var path = GetPath("items.xml");
+            using (var stream = File.Open(path, FileMode.Open))
             using (TextReader tr = new StreamReader(stream))
             {
                 var xml = new XmlSerializer(typeof(items));
@@ -47,8 +56,8 @@ namespace Albion.Db.Xml
 
         public static buildings LoadBuildingsXml()
         {
-            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Albion.Db.Xml.Xmls.buildings.xml");
-            if (stream == null) return null;
+            var path = GetPath("buildings.xml");
+            using (var stream = File.Open(path, FileMode.Open))
             using (TextReader tr = new StreamReader(stream))
             {
                 var xml = new XmlSerializer(typeof(buildings));
@@ -60,27 +69,28 @@ namespace Albion.Db.Xml
 
         public static Dictionary<string, string> LoadLocalizationXml()
         {
-            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Albion.Db.Xml.Xmls.localization.xml");
-            if (stream == null) return null;
+            var path = GetPath("localization.xml");
+            using (var stream = File.Open(path, FileMode.Open))
             using (TextReader tr = new StreamReader(stream))
             {
                 var xml = new XmlSerializer(typeof(tmx));
                 var items = (tmx) xml.Deserialize(tr);
 
-                return items.body.Where(s => s.tuid.StartsWith("@ITEMS_") || s.tuid.StartsWith("@BUILDINGS_")).SelectMany(x => x.tuv
-                    .Where(lr => lr.lang == "RU-RU").Select(lr => new
-                    {
+                return items.body.Where(s => s.tuid.StartsWith("@ITEMS_") || s.tuid.StartsWith("@BUILDINGS_"))
+                    .SelectMany(x => x.tuv
+                        .Where(lr => lr.lang == "RU-RU").Select(lr => new
+                        {
 //                        tuid = x.tuid.Substring(7),
-                        x.tuid,
-                        lr.seg
-                    }))
+                            x.tuid,
+                            lr.seg
+                        }))
                     .ToDictionary(k => k.tuid, v => v.seg);
             }
         }
 
         public int LoadModel()
         {
-            Localization = XmlLoader.LoadLocalizationXml();
+            Localization = LoadLocalizationXml();
 
             NoneBuilding = new CraftBuilding(new ItemBuilding(), _craftTownManager);
             var buildingsDb = LoadBuildingsXml();
@@ -91,15 +101,16 @@ namespace Albion.Db.Xml
                 x.craftingitemlist[0].craftitem != null);
 
             ItemIdToCraftBuildingId = xmlCraftBuildings
-                .SelectMany(x=>
+                .SelectMany(x =>
                     x.craftingitemlist[0].craftitem
-                        .Select(ci=>new {
+                        .Select(ci => new
+                        {
                             itemId = ci.uniquename,
                             buildingId = x.uniquename
                         }))
-                .ToDictionary(k=>k.itemId, v=>v.buildingId);
+                .ToDictionary(k => k.itemId, v => v.buildingId);
 
-            CraftBuildings = xmlCraftBuildings.Select(CreateCraftBuilding).ToDictionary(k=>k.Id);
+            CraftBuildings = xmlCraftBuildings.Select(CreateCraftBuilding).ToDictionary(k => k.Id);
 
             //            buildingsDb.Items.OfType<CraftBuilding>()
 
@@ -113,28 +124,27 @@ namespace Albion.Db.Xml
 
             var cnt = items.Count();
 
-            Artefacts =  Items.Values.SelectMany(x=>x.CraftingRequirements).SelectMany(x=>x.Resources.Where(a=>a.Item.ShopCategory==ShopCategory.Artefacts).Select(
-                a =>
-                new {
-                    x.Item.CraftingBuilding,
-                    art=a.Item
-                }))
+            Artefacts = Items.Values.SelectMany(x => x.CraftingRequirements).SelectMany(x => x.Resources
+                    .Where(a => a.Item.ShopCategory == ShopCategory.Artefacts).Select(
+                        a =>
+                            new
+                            {
+                                x.Item.CraftingBuilding,
+                                art = a.Item
+                            }))
                 .Distinct()
 //                .GroupBy(x=>new {x.CraftingBuilding, x.art.CraftingRequirements[0].Resources[0].Item})
-                .GroupBy(x=>x.art.CraftingRequirements[0].Resources[0].Item)
-                .Select(v=>new ArtefactStat(null, v.Key, v.Select(a=>a.art).ToArray()))
+                .GroupBy(x => x.art.CraftingRequirements[0].Resources[0].Item)
+                .Select(v => new ArtefactStat(null, v.Key, v.Select(a => a.art).ToArray()))
                 .ToArray();
 
             return cnt;
         }
 
-        public ArtefactStat[] Artefacts { get; set; }
-
-        public Dictionary<string, string> Localization { get; set; }
-
-        public Dictionary<string, CraftBuilding> CraftBuildings { get; set; }
-
-        public Dictionary<string, string> ItemIdToCraftBuildingId { get; private set; }
-        public CraftBuilding NoneBuilding { get; private set; }
+        private static string GetPath(string name)
+        {
+            var path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Xmls", name);
+            return path;
+        }
     }
 }
