@@ -9,6 +9,8 @@ namespace Albion.Model.Items.Requirements
         {
         }
 
+        public override int ReturnProc => 0;
+
         protected override void ResourcesOnCostUpdate()
         {
             Tax = 10000 / 100 * Item.CraftingBuilding.Tax * Item.ItemValue * 5 + Silver;

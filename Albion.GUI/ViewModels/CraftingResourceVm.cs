@@ -1,4 +1,5 @@
-﻿using Albion.Model.Items;
+﻿using System.Data;
+using Albion.Model.Items;
 using GalaSoft.MvvmLight;
 
 namespace Albion.GUI.ViewModels
@@ -6,12 +7,14 @@ namespace Albion.GUI.ViewModels
     public class CraftingResourceVm : ObservableObject
     {
         private int _count;
+        private readonly int _returnProc;
 
-        public CraftingResourceVm(CommonItem item, int count)
+        public CraftingResourceVm(CommonItem item, int baseCount, int returnProc)
         {
             Item = item;
-            _count = count;
-            BaseCount = count;
+            _returnProc = returnProc;
+            BaseCount = baseCount;
+            UpdateCount(1);
         }
 
         public int BaseCount { get; }
@@ -28,6 +31,31 @@ namespace Albion.GUI.ViewModels
         public override string ToString()
         {
             return $"{Item.FullName} {Count}";
+        }
+
+        public void UpdateCount(int count)
+        {
+            var tmpCount = BaseCount * count;
+            var ret = tmpCount * _returnProc / 100;
+            if (tmpCount - ret > BaseCount)
+            {
+                int chekCount;
+                ret++;
+                do
+                {
+                    ret--;
+                    var newRet = ret;
+                    chekCount = tmpCount - newRet;
+                    newRet = tmpCount - newRet;
+                    while (newRet > 0)
+                    {
+                        newRet = newRet * _returnProc / 100;
+                        chekCount += newRet;
+                    }
+                } while (chekCount < tmpCount);
+                tmpCount -= ret;
+            }
+            Count = tmpCount;
         }
     }
 }

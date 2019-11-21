@@ -19,6 +19,7 @@ namespace Albion.Model.Items.Requirements
 //        }
 
         public CraftingResource[] Resources { get; }
+        public abstract int ReturnProc { get; }
 
         protected abstract void ResourcesOnCostUpdate();
 
