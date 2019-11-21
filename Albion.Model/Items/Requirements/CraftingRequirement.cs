@@ -8,10 +8,11 @@ namespace Albion.Model.Items.Requirements
 {
     public class CraftingRequirement : BaseResorcedRequirement
     {
-        public static long Return35 => 100000 / (100 - (CostCalcOptions.Instance.IsFocus ? 53 : 35)); //Refining Royal City With Bonus
+        public static long ReturnRefine35 => 100000 / (100 - (CostCalcOptions.Instance.IsRefineFocus ? 53 : 35)); //Refining Royal City With Bonus
         public static long Return25 => 100000 / (100 - (CostCalcOptions.Instance.IsFocus ? 48 : 25)); //Crafting Royal City With Bonus, Black Zone Territory
-        public static long Return20 => 100000 / (100 - (CostCalcOptions.Instance.IsFocus ? 46 : 20)); //Refining Black Zone
+        public static long ReturnRefine20 => 100000 / (100 - (CostCalcOptions.Instance.IsRefineFocus ? 46 : 20)); //Refining Black Zone
         public static long Return15 => 100000 / (100 - (CostCalcOptions.Instance.IsFocus ? 44 : 15)); //Royal City
+        public static long ReturnRefine15 => 100000 / (100 - (CostCalcOptions.Instance.IsRefineFocus ? 44 : 15)); //Royal City
 
         public CraftingRequirement(CraftingResource[] resources) : base(resources)
         {
@@ -54,25 +55,25 @@ namespace Albion.Model.Items.Requirements
             switch (Item.ShopSubCategory)
             {
                 case ShopSubCategory.Planks:
-                    if (CraftTown == Location.FortSterling) return Return35;
-                    if (CraftTown == Location.BlackZone) return Return20;
-                    break;
+                    if (CraftTown == Location.FortSterling) return ReturnRefine35;
+                    if (CraftTown == Location.BlackZone) return ReturnRefine20;
+                    return ReturnRefine15;
                 case ShopSubCategory.Stoneblock:
-                    if (CraftTown == Location.Bridgewatch) return Return35;
-                    if (CraftTown == Location.BlackZone) return Return20;
-                    break;
+                    if (CraftTown == Location.Bridgewatch) return ReturnRefine35;
+                    if (CraftTown == Location.BlackZone) return ReturnRefine20;
+                    return ReturnRefine15;
                 case ShopSubCategory.Metalbar:
-                    if (CraftTown == Location.Thetford) return Return35;
-                    if (CraftTown == Location.BlackZone) return Return20;
-                    break;
+                    if (CraftTown == Location.Thetford) return ReturnRefine35;
+                    if (CraftTown == Location.BlackZone) return ReturnRefine20;
+                    return ReturnRefine15;
                 case ShopSubCategory.Leather:
-                    if (CraftTown == Location.Martlock) return Return35;
-                    if (CraftTown == Location.BlackZone) return Return20;
-                    break;
+                    if (CraftTown == Location.Martlock) return ReturnRefine35;
+                    if (CraftTown == Location.BlackZone) return ReturnRefine20;
+                    return ReturnRefine15;
                 case ShopSubCategory.Cloth:
-                    if (CraftTown == Location.Lymhurst) return Return35;
-                    if (CraftTown == Location.BlackZone) return Return20;
-                    break;
+                    if (CraftTown == Location.Lymhurst) return ReturnRefine35;
+                    if (CraftTown == Location.BlackZone) return ReturnRefine20;
+                    return ReturnRefine15;
 
                 case ShopSubCategory.Froststaff:
                 case ShopSubCategory.Quarterstaff:

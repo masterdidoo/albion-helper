@@ -20,6 +20,8 @@
         <CheckBox Content="Only Craft" IsChecked="{Binding IsCraftOnly}"
                   Margin="16,0,0,0"/>
         <CheckBox Content="Disable Salvage" IsChecked="{Binding IsSalvageDisabled}"/>
-        <CheckBox Content="Used Focus" IsChecked="{Binding IsFocus}"/>
+        <TextBlock Text="Used Focus"/>
+        <CheckBox Content="Craft" IsChecked="{Binding IsFocus}" Margin="16,0,0,0"/>
+        <CheckBox Content="Refine" IsChecked="{Binding IsRefineFocus}" Margin="16,0,0,0"/>
     </StackPanel>
 </UserControl>
