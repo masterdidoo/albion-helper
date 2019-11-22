@@ -53,7 +53,7 @@ namespace Albion.GUI.ViewModels
                 var itemMarket = MdmGetData(orders.Key).FromMarketItems[AuctionTownManager.TownId];
                 itemMarket.AppendOrSetOrders(orders);
                     //itemMarket.SetOrders(items[0], DateTime.Now);
-                mdm.Save(orders.Key, AuctionTownManager.TownId, true, itemMarket);
+                _mdm.Save(orders.Key, AuctionTownManager.TownId, true, itemMarket);
             }
             else
             {
@@ -61,7 +61,7 @@ namespace Albion.GUI.ViewModels
                 {
                     var itemMarket = MdmGetData(orders.Key).FromMarketItems[AuctionTownManager.TownId];
                     itemMarket.AppendOrders(orders);
-                    mdm.Save(orders.Key, AuctionTownManager.TownId, true, itemMarket);
+                    _mdm.Save(orders.Key, AuctionTownManager.TownId, true, itemMarket);
                 }
             }
 
@@ -87,7 +87,7 @@ namespace Albion.GUI.ViewModels
                 var itemMarket = MdmGetData(orders.Key).ToMarketItems[AuctionTownManager.TownId];
                 itemMarket.AppendOrSetOrders(orders);
                 //itemMarket.SetOrders(items[0], DateTime.Now);
-                mdm.Save(orders.Key, AuctionTownManager.TownId, false, itemMarket);
+                _mdm.Save(orders.Key, AuctionTownManager.TownId, false, itemMarket);
             }
             else
             {
@@ -95,7 +95,7 @@ namespace Albion.GUI.ViewModels
                 {
                     var itemMarket = MdmGetData(orders.Key).ToMarketItems[AuctionTownManager.TownId];
                     itemMarket.AppendOrders(orders);
-                    mdm.Save(orders.Key, AuctionTownManager.TownId, false, itemMarket);
+                    _mdm.Save(orders.Key, AuctionTownManager.TownId, false, itemMarket);
                 }
             }
 

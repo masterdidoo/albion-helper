@@ -32,19 +32,18 @@ namespace Albion.GUI.ViewModels
 
         private readonly AlbionParser _albionParser;
         private readonly DebounceDispatcher _debounceDispatcher;
-        private readonly BuildingDataManager bdm;
-        private readonly MarketDataManager mdm;
+        private readonly BuildingDataManager _bdm;
+        private readonly MarketDataManager _mdm;
         private int _bluePlayers;
         private int? _enchant;
         private string _filterTest;
-        private int _gridWidth = 300;
         private bool _isCostOrder;
         private bool _isCountOrder;
         private bool _isProfitOrder;
         private bool _isProfitPercentOrder;
         private bool _isProfitSumOrder;
-        private bool _IsSameTir;
-        private int? _Quality;
+        private bool _isSameTir;
+        private int? _quality;
         private int _redPlayers;
         private ShopCategory? _shopCategory;
         private ShopSubCategory? _shopSubCategory;
@@ -77,10 +76,10 @@ namespace Albion.GUI.ViewModels
             CraftTownManager = new TownManager();
             AuctionTownManager = new TownManager();
 
-            mdm = new MarketDataManager();
-            bdm = new BuildingDataManager(CraftTownManager);
+            _mdm = new MarketDataManager();
+            _bdm = new BuildingDataManager(CraftTownManager);
 
-            var loader = new XmlLoader(bdm, CraftTownManager, BuyTownManager, SellTownManager);
+            var loader = new XmlLoader(_bdm, CraftTownManager, BuyTownManager, SellTownManager);
             loader.LoadModel();
 
             Items = loader.Items.Values.Where(x => x.ShopSubCategory != Model.Items.Categories.ShopSubCategory.Event)
@@ -312,10 +311,10 @@ namespace Albion.GUI.ViewModels
 
         public bool IsSameTir
         {
-            get => _IsSameTir;
+            get => _isSameTir;
             set
             {
-                if (!Set(ref _IsSameTir, value)) return;
+                if (!Set(ref _isSameTir, value)) return;
                 RaisePropertyChanged(nameof(CommonItems));
             }
         }
@@ -334,10 +333,10 @@ namespace Albion.GUI.ViewModels
 
         public int? Quality
         {
-            get => _Quality;
+            get => _quality;
             set
             {
-                if (!Set(ref _Quality, value)) return;
+                if (!Set(ref _quality, value)) return;
                 RaisePropertyChanged(nameof(CommonItems));
             }
         }
@@ -381,37 +380,37 @@ namespace Albion.GUI.ViewModels
 
         private void SaveOptions()
         {
-            mdm.SetSelectedItems(Items.Values.Where(x => x.TreeProps.IsSelected).Select(x => x.Id));
+            _mdm.SetSelectedItems(Items.Values.Where(x => x.TreeProps.IsSelected).Select(x => x.Id));
         }
 
         private void ClearBm()
         {
-            mdm.DeleteOrders((int) Location.BlackMarket, false);
+            _mdm.DeleteOrders((int) Location.BlackMarket, false);
             foreach (var item in Items.Values)
                 item.ItemMarket.ToMarketItems[(int) Location.BlackMarket].ClearOrders();
         }
 
         private void ClearItemBm(CommonItem item)
         {
-            mdm.DeleteOrders(item.Id, (int) Location.BlackMarket, false);
+            _mdm.DeleteOrders(item.Id, (int) Location.BlackMarket, false);
             item.ItemMarket.ToMarketItems[(int) Location.BlackMarket].ClearOrders();
 
-            mdm.DeleteOrders(item.Id, (int) Location.BlackMarket, true);
+            _mdm.DeleteOrders(item.Id, (int) Location.BlackMarket, true);
             item.ItemMarket.FromMarketItems[(int) Location.BlackMarket].ClearOrders();
         }
 
         private void ClearItem(CommonItem item)
         {
-            mdm.DeleteOrders(item.Id, SellTownManager.TownId, false);
+            _mdm.DeleteOrders(item.Id, SellTownManager.TownId, false);
             item.ItemMarket.ToMarketItems[SellTownManager.TownId].ClearOrders();
 
-            mdm.DeleteOrders(item.Id, SellTownManager.TownId, true);
+            _mdm.DeleteOrders(item.Id, SellTownManager.TownId, true);
             item.ItemMarket.FromMarketItems[SellTownManager.TownId].ClearOrders();
         }
 
         private void LoadData()
         {
-            foreach (var ordersData in mdm.GetOrders())
+            foreach (var ordersData in _mdm.GetOrders())
             {
                 if (!Items.TryGetValue(ordersData.ItemId, out var item)) continue;
 
@@ -426,7 +425,7 @@ namespace Albion.GUI.ViewModels
                     item.Pos = ordersItem.UpdateTime;
             }
 
-            foreach (var id in mdm.GetSelectedItems())
+            foreach (var id in _mdm.GetSelectedItems())
             {
                 if (!Items.TryGetValue(id, out var item)) continue;
 
