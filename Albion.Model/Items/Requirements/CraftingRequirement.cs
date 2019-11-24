@@ -31,9 +31,9 @@ namespace Albion.Model.Items.Requirements
                 return;
             }
 
-//            var resourceCost = Resources.Where(r => r.Item.IsResource).Sum(x => x.Cost) * 1000 / GetReturnCoeff();
-//            var summ = Resources.Where(r => !r.Item.IsResource).Sum(x => x.Cost) + resourceCost;
-            var summ = Resources.Sum(x => x.Cost) * 1000 / GetReturnCoeff();
+            var resourceCost = Resources.Where(r => r.Item.ShopCategory != ShopCategory.Artefacts).Sum(x => x.Cost) * 1000 / GetReturnCoeff();
+            var summ = Resources.Where(r => r.Item.ShopCategory == ShopCategory.Artefacts).Sum(x => x.Cost) + resourceCost;
+//            var summ = Resources.Sum(x => x.Cost) * 1000 / GetReturnCoeff();
 
             //TODO сделать красиво
             var artefacts = Item.ShopCategory == ShopCategory.Artefacts ? 9 : 1;
