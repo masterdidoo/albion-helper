@@ -2,11 +2,12 @@
 {
     public class CraftingResource : NotifyEntity
     {
-        public CraftingResource(CommonItem item, int count)
+        public CraftingResource(CommonItem item, int count, bool isReturnable)
         {
             TreeProps = new TreeProps {IsExpanded = false};
             Item = item;
             Count = count;
+            IsReturnable = isReturnable;
             Item.CostUpdate += ItemOnCostUpdate;
         }
 
@@ -17,6 +18,7 @@
 
         public CommonItem Item { get; }
         public int Count { get; }
+        public bool IsReturnable { get; }
         public long Cost => Item.Cost * Count;
 
         public TreeProps TreeProps { get; }

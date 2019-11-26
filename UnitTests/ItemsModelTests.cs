@@ -57,10 +57,22 @@ namespace UnitTests
 
             var list = loader.Items.Values;
 
-            foreach (var n in list.Where(x => x.IsCraftable))
-                Debug.WriteLine("\"{0}\" {1}, {2}", n.Id,
-                    (n.CraftingRequirements.FirstOrDefault() as CraftingRequirement)?.Silver,
-                    n.CraftingRequirements.FirstOrDefault()?.Resources.Length);
+            //            foreach (var n in list.Where(x => x.IsCraftable))
+            //                Debug.WriteLine("\"{0}\" {1}, {2}", n.Id,
+            //                    (n.CraftingRequirements.FirstOrDefault() as CraftingRequirement)?.Silver,
+            //                    n.CraftingRequirements.FirstOrDefault()?.Resources.Length);
+
+            foreach (var item in list
+                .Where(x =>
+                    x.ShopCategory == ShopCategory.Consumables
+                )
+            )
+            foreach (var requirement in item.Components.OfType<CraftingRequirement>())
+            foreach (var cr in requirement.Resources)
+            {
+                Debug.WriteLine($"{item} {item.FullName} <- {cr.Item} {cr.Item.ShopCategory} {cr.Item.ShopSubCategory}");
+                //Assert.Fail($"{item} {item.FullName} <- {cr.Item} {cr.Item.ShopCategory} {cr.Item.ShopSubCategory}");
+            }
 
             Assert.AreEqual(6286, list.Count);
 
@@ -72,23 +84,6 @@ namespace UnitTests
 
             Assert.IsTrue(list.All(x => x.Enchant > 0 && x.Id.EndsWith($"@{x.Enchant}") || x.Enchant == 0));
 
-            foreach (var item in list
-                .Where(x =>
-                    x.ShopCategory == ShopCategory.Armor
-                    || x.ShopCategory == ShopCategory.Magic
-                    || x.ShopCategory == ShopCategory.Melee
-                    || x.ShopCategory == ShopCategory.Ranged
-                )
-            )
-            foreach (var requirement in item.Components.OfType<CraftingRequirement>())
-            foreach (var cr in requirement.Resources)
-            {
-                if (cr.Item.Enchant == item.Enchant || cr.Item.ShopCategory == ShopCategory.Artefacts ||
-                    cr.Item.ShopSubCategory == ShopSubCategory.Royalsigils ||
-                    cr.Item.Id == "QUESTITEM_TOKEN_EVENT_EASTER_2018") continue;
-                //Debug.WriteLine($"{item} {item.FullName} <- {cr.Item} {cr.Item.ShopCategory} {cr.Item.ShopSubCategory}");
-                Assert.Fail($"{item} {item.FullName} <- {cr.Item} {cr.Item.ShopCategory} {cr.Item.ShopSubCategory}");
-            }
 
 //            foreach (var item in list
 //                .Where(x => x.CraftingRequirements.Length>0 && x.CraftingRequirements[0].Resources.Length>0  && x.ItemValue != x.CraftingRequirements[0].Resources.Sum(r=>r.Item.ItemValue * r.Count)).GroupBy(i => i.ShopSubCategory)

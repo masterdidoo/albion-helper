@@ -22,7 +22,7 @@ public class rementsResource
 
     /// <remarks />
     [XmlAttribute]
-    public int maxreturnamount { get; set; }
+    public string maxreturnamount { get; set; }
 
     /// <remarks />
     [XmlAttribute]
