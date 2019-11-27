@@ -47,6 +47,7 @@
     <Compile Include="HarvestableType.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="OperationCodes.cs" />
+    <Compile Include="ParametersExtractor.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

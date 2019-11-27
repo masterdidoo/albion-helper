@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LeaveEvent.cs" />
+    <Compile Include="NewCharacter.cs" />
     <Compile Include="PlayerCounts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

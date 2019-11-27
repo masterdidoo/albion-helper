@@ -10,4 +10,5 @@ namespace Albion.Network
     {
         public abstract EventCodes Code { get; }
     }
+
 }
