@@ -93,7 +93,8 @@ namespace Albion.Model.Items
         {
             get
             {
-                if (!CostCalcOptions.Instance.IsCraftDisabled || CostCalcOptions.Instance.IsCraftOnlyNotResources && !IsResource)
+                if (!CostCalcOptions.Instance.IsCraftDisabled)
+                if (!CostCalcOptions.Instance.IsCraftOnlyNotResources || CostCalcOptions.Instance.IsCraftOnlyNotResources && !IsResource)
                     if (IsCraftable)
                     {
                         foreach (var cr in CraftingRequirements) yield return cr;
