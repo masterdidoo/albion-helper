@@ -9,11 +9,11 @@ namespace Albion.GUI.ViewModels
     {
         private int _count = 1;
 
-        public ItemViewModel(CommonItem item)
+        public ItemViewModel(CommonItem item, int returnProc)
         {
             Item = item;
             Items = new ObservableCollection<CraftingResourceVm>();
-            AddRequirement(item, 1);
+            AddRequirement(item, 1, returnProc);
         }
 
         public ObservableCollection<CraftingResourceVm> Items { get; }
@@ -33,10 +33,10 @@ namespace Albion.GUI.ViewModels
         private void UpdateCount(int count)
         {
             //TODO возвраты
-            foreach (var item in Items) item.Count = item.BaseCount * count;
+            foreach (var item in Items) item.UpdateCount(count);
         }
 
-        private void AddRequirement(CommonItem item, int count)
+        private void AddRequirement(CommonItem item, int count, int returnProc)
         {
             switch (item.Requirement)
             {
@@ -46,13 +46,13 @@ namespace Albion.GUI.ViewModels
                     return;
             }
 
-            Items.Add(new CraftingResourceVm(item, count));
+            Items.Add(new CraftingResourceVm(item, count, returnProc));
         }
 
         private void AddCraftingRequirement(BaseResorcedRequirement requirement, int count)
         {
             foreach (var requirementResource in requirement.Resources)
-                AddRequirement(requirementResource.Item, requirementResource.Count * count);
+                AddRequirement(requirementResource.Item, count * requirementResource.Count, requirementResource.IsReturnable ? requirement.ReturnProc : 0);
         }
     }
 }

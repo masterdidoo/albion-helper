@@ -352,7 +352,7 @@ namespace Albion.GUI.ViewModels
 
         private void OpenItem(CommonItem item)
         {
-            var vm = new ItemViewModel(item);
+            var vm = new ItemViewModel(item, 1);
             var window = new ItemWindow() {DataContext = vm};
             window.Show();
         }

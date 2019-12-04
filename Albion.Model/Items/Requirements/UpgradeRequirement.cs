@@ -15,6 +15,8 @@ namespace Albion.Model.Items.Requirements
             RaisePropertyChanged(nameof(Type));
         }
 
+        public override int ReturnProc => 0;
+
         protected override void ResourcesOnCostUpdate()
         {
             var cost = Resources.Any(x => x.Cost == 0) ? 0 : Resources.Sum(x => x.Count * x.Item.Cost);

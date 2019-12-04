@@ -8,11 +8,13 @@ namespace Albion.Model.Items.Requirements
 {
     public class CraftingRequirement : BaseResorcedRequirement
     {
-        public static long ReturnRefine35 => 100000 / (100 - (CostCalcOptions.Instance.IsRefineFocus ? 53 : 35)); //Refining Royal City With Bonus
-        public static long Return25 => 100000 / (100 - (CostCalcOptions.Instance.IsFocus ? 48 : 25)); //Crafting Royal City With Bonus, Black Zone Territory
-        public static long ReturnRefine20 => 100000 / (100 - (CostCalcOptions.Instance.IsRefineFocus ? 46 : 20)); //Refining Black Zone
-        public static long Return15 => 100000 / (100 - (CostCalcOptions.Instance.IsFocus ? 44 : 15)); //Royal City
-        public static long ReturnRefine15 => 100000 / (100 - (CostCalcOptions.Instance.IsRefineFocus ? 44 : 15)); //Royal City
+        public static int ReturnRefine35 => ((CostCalcOptions.Instance.IsRefineFocus ? 53 : 35)); //Refining Royal City With Bonus
+        public static int Return25 => ((CostCalcOptions.Instance.IsFocus ? 48 : 25)); //Crafting Royal City With Bonus, Black Zone Territory
+        public static int ReturnRefine20 => ((CostCalcOptions.Instance.IsRefineFocus ? 46 : 20)); //Refining Black Zone
+        public static int Return15 => ((CostCalcOptions.Instance.IsFocus ? 44 : 15)); //Royal City
+        public static int ReturnRefine15 => ((CostCalcOptions.Instance.IsRefineFocus ? 44 : 15)); //Royal City
+
+        private int _returnProc;
 
         public CraftingRequirement(CraftingResource[] resources) : base(resources)
         {
@@ -20,6 +22,8 @@ namespace Albion.Model.Items.Requirements
         }
 
         public Location CraftTown => Item.CraftingBuilding.Town;
+
+        public override int ReturnProc => _returnProc;
 
         protected override void ResourcesOnCostUpdate()
         {
@@ -31,7 +35,8 @@ namespace Albion.Model.Items.Requirements
                 return;
             }
 
-            var returnableCost = Resources.Where(r => r.IsReturnable).Sum(x => x.Cost) * 1000 / GetReturnCoeff();
+            _returnProc = GetReturnCoeff();
+            var returnableCost = Resources.Where(r => r.IsReturnable).Sum(x => x.Cost) * (100 - _returnProc) / 100;
             var summ = Resources.Where(r => !r.IsReturnable).Sum(x => x.Cost) + returnableCost;
 //            var summ = Resources.Sum(x => x.Cost) * 1000 / GetReturnCoeff();
 
@@ -43,7 +48,7 @@ namespace Albion.Model.Items.Requirements
             SetCost(cost, 1);
         }
 
-        private long GetReturnCoeff()
+        private int GetReturnCoeff()
         {
             switch (Item.ShopCategory)
             {
@@ -114,7 +119,7 @@ namespace Albion.Model.Items.Requirements
             if (CraftTown == Location.BlackZone) return Return25;
             if (CraftTown < Location.BlackMarket) return Return15;
 
-            return 1000;
+            return 0;
         }
 
         public override string Type => "CR";
@@ -134,6 +139,7 @@ namespace Albion.Model.Items.Requirements
         #region Tax
 
         private long _tax;
+
 
         public long Tax
         {
