@@ -12,6 +12,17 @@ namespace Albion.Model.Items
 {
     public class CommonItem : BaseCostableEntity
     {
+        public static readonly HashSet<ShopCategory> SimpleItems = new HashSet<ShopCategory>
+        {
+            Model.Items.Categories.ShopCategory.Accessories,
+//            Model.Items.Categories.ShopCategory.Consumables,
+            Model.Items.Categories.ShopCategory.Armor,
+            Model.Items.Categories.ShopCategory.Melee,
+            Model.Items.Categories.ShopCategory.Ranged,
+            Model.Items.Categories.ShopCategory.Magic
+        };
+
+
         public int QualityLevel { get; }
 
         private readonly FastBuyRequirement _fastBuyRequirement;
@@ -94,11 +105,10 @@ namespace Albion.Model.Items
             get
             {
                 if (!CostCalcOptions.Instance.IsCraftDisabled)
-                if (!CostCalcOptions.Instance.IsCraftOnlyNotResources || CostCalcOptions.Instance.IsCraftOnlyNotResources && !IsResource)
                     if (IsCraftable)
                     {
                         foreach (var cr in CraftingRequirements) yield return cr;
-                        if (CostCalcOptions.Instance.IsCraftOnlyNotResources) yield break;
+                        if (CostCalcOptions.Instance.IsCraftOnlyNotResources && IsItem) yield break;
                     }
                 yield return _fastBuyRequirement;
                 if (!CostCalcOptions.Instance.IsLongBuyDisabled || CostCalcOptions.Instance.IsArtefactsLongBuyEnabled &&
@@ -250,6 +260,9 @@ namespace Albion.Model.Items
 
         public CommonItem[] QualityLevels { get; set; }
 
+        public bool IsResource => ShopCategory == ShopCategory.Resources;
+        public bool IsItem => SimpleItems.Contains(ShopCategory);
+
         #region From Config
 #if DEBUG
         public object Debug { get; set; }
@@ -270,7 +283,6 @@ namespace Albion.Model.Items
 
         public BaseResorcedRequirement[] CraftingRequirements { get; }
         public int ItemValue { get; set; }
-        public bool IsResource => ShopCategory == ShopCategory.Resources;
         public bool IsSalvageable { get; set; }
         public bool IsCraftable { get; set; }
 

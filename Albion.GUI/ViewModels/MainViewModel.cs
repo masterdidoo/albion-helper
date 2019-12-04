@@ -22,13 +22,6 @@ namespace Albion.GUI.ViewModels
 {
     public partial class MainViewModel : ViewModelBase, IDisposable
     {
-        private static readonly HashSet<ShopCategory> _simpleItems = new HashSet<ShopCategory>
-        {
-            Model.Items.Categories.ShopCategory.Armor,
-            Model.Items.Categories.ShopCategory.Melee,
-            Model.Items.Categories.ShopCategory.Ranged,
-            Model.Items.Categories.ShopCategory.Magic
-        };
 
         private readonly AlbionParser _albionParser;
         private readonly DebounceDispatcher _debounceDispatcher;
@@ -179,10 +172,10 @@ namespace Albion.GUI.ViewModels
                     switch (ShopCategory)
                     {
                         case Model.Items.Categories.ShopCategory.SimpleItems:
-                            items = items.Where(x => _simpleItems.Contains(x.ShopCategory)).Where(x => !x.IsArtefacted);
+                            items = items.Where(x => CommonItem.SimpleItems.Contains(x.ShopCategory)).Where(x => !x.IsArtefacted);
                             break;
                         case Model.Items.Categories.ShopCategory.ArtefactsItems:
-                            items = items.Where(x => _simpleItems.Contains(x.ShopCategory)).Where(x => x.IsArtefacted);
+                            items = items.Where(x => CommonItem.SimpleItems.Contains(x.ShopCategory)).Where(x => x.IsArtefacted);
                             break;
                         default:
                             items = items.Where(x => x.ShopCategory == ShopCategory);
