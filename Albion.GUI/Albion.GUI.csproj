@@ -100,6 +100,7 @@
     <Compile Include="Controls\CommonItemControl.xaml.cs">
       <DependentUpon>CommonItemControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\IntToBoolConverter.cs" />
     <Compile Include="Libs\DebounceDispatcher.cs" />
     <Compile Include="Converters\Multiplier.cs" />
     <Compile Include="Converters\PriceConverter.cs" />

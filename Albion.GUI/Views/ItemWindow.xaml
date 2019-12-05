@@ -12,7 +12,7 @@
             <TextBlock Text="Cost:" Width="60"/>
             <TextBlock Text="{Binding Item.Requirement.Cost, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}" Style="{StaticResource IntBlockStyle}"/>
             <TextBlock Text="{Binding Item.Profitt.Income, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}" Style="{StaticResource IntBlockStyle}"/>
-            <TextBlock Text="{Binding Item.Profitt.Profit, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}" Style="{StaticResource IntBlockStyle}"/>
+            <TextBlock Text="{Binding Item.Profitt.Profit, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}" Style="{StaticResource ProfitBlockStyle}"/>
             <FrameworkElement Visibility="Hidden"/>
         </DockPanel>
         <DockPanel Margin="2">
@@ -33,7 +33,7 @@
                     </MultiBinding>
                 </TextBlock.Text>
             </TextBlock>
-            <TextBlock Style="{StaticResource IntBlockStyle}">
+            <TextBlock Style="{StaticResource ProfitBlockStyle}">
                 <TextBlock.Text>
                     <MultiBinding Converter="{StaticResource MultiplierConverter}" StringFormat="{}{0:#,##0}" Mode="OneWay">
                         <Binding Path="Item.Profitt.Profit"/>
@@ -47,7 +47,7 @@
             <TextBlock Text="Req Cost:" Width="60"/>
             <TextBlock Text="{Binding Sum, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}" Style="{StaticResource IntBlockStyle}"/>
             <FrameworkElement Visibility="Hidden" Width="66"/>
-            <TextBlock Text="{Binding Profit, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}" Style="{StaticResource IntBlockStyle}"/>
+            <TextBlock Text="{Binding Profit, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}" Style="{StaticResource ProfitBlockStyle}"/>
             <FrameworkElement Visibility="Hidden"/>
         </DockPanel>
         <DockPanel Margin="2">

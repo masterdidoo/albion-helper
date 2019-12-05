@@ -68,7 +68,7 @@
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding TreeProps.IsSelected}" Value="True">
                             <DataTrigger.Setters>
-                                <Setter Property="Background" Value="GreenYellow" />
+                                <Setter Property="Background" Value="LightGreen" />
                             </DataTrigger.Setters>
                         </DataTrigger>
                     </Style.Triggers>
@@ -106,7 +106,7 @@
                         <Border Grid.Column="5" BorderBrush="Black" BorderThickness="0,0,1,0">
                             <TextBlock
                                 Text="{Binding Profitt.Profit, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}"
-                                Style="{StaticResource IntBlockStyle}" >
+                                Style="{StaticResource ProfitBlockStyle}" >
                                 <TextBlock.ToolTip>
                                     <TextBlock Text="{Binding Profitt.Income, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}"></TextBlock>
                                 </TextBlock.ToolTip>
@@ -114,7 +114,7 @@
                         </Border>
                         <Border Grid.Column="6" BorderBrush="Black" BorderThickness="0,0,1,0">
                             <TextBlock Text="{Binding Profitt.ProfitPercent, Mode=OneWay}"
-                                   Style="{StaticResource IntBlockStyle}" />
+                                   Style="{StaticResource ProfitBlockStyle}" />
                         </Border>
                         <Border Grid.Column="7" BorderBrush="Black" BorderThickness="0,0,1,0">
                             <TextBlock
@@ -173,7 +173,7 @@
                             Style="{StaticResource IntBlockStyle}" />
                         <TextBlock
                             Text="{Binding Profit, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,#}}"
-                            Style="{StaticResource IntBlockStyle}" />
+                            Style="{StaticResource ProfitBlockStyle}" />
                     </DockPanel>
                 </HierarchicalDataTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type profits:LongSellProfit}">
@@ -188,7 +188,7 @@
                                    Style="{StaticResource IntBlockStyle}"/>
                         <TextBlock
                             Text="{Binding Profit, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,#}}"
-                            Style="{StaticResource IntBlockStyle}" />
+                            Style="{StaticResource ProfitBlockStyle}" />
                     </DockPanel>
                 </HierarchicalDataTemplate>
 
@@ -204,7 +204,7 @@
                                    Style="{StaticResource IntBlockStyle}"/>
                         <TextBlock
                             Text="{Binding Profit, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,#}}"
-                            Style="{StaticResource IntBlockStyle}" />
+                            Style="{StaticResource ProfitBlockStyle}" />
                         <TextBlock
                             Text="{Binding Count}"
                             Style="{StaticResource IntBlockStyle}" />
@@ -223,7 +223,7 @@
                                    Style="{StaticResource IntBlockStyle}"/>
                         <TextBlock
                             Text="{Binding Profit, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,#}}"
-                            Style="{StaticResource IntBlockStyle}" />
+                            Style="{StaticResource ProfitBlockStyle}" />
                     </DockPanel>
                 </HierarchicalDataTemplate>
 
@@ -239,7 +239,7 @@
                                    Style="{StaticResource IntBlockStyle}"/>
                         <TextBlock
                             Text="{Binding Profit, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,#}}"
-                            Style="{StaticResource IntBlockStyle}" />
+                            Style="{StaticResource ProfitBlockStyle}" />
                         <TextBlock
                             Text="{Binding Count}"
                             Style="{StaticResource IntBlockStyle}" />
