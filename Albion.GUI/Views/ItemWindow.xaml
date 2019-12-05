@@ -11,6 +11,8 @@
         <DockPanel Margin="2">
             <TextBlock Text="Cost:" Width="60"/>
             <TextBlock Text="{Binding Item.Requirement.Cost, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}" Style="{StaticResource IntBlockStyle}"/>
+            <TextBlock Text="{Binding Item.Profitt.Income, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}" Style="{StaticResource IntBlockStyle}"/>
+            <TextBlock Text="{Binding Item.Profitt.Profit, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}" Style="{StaticResource IntBlockStyle}"/>
             <FrameworkElement Visibility="Hidden"/>
         </DockPanel>
         <DockPanel Margin="2">
@@ -23,6 +25,29 @@
                     </MultiBinding>
                 </TextBlock.Text>
             </TextBlock>
+            <TextBlock Style="{StaticResource IntBlockStyle}">
+                <TextBlock.Text>
+                    <MultiBinding Converter="{StaticResource MultiplierConverter}" StringFormat="{}{0:#,##0}" Mode="OneWay">
+                        <Binding Path="Item.Profitt.Income"/>
+                        <Binding Path="Count"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+            <TextBlock Style="{StaticResource IntBlockStyle}">
+                <TextBlock.Text>
+                    <MultiBinding Converter="{StaticResource MultiplierConverter}" StringFormat="{}{0:#,##0}" Mode="OneWay">
+                        <Binding Path="Item.Profitt.Profit"/>
+                        <Binding Path="Count"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+            <FrameworkElement Visibility="Hidden"/>
+        </DockPanel>
+        <DockPanel Margin="2">
+            <TextBlock Text="Req Cost:" Width="60"/>
+            <TextBlock Text="{Binding Sum, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}" Style="{StaticResource IntBlockStyle}"/>
+            <FrameworkElement Visibility="Hidden" Width="66"/>
+            <TextBlock Text="{Binding Profit, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}" Style="{StaticResource IntBlockStyle}"/>
             <FrameworkElement Visibility="Hidden"/>
         </DockPanel>
         <DockPanel Margin="2">
@@ -34,14 +59,15 @@
                 <DataGridTextColumn Binding="{Binding Item.FullName}"/>
                 <DataGridTextColumn Header="Count" Binding="{Binding Count}" />
                 <DataGridTextColumn Header="Price" Binding="{Binding Item.Requirement.Cost, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}"/>
-                <DataGridTextColumn Header="Total">
-                    <DataGridTextColumn.Binding>
-                        <MultiBinding Converter="{StaticResource MultiplierConverter}" StringFormat="{}{0:#,##0}" Mode="OneWay">
-                            <Binding Path="Item.Requirement.Cost"/>
-                            <Binding Path="Count"/>
-                        </MultiBinding>
-                    </DataGridTextColumn.Binding>
-                </DataGridTextColumn>
+                <DataGridTextColumn Header="Total" Binding="{Binding Sum, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}"/>
+                <!-- <DataGridTextColumn Header="Total"> -->
+                <!--     <DataGridTextColumn.Binding> -->
+                <!--         <MultiBinding Converter="{StaticResource MultiplierConverter}" StringFormat="{}{0:#,##0}" Mode="OneWay"> -->
+                <!--             <Binding Path="Item.Requirement.Cost"/> -->
+                <!--             <Binding Path="Count"/> -->
+                <!--         </MultiBinding> -->
+                <!--     </DataGridTextColumn.Binding> -->
+                <!-- </DataGridTextColumn> -->
             </DataGrid.Columns>
         </DataGrid>
         <!-- <ListView ItemsSource="{Binding Items}"> -->
@@ -53,4 +79,6 @@
         <!-- </ListView> -->
     </StackPanel>
 </Window>
+
+
 

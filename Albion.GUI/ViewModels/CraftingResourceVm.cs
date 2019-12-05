@@ -1,23 +1,26 @@
-﻿using System.Data;
-using Albion.Model.Items;
+﻿using Albion.Model.Items;
 using GalaSoft.MvvmLight;
 
 namespace Albion.GUI.ViewModels
 {
     public class CraftingResourceVm : ObservableObject
     {
-        private int _count;
         private readonly int _returnProc;
+        private int _count;
 
-        public CraftingResourceVm(CommonItem item, int baseCount, int returnProc)
+        private long _sum;
+
+        public CraftingResourceVm(CommonItem item, int batchCount, int baseCount, int returnProc)
         {
             Item = item;
+            BatchCount = batchCount;
             _returnProc = returnProc;
             BaseCount = baseCount;
             UpdateCount(1);
         }
 
         public int BaseCount { get; }
+        public int BatchCount { get; }
 
         public int Count
         {
@@ -27,35 +30,20 @@ namespace Albion.GUI.ViewModels
 
         public CommonItem Item { get; }
 
-
-        public override string ToString()
+        public long Sum
         {
-            return $"{Item.FullName} {Count}";
+            get => _sum;
+            set => Set(ref _sum, value);
         }
 
         public void UpdateCount(int count)
         {
-            var tmpCount = BaseCount * count;
-            var ret = tmpCount * _returnProc / 100;
-            if (tmpCount - ret > BaseCount)
-            {
-                int chekCount;
-                ret++;
-                do
-                {
-                    ret--;
-                    var newRet = ret;
-                    chekCount = tmpCount - newRet;
-                    newRet = tmpCount - newRet;
-                    while (newRet > 0)
-                    {
-                        newRet = newRet * _returnProc / 100;
-                        chekCount += newRet;
-                    }
-                } while (chekCount < tmpCount);
-                tmpCount -= ret;
-            }
-            Count = tmpCount;
+            var tmpSumCount = BaseCount * count * BatchCount;
+//            var ret = tmpSumCount * _returnProc / 100;
+
+            Count = tmpSumCount;
+
+            Sum = Item.Requirement.Cost * Count;
         }
     }
 }

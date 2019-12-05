@@ -7,13 +7,18 @@ namespace Albion.GUI.ViewModels
 {
     public class ItemViewModel : ViewModelBase
     {
-        private int _count = 1;
+        private int _count;
+
+        private long _profit;
+
+        private long _sum;
 
         public ItemViewModel(CommonItem item, int returnProc)
         {
             Item = item;
             Items = new ObservableCollection<CraftingResourceVm>();
-            AddRequirement(item, 1, returnProc);
+            AddRequirement(item, 1, 1, returnProc);
+            Count = 1;
         }
 
         public ObservableCollection<CraftingResourceVm> Items { get; }
@@ -30,29 +35,49 @@ namespace Albion.GUI.ViewModels
             }
         }
 
-        private void UpdateCount(int count)
+        public long Sum
         {
-            //TODO возвраты
-            foreach (var item in Items) item.UpdateCount(count);
+            get => _sum;
+            set => Set(ref _sum, value);
         }
 
-        private void AddRequirement(CommonItem item, int count, int returnProc)
+        public long Profit
+
+        {
+            get => _profit;
+            set => Set(ref _profit, value);
+        }
+
+        private void UpdateCount(int count)
+        {
+            long sum = 0;
+            foreach (var item in Items)
+            {
+                item.UpdateCount(count);
+                sum += item.Sum;
+            }
+
+            Sum = sum;
+            Profit = Item.Profitt.Income * count - Sum;
+        }
+
+        private void AddRequirement(CommonItem item, int itemsCount, int ingredientsCount, int returnProc)
         {
             switch (item.Requirement)
             {
                 case BaseResorcedRequirement craftingRequirement:
-                    //TODO возвраты
-                    AddCraftingRequirement(craftingRequirement, count);
+                    AddCraftingRequirement(craftingRequirement, itemsCount * ingredientsCount);
                     return;
             }
 
-            Items.Add(new CraftingResourceVm(item, count, returnProc));
+            Items.Add(new CraftingResourceVm(item, itemsCount, ingredientsCount, returnProc));
         }
 
-        private void AddCraftingRequirement(BaseResorcedRequirement requirement, int count)
+        private void AddCraftingRequirement(BaseResorcedRequirement requirement, int itemsCount)
         {
             foreach (var requirementResource in requirement.Resources)
-                AddRequirement(requirementResource.Item, count * requirementResource.Count, requirementResource.IsReturnable ? requirement.ReturnProc : 0);
+                AddRequirement(requirementResource.Item, itemsCount, requirementResource.Count,
+                    requirementResource.IsReturnable ? requirement.ReturnProc : 0);
         }
     }
 }
