@@ -43,7 +43,7 @@ namespace Albion.GUI.ViewModels
 
             Count = tmpSumCount;
 
-            Sum = Item?.Requirement?.Cost ?? 0 * Count;
+            Sum = (Item?.Requirement?.Cost ?? 0) * Count;
         }
     }
 }

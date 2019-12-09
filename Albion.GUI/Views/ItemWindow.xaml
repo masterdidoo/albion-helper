@@ -59,7 +59,7 @@
                 <DataGridTextColumn Binding="{Binding Item.FullName}"/>
                 <DataGridTextColumn Header="Count" Binding="{Binding Count}" />
                 <DataGridTextColumn Header="Price" Binding="{Binding Item.Requirement.Cost, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}"/>
-                <DataGridTextColumn Header="Total" Binding="{Binding Sum, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}"/>
+                <DataGridTextColumn Header="Total" Binding="{Binding Sum, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}"/>
                 <!-- <DataGridTextColumn Header="Total"> -->
                 <!--     <DataGridTextColumn.Binding> -->
                 <!--         <MultiBinding Converter="{StaticResource MultiplierConverter}" StringFormat="{}{0:#,##0}" Mode="OneWay"> -->
