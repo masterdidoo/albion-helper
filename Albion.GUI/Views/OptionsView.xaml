@@ -17,7 +17,9 @@
         <CheckBox Content="Disable long sell" IsChecked="{Binding IsLongSellDisabled}"/>
         <CheckBox Content="Disable Black Market" IsChecked="{Binding IsBmDisabled}"/>
         <CheckBox Content="Disable Craft" IsChecked="{Binding IsCraftDisabled}"/>
-        <CheckBox Content="Only Items Craft" IsChecked="{Binding IsCraftOnlyNotResources}"
+        <CheckBox Content="Items Only Craft" IsChecked="{Binding IsItemsOnlyCraft}"
+                  Margin="16,0,0,0"/>
+        <CheckBox Content="Disable Resources Craft" IsChecked="{Binding IsDisableCraftResources}"
                   Margin="16,0,0,0"/>
         <CheckBox Content="Disable Salvage" IsChecked="{Binding IsSalvageDisabled}"/>
         <TextBlock Text="Used Focus"/>

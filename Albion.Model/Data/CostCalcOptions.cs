@@ -11,8 +11,9 @@ namespace Albion.Model.Data
         private bool _isSalvageDisabled;
         private bool _isCraftDisabled;
         private bool _isFocus;
-        private bool _isCraftOnlyNotResources;
+        private bool _isItemsOnlyCraft;
         private bool _isRefineFocus;
+        private bool _isDisableCraftResources;
         public static CostCalcOptions Instance { get; } = new CostCalcOptions();
 
         public bool IsLongBuyDisabled
@@ -81,13 +82,24 @@ namespace Albion.Model.Data
             }
         }
 
-        public bool IsCraftOnlyNotResources
+        public bool IsItemsOnlyCraft
         {
-            get => _isCraftOnlyNotResources;
+            get => _isItemsOnlyCraft;
             set
             {
-                if (_isCraftOnlyNotResources == value) return;
-                _isCraftOnlyNotResources = value;
+                if (_isItemsOnlyCraft == value) return;
+                _isItemsOnlyCraft = value;
+                Changed?.Invoke();
+            }
+        }
+
+        public bool IsDisableCraftResources
+        {
+            get => _isDisableCraftResources;
+            set
+            {
+                if (_isDisableCraftResources == value) return;
+                _isDisableCraftResources = value;
                 Changed?.Invoke();
             }
         }
