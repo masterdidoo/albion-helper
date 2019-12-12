@@ -108,7 +108,10 @@ namespace Albion.Model.Items
                     if (IsCraftable)
                     if (!(CostCalcOptions.Instance.IsDisableCraftResources && IsResource))
                     {
-                        foreach (var cr in CraftingRequirements) yield return cr;
+                        if (CostCalcOptions.Instance.IsDisableUpgrade)
+                            foreach (var cr in CraftingRequirements.OfType<CraftingRequirement>()) yield return cr;
+                        else
+                            foreach (var cr in CraftingRequirements) yield return cr;
                         if (CostCalcOptions.Instance.IsItemsOnlyCraft && IsItem) yield break;
                     }
                 yield return _fastBuyRequirement;

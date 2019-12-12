@@ -19,6 +19,8 @@
         <CheckBox Content="Disable Craft" IsChecked="{Binding IsCraftDisabled}"/>
         <CheckBox Content="Items Only Craft" IsChecked="{Binding IsItemsOnlyCraft}"
                   Margin="16,0,0,0"/>
+        <CheckBox Content="Disable Upgrade" IsChecked="{Binding IsDisableUpgrade}"
+                  Margin="16,0,0,0"/>
         <CheckBox Content="Disable Resources Craft" IsChecked="{Binding IsDisableCraftResources}"
                   Margin="16,0,0,0"/>
         <CheckBox Content="Disable Salvage" IsChecked="{Binding IsSalvageDisabled}"/>
