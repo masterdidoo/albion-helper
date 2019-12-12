@@ -193,6 +193,11 @@ namespace Albion.Model.Items
             foreach (var item in ProfitsAutoMin)
             {
                 item.TreeProps.IsSelected = false;
+            }
+
+            foreach (var item in ProfitsAutoMin)
+            {
+                //item.TreeProps.IsSelected = false;
                 //item.TreeProps.IsExpanded = false;
                 if (max < item.Income)
                 {
