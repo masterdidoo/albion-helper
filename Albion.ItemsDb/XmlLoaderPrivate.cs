@@ -121,8 +121,7 @@ namespace Albion.Db.Xml
                 ItemValue = GetItemValue(iItem, enchant, crs),
                 ItemPower = enchantIp > 0
                     ? enchantIp
-                    : (iItem as IItemPowered)?.itempower ?? (iItem as IItemPowered2)?.dummyitempower ??
-                      (int?) (iItem as IItemValued)?.itemvalue * 100 ?? 0
+                    : (iItem as IItemPowered)?.itempower ?? (iItem as IItemPowered2)?.dummyitempower ?? 0
             };
 
             item.IsCraftable = //iItem.unlockedtocraft &&
