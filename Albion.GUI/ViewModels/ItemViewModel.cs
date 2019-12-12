@@ -58,7 +58,7 @@ namespace Albion.GUI.ViewModels
             }
 
             Sum = sum;
-            Profit = Item.Profitt.Income * count - Sum;
+            Profit = (Item.Profitt?.Income ?? 0) * count - Sum;
         }
 
         private void AddRequirement(CommonItem item, int itemsCount, int ingredientsCount, int returnProc)
