@@ -4,7 +4,7 @@ using Albion.Model.Buildings;
 using Albion.Model.Managers;
 using GalaSoft.MvvmLight;
 
-namespace Albion.GUI
+namespace Albion.GUI.ViewModels
 {
     public class BuildingsViewModel : ObservableObject
     {
