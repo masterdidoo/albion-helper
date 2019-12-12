@@ -101,7 +101,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BuildingsViewModel.cs" />
+    <Compile Include="ViewModels\BuildingsViewModel.cs" />
     <Compile Include="Controls\RequirementControl.xaml.cs">
       <DependentUpon>RequirementControl.xaml</DependentUpon>
     </Compile>

@@ -44,7 +44,9 @@
     <Compile Include="Buildings\CraftBuilding.cs" />
     <Compile Include="Data\ItemBuilding.cs" />
     <Compile Include="Data\CostCalcOptions.cs" />
+    <Compile Include="Data\ItemFromMarketData.cs" />
     <Compile Include="Data\ItemMarketData.cs" />
+    <Compile Include="Data\ItemToMarketData.cs" />
     <Compile Include="Items\ArtefactStat.cs" />
     <Compile Include="Items\Profits\BaseProfit.cs" />
     <Compile Include="Items\Profits\BaseMarketProfit.cs" />

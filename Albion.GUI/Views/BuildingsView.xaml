@@ -4,8 +4,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:gui="clr-namespace:Albion.GUI"
+             xmlns:viewModels="clr-namespace:Albion.GUI.ViewModels"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance gui:BuildingsViewModel}">
+             d:DataContext="{d:DesignInstance viewModels:BuildingsViewModel}">
     <Grid Grid.IsSharedSizeScope="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

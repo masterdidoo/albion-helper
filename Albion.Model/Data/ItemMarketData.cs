@@ -5,7 +5,7 @@ using Albion.Common;
 
 namespace Albion.Model.Data
 {
-    public class ItemMarketData
+    public abstract class ItemMarketData
     {
         public DateTime UpdateTime { get; set; }
 
@@ -13,13 +13,12 @@ namespace Albion.Model.Data
 
         public event Action<ItemMarketData> OrdersUpdated;
 
-        public void AppendOrSetOrders(IEnumerable<AuctionItem> auctionItems)
+        public abstract void AppendOrSetOrders(IEnumerable<AuctionItem> auctionItems);
+
+        protected void AddOrders(IEnumerable<AuctionItem> auctionItems)
         {
-            var max = auctionItems.Select(k => k.QualityLevel).DefaultIfEmpty(0).Max();
-            var min = auctionItems.Select(k => k.QualityLevel).DefaultIfEmpty(0).Min();
-            Orders.RemoveAll(x => x.QualityLevel >= min && x.QualityLevel <= max);
             Orders.AddRange(auctionItems);
-            OrdersUpdated?.Invoke(this);
+            OrdersUpdatedInvoke();
         }
 
         public void AppendOrders(IEnumerable<AuctionItem> auctionItems)
@@ -28,20 +27,27 @@ namespace Albion.Model.Data
             var items = auctionItems.ToDictionary(k => k.Id);
             Orders.RemoveAll(x => items.ContainsKey(x.Id));
             Orders.AddRange(items.Values);
-            OrdersUpdated?.Invoke(this);
+            OrdersUpdatedInvoke();
         }
 
         public void SetOrders(IEnumerable<AuctionItem> auctionItems, DateTime? time = null)
         {
             if (time != null) UpdateTime = time.Value;
             Orders = auctionItems.ToList();
+            OrdersUpdatedInvoke();
+        }
+
+        public abstract void ClearOrders(int qualityLevel);
+
+        protected void OrdersUpdatedInvoke()
+        {
             OrdersUpdated?.Invoke(this);
         }
 
         public void ClearOrders()
         {
             Orders = new List<AuctionItem>();
-            OrdersUpdated?.Invoke(this);
+            OrdersUpdatedInvoke();
         }
     }
 }
