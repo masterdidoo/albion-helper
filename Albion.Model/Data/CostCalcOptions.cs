@@ -46,7 +46,7 @@ namespace Albion.Model.Data
             {
                 if (_isLongSellDisabled == value) return;
                 _isLongSellDisabled = value;
-                Changed?.Invoke();
+                ProfitsChanged?.Invoke();
             }
         }
 
@@ -68,7 +68,7 @@ namespace Albion.Model.Data
             {
                 if (_isSalvageDisabled == value) return;
                 _isSalvageDisabled = value;
-                Changed?.Invoke();
+                ProfitsChanged?.Invoke();
             }
         }
 
@@ -140,5 +140,6 @@ namespace Albion.Model.Data
 
         public event Action Changed;
         public event Action IsFocusChanged;
+        public event Action ProfitsChanged;
     }
 }

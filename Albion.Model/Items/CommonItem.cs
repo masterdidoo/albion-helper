@@ -55,6 +55,7 @@ namespace Albion.Model.Items
             BmLongSellProfit = new BmLongSellProfit(this);
 
             CostCalcOptions.Instance.Changed += RequirementsOnUpdated;
+            CostCalcOptions.Instance.ProfitsChanged += ProfitsOnUpdated;
         }
 
         public FastSellProfit FastSellProfit { get; }
@@ -193,15 +194,14 @@ namespace Albion.Model.Items
             var max = long.MinValue;
             BaseProfit maxItem = null;
 
-            foreach (var item in ProfitsAutoMin)
+            foreach (var item in Profits)
             {
                 item.TreeProps.IsSelected = false;
+                //item.TreeProps.IsExpanded = false;
             }
 
             foreach (var item in ProfitsAutoMin)
             {
-                //item.TreeProps.IsSelected = false;
-                //item.TreeProps.IsExpanded = false;
                 if (max < item.Income)
                 {
                     max = item.Income;
@@ -221,10 +221,14 @@ namespace Albion.Model.Items
             var min = long.MaxValue;
             BaseRequirement minItem = null;
 
-            foreach (var item in RequirementsAutoMin)
+            foreach (var item in Requirements)
             {
                 item.TreeProps.IsSelected = false;
                 //item.TreeProps.IsExpanded = false;
+            }
+
+            foreach (var item in RequirementsAutoMin)
+            {
                 if (min > item.Cost && item.Cost > 0)
                 {
                     min = item.Cost;

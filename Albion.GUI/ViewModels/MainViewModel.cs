@@ -111,6 +111,7 @@ namespace Albion.GUI.ViewModels
 
             InitAlbionParser();
 
+            CostCalcOptions.Instance.ProfitsChanged += RefreshTree;
             CostCalcOptions.Instance.Changed += RefreshTree;
         }
 
