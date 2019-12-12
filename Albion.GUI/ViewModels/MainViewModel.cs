@@ -4,6 +4,7 @@ using System.Linq;
 using System.Media;
 using System.Windows.Input;
 using Albion.Common;
+using Albion.DataStore.DataModel;
 using Albion.DataStore.Db;
 using Albion.DataStore.Managers;
 using Albion.Db.Xml;
@@ -409,7 +410,7 @@ namespace Albion.GUI.ViewModels
 
                 var itemMarket = item.ItemMarket;
                 var ordersItem = !ordersData.IsFrom
-                    ? itemMarket.ToMarketItems[ordersData.TownId]
+                    ? (ItemMarketData) itemMarket.ToMarketItems[ordersData.TownId]
                     : itemMarket.FromMarketItems[ordersData.TownId];
 
                 ordersItem.SetOrders(ordersData.Orders, ordersData.UpdateTime);
