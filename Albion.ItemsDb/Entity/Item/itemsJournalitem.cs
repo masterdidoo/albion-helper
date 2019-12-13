@@ -35,7 +35,7 @@ namespace Albion.Db.Xml.Entity.Item
         [XmlAttribute] public int tier { get; set; }
 
 
-        [XmlAttribute] public string maxfame { get; set; }
+        [XmlAttribute] public int maxfame { get; set; }
 
 
         [XmlAttribute] public string baselootamount { get; set; }

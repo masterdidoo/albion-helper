@@ -137,6 +137,7 @@ namespace Albion.Db.Xml
             XmlItems = itemsDb.Items.Cast<IItem>().ToDictionary(k => k.uniquename, v => v);
 
             Items = new Dictionary<string, CommonItem>();
+            Journals = new Dictionary<string, Journal>();
 
             var enItems = XmlItems.Values.OfType<IItemEnchantments>().SelectMany(CreateEnchantedItems);
 

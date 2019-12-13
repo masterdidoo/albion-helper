@@ -48,6 +48,7 @@
     <Compile Include="Data\ItemMarketData.cs" />
     <Compile Include="Data\ItemToMarketData.cs" />
     <Compile Include="Items\ArtefactStat.cs" />
+    <Compile Include="Items\Journal.cs" />
     <Compile Include="Items\Profits\BaseProfit.cs" />
     <Compile Include="Items\Profits\BaseMarketProfit.cs" />
     <Compile Include="Items\Requirements\TransmutRequirement.cs" />

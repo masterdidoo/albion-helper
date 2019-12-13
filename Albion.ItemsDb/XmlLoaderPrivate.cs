@@ -21,19 +21,10 @@ namespace Albion.Db.Xml
         private const string LevelNameConst = "@";
 
         private Dictionary<string, AOResourcesResourcesResourceResourceTier> ResourceItemValues { get; set; }
-        //        private static readonly int[][] ResourceItemValues =
-        //        {
-        //            new[] {6, 14, 30, 62, 126, 254},
-        //            new[] {0, 30, 62, 126, 254, 510},
-        //            new[] {0, 54, 118, 246, 502, 1014},
-        //            new[] {0, 102, 230, 486, 998, 2022}
-        //        };
 
         private readonly IBuildingDataManager _buildingDataManager;
 
         private int _memCounter;
-        private BaseResorcedRequirement[] _empty = new BaseResorcedRequirement[0];
-
 
         private CommonItem CreateOrGetItem(IItem arg)
         {
@@ -51,7 +42,7 @@ namespace Albion.Db.Xml
 
         private CommonItem CreateItem(IItem arg)
         {
-            var item = CreateCommonItem(arg, GetId(arg), CreateCraftingRequirements(arg.craftingrequirements, (arg as SimpleItem)?.resourcetype != null),
+            var item = CreateCommonItem(arg, GetId(arg), CreateCraftingRequirements(arg.craftingrequirements, (arg as SimpleItem)?.resourcetype != null, arg.uniquename),
                 (arg as IItemEnchantmentLevel)?.enchantmentlevel ?? 0);
 
             return item;
@@ -132,14 +123,42 @@ namespace Albion.Db.Xml
             //            item.IsCraftable = item.CraftingBuilding != NoneBuilding || item.CraftingRequirements.Length > 0 && (item.CraftingRequirements[0] as CraftingRequirement)?.Silver > 0;
             //                               || item.ShopCategory == ShopCategory.Artefacts;
 
+            if (item.IsCraftable && Journals.TryGetValue(iItem.uniquename, out var journal))
+            {
+                crs[0].Resources
+            }
+
             item.Init();
 
             Items.Add(item.Id + (qualityLevel > 1 ? $"_{qualityLevel}" : ""), item);
+
+            if (iItem is ItemsJournalitem journalitem)
+            {
+                AddJournal(journalitem, item);
+            }
 
 //            if (iItem.shopcategory == shopCategory.token && iItem.unlockedtocraft) Debug.WriteLine("tk");
 
             return item;
         }
+
+        private void AddJournal(ItemsJournalitem journalitem, CommonItem item)
+        {
+            var journal = new Journal(item)
+            {
+                MaxFame = journalitem.maxfame
+            };
+
+            var itemIds = journalitem.famefillingmissions.SelectMany(x => x.craftitemfame).SelectMany(x => x.validitem)
+                .Select(x => x.id);
+
+            foreach (var itemId in itemIds)
+            {
+                Journals.Add(itemId, journal);
+            }
+        }
+
+        public Dictionary<string, Journal> Journals { get; private set; }
 
         private double GetItemFame(IItem iItem, BaseResorcedRequirement[] crs)
         {
@@ -192,7 +211,7 @@ namespace Albion.Db.Xml
         private IEnumerable<BaseResorcedRequirement> EnCreateCraftingRequirements(string itemId,
             EnchantmentsEnchantment enchantment)
         {
-            foreach (var c in CreateCraftingRequirements(enchantment.craftingrequirements, false))
+            foreach (var c in CreateCraftingRequirements(enchantment.craftingrequirements, false, itemId))
                 yield return c;
             if (enchantment.upgraderequirements != null)
                 yield return CreateUpgradeRequirements(itemId, enchantment);
@@ -215,8 +234,11 @@ namespace Albion.Db.Xml
         }
 
 
-        private IEnumerable<CraftingRequirement> CreateCraftingRequirements(Craftingrequirements[] arg, bool isTransmut)
+        private IEnumerable<CraftingRequirement> CreateCraftingRequirements(Craftingrequirements[] arg, bool isTransmut,
+            string itemId)
         {
+            Journals.TryGetValue(itemId, out var journal);
+
             if (arg == null) yield break;
             foreach (var cr in arg)
             {
@@ -228,11 +250,17 @@ namespace Albion.Db.Xml
                         AmountCrafted = cr.amountcrafted
                     };
                 else
+                {
+                    if (journal != null)
+                    {
+                        res = res.Concat(new []{new CraftingResource(), })
+                    }
                     yield return new CraftingRequirement(res.ToArray())
                     {
                         Silver = cr.silver * 10000,
                         AmountCrafted = cr.amountcrafted
                     };
+                }
             }
         }
 
