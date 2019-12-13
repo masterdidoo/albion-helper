@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="AO-Resources" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="AO-Resources" msdata:IsDataSet="true" msdata:Locale="en-US">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Resources">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Resource" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="ResourceTier" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:attribute name="value" type="xs:string" />
+                        <xs:attribute name="resourcevalue" type="xs:string" />
+                        <xs:attribute name="famevalue" type="xs:string" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="name" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Harvestables">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Harvestable" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="ToolModifier" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Modifier" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:attribute name="tierdifference" type="xs:string" />
+                              <xs:attribute name="timefactor" type="xs:string" />
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Tier" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Charge" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:attribute name="level" type="xs:string" />
+                              <xs:attribute name="gfxstate" type="xs:string" />
+                              <xs:attribute name="respawnfactormin" type="xs:string" />
+                              <xs:attribute name="respawnfactormax" type="xs:string" />
+                              <xs:attribute name="respawncharges" type="xs:string" />
+                              <xs:attribute name="yield" type="xs:string" />
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="RareState" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:attribute name="state" type="xs:string" />
+                              <xs:attribute name="item" type="xs:string" />
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="tier" type="xs:string" />
+                        <xs:attribute name="item" type="xs:string" />
+                        <xs:attribute name="maxchargesperharvest" type="xs:string" />
+                        <xs:attribute name="respawntimeseconds" type="xs:string" />
+                        <xs:attribute name="harvesttimeseconds" type="xs:string" />
+                        <xs:attribute name="requirestool" type="xs:string" />
+                        <xs:attribute name="notooltimefactor" type="xs:string" />
+                        <xs:attribute name="startcharges" type="xs:string" />
+                        <xs:attribute name="tile" type="xs:string" />
+                        <xs:attribute name="decaytimeseconds" type="xs:string" />
+                        <xs:attribute name="decaytimewhenexhaustedseconds" type="xs:string" />
+                        <xs:attribute name="tilepremium" type="xs:string" />
+                        <xs:attribute name="isscaled" type="xs:string" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="name" type="xs:string" />
+                  <xs:attribute name="resource" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

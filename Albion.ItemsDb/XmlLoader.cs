@@ -67,6 +67,19 @@ namespace Albion.Db.Xml
             }
         }
 
+        public static AOResourcesResourcesResource[] LoadResourcesXml()
+        {
+            var path = GetPath("resources.xml");
+            using (var stream = File.Open(path, FileMode.Open))
+            using (TextReader tr = new StreamReader(stream))
+            {
+                var xml = new XmlSerializer(typeof(AOResources));
+                var items = (AOResources) xml.Deserialize(tr);
+
+                return items.Items.OfType<AOResourcesResources>().First().Resource;
+            }
+        }
+
         public static Dictionary<string, string> LoadLocalizationXml()
         {
             var path = GetPath("localization.xml");
@@ -93,12 +106,19 @@ namespace Albion.Db.Xml
             Localization = LoadLocalizationXml();
 
             NoneBuilding = new CraftBuilding(new ItemBuilding(), _craftTownManager);
+            var resourcesDb = LoadResourcesXml();
             var buildingsDb = LoadBuildingsXml();
             var itemsDb = LoadItemsXml();
 
             var xmlCraftBuildings = buildingsDb.Items.OfType<craftBuilding>().Where(x =>
                 x.tier == 8 && x.favoritedish != null && x.craftingitemlist != null &&
                 x.craftingitemlist[0].craftitem != null);
+
+            ResourceItemValues = resourcesDb
+                .SelectMany(x=>x.ResourceTier.Select(z=>new {
+                    name = $"T{z.value}_{x.name}",
+                    val = z
+                })).ToDictionary(k=>k.name, v=>v.val);
 
             ItemIdToCraftBuildingId = xmlCraftBuildings
                 .SelectMany(x =>

@@ -90,6 +90,7 @@
                             <ColumnDefinition Width="60"/>
                             <ColumnDefinition />
                             <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <CheckBox IsChecked="{Binding TreeProps.IsSelected}" Margin="0,2,2,0" IsTabStop="False"/>
                         <TextBlock Grid.Column="1" Text="{Binding FullName, Mode=OneTime}" />
@@ -167,6 +168,11 @@
                         <Border Grid.Column="11" BorderBrush="Black" BorderThickness="0,0,1,0">
                             <TextBlock
                                 Text="{Binding ItemValue, Mode=OneWay}"
+                                Style="{StaticResource IntBlockStyle}" />
+                        </Border>
+                        <Border Grid.Column="12" BorderBrush="Black" BorderThickness="0,0,1,0">
+                            <TextBlock
+                                Text="{Binding ItemFame, Mode=OneWay}"
                                 Style="{StaticResource IntBlockStyle}" />
                         </Border>
                     </Grid>

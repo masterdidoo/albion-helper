@@ -45,7 +45,6 @@ namespace UnitTests
         [TestMethod]
         public void TestModel()
         {
-            var mdm = Mock.Of<IMarketDataManager>(x => x.GetData(It.IsAny<string>()) == new ItemMarket());
             var bdm = Mock.Of<IBuildingDataManager>(x => x.GetData(It.IsAny<string>()) == new ItemBuilding());
             var tm = Mock.Of<ITownManager>();
 
@@ -64,13 +63,13 @@ namespace UnitTests
 
             foreach (var item in list
                 .Where(x =>
-                    x.ShopCategory == ShopCategory.Consumables
+                    x.ShopCategory == ShopCategory.Artefacts
                 )
             )
             foreach (var requirement in item.Components.OfType<CraftingRequirement>())
             foreach (var cr in requirement.Resources)
             {
-                Debug.WriteLine($"{item} {item.FullName} <- {cr.Item} {cr.Item.ShopCategory} {cr.Item.ShopSubCategory}");
+                Debug.WriteLine($"{item} {item.FullName} {item.ItemValue} <- {cr.Item} x {cr.Count} {cr.Item.ShopCategory} {cr.Item.ItemValue}");
                 //Assert.Fail($"{item} {item.FullName} <- {cr.Item} {cr.Item.ShopCategory} {cr.Item.ShopSubCategory}");
             }
 
@@ -143,7 +142,7 @@ namespace UnitTests
 //                .ThenBy(x=>x.Item2)
 //                .ThenBy(x=>x.Item3);
 //
-//            foreach (var value in enums) Debug.WriteLine($"{value},");
+            foreach (var value in enums) Debug.WriteLine($"{value.uniquename},");
         }
     }
 }

@@ -47,6 +47,7 @@
     <Compile Include="Entity\Building\CraftItem.cs" />
     <Compile Include="Entity\Common\AudioInfo.cs" />
     <Compile Include="Entity\Localization\localization.cs" />
+    <Compile Include="Entity\Resources\resources.cs" />
     <Compile Include="Requirements\rementsResource.cs" />
     <Compile Include="Entity\Item\items.cs" />
     <Compile Include="Requirements\enchantmentsEnchantment.cs" />
@@ -75,6 +76,7 @@
     </Content>
     <Content Include="Xmls\resources.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>

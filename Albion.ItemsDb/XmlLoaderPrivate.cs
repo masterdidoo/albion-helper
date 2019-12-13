@@ -20,14 +20,14 @@ namespace Albion.Db.Xml
     {
         private const string LevelNameConst = "@";
 
-
-        private static readonly int[][] ResourceItemValues =
-        {
-            new[] {6, 14, 30, 62, 126, 254},
-            new[] {0, 30, 62, 126, 254, 510},
-            new[] {0, 54, 118, 246, 502, 1014},
-            new[] {0, 102, 230, 486, 998, 2022}
-        };
+        private Dictionary<string, AOResourcesResourcesResourceResourceTier> ResourceItemValues { get; set; }
+        //        private static readonly int[][] ResourceItemValues =
+        //        {
+        //            new[] {6, 14, 30, 62, 126, 254},
+        //            new[] {0, 30, 62, 126, 254, 510},
+        //            new[] {0, 54, 118, 246, 502, 1014},
+        //            new[] {0, 102, 230, 486, 998, 2022}
+        //        };
 
         private readonly IBuildingDataManager _buildingDataManager;
 
@@ -119,6 +119,7 @@ namespace Albion.Db.Xml
                 ShopSubCategory = (ShopSubCategory) iItem.shopsubcategory1,
                 IsSalvageable = (iItem as IItemSalvageable)?.salvageable ?? false,
                 ItemValue = GetItemValue(iItem, enchant, crs),
+                ItemFame = GetItemFame(iItem, crs),
                 ItemPower = enchantIp > 0
                     ? enchantIp
                     : (iItem as IItemPowered)?.itempower ?? (iItem as IItemPowered2)?.dummyitempower ?? 0
@@ -140,22 +141,37 @@ namespace Albion.Db.Xml
             return item;
         }
 
-        private int GetItemValue(IItem iItem, int enchant, BaseResorcedRequirement[] crs)
+        private double GetItemFame(IItem iItem, BaseResorcedRequirement[] crs)
         {
-            if (iItem is SimpleItem item && item.foodcategory == "plants")
-                return 4;
+            if (ResourceItemValues.TryGetValue(iItem.uniquename, out var res))
+                return res.famevalue;
 
-            if (iItem.shopsubcategory1 == shopSubCategory.royalsigils && iItem.tier == 4)
-                return 128;
+            if (crs.Length >0) return crs[0].Resources.Sum(r=>r.Item.ItemFame * r.Count);
+            return 0;
+        }
 
-            if (iItem.shopcategory == shopCategory.artefacts)
-                return (int?)(iItem as IItemValued)?.itemvalue ?? 1000;
-
-            if (iItem.shopcategory == shopCategory.resources)
-                return iItem.tier < 3 ? 0 : iItem.tier > 2 ? ResourceItemValues[enchant][iItem.tier - 3] : iItem.tier;
-
-            int iv = (int?) (iItem as IItemValued)?.itemvalue ?? 0;
+        private double GetItemValue(IItem iItem, int enchant, BaseResorcedRequirement[] crs)
+        {
+            var iv = (iItem as IItemValued)?.itemvalue ?? 0;
             if (iv > 0) return iv;
+
+            if (ResourceItemValues.TryGetValue(iItem.uniquename, out var res))
+                return res.resourcevalue;
+
+//            if (iItem.shopcategory == shopCategory.resources)
+//                return iItem.tier < 3 ? 0 : iItem.tier > 2 ? ResourceItemValues[enchant][iItem.tier - 3] : iItem.tier;
+//
+//            if (iItem is SimpleItem item && item.foodcategory == "plants")
+//                return 4;
+//
+//            if (iItem.shopsubcategory1 == shopSubCategory.royalsigils && iItem.tier == 4)
+//                return 128;
+//
+//            if (iItem.shopcategory == shopCategory.artefacts)
+//                return (int?)(iItem as IItemValued)?.itemvalue ?? 1000;
+//
+//            if (iItem.shopcategory == shopCategory.resources)
+//                return iItem.tier < 3 ? 0 : iItem.tier > 2 ? ResourceItemValues[enchant][iItem.tier - 3] : iItem.tier;
 
             if (crs.Length >0) return crs[0].Resources.Sum(r=>r.Item.ItemValue * r.Count);
             return 0;
