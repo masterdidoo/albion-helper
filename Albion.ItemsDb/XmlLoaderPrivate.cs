@@ -161,8 +161,8 @@ namespace Albion.Db.Xml
 //            if (iItem.shopcategory == shopCategory.resources)
 //                return iItem.tier < 3 ? 0 : iItem.tier > 2 ? ResourceItemValues[enchant][iItem.tier - 3] : iItem.tier;
 //
-//            if (iItem is SimpleItem item && item.foodcategory == "plants")
-//                return 4;
+            if (iItem is SimpleItem item && item.foodcategory == "plants")
+                return 4;
 //
 //            if (iItem.shopsubcategory1 == shopSubCategory.royalsigils && iItem.tier == 4)
 //                return 128;
