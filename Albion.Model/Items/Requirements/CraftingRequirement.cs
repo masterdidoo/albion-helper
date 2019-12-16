@@ -48,6 +48,8 @@ namespace Albion.Model.Items.Requirements
             SetCost(cost, 1);
         }
 
+        public double JournalsCount { get; private set; }
+
         private int GetReturnCoeff()
         {
             switch (Item.ShopCategory)
@@ -126,6 +128,8 @@ namespace Albion.Model.Items.Requirements
 
         protected override void OnSetItem()
         {
+            if (Journal!=null)
+                JournalsCount = Item.ItemFame / Journal.MaxFame;
             Item.CraftingBuilding.UpdateTax += ResourcesOnCostUpdate;
             CostCalcOptions.Instance.IsFocusChanged += ResourcesOnCostUpdate;
             ResourcesOnCostUpdate();
@@ -162,7 +166,7 @@ namespace Albion.Model.Items.Requirements
         public long Silver { get; set; }
 
         public int AmountCrafted { get; set; }
-
+        public Journal Journal { get; set; }
 
         #endregion
     }

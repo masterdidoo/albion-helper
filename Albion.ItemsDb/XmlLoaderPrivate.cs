@@ -123,11 +123,6 @@ namespace Albion.Db.Xml
             //            item.IsCraftable = item.CraftingBuilding != NoneBuilding || item.CraftingRequirements.Length > 0 && (item.CraftingRequirements[0] as CraftingRequirement)?.Silver > 0;
             //                               || item.ShopCategory == ShopCategory.Artefacts;
 
-            if (item.IsCraftable && Journals.TryGetValue(iItem.uniquename, out var journal))
-            {
-                crs[0].Resources
-            }
-
             item.Init();
 
             Items.Add(item.Id + (qualityLevel > 1 ? $"_{qualityLevel}" : ""), item);
@@ -149,7 +144,7 @@ namespace Albion.Db.Xml
                 MaxFame = journalitem.maxfame
             };
 
-            var itemIds = journalitem.famefillingmissions.SelectMany(x => x.craftitemfame).SelectMany(x => x.validitem)
+            var itemIds = journalitem.famefillingmissions.Where(x => x.craftitemfame != null).SelectMany(x => x.craftitemfame).SelectMany(x => x.validitem)
                 .Select(x => x.id);
 
             foreach (var itemId in itemIds)
@@ -251,14 +246,11 @@ namespace Albion.Db.Xml
                     };
                 else
                 {
-                    if (journal != null)
-                    {
-                        res = res.Concat(new []{new CraftingResource(), })
-                    }
                     yield return new CraftingRequirement(res.ToArray())
                     {
                         Silver = cr.silver * 10000,
-                        AmountCrafted = cr.amountcrafted
+                        AmountCrafted = cr.amountcrafted,
+                        Journal = journal
                     };
                 }
             }

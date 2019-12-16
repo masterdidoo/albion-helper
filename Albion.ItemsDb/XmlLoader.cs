@@ -139,6 +139,9 @@ namespace Albion.Db.Xml
             Items = new Dictionary<string, CommonItem>();
             Journals = new Dictionary<string, Journal>();
 
+            //Journalitems
+            XmlItems.Values.OfType<ItemsJournalitem>().Select(CreateOrGetItem).Count();
+
             var enItems = XmlItems.Values.OfType<IItemEnchantments>().SelectMany(CreateEnchantedItems);
 
             var items = XmlItems.Values.Select(CreateOrGetItem).Concat(enItems);

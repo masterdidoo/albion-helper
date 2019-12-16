@@ -323,6 +323,10 @@
                         <TextBlock
                             Text="{Binding Cost, Converter={StaticResource PriceConverter}, StringFormat={}{0:#,##0}}"
                             Style="{StaticResource IntBlockStyle}" />
+                        <FrameworkElement Visibility="Hidden" Width="66" />
+                        <TextBlock
+                            Text="{Binding JournalsCount, StringFormat=J {0:#,#.0}}"
+                            Style="{StaticResource IntBlockStyle}" />
                     </DockPanel>
                 </HierarchicalDataTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type requ:CraftingResource}"
