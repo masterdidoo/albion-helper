@@ -2,12 +2,13 @@
 {
     public class Journal
     {
-        public CommonItem Item { get; }
+        public CommonItem EmptyItem { get; }
+        public CommonItem FullItem { get; }
         public int MaxFame { get; set; }
 
-        public Journal(CommonItem item)
+        public Journal(CommonItem emptyItem)
         {
-            Item = item;
+            EmptyItem = emptyItem;
         }
     }
 }

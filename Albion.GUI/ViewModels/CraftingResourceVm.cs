@@ -1,4 +1,5 @@
-﻿using Albion.Model.Items;
+﻿using System;
+using Albion.Model.Items;
 using GalaSoft.MvvmLight;
 
 namespace Albion.GUI.ViewModels
@@ -10,17 +11,15 @@ namespace Albion.GUI.ViewModels
 
         private long _sum;
 
-        public CraftingResourceVm(CommonItem item, int batchCount, int baseCount, int returnProc)
+        public CraftingResourceVm(CommonItem item, double baseCount, int returnProc)
         {
             Item = item;
-            BatchCount = batchCount;
             _returnProc = returnProc;
-            BaseCount = baseCount;
+            _baseCount = baseCount;
             UpdateCount(1);
         }
 
-        public int BaseCount { get; }
-        public int BatchCount { get; }
+        private double _baseCount;
 
         public int Count
         {
@@ -38,12 +37,17 @@ namespace Albion.GUI.ViewModels
 
         public void UpdateCount(int count)
         {
-            var tmpSumCount = BaseCount * count * BatchCount;
+            var tmpSumCount = _baseCount * count;
 //            var ret = tmpSumCount * _returnProc / 100;
 
-            Count = tmpSumCount;
+            Count = (int)Math.Ceiling(tmpSumCount);
 
             Sum = (Item?.Requirement?.Cost ?? 0) * Count;
+        }
+
+        public void Add(double count)
+        {
+            _baseCount += count;
         }
     }
 }

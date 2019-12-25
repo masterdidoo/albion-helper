@@ -140,7 +140,9 @@ namespace Albion.Db.Xml
             Journals = new Dictionary<string, Journal>();
 
             //Journalitems
-            XmlItems.Values.OfType<ItemsJournalitem>().Select(CreateOrGetItem).Count();
+            foreach (var journalitem in XmlItems.Values.OfType<ItemsJournalitem>().Select(CreateOrGetItem))
+            {
+            }
 
             var enItems = XmlItems.Values.OfType<IItemEnchantments>().SelectMany(CreateEnchantedItems);
 

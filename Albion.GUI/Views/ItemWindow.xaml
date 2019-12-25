@@ -50,6 +50,11 @@
             <TextBlock Text="{Binding Profit, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}" Style="{StaticResource ProfitBlockStyle}"/>
             <FrameworkElement Visibility="Hidden"/>
         </DockPanel>
+        <DockPanel Margin="2" Visibility="{Binding JornalsCount, Converter={StaticResource NullToVisibilityConverter}}">
+            <TextBlock Text="Jornals:" Width="60"/>
+            <TextBlock Text="{Binding JornalsCount, Mode=OneWay, StringFormat={}{0:#,#.0}}" Style="{StaticResource IntBlockStyle}"/>
+            <FrameworkElement Visibility="Hidden"/>
+        </DockPanel>
         <DockPanel Margin="2">
             <TextBlock Text="Count:" Width="60" VerticalAlignment="Center"/>
             <TextBox Text="{Binding Count}" KeyDown="UIElement_OnKeyDown"  Width="66" TextAlignment="Right" HorizontalAlignment="Left" />

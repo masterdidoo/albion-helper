@@ -7,6 +7,7 @@
              Startup="App_OnStartup"
              Exit="App_OnExit">
     <Application.Resources>
+        <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
         <converters:IntToBoolConverter x:Key="IntToBoolConverter" />
         <converters:PriceConverter x:Key="PriceConverter" />
         <converters:Multiplier x:Key="MultiplierConverter" />
