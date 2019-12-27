@@ -203,7 +203,7 @@ namespace Albion.GUI.ViewModels
                                     : IsCountOrder
                                         ? items.OrderByDescending(x => x.Profitt?.Count)
                                     : IsIpCostOrder
-                                        ? items.Where(x=> x.ItemPower > 0 && x.Requirement?.Cost > 0).OrderBy(x => x.Requirement?.Cost / x.ItemPower)
+                                        ? items.Where(x=> x.ItemPower > 0 && x.Requirement?.Cost > 0).OrderBy(x => ((double)x.Requirement?.Cost) / x.ItemPower)
                                         : items.OrderBy(x => !x.TreeProps.IsSelected);
 
 //                var tmp = items.OrderByDescending(x => x.Pos).ThenBy(x => x.FullName).ToArray();

@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
 using Albion.Db.Xml.Entity.Building;
 using Albion.Db.Xml.Entity.Item;
-using Albion.Db.Xml.Enums;
 using Albion.Db.Xml.Requirements;
 using Albion.Model.Buildings;
 using Albion.Model.Data;
@@ -20,11 +17,17 @@ namespace Albion.Db.Xml
     {
         private const string LevelNameConst = "@";
 
-        private Dictionary<string, AOResourcesResourcesResourceResourceTier> ResourceItemValues { get; set; }
-
         private readonly IBuildingDataManager _buildingDataManager;
 
+        private readonly int[] _qualityLevelItemPower = {10, 20, 50, 100};
+
         private int _memCounter;
+
+        private readonly CommonItem[] Empty = new CommonItem[0];
+
+        private Dictionary<string, AOResourcesResourcesResourceResourceTier> ResourceItemValues { get; set; }
+
+        public Dictionary<string, Journal> Journals { get; private set; }
 
         private CommonItem CreateOrGetItem(IItem arg)
         {
@@ -42,7 +45,8 @@ namespace Albion.Db.Xml
 
         private CommonItem CreateItem(IItem arg)
         {
-            var item = CreateCommonItem(arg, GetId(arg), CreateCraftingRequirements(arg.craftingrequirements, (arg as SimpleItem)?.resourcetype != null, arg.uniquename),
+            var item = CreateCommonItem(arg, GetId(arg), null, arg.craftingrequirements,
+                (arg as SimpleItem)?.resourcetype != null,
                 (arg as IItemEnchantmentLevel)?.enchantmentlevel ?? 0);
 
             return item;
@@ -54,62 +58,62 @@ namespace Albion.Db.Xml
 
             foreach (var enchantment in iItem.enchantments)
             {
-                var craftingRequirements = EnCreateCraftingRequirements(iItem.uniquename, enchantment);
-
                 var item = CreateCommonItem(iItem, GetId(iItem.uniquename, enchantment.enchantmentlevel),
-                    craftingRequirements, enchantment.enchantmentlevel,
+                    enchantment, enchantment.craftingrequirements, false,
                     enchantment.itempower > 0 ? enchantment.itempower : enchantment.dummyitempower);
 
                 yield return item;
             }
         }
 
-        private CommonItem CreateCommonItem(IItem iItem, string itemId,
-            IEnumerable<BaseResorcedRequirement> craftingRequirements, int enchant, int enchantIp = 0)
+        private CommonItem CreateCommonItem(IItem iItem, string itemId, EnchantmentsEnchantment enchantment,
+            Craftingrequirements[] craftingrequirements, bool isTransmut, int enchantIp = 0)
         {
             var im = new ItemMarket();
-            var main = CreateCommonItemExt(iItem, itemId, craftingRequirements, enchant, 1, im, enchantIp);
+            int enchantmentlevel = enchantment?.enchantmentlevel ?? 0;
+
+            var main = CreateCommonItemExt(iItem, itemId,
+                EnCreateCraftingRequirements(iItem.uniquename, craftingrequirements, enchantment, 1, isTransmut),
+                enchantmentlevel, 1, im, enchantIp);
             main.QualityLevels = Empty;
             if (iItem is IItemPowered)
             {
                 main.QualityLevels = new CommonItem[4];
-                for (int i = 1; i < 5; i++)
-                {
-                    main.QualityLevels[i-1] =
-                    CreateCommonItemExt(iItem, itemId, craftingRequirements, enchant, i+1, im, enchantIp);
-                }
+                for (var i = 1; i < 5; i++)
+                    main.QualityLevels[i - 1] =
+                        CreateCommonItemExt(iItem, itemId,
+                            EnCreateCraftingRequirements(iItem.uniquename, craftingrequirements,
+                                enchantment, i + 1, isTransmut), enchantmentlevel, i + 1, im, enchantIp);
             }
+
             return main;
         }
-
-        CommonItem[] Empty = new CommonItem[0];
 
         private CommonItem CreateCommonItemExt(IItem iItem, string itemId,
             IEnumerable<BaseResorcedRequirement> craftingRequirements, int enchant, int qualityLevel,
             ItemMarket itemMarket, int enchantIp = 0)
         {
-
 //            BaseResorcedRequirement[] crs = (iItem.shopcategory == shopCategory.token) ? _empty : craftingRequirements.ToArray();
-            BaseResorcedRequirement[] crs = craftingRequirements.ToArray();
+            var crs = craftingRequirements.ToArray();
             var item = new CommonItem(crs, itemMarket,
                 BuildingByItem(iItem.uniquename),
                 qualityLevel,
-                _buyTownManager, 
+                _buyTownManager,
                 _sellTownManager
-                )
+            )
             {
 #if DEBUG
                 Debug = iItem,
 #endif
                 MemId = _memCounter++,
                 Id = itemId,
-                Name = Localization.TryGetValue("@ITEMS_"+iItem.uniquename, out var name) ? name : itemId,
+                Name = Localization.TryGetValue("@ITEMS_" + iItem.uniquename, out var name) ? name : itemId,
                 Tir = iItem.tier,
                 Enchant = enchant,
                 ShopCategory = (ShopCategory) iItem.shopcategory,
                 ShopSubCategory = (ShopSubCategory) iItem.shopsubcategory1,
                 IsSalvageable = (iItem as IItemSalvageable)?.salvageable ?? false,
-                ItemValue = GetItemValue(iItem, enchant, crs),
+                ItemValue = GetItemValue(iItem, crs),
                 ItemFame = GetItemFame(iItem, crs),
                 ItemPower = enchantIp > 0
                     ? enchantIp
@@ -119,9 +123,9 @@ namespace Albion.Db.Xml
             if (item.ItemPower > 0 && qualityLevel > 1) item.ItemPower += _qualityLevelItemPower[qualityLevel - 2];
 
             item.IsCraftable = //iItem.unlockedtocraft &&
-                               !(itemId.Contains("_CAPEITEM_") && itemId.EndsWith("_BP") &&
-                                 item.CraftingBuilding == NoneBuilding)
-                               && item.CraftingRequirements.Length > 0;
+                !(itemId.Contains("_CAPEITEM_") && itemId.EndsWith("_BP") &&
+                  item.CraftingBuilding == NoneBuilding)
+                && item.CraftingRequirements.Length > 0;
             //            item.IsCraftable = item.CraftingBuilding != NoneBuilding || item.CraftingRequirements.Length > 0 && (item.CraftingRequirements[0] as CraftingRequirement)?.Silver > 0;
             //                               || item.ShopCategory == ShopCategory.Artefacts;
 
@@ -129,17 +133,12 @@ namespace Albion.Db.Xml
 
             Items.Add(item.Id + (qualityLevel > 1 ? $"_{qualityLevel}" : ""), item);
 
-            if (iItem is ItemsJournalitem journalitem)
-            {
-                AddJournal(journalitem, item);
-            }
+            if (iItem is ItemsJournalitem journalitem) AddJournal(journalitem, item);
 
 //            if (iItem.shopcategory == shopCategory.token && iItem.unlockedtocraft) Debug.WriteLine("tk");
 
             return item;
         }
-
-        private readonly int[] _qualityLevelItemPower = {10, 20, 50, 100};
 
         private void AddJournal(ItemsJournalitem journalitem, CommonItem item)
         {
@@ -148,27 +147,23 @@ namespace Albion.Db.Xml
                 MaxFame = journalitem.maxfame
             };
 
-            var itemIds = journalitem.famefillingmissions.Where(x => x.craftitemfame != null).SelectMany(x => x.craftitemfame).SelectMany(x => x.validitem)
+            var itemIds = journalitem.famefillingmissions.Where(x => x.craftitemfame != null)
+                .SelectMany(x => x.craftitemfame).SelectMany(x => x.validitem)
                 .Select(x => x.id);
 
-            foreach (var itemId in itemIds)
-            {
-                Journals.Add(itemId, journal);
-            }
+            foreach (var itemId in itemIds) Journals.Add(itemId, journal);
         }
-
-        public Dictionary<string, Journal> Journals { get; private set; }
 
         private double GetItemFame(IItem iItem, BaseResorcedRequirement[] crs)
         {
             if (ResourceItemValues.TryGetValue(iItem.uniquename, out var res))
                 return res.famevalue;
 
-            if (crs.Length >0) return crs[0].Resources.Sum(r=>r.Item.ItemFame * r.Count);
+            if (crs.Length > 0) return crs[0].Resources.Sum(r => r.Item.ItemFame * r.Count);
             return 0;
         }
 
-        private double GetItemValue(IItem iItem, int enchant, BaseResorcedRequirement[] crs)
+        private double GetItemValue(IItem iItem, BaseResorcedRequirement[] crs)
         {
             var iv = (iItem as IItemValued)?.itemvalue ?? 0;
             if (iv > 0) return iv;
@@ -191,7 +186,7 @@ namespace Albion.Db.Xml
 //            if (iItem.shopcategory == shopCategory.resources)
 //                return iItem.tier < 3 ? 0 : iItem.tier > 2 ? ResourceItemValues[enchant][iItem.tier - 3] : iItem.tier;
 
-            if (crs.Length >0) return crs[0].Resources.Sum(r=>r.Item.ItemValue * r.Count);
+            if (crs.Length > 0) return crs[0].Resources.Sum(r => r.Item.ItemValue * r.Count);
             return 0;
         }
 
@@ -205,15 +200,20 @@ namespace Albion.Db.Xml
         ///     enchanted versions
         /// </summary>
         /// <param name="itemId"></param>
+        /// <param name="craftingrequirements"></param>
         /// <param name="enchantment"></param>
+        /// <param name="qualityLevel"></param>
+        /// <param name="isTransmut"></param>
         /// <returns></returns>
         private IEnumerable<BaseResorcedRequirement> EnCreateCraftingRequirements(string itemId,
-            EnchantmentsEnchantment enchantment)
+            Craftingrequirements[] craftingrequirements,
+            EnchantmentsEnchantment enchantment,
+            int qualityLevel, bool isTransmut)
         {
-            foreach (var c in CreateCraftingRequirements(enchantment.craftingrequirements, false, itemId))
+            foreach (var c in CreateCraftingRequirements(craftingrequirements, isTransmut, itemId))
                 yield return c;
-            if (enchantment.upgraderequirements != null)
-                yield return CreateUpgradeRequirements(itemId, enchantment);
+            if (enchantment?.upgraderequirements != null)
+                yield return CreateUpgradeRequirements(itemId, enchantment, qualityLevel);
         }
 
         /// <summary>
@@ -223,11 +223,13 @@ namespace Albion.Db.Xml
         /// <param name="enchantment"></param>
         /// <returns></returns>
         private BaseResorcedRequirement CreateUpgradeRequirements(string itemId,
-            EnchantmentsEnchantment enchantment)
+            EnchantmentsEnchantment enchantment,
+            int qualityLevel)
         {
             var id = GetId(itemId, enchantment.enchantmentlevel - 1);
             var res = CreateResources(enchantment.upgraderequirements).ToList();
-            res.Add(new CraftingResource(Items[id], 1, false));
+            var item = Items[id + (qualityLevel > 1 ? $"_{qualityLevel}" : "")];
+            res.Add(new CraftingResource(item, 1, false));
 
             return new UpgradeRequirement(res.ToArray());
         }
@@ -249,14 +251,12 @@ namespace Albion.Db.Xml
                         AmountCrafted = cr.amountcrafted
                     };
                 else
-                {
                     yield return new CraftingRequirement(res.ToArray())
                     {
                         Silver = cr.silver * 10000,
                         AmountCrafted = cr.amountcrafted,
                         Journal = journal
                     };
-                }
             }
         }
 
@@ -305,7 +305,7 @@ namespace Albion.Db.Xml
             return new CraftBuilding(itemBuilding, _craftTownManager)
             {
                 Id = id,
-                Name = Localization.TryGetValue("@BUILDINGS_"+id, out var name) ? name : id,
+                Name = Localization.TryGetValue("@BUILDINGS_" + id, out var name) ? name : id
             };
         }
     }
