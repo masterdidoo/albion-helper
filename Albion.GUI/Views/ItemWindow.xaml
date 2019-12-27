@@ -59,12 +59,19 @@
             <TextBlock Text="Count:" Width="60" VerticalAlignment="Center"/>
             <TextBox Text="{Binding Count}" KeyDown="UIElement_OnKeyDown"  Width="66" TextAlignment="Right" HorizontalAlignment="Left" />
         </DockPanel>
+        <DockPanel Margin="2" Visibility="{Binding IsTaxSilver}">
+            <TextBlock Text="Tax:" Style="{StaticResource IntBlockStyle}"/>
+            <TextBlock Text="{Binding Tax, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}" Style="{StaticResource IntBlockStyle}"/>
+            <TextBlock Text="Silver:" Style="{StaticResource IntBlockStyle}"/>
+            <TextBlock Text="{Binding Silver, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}" Style="{StaticResource IntBlockStyle}"/>
+            <FrameworkElement Visibility="Hidden"/>
+        </DockPanel>
         <DataGrid ItemsSource="{Binding Items}" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Item.FullName}"/>
-                <DataGridTextColumn Header="Count" Binding="{Binding Count}" />
-                <DataGridTextColumn Header="Price" Binding="{Binding Item.Requirement.Cost, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}"/>
-                <DataGridTextColumn Header="Total" Binding="{Binding Sum, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}"/>
+                <DataGridTextColumn Header="Count" Binding="{Binding Count}" ElementStyle="{StaticResource IntBlockStyle}"/>
+                <DataGridTextColumn Header="Price" Binding="{Binding Item.Requirement.Cost, Mode=OneWay, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}" ElementStyle="{StaticResource IntBlockStyle}"/>
+                <DataGridTextColumn Header="Total" Binding="{Binding Sum, StringFormat={}{0:#,##0}, Converter={StaticResource PriceConverter}}" ElementStyle="{StaticResource IntBlockStyle}"/>
                 <!-- <DataGridTextColumn Header="Total"> -->
                 <!--     <DataGridTextColumn.Binding> -->
                 <!--         <MultiBinding Converter="{StaticResource MultiplierConverter}" StringFormat="{}{0:#,##0}" Mode="OneWay"> -->

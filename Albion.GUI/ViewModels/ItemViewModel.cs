@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using Albion.Model.Items;
 using Albion.Model.Items.Requirements;
 using GalaSoft.MvvmLight;
@@ -9,14 +7,20 @@ namespace Albion.GUI.ViewModels
 {
     public class ItemViewModel : ViewModelBase
     {
+        private readonly Dictionary<CommonItem, CraftingResourceVm> _items;
         private int _count;
 
         private double? _jornalsCount;
 
         private long _profit;
 
+        private long _silver;
+
         private long _sum;
-        private readonly Dictionary<CommonItem, CraftingResourceVm> _items;
+
+        private long _tax;
+        private long _baseTax;
+        private long _baseSilver;
 
         public ItemViewModel(CommonItem item, int returnProc)
         {
@@ -29,6 +33,8 @@ namespace Albion.GUI.ViewModels
         public IEnumerable<CraftingResourceVm> Items => _items.Values;
 
         public CommonItem Item { get; }
+
+        public bool IsTaxSilver => Tax > 0 || Silver > 0;
 
         public int Count
         {
@@ -59,6 +65,18 @@ namespace Albion.GUI.ViewModels
             set => Set(ref _profit, value);
         }
 
+        public long Silver
+        {
+            get => _silver;
+            set => Set(ref _silver, value);
+        }
+
+        public long Tax
+        {
+            get => _tax;
+            set => Set(ref _tax, value);
+        }
+
         private void UpdateCount(int count)
         {
             long sum = 0;
@@ -68,7 +86,10 @@ namespace Albion.GUI.ViewModels
                 sum += item.Sum;
             }
 
-            Sum = sum;
+            Tax = _baseTax * count;
+            Silver = _baseSilver * count;
+
+            Sum = sum + Tax + Silver;
             Profit = (Item.Profitt?.Income ?? 0) * count - Sum;
 
             JornalsCount = (Item.Requirement as CraftingRequirement)?.JournalsCount * count;
@@ -97,9 +118,13 @@ namespace Albion.GUI.ViewModels
                 AddRequirement(requirementResource.Item, itemsCount, requirementResource.Count,
                     requirementResource.IsReturnable ? requirement.ReturnProc : 0);
 
-            if (requirement is CraftingRequirement craftingRequirement && craftingRequirement.Journal != null)
+            if (requirement is CraftingRequirement craftingRequirement)
             {
-                AddRequirement(craftingRequirement.Journal.EmptyItem, itemsCount, craftingRequirement.JournalsCount, 0);
+                _baseTax += craftingRequirement.Tax;
+                _baseSilver += craftingRequirement.Silver;
+                if (craftingRequirement.Journal != null)
+                    AddRequirement(craftingRequirement.Journal.EmptyItem, itemsCount, craftingRequirement.JournalsCount,
+                        0);
             }
         }
     }
