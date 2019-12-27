@@ -170,7 +170,7 @@ namespace Albion.Db.Xml
             if (iv > 0) return iv;
 
             if (ResourceItemValues.TryGetValue(iItem.uniquename, out var res))
-                return res.resourcevalue;
+                return res.resourcevalue * 2; //TODO проверить xml
 
 //            if (iItem.shopcategory == shopCategory.resources)
 //                return iItem.tier < 3 ? 0 : iItem.tier > 2 ? ResourceItemValues[enchant][iItem.tier - 3] : iItem.tier;
