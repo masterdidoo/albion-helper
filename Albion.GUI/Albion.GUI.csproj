@@ -101,6 +101,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\Divisor.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="ViewModels\BuildingsViewModel.cs" />
     <Compile Include="Controls\RequirementControl.xaml.cs">

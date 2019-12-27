@@ -116,6 +116,8 @@ namespace Albion.Db.Xml
                     : (iItem as IItemPowered)?.itempower ?? (iItem as IItemPowered2)?.dummyitempower ?? 0
             };
 
+            if (item.ItemPower > 0 && qualityLevel > 1) item.ItemPower += _qualityLevelItemPower[qualityLevel - 2];
+
             item.IsCraftable = //iItem.unlockedtocraft &&
                                !(itemId.Contains("_CAPEITEM_") && itemId.EndsWith("_BP") &&
                                  item.CraftingBuilding == NoneBuilding)
@@ -136,6 +138,8 @@ namespace Albion.Db.Xml
 
             return item;
         }
+
+        private readonly int[] _qualityLevelItemPower = {10, 20, 50, 100};
 
         private void AddJournal(ItemsJournalitem journalitem, CommonItem item)
         {

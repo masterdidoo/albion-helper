@@ -42,6 +42,7 @@ namespace Albion.GUI.ViewModels
         private ShopCategory? _shopCategory;
         private ShopSubCategory? _shopSubCategory;
         private int? _tir;
+        private bool _isIpCostOrder;
 
         public MainViewModel()
         {
@@ -201,6 +202,8 @@ namespace Albion.GUI.ViewModels
                                     ? items.OrderByDescending(x => x.Profitt?.ProfitSum)
                                     : IsCountOrder
                                         ? items.OrderByDescending(x => x.Profitt?.Count)
+                                    : IsIpCostOrder
+                                        ? items.Where(x=> x.ItemPower > 0 && x.Requirement?.Cost > 0).OrderBy(x => x.Requirement?.Cost / x.ItemPower)
                                         : items.OrderBy(x => !x.TreeProps.IsSelected);
 
 //                var tmp = items.OrderByDescending(x => x.Pos).ThenBy(x => x.FullName).ToArray();
@@ -209,6 +212,16 @@ namespace Albion.GUI.ViewModels
             }
         }
 
+
+        public bool IsIpCostOrder
+        {
+            get => _isIpCostOrder;
+            set
+            {
+                if (!Set(ref _isIpCostOrder, value)) return;
+                RefreshTree();
+            }
+        }
 
         public bool IsCountOrder
         {

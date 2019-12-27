@@ -11,6 +11,7 @@
         <converters:IntToBoolConverter x:Key="IntToBoolConverter" />
         <converters:PriceConverter x:Key="PriceConverter" />
         <converters:Multiplier x:Key="MultiplierConverter" />
+        <converters:Divisor x:Key="DivConverter" />
 
         <Style x:Key="TextBlockStyle" TargetType="{x:Type TextBlock}">
             <Setter Property="Margin" Value="3 0 3 0" />

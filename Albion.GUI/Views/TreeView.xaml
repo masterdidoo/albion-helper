@@ -9,7 +9,7 @@
              xmlns:controls="clr-namespace:Albion.GUI.Controls"
              xmlns:profits="clr-namespace:Albion.Model.Items.Profits;assembly=Albion.Model"
              mc:Ignorable="d"
-             d:DesignHeight="350" d:DesignWidth="800">
+             d:DesignHeight="350" d:DesignWidth="900">
     <Grid Grid.IsSharedSizeScope="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -23,6 +23,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition SharedSizeGroup="Item" Width="300" />
+                        <ColumnDefinition />
                         <ColumnDefinition />
                         <ColumnDefinition />
                         <ColumnDefinition />
@@ -56,6 +57,11 @@
                     <Border Grid.Column="8" BorderThickness="0,0,1,0" BorderBrush="Black">
                         <CheckBox IsChecked="{Binding IsCountOrder}" Content="Count" Margin="3,0,3,0" Width="60" />
                     </Border>
+                    <Border Grid.Column="9" BorderThickness="0,0,1,0" BorderBrush="Black" Width="60">
+                    </Border>
+                    <Border Grid.Column="10" BorderThickness="0,0,1,0" BorderBrush="Black">
+                        <CheckBox IsChecked="{Binding IsIpCostOrder}" Content="IP Cost" Margin="3,0,3,0" Width="60" />
+                    </Border>
                 </Grid>
             </TreeViewItem.Header>
         </TreeViewItem>
@@ -88,6 +94,7 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                             <ColumnDefinition Width="60"/>
+                            <ColumnDefinition />
                             <ColumnDefinition />
                             <ColumnDefinition />
                             <ColumnDefinition />
@@ -162,15 +169,26 @@
                         </Border>
                         <Border Grid.Column="10" BorderBrush="Black" BorderThickness="0,0,1,0">
                             <TextBlock
+                                Style="{StaticResource IntBlockStyle}">
+                                <TextBlock.Text>
+                                    <MultiBinding Converter="{StaticResource DivConverter}" StringFormat="{}{0:#,##0}" Mode="OneWay">
+                                        <Binding Path="ItemPower"/>
+                                        <Binding Path="Requirement.Cost"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </Border>
+                        <Border Grid.Column="11" BorderBrush="Black" BorderThickness="0,0,1,0">
+                            <TextBlock
                                 Text="{Binding ItemPower, Mode=OneWay}"
                                 Style="{StaticResource IntBlockStyle}" />
                         </Border>
-                        <Border Grid.Column="11" BorderBrush="Black" BorderThickness="0,0,1,0">
+                        <Border Grid.Column="12" BorderBrush="Black" BorderThickness="0,0,1,0">
                             <TextBlock
                                 Text="{Binding ItemValue, Mode=OneWay}"
                                 Style="{StaticResource IntBlockStyle}" />
                         </Border>
-                        <Border Grid.Column="12" BorderBrush="Black" BorderThickness="0,0,1,0">
+                        <Border Grid.Column="13" BorderBrush="Black" BorderThickness="0,0,1,0">
                             <TextBlock
                                 Text="{Binding ItemFame, Mode=OneWay}"
                                 Style="{StaticResource IntBlockStyle}" />
