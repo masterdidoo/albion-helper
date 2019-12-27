@@ -21,9 +21,9 @@ namespace Albion.Db.Xml
 
         private readonly int[] _qualityLevelItemPower = {10, 20, 50, 100};
 
-        private int _memCounter;
-
         private readonly CommonItem[] Empty = new CommonItem[0];
+
+        private int _memCounter;
 
         private Dictionary<string, AOResourcesResourcesResourceResourceTier> ResourceItemValues { get; set; }
 
@@ -70,20 +70,22 @@ namespace Albion.Db.Xml
             Craftingrequirements[] craftingrequirements, bool isTransmut, int enchantIp = 0)
         {
             var im = new ItemMarket();
-            int enchantmentlevel = enchantment?.enchantmentlevel ?? 0;
+            var enchantmentlevel = enchantment?.enchantmentlevel ?? 0;
 
             var main = CreateCommonItemExt(iItem, itemId,
-                EnCreateCraftingRequirements(iItem.uniquename, craftingrequirements, enchantment, 1, isTransmut),
+                CreateCraftingAndUpgradeRequirements(iItem.uniquename, craftingrequirements, enchantment, isTransmut),
                 enchantmentlevel, 1, im, enchantIp);
             main.QualityLevels = Empty;
             if (iItem is IItemPowered)
             {
                 main.QualityLevels = new CommonItem[4];
                 for (var i = 1; i < 5; i++)
+                {
+                    var upgrades = CreateUpgradeRequirements(iItem.uniquename, enchantment, i + 1);
                     main.QualityLevels[i - 1] =
                         CreateCommonItemExt(iItem, itemId,
-                            EnCreateCraftingRequirements(iItem.uniquename, craftingrequirements,
-                                enchantment, i + 1, isTransmut), enchantmentlevel, i + 1, im, enchantIp);
+                            upgrades, enchantmentlevel, i + 1, im, enchantIp);
+                }
             }
 
             return main;
@@ -202,18 +204,30 @@ namespace Albion.Db.Xml
         /// <param name="itemId"></param>
         /// <param name="craftingrequirements"></param>
         /// <param name="enchantment"></param>
-        /// <param name="qualityLevel"></param>
         /// <param name="isTransmut"></param>
         /// <returns></returns>
-        private IEnumerable<BaseResorcedRequirement> EnCreateCraftingRequirements(string itemId,
+        private IEnumerable<BaseResorcedRequirement> CreateCraftingAndUpgradeRequirements(string itemId,
             Craftingrequirements[] craftingrequirements,
-            EnchantmentsEnchantment enchantment,
-            int qualityLevel, bool isTransmut)
+            EnchantmentsEnchantment enchantment, bool isTransmut)
         {
             foreach (var c in CreateCraftingRequirements(craftingrequirements, isTransmut, itemId))
                 yield return c;
             if (enchantment?.upgraderequirements != null)
-                yield return CreateUpgradeRequirements(itemId, enchantment, qualityLevel);
+                yield return CreateUpgradeRequirement(itemId, enchantment, 1);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <param name="enchantment"></param>
+        /// <param name="qualityLevel"></param>
+        /// <returns></returns>
+        private IEnumerable<BaseResorcedRequirement> CreateUpgradeRequirements(string itemId,
+            EnchantmentsEnchantment enchantment,
+            int qualityLevel)
+        {
+            if (enchantment?.upgraderequirements != null)
+                yield return CreateUpgradeRequirement(itemId, enchantment, qualityLevel);
         }
 
         /// <summary>
@@ -222,7 +236,7 @@ namespace Albion.Db.Xml
         /// <param name="itemId"></param>
         /// <param name="enchantment"></param>
         /// <returns></returns>
-        private BaseResorcedRequirement CreateUpgradeRequirements(string itemId,
+        private BaseResorcedRequirement CreateUpgradeRequirement(string itemId,
             EnchantmentsEnchantment enchantment,
             int qualityLevel)
         {
