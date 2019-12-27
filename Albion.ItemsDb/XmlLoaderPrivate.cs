@@ -46,8 +46,7 @@ namespace Albion.Db.Xml
         private CommonItem CreateItem(IItem arg)
         {
             var item = CreateCommonItem(arg, GetId(arg), null, arg.craftingrequirements,
-                (arg as SimpleItem)?.resourcetype != null,
-                (arg as IItemEnchantmentLevel)?.enchantmentlevel ?? 0);
+                (arg as SimpleItem)?.resourcetype != null);
 
             return item;
         }
@@ -70,7 +69,7 @@ namespace Albion.Db.Xml
             Craftingrequirements[] craftingrequirements, bool isTransmut, int enchantIp = 0)
         {
             var im = new ItemMarket();
-            var enchantmentlevel = enchantment?.enchantmentlevel ?? 0;
+            var enchantmentlevel = enchantment?.enchantmentlevel ?? (iItem is IItemEnchantmentLevel ie ? ie.enchantmentlevel : 0);
 
             var main = CreateCommonItemExt(iItem, itemId,
                 CreateCraftingAndUpgradeRequirements(iItem.uniquename, craftingrequirements, enchantment, isTransmut),
