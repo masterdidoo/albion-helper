@@ -1,11 +1,11 @@
-﻿// This is an open source non-commercial project. Dear PVS-Studio, please check it.
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+﻿//
+//
 
 namespace Albion.Common
 {
     public enum EventCodes : short
     {
-        Leave = 1,
+        Leave, //1,
         JoinFinished,
         Move,
         Teleport,
@@ -94,7 +94,6 @@ namespace Albion.Common
         NewLoot,
         AttachItemContainer,
         DetachItemContainer,
-        GuildVaultInfo,
         GuildUpdate,
         GuildPlayerUpdated,
         InvitedToGuild,
@@ -121,6 +120,7 @@ namespace Albion.Common
         DebugVariablesInfo,
         DebugReputationInfo,
         DebugDiminishingReturnInfo,
+        DebugSmartClusterQueueInfo,
         ClaimOrbStart,
         ClaimOrbFinished,
         ClaimOrbCancel,
@@ -195,6 +195,7 @@ namespace Albion.Common
         RemovedChatChannel,
         AccessStatus,
         Mounted,
+        MountStart,
         MountCancel,
         NewTravelpoint,
         NewIslandAccessPoint,
@@ -208,7 +209,6 @@ namespace Albion.Common
         UpdateUnlockedAvatars,
         UpdateUnlockedAvatarRings,
         UpdateUnlockedBuildings,
-        DailyLoginBonus,
         NewIslandManagement,
         NewTeleportStone,
         Cloak,
@@ -353,25 +353,54 @@ namespace Albion.Common
         CrystalRealmFeedback,
         NewLocationMarker,
         NewTutorialBlocker,
-        NewInformationProvider,
-        NewDynamicGuildLogo,
-        TutorialUpdate,
-        TriggerHintBox,
-        RandomDungeonPositionInfo,
-        NewLootChest,
-        UpdateLootChest,
-        LootChestOpened,
-        NewShrine,
-        UpdateShrine,
-        MutePlayerUpdate,
-        ShopTileUpdate,
-        ShopUpdate,
-        EasyAntiCheatKick,
-        UnlockVanityUnlock,
-        CustomizationChanged,
-        BankVaultInfo,
-        CastlePhaseChanged,
-        GuildAccountLogEvent,
-        IpChanged
+        NewTileSwitch, //349
+        NewInformationProvider, //350
+        NewDynamicGuildLogo, //351
+        TutorialUpdate, //352
+        TriggerHintBox, //353
+        RandomDungeonPositionInfo, //354
+        NewLootChest, //355
+        UpdateLootChest, //356
+        LootChestOpened, //357
+        NewShrine, //358
+        UpdateShrine, //359
+        MutePlayerUpdate, //360
+        ShopTileUpdate, //361
+        ShopUpdate, //362
+        EasyAntiCheatKick, //363
+        UnlockVanityUnlock, //364
+        CustomizationChanged, //365
+        BaseVaultInfo, //366
+        GuildVaultInfo, //367
+        BankVaultInfo, //368
+        RecoveryVaultPlayerInfo, //369
+        RecoveryVaultGuildInfo, //370
+        UpdateWardrobe, //371
+        CastlePhaseChanged, //372
+        GuildAccountLogEvent, //373
+        NewHideoutObject, //374
+        NewHideoutManagement, //375
+        NewHideoutExit, //376
+        InitHideoutAttackStart, //377
+        InitHideoutAttackCancel, //378
+        InitHideoutAttackFinished, //379
+        HideoutManagementUpdate, //380
+        IpChanged, //381
+        SmartClusterQueueUpdateInfo, //382
+        SmartClusterQueueActiveInfo, //383
+        SmartClusterQueueKickWarning, //384
+        SmartClusterQueueInvite, //385
+        ReceivedGvgSeasonPoints, //386
+        TerritoryBonusLevelUpdate, //387
+        OpenWorldAttackScheduleStart, //388
+        OpenWorldAttackScheduleFinished, //389
+        OpenWorldAttackScheduleCancel, //390
+        OpenWorldAttackConquerStart, //391
+        OpenWorldAttackConquerFinished, //392
+        OpenWorldAttackConquerCancel, //393
+        OpenWorldAttackConquerStatus, //394
+        OpenWorldAttackStart, //395
+        OpenWorldAttackEnd, //396
+        NewRandomResourceBlocker //397
     }
 }

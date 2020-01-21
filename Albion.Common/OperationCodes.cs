@@ -1,5 +1,8 @@
-﻿// This is an open source non-commercial project. Dear PVS-Studio, please check it.
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+﻿//
+//
+//
+//
+//
 
 namespace Albion.Common
 {
@@ -11,364 +14,383 @@ namespace Albion.Common
         CreateAccount,
         Login,
         SendCrashLog,
-        CreateCharacter,
-        DeleteCharacter,
-        SelectCharacter,
-        RedeemKeycode,
-        GetGameServerByCluster,
-        GetActiveSubscription,
-        GetShopPurchaseUrl,
-        GetBuyTrialDetails,
-        GetReferralSeasonDetails,
-        GetReferralLink,
-        GetAvailableTrialKeys,
-        GetShopTilesForCategory,
-        Move,
-        AttackStart,
-        CastStart,
-        CastCancel,
-        TerminateToggleSpell,
-        ChannelingCancel,
-        AttackBuildingStart,
-        InventoryDestroyItem,
-        InventoryMoveItem,
-        InventorySplitStack,
-        GetClusterData,
-        ChangeCluster,
-        ConsoleCommand,
-        ChatMessage,
-        ReportClientError,
-        RegisterToObject,
-        UnRegisterFromObject,
-        CraftBuildingChangeSettings,
-        CraftBuildingTakeMoney,
-        RepairBuildingChangeSettings,
-        RepairBuildingTakeMoney,
-        ActionBuildingChangeSettings,
-        HarvestStart,
-        HarvestCancel,
-        TakeSilver,
-        ActionOnBuildingStart,
-        ActionOnBuildingCancel,
-        ItemRerollQualityStart,
-        ItemRerollQualityCancel,
-        InstallResourceStart,
-        InstallResourceCancel,
-        InstallSilver,
-        BuildingFillNutrition,
-        BuildingChangeRenovationState,
-        BuildingBuySkin,
-        BuildingClaim,
-        BuildingGiveup,
-        BuildingNutritionSilverStorageDeposit,
-        BuildingNutritionSilverStorageWithdraw,
-        BuildingNutritionSilverRewardSet,
-        ConstructionSiteCreate,
-        PlaceableItemPlace,
-        PlaceableItemPlaceCancel,
-        PlaceableObjectPickup,
-        FurnitureObjectUse,
-        FarmableHarvest,
-        FarmableFinishGrownItem,
-        FarmableDestroy,
-        FarmableGetProduct,
-        FarmableFill,
-//        LaborerObjectPlace,
-//        LaborerObjectPlaceCancel,
-        TearDownConstructionSite,
-        CastleGateUse,
-        AuctionCreateOffer,
-        AuctionCreateRequest,
-        AuctionGetOffers,
-        AuctionGetRequests,
-        AuctionBuyOffer,
-        AuctionAbortAuction,
-        AuctionModifyAuction,
-        AuctionAbortOffer,
-        AuctionAbortRequest,
-        AuctionSellRequest,
-        AuctionGetFinishedAuctions,
-        AuctionFetchAuction,
-        AuctionGetMyOpenOffers,
-        AuctionGetMyOpenRequests,
-        AuctionGetMyOpenAuctions,
-        AuctionGetItemsAverage,
-        AuctionGetItemAverageStats,
-        AuctionGetItemAverageValue,
-        ContainerOpen,
-        ContainerClose,
-        ContainerManageSubContainer,
-        Respawn,
-        Suicide,
-        JoinGuild,
-        LeaveGuild,
-        CreateGuild,
-        InviteToGuild,
-        DeclineGuildInvitation,
-        KickFromGuild,
-        DuellingChallengePlayer,
-        DuellingAcceptChallenge,
-        DuellingDenyChallenge,
-        ChangeClusterTax,
-        ClaimTerritory,
-        GiveUpTerritory,
-        ChangeTerritoryAccessRights,
-        GetMonolithInfo,
-        GetClaimInfo,
-        GetAttackInfo,
-        GetTerritorySeasonPoints,
-        GetAttackSchedule,
-        ScheduleAttack,
-        GetMatches,
-        GetMatchDetails,
-        JoinMatch,
-        LeaveMatch,
-        ChangeChatSettings,
-        LogoutStart,
-        LogoutCancel,
-        ClaimOrbStart,
-        ClaimOrbCancel,
-        MatchLootChestOpeningStart,
-        MatchLootChestOpeningCancel,
-        DepositToGuildAccount,
-        WithdrawalFromAccount,
-        ChangeGuildPayUpkeepFlag,
-        ChangeGuildTax,
-        GetMyTerritories,
-        MorganaCommand,
-        GetServerInfo,
-        InviteMercenaryToMatch,
-        SubscribeToCluster,
-        AnswerMercenaryInvitation,
-        GetCharacterEquipment,
-        GetCharacterSteamAchievements,
-        GetCharacterStats,
-        GetKillHistoryDetails,
-        LearnMasteryLevel,
-        ReSpecAchievement,
-        ChangeAvatar,
-        GetRankings,
-        GetRank,
-        GetGvgSeasonRankings,
-        GetGvgSeasonRank,
-        GetGvgSeasonHistoryRankings,
-        GetGvgSeasonGuildMemberHistory,
-        KickFromGvGMatch,
-        GetChestLogs,
-        GetAccessRightLogs,
-        GetGuildAccountLogs,
-        InviteToPlayerTrade,
-        PlayerTradeCancel,
-        PlayerTradeInvitationAccept,
-        PlayerTradeAddItem,
-        PlayerTradeRemoveItem,
-        PlayerTradeAcceptTrade,
-        PlayerTradeSetSilverOrGold,
-        SendMiniMapPing,
-        Stuck,
-        BuyRealEstate,
-        ClaimRealEstate,
-        GiveUpRealEstate,
-        ChangeRealEstateOutline,
-        GetMailInfos,
-        ReadMail,
-        SendNewMail,
-        DeleteMail,
-        ClaimAttachmentFromMail,
-        UpdateLfgInfo,
-        GetLfgInfos,
-        GetMyGuildLfgInfo,
-        GetLfgDescriptionText,
-        LfgApplyToGuild,
-        AnswerLfgGuildApplication,
-        GetClusterInfo,
-        RegisterChatPeer,
-        SendChatMessage,
-        JoinChatChannel,
-        LeaveChatChannel,
-        SendWhisperMessage,
-        Say,
-        PlayEmote,
-        StopEmote,
-        GetClusterMapInfo,
-        AccessRightsChangeSettings,
-        Mount,
-        MountCancel,
-        BuyJourney,
-        SetSaleStatusForEstate,
-        ResolveGuildOrPlayerName,
-        GetRespawnInfos,
-        MakeHome,
-        LeaveHome,
-        ResurrectionReply,
-        AllianceCreate,
-        AllianceDisband,
-        AllianceGetMemberInfos,
-        AllianceInvite,
-        AllianceAnswerInvitation,
-        AllianceCancelInvitation,
-        AllianceKickGuild,
-        AllianceLeave,
-        AllianceChangeGoldPaymentFlag,
-        AllianceGetDetailInfo,
-        GetIslandInfos,
-        AbandonMyIsland,
-        BuyMyIsland,
-        BuyGuildIsland,
-        AbandonGuildIsland,
-        UpgradeMyIsland,
-        UpgradeGuildIsland,
-        MoveMyIsland,
-        MoveGuildIsland,
-        TerritoryFillNutrition,
-        TeleportBack,
-        PartyInvitePlayer,
-        PartyAnswerInvitation,
-        PartyLeave,
-        PartyKickPlayer,
-        PartyMakeLeader,
-        PartyChangeLootSetting,
-        PartyMarkObject,
-        PartySetRole,
-        GetGuildMOTD,
-        SetGuildMOTD,
-        ExitEnterStart,
-        ExitEnterCancel,
-        QuestGiverRequest,
-        GoldMarketGetBuyOffer,
-        GoldMarketGetBuyOfferFromSilver,
-        GoldMarketGetSellOffer,
-        GoldMarketGetSellOfferFromSilver,
-        GoldMarketBuyGold,
-        GoldMarketSellGold,
-        GoldMarketCreateSellOrder,
-        GoldMarketCreateBuyOrder,
-        GoldMarketGetInfos,
-        GoldMarketCancelOrder,
-        GoldMarketGetAverageInfo,
-        SiegeCampClaimStart,
-        SiegeCampClaimCancel,
-        TreasureChestUsingStart,
-        TreasureChestUsingCancel,
-        UseLootChest,
-        UseShrine,
-        LaborerStartJob,
-        LaborerTakeJobLoot,
-        LaborerDismiss,
-        LaborerMove,
-        LaborerBuyItem,
-        LaborerUpgrade,
-        BuyPremium,
-        BuyTrial,
-        RealEstateGetAuctionData,
-        RealEstateBidOnAuction,
-        GetSiegeCampCooldown,
-        FriendInvite,
-        FriendAnswerInvitation,
-        FriendCancelnvitation,
-        FriendRemove,
-        InventoryStack,
-        InventorySort,
-        EquipmentItemChangeSpell,
-        ExpeditionRegister,
-        ExpeditionRegisterCancel,
-        JoinExpedition,
-        DeclineExpeditionInvitation,
-        VoteStart,
-        VoteDoVote,
-        RatingDoRate,
-        EnteringExpeditionStart,
-        EnteringExpeditionCancel,
-        ActivateExpeditionCheckPoint,
-        ArenaRegister,
-        ArenaRegisterCancel,
-        ArenaLeave,
-        JoinArenaMatch,
-        DeclineArenaInvitation,
-        EnteringArenaStart,
-        EnteringArenaCancel,
-        ArenaCustomMatch,
-        ArenaCustomMatchCreate,
-        UpdateCharacterStatement,
-        BoostFarmable,
-        GetStrikeHistory,
-        UseFunction,
-        UsePortalEntrance,
-        ResetPortalBinding,
-        QueryPortalBinding,
-        ClaimPaymentTransaction,
-        ChangeUseFlag,
-        ClientPerformanceStats,
-        ExtendedHardwareStats,
-        ClientLowMemoryWarning,
-        TerritoryClaimStart,
-        TerritoryClaimCancel,
-        RequestAppStoreProducts,
-        VerifyProductPurchase,
-        QueryGuildPlayerStats,
-        TrackAchievements,
-        SetAchievementsAutoLearn,
-        DepositItemToGuildCurrency,
-        WithdrawalItemFromGuildCurrency,
-        AuctionSellSpecificItemRequest,
-        FishingStart,
-        FishingCasting,
-        FishingCast,
-        FishingCatch,
-        FishingPull,
-        FishingGiveLine,
-        FishingFinish,
-        FishingCancel,
-        CreateGuildAccessTag,
-        DeleteGuildAccessTag,
-        RenameGuildAccessTag,
-        FlagGuildAccessTagGuildPermission,
-        AssignGuildAccessTag,
-        RemoveGuildAccessTagFromPlayer,
-        ModifyGuildAccessTagEditors,
-        RequestPublicAccessTags,
-        ChangeAccessTagPublicFlag,
-        UpdateGuildAccessTag,
-        SteamStartMicrotransaction,
-        SteamFinishMicrotransaction,
-        SteamIdHasActiveAccount,
-        CheckEmailAccountState,
-        LinkAccountToSteamId,
-        BuyGvgSeasonBooster,
-        ChangeFlaggingPrepare,
-        OverCharge,
-        OverChargeEnd,
-        RequestTrusted,
-        ChangeGuildLogo,
-        PartyFinderRegisterForUpdates,
-        PartyFinderUnregisterForUpdates,
-        PartyFinderEnlistNewPartySearch,
-        PartyFinderDeletePartySearch,
-        PartyFinderChangePartySearch,
-        PartyFinderChangeRole,
-        PartyFinderApplyForGroup,
-        PartyFinderAcceptOrDeclineApplyForGroup,
-        PartyFinderGetEquipmentSnapshot,
-        PartyFinderRegisterApplicants,
-        PartyFinderUnregisterApplicants,
-        PartyFinderFulltextSearch,
-        PartyFinderRequestEquipmentSnapshot,
-        GetPersonalSeasonTrackerData,
-        UseConsumableFromInventory,
-        ClaimPersonalSeasonReward,
-        EasyAntiCheatMessageToServer,
-        RetaliationAttackClaimTerritory,
-        SetNextTutorialState,
-        AddPlayerToMuteList,
-        RemovePlayerFromMuteList,
-        MakeTerritoryHome,
-        LeaveTerritoryHome,
-        ProductShopUserEvent,
-        GetVanityUnlocks,
-        BuyVanityUnlock,
-        GetMountSkins,
-        SetMountSkin,
-        ChangeCustomization,
-        SetFavoriteIsland
+        SendTraceRoute, //6
+        SendGamePingInfo, //7
+        CreateCharacter, //8
+        DeleteCharacter, //9
+        SelectCharacter, //10
+        RedeemKeycode, //11
+        GetGameServerByCluster, //12
+        GetActiveSubscription, //13
+        GetShopPurchaseUrl, //14
+        GetBuyTrialDetails, //15
+        GetReferralSeasonDetails, //16
+        GetReferralLink, //17
+        GetAvailableTrialKeys, //18
+        GetShopTilesForCategory, //19
+        Move, //20
+        AttackStart, //21
+        CastStart, //22
+        CastCancel, //23
+        TerminateToggleSpell, //24
+        ChannelingCancel, //25
+        AttackBuildingStart, //26
+        InventoryDestroyItem, //27
+        InventoryMoveItem, //28
+        InventoryRecoverItem, //29
+        InventoryRecoverAllItems, //30
+        InventorySplitStack, //31
+        InventorySplitStackInto, //32
+        GetClusterData, //33
+        ChangeCluster, //34
+        ConsoleCommand, //35
+        ChatMessage, //36
+        ReportClientError, //37
+        RegisterToObject, //38
+        UnRegisterFromObject, //39
+        CraftBuildingChangeSettings, //40
+        CraftBuildingTakeMoney, //41
+        RepairBuildingChangeSettings, //42
+        RepairBuildingTakeMoney, //43
+        ActionBuildingChangeSettings, //44
+        HarvestStart, //45
+        HarvestCancel, //46
+        TakeSilver, //47
+        ActionOnBuildingStart, //48
+        ActionOnBuildingCancel, //49
+        ItemRerollQualityStart, //50
+        ItemRerollQualityCancel, //51
+        InstallResourceStart, //52
+        InstallResourceCancel, //53
+        InstallSilver, //54
+        BuildingFillNutrition, //55
+        BuildingChangeRenovationState, //56
+        BuildingBuySkin, //57
+        BuildingClaim, //58
+        BuildingGiveup, //59
+        BuildingNutritionSilverStorageDeposit, //60
+        BuildingNutritionSilverStorageWithdraw, //61
+        BuildingNutritionSilverRewardSet, //62
+        ConstructionSiteCreate, //63
+        PlaceableObjectPlace, //64
+        PlaceableObjectPlaceCancel, //65
+        PlaceableObjectPickup, //66
+        FurnitureObjectUse, //67
+        FarmableHarvest, //68
+        FarmableFinishGrownItem, //69
+        FarmableDestroy, //70
+        FarmableGetProduct, //71
+        FarmableFill, //72
+        TearDownConstructionSite, //73
+        CastleGateUse, //74
+        AuctionCreateOffer, //75
+        AuctionCreateRequest, //76
+        AuctionGetOffers, //77
+        AuctionGetRequests, //78
+        AuctionBuyOffer, //79
+        AuctionAbortAuction, //80
+        AuctionModifyAuction, //81
+        AuctionAbortOffer, //82
+        AuctionAbortRequest, //83
+        AuctionSellRequest, //84
+        AuctionGetFinishedAuctions, //85
+        AuctionFetchAuction, //86
+        AuctionGetMyOpenOffers, //87
+        AuctionGetMyOpenRequests, //88
+        AuctionGetMyOpenAuctions, //89
+        AuctionGetItemsAverage, //90
+        AuctionGetItemAverageStats, //91
+        AuctionGetItemAverageValue, //92
+        ContainerOpen, //93
+        ContainerClose, //94
+        ContainerManageSubContainer, //95
+        Respawn, //96
+        Suicide, //97
+        JoinGuild, //98
+        LeaveGuild, //99
+        CreateGuild, //100
+        InviteToGuild, //101
+        DeclineGuildInvitation, //102
+        KickFromGuild, //103
+        DuellingChallengePlayer, //104
+        DuellingAcceptChallenge, //105
+        DuellingDenyChallenge, //106
+        ChangeClusterTax, //107
+        ClaimTerritory, //108
+        GiveUpTerritory, //109
+        ChangeTerritoryAccessRights, //110
+        GetMonolithInfo, //111
+        GetClaimInfo, //112
+        GetAttackInfo, //113
+        GetTerritorySeasonPoints, //114
+        GetAttackSchedule, //115
+        ScheduleAttack, //116
+        GetMatches, //117
+        GetMatchDetails, //118
+        JoinMatch, //119
+        LeaveMatch, //120
+        ChangeChatSettings, //121
+        LogoutStart, //122
+        LogoutCancel, //123
+        ClaimOrbStart, //124
+        ClaimOrbCancel, //125
+        MatchLootChestOpeningStart, //126
+        MatchLootChestOpeningCancel, //127
+        DepositToGuildAccount, //128
+        WithdrawalFromAccount, //129
+        ChangeGuildPayUpkeepFlag, //130
+        ChangeGuildTax, //131
+        GetMyTerritories, //132
+        MorganaCommand, //133
+        GetServerInfo, //134
+        InviteMercenaryToMatch, //135
+        SubscribeToCluster, //136
+        AnswerMercenaryInvitation, //137
+        GetCharacterEquipment, //138
+        GetCharacterSteamAchievements, //139
+        GetCharacterStats, //140
+        GetKillHistoryDetails, //141
+        LearnMasteryLevel, //142
+        ReSpecAchievement, //143
+        ChangeAvatar, //144
+        GetRankings, //145
+        GetRank, //146
+        GetGvgSeasonRankings, //147
+        GetGvgSeasonRank, //148
+        GetGvgSeasonHistoryRankings, //149
+        GetGvgSeasonGuildMemberHistory, //150
+        KickFromGvGMatch, //151
+        GetChestLogs, //152
+        GetAccessRightLogs, //153
+        GetGuildAccountLogs, //154
+        GetGuildAccountLogsLargeAmount, //155
+        InviteToPlayerTrade, //156
+        PlayerTradeCancel, //157
+        PlayerTradeInvitationAccept, //158
+        PlayerTradeAddItem, //159
+        PlayerTradeRemoveItem, //160
+        PlayerTradeAcceptTrade, //161
+        PlayerTradeSetSilverOrGold, //162
+        SendMiniMapPing, //163
+        Stuck, //164
+        BuyRealEstate, //165
+        ClaimRealEstate, //166
+        GiveUpRealEstate, //167
+        ChangeRealEstateOutline, //168
+        GetMailInfos, //169
+        ReadMail, //170
+        SendNewMail, //171
+        DeleteMail, //172
+        ClaimAttachmentFromMail, //173
+        UpdateLfgInfo, //174
+        GetLfgInfos, //175
+        GetMyGuildLfgInfo, //176
+        GetLfgDescriptionText, //177
+        LfgApplyToGuild, //178
+        AnswerLfgGuildApplication, //179
+        RegisterChatPeer, //180
+        SendChatMessage, //181
+        JoinChatChannel, //182
+        LeaveChatChannel, //183
+        SendWhisperMessage, //184
+        Say, //185
+        PlayEmote, //186
+        StopEmote, //187
+        GetClusterMapInfo, //188
+        AccessRightsChangeSettings, //189
+        Mount, //190
+        MountCancel, //191
+        BuyJourney, //192
+        SetSaleStatusForEstate, //193
+        ResolveGuildOrPlayerName, //194
+        GetRespawnInfos, //195
+        MakeHome, //196
+        LeaveHome, //197
+        ResurrectionReply, //198
+        AllianceCreate, //199
+        AllianceDisband, //200
+        AllianceGetMemberInfos, //201
+        AllianceInvite, //202
+        AllianceAnswerInvitation, //203
+        AllianceCancelInvitation, //204
+        AllianceKickGuild, //205
+        AllianceLeave, //206
+        AllianceChangeGoldPaymentFlag, //207
+        AllianceGetDetailInfo, //208
+        GetIslandInfos, //209
+        AbandonMyIsland, //210
+        BuyMyIsland, //211
+        BuyGuildIsland, //212
+        AbandonGuildIsland, //213
+        UpgradeMyIsland, //214
+        UpgradeGuildIsland, //215
+        MoveMyIsland, //216
+        MoveGuildIsland, //217
+        TerritoryFillNutrition, //218
+        TeleportBack, //219
+        PartyInvitePlayer, //220
+        PartyAnswerInvitation, //221
+        PartyLeave, //222
+        PartyKickPlayer, //223
+        PartyMakeLeader, //224
+        PartyChangeLootSetting, //225
+        PartyMarkObject, //226
+        PartySetRole, //227
+        GetGuildMOTD, //228
+        SetGuildMOTD, //229
+        ExitEnterStart, //230
+        ExitEnterCancel, //231
+        QuestGiverRequest, //232
+        GoldMarketGetBuyOffer, //233
+        GoldMarketGetBuyOfferFromSilver, //234
+        GoldMarketGetSellOffer, //235
+        GoldMarketGetSellOfferFromSilver, //236
+        GoldMarketBuyGold, //237
+        GoldMarketSellGold, //238
+        GoldMarketCreateSellOrder, //239
+        GoldMarketCreateBuyOrder, //240
+        GoldMarketGetInfos, //241
+        GoldMarketCancelOrder, //242
+        GoldMarketGetAverageInfo, //243
+        SiegeCampClaimStart, //244
+        SiegeCampClaimCancel, //245
+        TreasureChestUsingStart, //246
+        TreasureChestUsingCancel, //247
+        UseLootChest, //248
+        UseShrine, //249
+        LaborerStartJob, //250
+        LaborerTakeJobLoot, //251
+        LaborerDismiss, //252
+        LaborerMove, //253
+        LaborerBuyItem, //254
+        LaborerUpgrade, //255
+        BuyPremium, //256
+        BuyTrial, //257
+        RealEstateGetAuctionData, //258
+        RealEstateBidOnAuction, //259
+        GetSiegeCampCooldown, //260
+        FriendInvite, //261
+        FriendAnswerInvitation, //262
+        FriendCancelnvitation, //263
+        FriendRemove, //264
+        InventoryStack, //265
+        InventorySort, //266
+        EquipmentItemChangeSpell, //267
+        ExpeditionRegister, //268
+        ExpeditionRegisterCancel, //269
+        JoinExpedition, //270
+        DeclineExpeditionInvitation, //271
+        VoteStart, //272
+        VoteDoVote, //273
+        RatingDoRate, //274
+        EnteringExpeditionStart, //275
+        EnteringExpeditionCancel, //276
+        ActivateExpeditionCheckPoint, //277
+        ArenaRegister, //278
+        ArenaRegisterCancel, //279
+        ArenaLeave, //280
+        JoinArenaMatch, //281
+        DeclineArenaInvitation, //282
+        EnteringArenaStart, //283
+        EnteringArenaCancel, //284
+        ArenaCustomMatch, //285
+        ArenaCustomMatchCreate, //286
+        UpdateCharacterStatement, //287
+        BoostFarmable, //288
+        GetStrikeHistory, //289
+        UseFunction, //290
+        UsePortalEntrance, //291
+        ResetPortalBinding, //292
+        QueryPortalBinding, //293
+        ClaimPaymentTransaction, //294
+        ChangeUseFlag, //295
+        ClientPerformanceStats, //296
+        ExtendedHardwareStats, //297
+        ClientLowMemoryWarning, //298
+        TerritoryClaimStart, //299
+        TerritoryClaimCancel, //300
+        RequestAppStoreProducts, //301
+        VerifyProductPurchase, //302
+        QueryGuildPlayerStats, //303
+        QueryAllianceGuildStats, //304
+        TrackAchievements, //305
+        SetAchievementsAutoLearn, //306
+        DepositItemToGuildCurrency, //307
+        WithdrawalItemFromGuildCurrency, //308
+        AuctionSellSpecificItemRequest, //309
+        FishingStart, //310
+        FishingCasting, //311
+        FishingCast, //312
+        FishingCatch, //313
+        FishingPull, //314
+        FishingGiveLine, //315
+        FishingFinish, //316
+        FishingCancel, //317
+        CreateGuildAccessTag, //318
+        DeleteGuildAccessTag, //319
+        RenameGuildAccessTag, //320
+        FlagGuildAccessTagGuildPermission, //321
+        AssignGuildAccessTag, //322
+        RemoveGuildAccessTagFromPlayer, //323
+        ModifyGuildAccessTagEditors, //324
+        RequestPublicAccessTags, //325
+        ChangeAccessTagPublicFlag, //326
+        UpdateGuildAccessTag, //327
+        SteamStartMicrotransaction, //328
+        SteamFinishMicrotransaction, //329
+        SteamIdHasActiveAccount, //330
+        CheckEmailAccountState, //331
+        LinkAccountToSteamId, //332
+        BuyGvgSeasonBooster, //333
+        ChangeFlaggingPrepare, //334
+        OverCharge, //335
+        OverChargeEnd, //336
+        RequestTrusted, //337
+        ChangeGuildLogo, //338
+        PartyFinderRegisterForUpdates, //339
+        PartyFinderUnregisterForUpdates, //340
+        PartyFinderEnlistNewPartySearch, //341
+        PartyFinderDeletePartySearch, //342
+        PartyFinderChangePartySearch, //343
+        PartyFinderChangeRole, //344
+        PartyFinderApplyForGroup, //345
+        PartyFinderAcceptOrDeclineApplyForGroup, //346
+        PartyFinderGetEquipmentSnapshot, //347
+        PartyFinderRegisterApplicants, //348
+        PartyFinderUnregisterApplicants, //349
+        PartyFinderFulltextSearch, //350
+        PartyFinderRequestEquipmentSnapshot, //351
+        GetPersonalSeasonTrackerData, //352
+        UseConsumableFromInventory, //353
+        ClaimPersonalSeasonReward, //354
+        EasyAntiCheatMessageToServer, //355
+        SetNextTutorialState, //356
+        AddPlayerToMuteList, //357
+        RemovePlayerFromMuteList, //358
+        ProductShopUserEvent, //359
+        GetVanityUnlocks, //360
+        BuyVanityUnlocks, //361
+        GetMountSkins, //362
+        SetMountSkin, //363
+        SetWardrobe, //364
+        ChangeCustomization, //365
+        SetFavoriteIsland, //366
+        GetGuildChallengePoints, //367
+        TravelToHideout, //368
+        SmartQueueJoin, //369
+        SmartQueueLeave, //370
+        SmartQueueSelectSpawnCluster, //371
+        UpgradeHideout, //372
+        InitHideoutAttackStart, //373
+        InitHideoutAttackCancel, //374
+        HideoutFillNutrition, //375
+        HideoutGetInfo, //376
+        HideoutSetTribute, //377
+        OpenWorldAttackScheduleStart, //378
+        OpenWorldAttackScheduleCancel, //379
+        OpenWorldAttackConquerStart, //380
+        OpenWorldAttackConquerCancel, //381
+        GetOpenWorldAttackDetails, //382
+        GetNextOpenWorldAttackScheduleTime, //383
     }
 }
