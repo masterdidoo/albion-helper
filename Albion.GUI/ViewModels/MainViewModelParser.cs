@@ -28,9 +28,9 @@ namespace Albion.GUI.ViewModels
                 }
             });
 
-            _albionParser.AddOperationHandler<AuctionBuyOffer>(AuctionBuyOfferHandler);
+            _albionParser.AddOperationHandler<AuctionGetRequests>(AuctionBuyOfferHandler);
 
-            _albionParser.AddOperationHandler<AuctionGetRequests>(AuctionGetRequestsHandler);
+            _albionParser.AddOperationHandler<AuctionGetOffers>(AuctionGetRequestsHandler);
 
             try
             {
@@ -42,7 +42,7 @@ namespace Albion.GUI.ViewModels
             }
         }
 
-        private void AuctionGetRequestsHandler(AuctionGetRequests p)
+        private void AuctionGetRequestsHandler(AuctionGetOffers p)
         {
             if (p.Items.Length == 0) return;
             var ordersGroups = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
@@ -76,7 +76,7 @@ namespace Albion.GUI.ViewModels
             RefreshTree();
         }
 
-        private void AuctionBuyOfferHandler(AuctionBuyOffer p)
+        private void AuctionBuyOfferHandler(AuctionGetRequests p)
         {
             if (p.Items.Length == 0) return;
             var ordersGroups = p.Items.GroupBy(x => x.ItemTypeId).ToArray();

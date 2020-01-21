@@ -45,8 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuctionBase.cs" />
-    <Compile Include="AuctionBuyOffer.cs" />
     <Compile Include="AuctionGetRequests.cs" />
+    <Compile Include="AuctionGetOffers.cs" />
     <Compile Include="ConsloeCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
