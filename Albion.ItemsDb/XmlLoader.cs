@@ -134,7 +134,7 @@ namespace Albion.Db.Xml
 
             //            buildingsDb.Items.OfType<CraftBuilding>()
 
-            XmlItems = itemsDb.Items.Cast<IItem>().ToDictionary(k => k.uniquename, v => v);
+            XmlItems = itemsDb.Items.Cast<IItem>().ToDictionary(GetId, v => v);
 
             Items = new Dictionary<string, CommonItem>();
             Journals = new Dictionary<string, Journal>();
