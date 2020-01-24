@@ -5,7 +5,7 @@ namespace Albion.Common
 {
     public enum EventCodes : short
     {
-        Leave, //1,
+        Leave = 1, //1,
         JoinFinished,
         Move,
         Teleport,

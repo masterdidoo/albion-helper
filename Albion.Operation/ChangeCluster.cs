@@ -5,7 +5,7 @@ using Albion.Network;
 
 namespace Albion.Operation
 {
-    public class ConsloeCommand : BaseOperation
+    public class ChangeCluster : BaseOperation
     {
         private Location _town = Location.None;
 
@@ -30,7 +30,7 @@ namespace Albion.Operation
 
         public string LocId { get; private set; }
 
-        public override OperationCodes Code => OperationCodes.ConsoleCommand;
+        public override OperationCodes Code => OperationCodes.ChangeCluster;
 
         public override void Init(Dictionary<byte, object> parameters)
         {

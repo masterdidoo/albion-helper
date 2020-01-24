@@ -20,7 +20,7 @@ namespace Albion.GUI.ViewModels
                 RedPlayers = p.Red > 0 ? p.Red : 0;
             });
 
-            _albionParser.AddOperationHandler<ConsloeCommand>(p =>
+            _albionParser.AddOperationHandler<ChangeCluster>(p =>
             {
                 if (p.Town != Location.None)
                 {
