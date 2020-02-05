@@ -80,7 +80,8 @@ namespace Albion.Db.Xml
                 main.QualityLevels = new CommonItem[4];
                 for (var i = 1; i < 5; i++)
                 {
-                    var upgrades = CreateUpgradeRequirements(iItem.uniquename, enchantment, i + 1);
+//                    var upgrades = CreateUpgradeRequirements(iItem.uniquename, enchantment, i + 1);
+                    var upgrades = CreateCraftingAndUpgradeRequirements(iItem.uniquename, craftingrequirements, enchantment, isTransmut, i + 1);
                     main.QualityLevels[i - 1] =
                         CreateCommonItemExt(iItem, itemId,
                             upgrades, enchantmentlevel, i + 1, im, enchantIp);
@@ -207,12 +208,13 @@ namespace Albion.Db.Xml
         /// <returns></returns>
         private IEnumerable<BaseResorcedRequirement> CreateCraftingAndUpgradeRequirements(string itemId,
             Craftingrequirements[] craftingrequirements,
-            EnchantmentsEnchantment enchantment, bool isTransmut)
+            EnchantmentsEnchantment enchantment, bool isTransmut,
+            int qualityLevel = 1)
         {
             foreach (var c in CreateCraftingRequirements(craftingrequirements, isTransmut, itemId))
                 yield return c;
             if (enchantment?.upgraderequirements != null)
-                yield return CreateUpgradeRequirement(itemId, enchantment, 1);
+                yield return CreateUpgradeRequirement(itemId, enchantment, qualityLevel);
         }
 
         /// <summary>
