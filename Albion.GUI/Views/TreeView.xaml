@@ -32,6 +32,9 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                         <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <CheckBox IsEnabled="False" Margin="0,2,4,0" />
                     <TextBlock Grid.Column="1" Text="Task" Margin="2,0,5,0"/>
@@ -61,6 +64,15 @@
                     </Border>
                     <Border Grid.Column="10" BorderThickness="0,0,1,0" BorderBrush="Black">
                         <CheckBox IsChecked="{Binding IsIpCostOrder}" Content="IP Cost" Margin="3,0,3,0" Width="60" />
+                    </Border>
+                    <Border Grid.Column="11" BorderThickness="0,0,1,0" BorderBrush="Black">
+                        <TextBlock Text="IP" Margin="3,0,3,0" Width="60" />
+                    </Border>
+                    <Border Grid.Column="12" BorderThickness="0,0,1,0" BorderBrush="Black">
+                        <TextBlock Text="IV" Margin="3,0,3,0" Width="60" />
+                    </Border>
+                    <Border Grid.Column="13" BorderThickness="0,0,1,0" BorderBrush="Black">
+                        <TextBlock Text="Fame" Margin="3,0,3,0" Width="60" />
                     </Border>
                 </Grid>
             </TreeViewItem.Header>
