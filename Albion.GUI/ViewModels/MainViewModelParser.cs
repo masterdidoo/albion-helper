@@ -22,7 +22,7 @@ namespace Albion.GUI.ViewModels
 
             _albionParser.AddOperationHandler<ChangeCluster>(p =>
             {
-                if (p.Town != Location.None)
+                //if (p.Town != Location.None)
                 {
                     AuctionTownManager.Town = p.Town;
                 }
