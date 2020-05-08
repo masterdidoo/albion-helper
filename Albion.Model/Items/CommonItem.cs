@@ -22,6 +22,15 @@ namespace Albion.Model.Items
             Model.Items.Categories.ShopCategory.Magic
         };
 
+        public static readonly HashSet<ShopSubCategory> BaseResourceItems = new HashSet<ShopSubCategory>
+        {
+            Model.Items.Categories.ShopSubCategory.Wood,
+            Model.Items.Categories.ShopSubCategory.Rock,
+            Model.Items.Categories.ShopSubCategory.Ore,
+            Model.Items.Categories.ShopSubCategory.Fiber,
+            Model.Items.Categories.ShopSubCategory.Hide,
+        };
+
 
         public int QualityLevel { get; }
 
@@ -116,8 +125,10 @@ namespace Albion.Model.Items
                         if (CostCalcOptions.Instance.IsItemsOnlyCraft && IsItem) yield break;
                     }
                 yield return _fastBuyRequirement;
-                if (!CostCalcOptions.Instance.IsLongBuyDisabled || CostCalcOptions.Instance.IsArtefactsLongBuyEnabled &&
-                    ShopCategory == ShopCategory.Artefacts)
+                if (!CostCalcOptions.Instance.IsLongBuyDisabled 
+                    || CostCalcOptions.Instance.IsArtefactsLongBuyEnabled && ShopCategory == ShopCategory.Artefacts
+                    || CostCalcOptions.Instance.IsBaseResourcesLongBuyEnabled && IsBaseResourceItem && Enchant == 0
+                    )
                     yield return _longBuyRequirement;
             }
         }
@@ -274,6 +285,7 @@ namespace Albion.Model.Items
         public CommonItem[] QualityLevels { get; set; }
 
         public bool IsResource => ShopCategory == ShopCategory.Resources;
+        public bool IsBaseResourceItem => BaseResourceItems.Contains(ShopSubCategory);
         public bool IsItem => SimpleItems.Contains(ShopCategory);
 
         #region From Config

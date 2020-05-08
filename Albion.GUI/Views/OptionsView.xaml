@@ -14,6 +14,11 @@
             IsChecked="{Binding IsArtefactsLongBuyEnabled}"
             IsEnabled="{Binding IsChecked, ElementName=LongBuy}"
             Margin="16,0,0,0"/>
+        <CheckBox 
+            Content="Enable for base resources"
+            IsChecked="{Binding IsBaseResourcesLongBuyEnabled}"
+            IsEnabled="{Binding IsChecked, ElementName=LongBuy}"
+            Margin="16,0,0,0"/>
         <CheckBox Content="Disable long sell" IsChecked="{Binding IsLongSellDisabled}"/>
         <CheckBox Content="Disable Black Market" IsChecked="{Binding IsBmDisabled}"/>
         <CheckBox Content="Disable Craft" IsChecked="{Binding IsCraftDisabled}"/>

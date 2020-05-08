@@ -6,7 +6,7 @@ namespace Albion.Model.Data
     {
         private bool _isArtefactsLongBuyEnabled = true;
         private bool _isBmDisabled;
-        private bool _isLongBuyDisabled;
+        private bool _isLongBuyDisabled = true;
         private bool _isLongSellDisabled;
         private bool _isSalvageDisabled;
         private bool _isCraftDisabled;
@@ -15,6 +15,7 @@ namespace Albion.Model.Data
         private bool _isRefineFocus;
         private bool _isDisableCraftResources;
         private bool _isDisableUpgrade;
+        private bool _isBaseResourcesLongBuyEnabled = true;
         public static CostCalcOptions Instance { get; } = new CostCalcOptions();
 
         public bool IsLongBuyDisabled
@@ -35,6 +36,17 @@ namespace Albion.Model.Data
             {
                 if (_isArtefactsLongBuyEnabled == value) return;
                 _isArtefactsLongBuyEnabled = value;
+                Changed?.Invoke();
+            }
+        }
+
+        public bool IsBaseResourcesLongBuyEnabled
+        {
+            get => _isBaseResourcesLongBuyEnabled;
+            set
+            {
+                if (_isBaseResourcesLongBuyEnabled == value) return;
+                _isBaseResourcesLongBuyEnabled = value;
                 Changed?.Invoke();
             }
         }
