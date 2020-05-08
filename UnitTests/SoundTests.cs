@@ -15,7 +15,7 @@ namespace UnitTests
             SystemSounds.Beep.Play();
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void TestMpSound()
         {
             SoundPlayer player = new SoundPlayer("sound.wav");

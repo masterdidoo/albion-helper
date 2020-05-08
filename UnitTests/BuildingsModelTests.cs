@@ -13,7 +13,7 @@ namespace UnitTests
         {
             var db = XmlLoader.LoadBuildingsXml();
             Assert.IsNotNull(db);
-            Assert.AreEqual(348, db.Items.Length);
+            Assert.AreEqual(367, db.Items.Length);
 
             var craft = db.Items.OfType<craftBuilding>();
             Assert.AreEqual(135, craft.Count());

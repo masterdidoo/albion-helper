@@ -13,7 +13,7 @@ namespace UnitTests
         {
             var db = XmlLoader.LoadResourcesXml();
             Assert.IsNotNull(db);
-            Assert.AreEqual(30, db.Length);
+            Assert.AreEqual(35, db.Length);
 
 //            var res = db.First();
 //            Assert.AreEqual(135, res.Resource);
