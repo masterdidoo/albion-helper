@@ -1,11 +1,11 @@
 ﻿//
-//
 
 namespace Albion.Common
 {
     public enum EventCodes : short
     {
-        Leave = 1, //1,
+        Unused = 0,
+        Leave,
         JoinFinished,
         Move,
         Teleport,
@@ -18,6 +18,7 @@ namespace Albion.Common
         ResetCooldowns,
         Attack,
         CastStart,
+        ChannelingUpdate,
         CastCancel,
         CastTimeUpdate,
         CastFinished,
@@ -94,6 +95,8 @@ namespace Albion.Common
         NewLoot,
         AttachItemContainer,
         DetachItemContainer,
+        InvalidateItemContainer,
+        LockItemContainer,
         GuildUpdate,
         GuildPlayerUpdated,
         InvitedToGuild,
@@ -105,6 +108,7 @@ namespace Albion.Common
         NewOrbObject,
         NewCastleObject,
         NewSpellEffectArea,
+        UpdateSpellEffectArea,
         NewChainSpell,
         UpdateChainSpell,
         NewTreasureChest,
@@ -304,6 +308,7 @@ namespace Albion.Common
         PlayerMovementRateUpdate,
         ObserveStart,
         MinimapZergs,
+        MinimapSmartClusterZergs,
         PaymentTransactions,
         PerformanceStatsUpdate,
         OverloadModeUpdate,
@@ -353,54 +358,58 @@ namespace Albion.Common
         CrystalRealmFeedback,
         NewLocationMarker,
         NewTutorialBlocker,
-        NewTileSwitch, //349
-        NewInformationProvider, //350
-        NewDynamicGuildLogo, //351
-        TutorialUpdate, //352
-        TriggerHintBox, //353
-        RandomDungeonPositionInfo, //354
-        NewLootChest, //355
-        UpdateLootChest, //356
-        LootChestOpened, //357
-        NewShrine, //358
-        UpdateShrine, //359
-        MutePlayerUpdate, //360
-        ShopTileUpdate, //361
-        ShopUpdate, //362
-        EasyAntiCheatKick, //363
-        UnlockVanityUnlock, //364
-        CustomizationChanged, //365
-        BaseVaultInfo, //366
-        GuildVaultInfo, //367
-        BankVaultInfo, //368
-        RecoveryVaultPlayerInfo, //369
-        RecoveryVaultGuildInfo, //370
-        UpdateWardrobe, //371
-        CastlePhaseChanged, //372
-        GuildAccountLogEvent, //373
-        NewHideoutObject, //374
-        NewHideoutManagement, //375
-        NewHideoutExit, //376
-        InitHideoutAttackStart, //377
-        InitHideoutAttackCancel, //378
-        InitHideoutAttackFinished, //379
-        HideoutManagementUpdate, //380
-        IpChanged, //381
-        SmartClusterQueueUpdateInfo, //382
-        SmartClusterQueueActiveInfo, //383
-        SmartClusterQueueKickWarning, //384
-        SmartClusterQueueInvite, //385
-        ReceivedGvgSeasonPoints, //386
-        TerritoryBonusLevelUpdate, //387
-        OpenWorldAttackScheduleStart, //388
-        OpenWorldAttackScheduleFinished, //389
-        OpenWorldAttackScheduleCancel, //390
-        OpenWorldAttackConquerStart, //391
-        OpenWorldAttackConquerFinished, //392
-        OpenWorldAttackConquerCancel, //393
-        OpenWorldAttackConquerStatus, //394
-        OpenWorldAttackStart, //395
-        OpenWorldAttackEnd, //396
-        NewRandomResourceBlocker //397
+        NewTileSwitch,
+        NewInformationProvider,
+        NewDynamicGuildLogo,
+        TutorialUpdate,
+        TriggerHintBox,
+        RandomDungeonPositionInfo,
+        NewLootChest,
+        UpdateLootChest,
+        LootChestOpened,
+        NewShrine,
+        UpdateShrine,
+        MutePlayerUpdate,
+        ShopTileUpdate,
+        ShopUpdate,
+        EasyAntiCheatKick,
+        UnlockVanityUnlock,
+        AvatarUnlocked,
+        CustomizationChanged,
+        BaseVaultInfo,
+        GuildVaultInfo,
+        BankVaultInfo,
+        RecoveryVaultPlayerInfo,
+        RecoveryVaultGuildInfo,
+        UpdateWardrobe,
+        CastlePhaseChanged,
+        GuildAccountLogEvent,
+        NewHideoutObject,
+        NewHideoutManagement,
+        NewHideoutExit,
+        InitHideoutAttackStart,
+        InitHideoutAttackCancel,
+        InitHideoutAttackFinished,
+        HideoutManagementUpdate,
+        IpChanged,
+        SmartClusterQueueUpdateInfo,
+        SmartClusterQueueActiveInfo,
+        SmartClusterQueueKickWarning,
+        SmartClusterQueueInvite,
+        ReceivedGvgSeasonPoints,
+        TerritoryBonusLevelUpdate,
+        OpenWorldAttackScheduleStart,
+        OpenWorldAttackScheduleFinished,
+        OpenWorldAttackScheduleCancel,
+        OpenWorldAttackConquerStart,
+        OpenWorldAttackConquerFinished,
+        OpenWorldAttackConquerCancel,
+        OpenWorldAttackConquerStatus,
+        OpenWorldAttackStart,
+        OpenWorldAttackEnd,
+        NewRandomResourceBlocker,
+        NewHomeObject,
+        HideoutObjectUpdate,
+        UpdateInfamy
     }
 }
