@@ -53,6 +53,15 @@
         <DockPanel Margin="2" Visibility="{Binding JornalsCount, Converter={StaticResource NullToVisibilityConverter}}">
             <TextBlock Text="Jornals:" Width="60"/>
             <TextBlock Text="{Binding JornalsCount, Mode=OneWay, StringFormat={}{0:#,#.0}}" Style="{StaticResource IntBlockStyle}"/>
+            <FrameworkElement Visibility="Hidden" Width="66"/>
+            <TextBlock Style="{StaticResource ProfitBlockStyle}">
+                <TextBlock.Text>
+                    <MultiBinding Converter="{StaticResource MultiplierConverter}" StringFormat="{}{0:#,##0}" Mode="OneWay">
+                        <Binding Path="Jornal.FullItem.Profitt.Income"/>
+                        <Binding Path="JornalsCount"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
             <FrameworkElement Visibility="Hidden"/>
         </DockPanel>
         <DockPanel Margin="2">

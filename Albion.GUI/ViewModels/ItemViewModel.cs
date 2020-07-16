@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Albion.Model.Items;
 using Albion.Model.Items.Requirements;
 using GalaSoft.MvvmLight;
@@ -57,6 +58,7 @@ namespace Albion.GUI.ViewModels
             get => _jornalsCount;
             set => Set(ref _jornalsCount, value);
         }
+        public Journal Jornal { get; private set; }
 
         public long Profit
 
@@ -93,7 +95,15 @@ namespace Albion.GUI.ViewModels
             Profit = (Item.Profitt?.Income ?? 0) * count - Sum;
 
             JornalsCount = (Item.Requirement as CraftingRequirement)?.JournalsCount * count;
-            if (JornalsCount == 0) JornalsCount = null;
+            Jornal = (Item.Requirement as CraftingRequirement)?.Journal;
+            if (JornalsCount == null || JornalsCount == 0)
+            {
+                JornalsCount = null;
+            }
+            else
+            {
+                //Profit += (long) ((Jornal.FullItem.Profitt?.Income ?? 0) * JornalsCount.Value);
+            }
         }
 
         private void AddRequirement(CommonItem item, double itemsCount, double ingredientsCount, int returnProc)

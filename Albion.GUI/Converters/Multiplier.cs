@@ -19,6 +19,9 @@ namespace Albion.GUI.Converters
                     case int i:
                         rez *= i;
                         break;
+                    case double i:
+                        rez *= System.Convert.ToInt64(Math.Floor(i));
+                        break;
                     default:
                         return null;
                 }
