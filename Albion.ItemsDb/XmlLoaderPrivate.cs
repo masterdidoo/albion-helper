@@ -22,12 +22,14 @@ namespace Albion.Db.Xml
         private readonly int[] _qualityLevelItemPower = {10, 20, 50, 100};
 
         private readonly CommonItem[] Empty = new CommonItem[0];
+        private readonly BaseResorcedRequirement[] EmptyCraftingRequirements = new BaseResorcedRequirement[0];
 
         private int _memCounter;
 
         private Dictionary<string, AOResourcesResourcesResourceResourceTier> ResourceItemValues { get; set; }
 
         public Dictionary<string, Journal> Journals { get; private set; }
+        public Dictionary<string, Journal> JournalsItems { get; private set; }
 
         private CommonItem CreateOrGetItem(IItem arg)
         {
@@ -133,21 +135,37 @@ namespace Albion.Db.Xml
 
             item.Init();
 
-            Items.Add(item.Id + (qualityLevel > 1 ? $"_{qualityLevel}" : ""), item);
-
             if (iItem is ItemsJournalitem journalitem) AddJournal(journalitem, item);
 
-//            if (iItem.shopcategory == shopCategory.token && iItem.unlockedtocraft) Debug.WriteLine("tk");
+            Items.Add(item.Id + (qualityLevel > 1 ? $"_{qualityLevel}" : ""), item);
+
+            //            if (iItem.shopcategory == shopCategory.token && iItem.unlockedtocraft) Debug.WriteLine("tk");
 
             return item;
         }
 
         private void AddJournal(ItemsJournalitem journalitem, CommonItem item)
         {
-            var journal = new Journal(item)
+            if (JournalsItems.TryGetValue(item.Id, out var journal))
+            {
+                item.Id += "_FULL";
+                item.Name = Localization.TryGetValue("@ITEMS_" + item.Id, out var name) ? name : item.Id;
+                item.CraftingRequirements = EmptyCraftingRequirements;
+                item.IsCraftable = false;
+                journal.FullItem = item;
+                return;
+            }
+
+            journal = new Journal(item)
             {
                 MaxFame = journalitem.maxfame
             };
+            JournalsItems.Add(item.Id, journal);
+
+            {
+                item.Id += "_EMPTY";
+                item.Name = Localization.TryGetValue("@ITEMS_" + item.Id, out var name) ? name : item.Id;
+            }
 
             var itemIds = journalitem.famefillingmissions.Where(x => x.craftitemfame != null)
                 .SelectMany(x => x.craftitemfame).SelectMany(x => x.validitem)
@@ -253,9 +271,10 @@ namespace Albion.Db.Xml
         private IEnumerable<CraftingRequirement> CreateCraftingRequirements(Craftingrequirements[] arg, bool isTransmut,
             string itemId)
         {
+            if (arg == null) yield break;
+
             Journals.TryGetValue(itemId, out var journal);
 
-            if (arg == null) yield break;
             foreach (var cr in arg)
             {
                 var res = CreateResources(cr.craftresource, cr.currency, cr.playerfactionstanding);

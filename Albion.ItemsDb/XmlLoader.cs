@@ -138,15 +138,20 @@ namespace Albion.Db.Xml
 
             Items = new Dictionary<string, CommonItem>();
             Journals = new Dictionary<string, Journal>();
+            JournalsItems = new Dictionary<string, Journal>();
 
-            //Journalitems
+            //Journalitems _EMPTY
+            foreach (var journalitem in XmlItems.Values.OfType<ItemsJournalitem>().Select(CreateOrGetItem))
+            {
+            }
+            //Journalitems _FULL
             foreach (var journalitem in XmlItems.Values.OfType<ItemsJournalitem>().Select(CreateOrGetItem))
             {
             }
 
             var enItems = XmlItems.Values.OfType<IItemEnchantments>().SelectMany(CreateEnchantedItems);
 
-            var items = XmlItems.Values.Select(CreateOrGetItem).Concat(enItems);
+            var items = XmlItems.Values.Where(x=>!(x is ItemsJournalitem)).Select(CreateOrGetItem).Concat(enItems);
 
             var cnt = items.Count();
 
