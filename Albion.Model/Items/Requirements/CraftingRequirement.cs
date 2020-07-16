@@ -116,6 +116,10 @@ namespace Albion.Model.Items.Requirements
                 case ShopSubCategory.ClothHelmet:
                     if (CraftTown == Location.Thetford) return Return25;
                     break;
+                case ShopSubCategory.Cooked:
+                case ShopSubCategory.Potion:
+                    if (CraftTown == Location.Caerleon) return Return25;
+                    break;
             }
 
             if (CraftTown == Location.BlackZone) return Return25;
