@@ -1,4 +1,5 @@
 ﻿//
+//
 
 namespace Albion.Common
 {
@@ -191,6 +192,7 @@ namespace Albion.Common
         FurnitureObjectCheatProviderInfo,
         FarmableObjectInfo,
         NewUnreadMails,
+        Unknown187,
         GuildLogoObjectUpdate,
         StartLogout,
         NewChatChannels,
