@@ -147,5 +147,7 @@
         beastheart,
         mountainheart,
         vineheart,
+        //new avalon:
+        any,
     }
 }
