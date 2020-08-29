@@ -48,6 +48,7 @@
     <Compile Include="AuctionGetRequests.cs" />
     <Compile Include="AuctionGetOffers.cs" />
     <Compile Include="ChangeCluster.cs" />
+    <Compile Include="Join.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
