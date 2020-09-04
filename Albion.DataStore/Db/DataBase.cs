@@ -8,7 +8,7 @@ namespace Albion.DataStore.Db
     {
         private DataBase()
         {
-            LiteDatabase = new LiteDB.LiteDatabase("main.db");
+            LiteDatabase = new LiteDB.LiteDatabase("main2v.db");
         }
 
         internal readonly LiteDatabase LiteDatabase;
@@ -29,7 +29,7 @@ namespace Albion.DataStore.Db
 
         public static void Drop()
         {
-            File.Delete("main.db");
+            File.Delete("main2v.db");
         }
     }
 }

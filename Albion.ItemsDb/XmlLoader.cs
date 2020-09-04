@@ -155,6 +155,12 @@ namespace Albion.Db.Xml
 
             var cnt = items.Count();
 
+/*            var rocks = Items.Values.Where(x => x.ShopSubCategory == ShopSubCategory.Rock);
+            foreach (var item in rocks)
+            {
+                item.CraftingRequirements = EmptyCraftingRequirements;
+            }*/
+
             Artefacts = Items.Values.SelectMany(x => x.CraftingRequirements).SelectMany(x => x.Resources
                     .Where(a => a.Item.ShopCategory == ShopCategory.Artefacts).Select(
                         a =>

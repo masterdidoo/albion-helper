@@ -49,6 +49,7 @@ namespace Albion.Model.Items
         {
             QualityLevel = qualityLevel;
             CraftingRequirements = craftingRequirements;
+
             IsArtefacted = CraftingRequirements.SelectMany(x => x.Resources)
                 .Any(r => r.Item.ShopCategory == ShopCategory.Artefacts || r.Item.ShopCategory == ShopCategory.Token);
 

@@ -97,8 +97,14 @@ namespace Albion.Db.Xml
             IEnumerable<BaseResorcedRequirement> craftingRequirements, int enchant, int qualityLevel,
             ItemMarket itemMarket, int enchantIp = 0)
         {
-//            BaseResorcedRequirement[] crs = (iItem.shopcategory == shopCategory.token) ? _empty : craftingRequirements.ToArray();
-            var crs = craftingRequirements.ToArray();
+            //            BaseResorcedRequirement[] crs = (iItem.shopcategory == shopCategory.token) ? _empty : craftingRequirements.ToArray();
+
+            var crs =
+             //нет трансмута цветных камней
+             (iItem.shopsubcategory1 == Enums.shopSubCategory.rock && enchant > 0) 
+             ? new BaseResorcedRequirement[0]
+             : craftingRequirements.ToArray();
+
             var item = new CommonItem(crs, itemMarket,
                 BuildingByItem(iItem.uniquename),
                 qualityLevel,
@@ -231,20 +237,6 @@ namespace Albion.Db.Xml
         {
             foreach (var c in CreateCraftingRequirements(craftingrequirements, isTransmut, itemId))
                 yield return c;
-            if (enchantment?.upgraderequirements != null)
-                yield return CreateUpgradeRequirement(itemId, enchantment, qualityLevel);
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="itemId"></param>
-        /// <param name="enchantment"></param>
-        /// <param name="qualityLevel"></param>
-        /// <returns></returns>
-        private IEnumerable<BaseResorcedRequirement> CreateUpgradeRequirements(string itemId,
-            EnchantmentsEnchantment enchantment,
-            int qualityLevel)
-        {
             if (enchantment?.upgraderequirements != null)
                 yield return CreateUpgradeRequirement(itemId, enchantment, qualityLevel);
         }

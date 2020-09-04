@@ -3,6 +3,7 @@ using System.Linq;
 using Albion.DataStore.Db;
 using Albion.DataStore.Managers;
 using Albion.Db.Xml;
+using Albion.Model.Data;
 using Albion.Model.Managers;
 using Castle.DynamicProxy.Generators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -15,8 +16,12 @@ namespace UnitTests
         private long _exp;
 
         [TestMethod]
-        public void TestItemIds()
+        public void TestMigration()
         {
+
+            var LiteDatabase = new LiteDB.LiteDatabase("main2v.db");
+
+            DataBase.Drop();
             var tm = new TownManager();
 
             var bdm = new BuildingDataManager(tm);
@@ -24,14 +29,41 @@ namespace UnitTests
             var loader = new XmlLoader(bdm, tm, tm, tm);
             loader.LoadModel();
 
-            var id = MarketDataManager.Items.Values.Max() / 1000;
+            var max = loader.Items.OrderByDescending(x=>x.Key.Length).First();
 
-            foreach (var x in loader.Items.Values.Select(x=>x.Id).Distinct())
-            {
-                //if (!MarketDataManager.Items.ContainsKey(x)) Debug.WriteLine("{{\"{0}\", {1} }},", x, (++id)*1000);
-                Assert.IsTrue(MarketDataManager.Items.ContainsKey(x), x);
-            }
-//            Assert.IsTrue(loader.Items.Values.All(x => MarketDataManager.Items.ContainsKey(x.Id)));
+            var md = new MarketDataManager();
+
+            md.Save(max.Key, 1, false, new ItemFromMarketData());
+
+            var ord = md.GetOrders();
+
+            Assert.AreEqual(1, ord.Count());
+
+            //DataBase.Instance.GetCollection<>
+        }
+
+        [TestMethod]
+        public void TestSaveData()
+        {
+            DataBase.Drop();
+            var tm = new TownManager();
+
+            var bdm = new BuildingDataManager(tm);
+
+            var loader = new XmlLoader(bdm, tm, tm, tm);
+            loader.LoadModel();
+
+            var max = loader.Items.OrderByDescending(x=>x.Key.Length).First();
+
+            var md = new MarketDataManager();
+
+            md.Save(max.Key, 1, false, new ItemFromMarketData());
+
+            var ord = md.GetOrders();
+
+            Assert.AreEqual(1, ord.Count());
+
+            //DataBase.Instance.GetCollection<>
         }
 
         [TestMethod]

@@ -6,8 +6,7 @@ namespace Albion.DataStore.DataModel
 {
     public class OrdersData
     {
-        public int Id { get; set; }
-
+        public string Id { get; set; }
         public string ItemId { get; set; }
         public int TownId { get; set; }
         public List<AuctionItem> Orders { get; set; }

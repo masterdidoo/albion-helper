@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataModel\MarketData.cs" />
+    <Compile Include="DataModel\OrdersDataId.cs" />
     <Compile Include="DataModel\PriceData.cs" />
     <Compile Include="DataModel\BuildingData.cs" />
     <Compile Include="Managers\BaseDataManager.cs" />
