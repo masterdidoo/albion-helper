@@ -19,7 +19,7 @@ namespace UnitTests
         public void TestMigration()
         {
 
-            var LiteDatabase = new LiteDB.LiteDatabase("main2v.db");
+            //var LiteDatabase = new LiteDB.LiteDatabase("main2v.db");
 
             DataBase.Drop();
             var tm = new TownManager();
