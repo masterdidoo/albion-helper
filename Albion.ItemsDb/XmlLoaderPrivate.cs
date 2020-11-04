@@ -158,7 +158,7 @@ namespace Albion.Db.Xml
                 item.Name = Localization.TryGetValue("@ITEMS_" + item.Id, out var name) ? name : item.Id;
                 item.CraftingRequirements = EmptyCraftingRequirements;
                 item.IsCraftable = false;
-                journal.FullItem = item;
+                journal.SetFullItem(item);
                 return;
             }
 
