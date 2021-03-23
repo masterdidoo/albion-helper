@@ -149,5 +149,8 @@
         vineheart,
         //new avalon:
         any,
+        //new CtA:
+        battle_mount,
+        blackheart,
     }
 }

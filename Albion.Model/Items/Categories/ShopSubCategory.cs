@@ -1,5 +1,6 @@
 ﻿namespace Albion.Model.Items.Categories
 {
+    //@MARKETPLACEGUI_ROLLOUT_SHOPSUBCATEGORY_
     public enum ShopSubCategory
     {
         Seed,
@@ -148,5 +149,8 @@
         Vineheart,
 
         Any,
+
+        BattleMount,
+        Blackheart,
     }
 }
