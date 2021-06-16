@@ -17,7 +17,7 @@ namespace Albion.DataStore.Managers
             SelectedItemRep = Db.GetCollection<SelectedItem>();
         }
 
-        private LiteCollection<SelectedItem> SelectedItemRep { get; }
+        private ILiteCollection<SelectedItem> SelectedItemRep { get; }
 
         protected override ItemMarket CreateData(string id)
         {
@@ -61,7 +61,7 @@ namespace Albion.DataStore.Managers
 
         public void DeleteOrders(int townId, bool isFrom)
         {
-            Rep.Delete(x => x.TownId == townId && x.IsFrom == isFrom);
+            Rep.DeleteMany(x => x.TownId == townId && x.IsFrom == isFrom);
         }
 
         public void DeleteOrders(string id, int townId, bool isFrom)

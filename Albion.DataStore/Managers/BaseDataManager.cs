@@ -17,7 +17,7 @@ namespace Albion.DataStore.Managers
             Rep = Db.GetCollection<TData>();
         }
 
-        internal LiteCollection<TData> Rep { get; }
+        internal ILiteCollection<TData> Rep { get; }
 
         public TItem GetData(string id)
         {

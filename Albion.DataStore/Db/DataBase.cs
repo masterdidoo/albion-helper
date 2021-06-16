@@ -8,13 +8,13 @@ namespace Albion.DataStore.Db
     {
         private DataBase()
         {
-            LiteDatabase = new LiteDB.LiteDatabase("main2v.db");
+            LiteDatabase = new LiteDatabase("main3v.db");
         }
 
         internal readonly LiteDatabase LiteDatabase;
         public static DataBase Instance { get; } = new DataBase();
 
-        public LiteCollection<T> GetCollection<T>()
+        public ILiteCollection<T> GetCollection<T>()
         {
             return LiteDatabase.GetCollection<T>();
         }
@@ -23,13 +23,13 @@ namespace Albion.DataStore.Db
         {
 //            var x = Instance.LiteDatabase.GetCollection("OrdersData").Find(Query.EQ("ItemId", "T4_2H_FIRESTAF_HELL@3")).ToArray();
 //            var x2 = Instance.LiteDatabase.GetCollection("OrdersData").Delete(Query.EQ("ItemId", "T4_2H_FIRESTAF_HELL@3"));
-            Instance.LiteDatabase.Shrink();
+            //Instance.LiteDatabase.Shrink();
             Instance.LiteDatabase.Dispose();
         }
 
         public static void Drop()
         {
-            File.Delete("main2v.db");
+            File.Delete("main3v.db");
         }
     }
 }
