@@ -24,5 +24,6 @@
         magic,
         melee,
         cityresources,
+        skillbooks,
     }
 }

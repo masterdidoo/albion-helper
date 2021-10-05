@@ -152,5 +152,13 @@
 
         BattleMount,
         Blackheart,
+
+        Mule,
+        Giantstag,
+        Direwolf,
+        Direboar,
+        SwampDragon,
+        DireBear,
+        Cougar
     }
 }

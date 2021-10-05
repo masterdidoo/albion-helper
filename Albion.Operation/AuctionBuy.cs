@@ -5,9 +5,9 @@ using Albion.Common;
 
 namespace Albion.Operation
 {
-    public class AuctionGetRequests : AuctionBase
+    public class AuctionBuy : AuctionBase
     {
-        public override OperationCodes Code => OperationCodes.AuctionGetRequests;
+        public override OperationCodes Code => OperationCodes.AuctionBuyOffer;
     }
 
 

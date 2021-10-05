@@ -25,5 +25,6 @@
         Cityresources,
         SimpleItems,
         ArtefactsItems,
+        SkillBooks,
     }
 }

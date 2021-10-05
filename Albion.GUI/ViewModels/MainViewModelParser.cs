@@ -28,9 +28,9 @@ namespace Albion.GUI.ViewModels
                 }
             });
 
-            _albionParser.AddOperationHandler<AuctionGetRequests>(AuctionBuyOfferHandler);
+            _albionParser.AddOperationHandler<AuctionBuy>(AuctionBuyOfferHandler);
 
-            _albionParser.AddOperationHandler<AuctionGetOffers>(AuctionGetRequestsHandler);
+            _albionParser.AddOperationHandler<AuctionSell>(AuctionGetRequestsHandler);
 
             try
             {
@@ -42,7 +42,7 @@ namespace Albion.GUI.ViewModels
             }
         }
 
-        private void AuctionGetRequestsHandler(AuctionGetOffers p)
+        private void AuctionGetRequestsHandler(AuctionSell p)
         {
             if (p.Items.Length == 0) return;
             var ordersGroups = p.Items.GroupBy(x => x.ItemTypeId).ToArray();
@@ -51,8 +51,8 @@ namespace Albion.GUI.ViewModels
             {
                 var orders = ordersGroups[0];
                 var itemMarket = MdmGetData(orders.Key).FromMarketItems[AuctionTownManager.TownId];
-                itemMarket.AppendOrSetOrders(orders);
-                    //itemMarket.SetOrders(items[0], DateTime.Now);
+                //itemMarket.AppendOrSetOrders(orders);
+                itemMarket.SetOrders(orders, DateTime.Now);
                 _mdm.Save(orders.Key, AuctionTownManager.TownId, true, itemMarket);
             }
             else
@@ -76,7 +76,7 @@ namespace Albion.GUI.ViewModels
             RefreshTree();
         }
 
-        private void AuctionBuyOfferHandler(AuctionGetRequests p)
+        private void AuctionBuyOfferHandler(AuctionBuy p)
         {
             if (p.Items.Length == 0) return;
             var ordersGroups = p.Items.GroupBy(x => x.ItemTypeId).ToArray();

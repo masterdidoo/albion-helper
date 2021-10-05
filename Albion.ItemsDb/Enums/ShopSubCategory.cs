@@ -152,5 +152,12 @@
         //new CtA:
         battle_mount,
         blackheart,
+        mule,
+        giantstag,
+        direwolf,
+        direboar,
+        swampdragon,
+        direbear,
+        cougar
     }
 }
