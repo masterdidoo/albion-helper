@@ -135,6 +135,7 @@
         Quarterstaff,
         Hammer,
         Mace,
+        Knuckles,
         Mercenarytrophy,
         Hidetrophy,
         Oretrophy,

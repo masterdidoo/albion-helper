@@ -128,14 +128,16 @@ namespace Albion.Network
 
         private OperationCodes ParseOperationCode(Dictionary<byte, object> parameters)
         {
-            if (!parameters.TryGetValue(253, out var value)) throw new AlbionException();
+            if (!parameters.TryGetValue(253, out var value)) return OperationCodes.Unused;
+            //throw new AlbionException();
 
             return (OperationCodes) value;
         }
 
         private EventCodes ParseEventCode(Dictionary<byte, object> parameters)
         {
-            if (!parameters.TryGetValue(252, out var value)) throw new AlbionException();
+            if (!parameters.TryGetValue(252, out var value)) return EventCodes.Unused;
+            //throw new AlbionException();
 
             return (EventCodes) value;
         }

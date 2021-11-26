@@ -7,7 +7,7 @@ namespace Albion.Operation
 {
     public class AuctionBuy : AuctionBase
     {
-        public override OperationCodes Code => OperationCodes.AuctionBuyOffer;
+        public override OperationCodes Code => OperationCodes.AuctionGetRequests;
     }
 
 

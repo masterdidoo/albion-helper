@@ -162,7 +162,7 @@ namespace Albion.Db.Xml
             }*/
 
             Artefacts = Items.Values.SelectMany(x => x.CraftingRequirements).SelectMany(x => x.Resources
-                    .Where(a => a.Item.ShopCategory == ShopCategory.Artefacts).Select(
+                    .Where(a => a.Item.CraftingRequirements.Length > 0 && a.Item.ShopCategory == ShopCategory.Artefacts).Select(
                         a =>
                             new
                             {

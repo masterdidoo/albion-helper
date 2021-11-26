@@ -135,6 +135,7 @@
         quarterstaff,
         hammer,
         mace,
+        knuckles,
         mercenarytrophy,
         hidetrophy,
         oretrophy,

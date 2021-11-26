@@ -38,7 +38,6 @@ namespace Albion.Common
         , GetAvailableTrialKeys
         , GetShopTilesForCategory
         , Move
-        , AttackStart
         , CastStart
         , CastCancel
         , TerminateToggleSpell
@@ -92,8 +91,8 @@ namespace Albion.Common
         , FarmableFill
         , TearDownConstructionSite
         , CastleGateUse
-        , AuctionCreateOffer
         , AuctionCreateRequest
+        , AuctionCreateOffer
         , AuctionGetOffers
         , AuctionGetRequests
         , AuctionBuyOffer
@@ -262,8 +261,8 @@ namespace Albion.Common
         , GoldMarketCreateBuyOrder
         , GoldMarketGetInfos
         , GoldMarketCancelOrder
+        , Unknown245
         , Unknown246
-        , Unknown247
         , GoldMarketGetAverageInfo
         , SiegeCampClaimStart
         , SiegeCampClaimCancel
