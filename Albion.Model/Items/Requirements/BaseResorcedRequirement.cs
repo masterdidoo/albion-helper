@@ -4,6 +4,7 @@ namespace Albion.Model.Items.Requirements
 {
     public abstract class BaseResorcedRequirement : BaseRequirement
     {
+        public const int ItemValueToNutrition = 1125;
         protected BaseResorcedRequirement(CraftingResource[] resources)
         {
             Resources = resources;

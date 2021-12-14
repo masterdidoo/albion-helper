@@ -13,7 +13,7 @@ namespace Albion.Model.Items.Requirements
 
         protected override void ResourcesOnCostUpdate()
         {
-            Tax = (int)(10000 / 100 * Item.CraftingBuilding.Tax * Item.ItemValue * 5) + Silver;
+            Tax = (int)(Item.CraftingBuilding.Tax * Item.ItemValue * BaseResorcedRequirement.ItemValueToNutrition / 100) + Silver;
 
             if (Resources.Any(x => x.Item.Cost == 0))
             {
