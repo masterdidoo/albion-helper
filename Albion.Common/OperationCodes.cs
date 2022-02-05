@@ -88,7 +88,6 @@ namespace Albion.Common
         , FarmableFinishGrownItem
         , FarmableDestroy
         , FarmableGetProduct
-        , FarmableFill
         , TearDownConstructionSite
         , CastleGateUse
         , AuctionCreateRequest
@@ -261,8 +260,8 @@ namespace Albion.Common
         , GoldMarketCreateBuyOrder
         , GoldMarketGetInfos
         , GoldMarketCancelOrder
+        , Unknown244
         , Unknown245
-        , Unknown246
         , GoldMarketGetAverageInfo
         , SiegeCampClaimStart
         , SiegeCampClaimCancel
