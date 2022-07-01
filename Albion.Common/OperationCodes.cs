@@ -106,6 +106,7 @@ namespace Albion.Common
         , AuctionGetMyOpenOffers
         , AuctionGetMyOpenRequests
         , AuctionGetMyOpenAuctions
+        , Unknown90
         , AuctionGetItemAverageStats
         , AuctionGetItemAverageValue
         , ContainerOpen
