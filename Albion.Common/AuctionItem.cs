@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Albion.Common
 {
+    [DebuggerDisplay("{AuctionType} {UnitPriceSilver} {Amount}")]
     public class AuctionItem
     {
         public long Id { get; set; }

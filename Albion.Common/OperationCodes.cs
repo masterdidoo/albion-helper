@@ -28,7 +28,6 @@ namespace Albion.Common
         , CreateCharacter
         , DeleteCharacter
         , SelectCharacter
-        , RedeemKeycode
         , GetGameServerByCluster
         , GetActiveSubscription
         , GetShopPurchaseUrl
